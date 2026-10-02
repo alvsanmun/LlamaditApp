@@ -22,7 +22,7 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 | Arranque con el launcher | `intent-filter` HOME + DEFAULT; como Device Owner, `addPersistentPreferredActivity`. |
 | Llamadas | `ACTION_CALL` con permiso `CALL_PHONE`. |
 | WhatsApp | No hay API oficial. Buscar en `ContactsContract.Data` las filas con mimetype `vnd.android.cursor.item/vnd.com.whatsapp.voip.call` (voz) y `vnd.android.cursor.item/vnd.com.whatsapp.video.call` (vídeo), y lanzar `ACTION_VIEW` sobre `content://com.android.contacts/data/<id>` con el paquete `com.whatsapp`. El contacto debe estar guardado en la agenda y tener WhatsApp. |
-| SOS | Llamar a un contacto de confianza y enviarle un SMS con la ubicación. Android **no permite** que una app de terceros llame directamente al 112 (solo abre el marcador con el número, y hace falta un toque más). |
+| SOS | Mantener pulsado 2 s (con un anillo de progreso). Llama **en el acto** al contacto de confianza y, en paralelo, `SosService` (servicio en primer plano de tipo location) le envía un SMS con un enlace de Google Maps y luego **3 actualizaciones cada 10 min** (30 min en total). Después se para solo; no hay palabra clave para pararlo. No se usa WhatsApp: no tiene API para enviar mensajes ni para compartir la ubicación en tiempo real (descartado, 2026-10-03). Android **no permite** que una app de terceros llame directamente al 112 (solo abre el marcador con el número, y hace falta un toque más). |
 | Localización bajo demanda | Un móvil autorizado envía un **SMS con palabra clave**. El launcher (con `RECEIVE_SMS`) comprueba el remitente, obtiene una posición GPS puntual y responde por SMS con un enlace de Google Maps. Sin servidor. Más adelante, quizá una app acompañante con Firebase. |
 | Configuración | Pantalla oculta para el cuidador, protegida con PIN, donde se añaden contactos y fotos. |
 
@@ -30,7 +30,7 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 
 1. ✅ Entorno + app "Hola" funcionando (verificado en el emulador el 2026-10-02).
 2. ✅ Pantalla principal: reloj, batería y botones grandes (los botones aún no hacen nada).
-3. ⬜ Llamadas: contactos con foto, teclado numérico y SOS.
+3. ✅ Llamadas: **3a** contactos con foto y teclado numérico. **3b** SOS.
 4. ⬜ Llamadas y videollamadas de WhatsApp.
 5. ⬜ Localización bajo demanda por SMS.
 6. ⬜ Modo quiosco + arranque automático (primero en el emulador, luego en el A16).
@@ -40,9 +40,19 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 
 - Paquete / applicationId: `com.launcherfacil.app`, nombre "Launcher Fácil".
 - `MainActivity.kt`: edge-to-edge con barras oscuras y muestra `HomeScreen`.
-- `ui/HomeScreen.kt`: reloj, batería y cuadrícula 2×2 (Llamar verde, WhatsApp verde azulado, Teclado azul, SOS rojo). Los callbacks `onCall`/`onWhatsApp`/`onDialpad`/`onSos` están vacíos; solo dan respuesta háptica.
+- `MainActivity.kt` → `LauncherApp()`: navegación simple con `enum Screen` (Home, Contacts, Dialpad); el botón Atrás vuelve a Home. Pide `READ_CONTACTS` y `CALL_PHONE` al arrancar.
+- `ui/HomeScreen.kt`: reloj, batería y cuadrícula 2×2 (Llamar verde, WhatsApp verde azulado, Teclado azul, SOS rojo). WhatsApp y SOS aún no hacen nada.
+- `ui/ContactsScreen.kt`: cuadrícula de 2 columnas con los contactos **favoritos (★) de la agenda** y su foto (o una silueta si no tienen). Tocar = llamar. El nombre aparece pequeño, para el cuidador.
+- `contacts/Contacts.kt`: `loadFavoriteContacts` (un número por contacto, el principal si lo hay) y `loadContactPhoto`.
+- `ui/DialpadScreen.kt`: teclado 1‑9/0, borrar (pulsación larga = todo) y llamar (mínimo 3 cifras: con menos, Android lo trata como USSD).
+- `ui/SosButton.kt`: pulsación larga de 2 s con anillo. `sos/SosService.kt`: secuencia de SMS (`UPDATES = 3`, `INTERVAL_MS = 10 min`). `sos/Location.kt`: posición puntual (GPS 20 s → red → última conocida). `sos/Sms.kt`: `sendSms` multiparte.
+- Contacto SOS provisional: el **primer favorito por orden alfabético** (en las pruebas, Juan). Si no hay ninguno, abre el marcador con el 112. Se podrá elegir en el paso 7.
+- Permisos: contactos, llamada, SMS, **`READ_PHONE_STATE`** (en Android reciente `sendMultipartTextMessage` lanza `SecurityException: getGroupIdLevel1` sin él), ubicación y notificaciones.
+- Probar el SOS rápido (solo en debug): `adb shell am start -S -n com.launcherfacil.app/.MainActivity --ei debug_interval_seconds 15`, mantener pulsado SOS y consultar `adb shell content query --uri content://sms/sent`. Mover la ubicación: `adb emu geo fix <lon> <lat>`.
+- `ui/Common.kt`: `BigTile`, `TileIcon` y `HomeBar` (barra con una casa para volver). `Calls.kt`: `placeCall` (`ACTION_CALL`).
 - `ui/Clock.kt` (hora H:mm 120sp + fecha según el idioma del sistema), `ui/Battery.kt` (icono dibujado con Canvas, color verde >50 %, ámbar >20 %, rojo; rayo al cargar), `ui/Colors.kt`.
-- Iconos: `ic_call`, `ic_dialpad` (Material, Apache 2.0) e `ic_whatsapp_call` (bocadillo con teléfono, sin el logotipo real).
+- Iconos: `ic_call`, `ic_dialpad`, `ic_home`, `ic_person`, `ic_backspace` (Material, Apache 2.0) e `ic_whatsapp_call` (bocadillo con teléfono, sin el logotipo real).
+- Contactos de prueba en el emulador (María, Juan y Lucía son favoritos; "Otro" no), creados con `adb shell content insert`. Aún no tienen foto: se añade desde la app Contactos.
 - Probar la batería en el emulador: `adb shell dumpsys battery set level 15` / `set status 2` (cargando) / `dumpsys battery reset`.
 - Versiones: AGP 8.7.3, Kotlin 2.1.0, Gradle 8.11.1, Compose BOM 2024.12.01 (en `gradle/libs.versions.toml`).
 - Icono provisional: vector de una casa (`res/drawable/ic_launcher.xml`).
@@ -62,10 +72,10 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
   - En un PC moderno no debería haber problema.
 - **PC actual** (Ryzen 7 9800X3D, Windows 11): el emulador va bien con WHPX y arranca en ~45 s.
   - AVD en uso: `Medium_Phone_API_37.0` (lo creó Studio, imagen Google Play x86_64, API 37). No hay cmdline-tools instaladas, así que los AVD se crean desde Studio.
-  - Arrancarlo desde la terminal: `%LOCALAPPDATA%\Android\Sdk\emulator\emulator.exe -avd Medium_Phone_API_37.0`
+  - Arrancarlo desde la terminal (con PowerShell `Start-Process` queda independiente; las tareas en segundo plano de Claude se cortan a los 30 min): `%LOCALAPPDATA%\Android\Sdk\emulator\emulator.exe -avd Medium_Phone_API_37.0`
   - JDK 21 para Gradle: `%USERPROFILE%\.jdks\jbr-21.0.11`. Hay otro en `C:\Program Files\Android\openjdk\jdk-21.0.8`.
 - Samsung A16: activar las opciones de desarrollador (tocar 7 veces "Número de compilación") y la depuración USB, e instalar el Samsung Android USB Driver en Windows.
 
 ## Siguiente paso al retomar
 
-Paso 3: llamadas (contactos con foto, teclado numérico y SOS).
+Paso 4: llamadas de voz y videollamadas de WhatsApp tocando la foto del contacto. En el A16, comprobar que la ubicación de cada SMS del SOS es nueva (en el emulador, a veces repetía la anterior).
