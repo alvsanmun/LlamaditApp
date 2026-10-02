@@ -1,0 +1,7 @@
+com.launcherfacil.whatsappstub.whatsapp-stub-pngs-0 C:\Users\Amodio\Desktop\ClaudeCode\AndroidLauncher\whatsapp-stub\build\generated\res\pngs\debug
+com.launcherfacil.whatsappstub.whatsapp-stub-resValues-1 C:\Users\Amodio\Desktop\ClaudeCode\AndroidLauncher\whatsapp-stub\build\generated\res\resValues\debug
+com.launcherfacil.whatsappstub.whatsapp-stub-packageDebugResources-2 C:\Users\Amodio\Desktop\ClaudeCode\AndroidLauncher\whatsapp-stub\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.launcherfacil.whatsappstub.whatsapp-stub-packageDebugResources-3 C:\Users\Amodio\Desktop\ClaudeCode\AndroidLauncher\whatsapp-stub\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.launcherfacil.whatsappstub.whatsapp-stub-debug-4 C:\Users\Amodio\Desktop\ClaudeCode\AndroidLauncher\whatsapp-stub\build\intermediates\merged_res\debug\mergeDebugResources
+com.launcherfacil.whatsappstub.whatsapp-stub-debug-5 C:\Users\Amodio\Desktop\ClaudeCode\AndroidLauncher\whatsapp-stub\src\debug\res
+com.launcherfacil.whatsappstub.whatsapp-stub-main-6 C:\Users\Amodio\Desktop\ClaudeCode\AndroidLauncher\whatsapp-stub\src\main\res

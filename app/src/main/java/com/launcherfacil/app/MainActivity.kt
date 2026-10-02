@@ -1,11 +1,13 @@
 package com.launcherfacil.app
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.BackHandler
@@ -24,10 +26,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import com.launcherfacil.app.contacts.loadFavoriteContacts
+import com.launcherfacil.app.contacts.whatsAppVideoCall
 import com.launcherfacil.app.sos.SosService
 import com.launcherfacil.app.ui.ContactsScreen
 import com.launcherfacil.app.ui.DialpadScreen
 import com.launcherfacil.app.ui.HomeScreen
+import com.launcherfacil.app.ui.WhatsAppScreen
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -45,7 +49,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private enum class Screen { Home, Contacts, Dialpad }
+private enum class Screen { Home, Contacts, WhatsApp, Dialpad }
 
 private val PERMISSIONS = buildList {
     add(Manifest.permission.READ_CONTACTS)
@@ -101,6 +105,7 @@ private fun LauncherApp(debugSosInterval: Int = 0) {
     when (screen) {
         Screen.Home -> HomeScreen(
             onCall = { screen = Screen.Contacts },
+            onWhatsApp = { screen = Screen.WhatsApp },
             onDialpad = { screen = Screen.Dialpad },
             onSos = ::sos
         )
@@ -110,9 +115,18 @@ private fun LauncherApp(debugSosInterval: Int = 0) {
             onContactClick = { call(it.phone) },
             onHome = { screen = Screen.Home }
         )
+        Screen.WhatsApp -> WhatsAppScreen(
+            hasPermission = canReadContacts,
+            onRequestPermission = { permissionLauncher.launch(PERMISSIONS) },
+            onVideoCall = { if (!context.whatsAppVideoCall(it)) whatsAppFailed(context) },
+            onHome = { screen = Screen.Home }
+        )
         Screen.Dialpad -> DialpadScreen(
             onCall = ::call,
             onHome = { screen = Screen.Home }
         )
     }
 }
+
+private fun whatsAppFailed(context: Context) =
+    Toast.makeText(context, "No se pudo abrir WhatsApp", Toast.LENGTH_LONG).show()

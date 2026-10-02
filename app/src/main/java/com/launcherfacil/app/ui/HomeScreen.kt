@@ -51,7 +51,7 @@ fun HomeScreen(
                     TileIcon(R.drawable.ic_call)
                 }
                 BigTile(VerdeWhatsApp, onWhatsApp, Modifier.weight(1f).fillMaxHeight()) {
-                    TileIcon(R.drawable.ic_whatsapp_call)
+                    TileIcon(R.drawable.ic_whatsapp_video)
                 }
             }
             Row(
