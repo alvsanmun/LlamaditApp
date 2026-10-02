@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Solo en builds de depuración. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <receiver
+            android:name=".kiosk.DebugExitKioskReceiver"
+            android:exported="true"
+            android:permission="android.permission.DUMP">
+            <intent-filter>
+                <action android:name="com.launcherfacil.app.DEBUG_EXIT_KIOSK" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

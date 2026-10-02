@@ -18,7 +18,7 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 | Requisito | Solución |
 |---|---|
 | Lenguaje y UI | Kotlin + Jetpack Compose, minSdk 26, compile/targetSdk 35 |
-| Modo quiosco | App como **Device Owner** (`adb shell dpm set-device-owner com.launcherfacil.app/.AdminReceiver`) + **Lock Task Mode**, con `setLockTaskPackages` permitiendo WhatsApp y el marcador/telecom. Requiere quitar todas las cuentas del móvil (Google/Samsung) o restablecerlo de fábrica. Probarlo antes en el emulador. |
+| Modo quiosco | App como **Device Owner** (`adb shell dpm set-device-owner com.launcherfacil.app/.kiosk.AdminReceiver`) + **Lock Task Mode**, con `setLockTaskPackages` permitiendo WhatsApp y el marcador/telecom. Requiere quitar todas las cuentas del móvil (Google/Samsung) o restablecerlo de fábrica. Probarlo antes en el emulador. |
 | Arranque con el launcher | `intent-filter` HOME + DEFAULT; como Device Owner, `addPersistentPreferredActivity`. |
 | Llamadas | `ACTION_CALL` con permiso `CALL_PHONE`. |
 | WhatsApp | No hay API oficial. Buscar en `ContactsContract.Data` las filas con mimetype `vnd.android.cursor.item/vnd.com.whatsapp.video.call` (vídeo; la de voz, `...voip.call`, no se usa), y lanzar `ACTION_VIEW` sobre `content://com.android.contacts/data/<id>` con el paquete `com.whatsapp`. El contacto debe estar guardado en la agenda y tener WhatsApp. |
@@ -33,14 +33,14 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 3. ✅ Llamadas: **3a** contactos con foto y teclado numérico. **3b** SOS.
 4. ✅ Videollamadas de WhatsApp (solo vídeo, sin voz) (probado en el emulador con un WhatsApp falso; falta probarlo con el real en el A16).
 5. ✅ Localización bajo demanda por SMS (probado en el emulador, también con la pantalla apagada).
-6. ⬜ Modo quiosco + arranque automático (primero en el emulador, luego en el A16).
+6. ⏳ Modo quiosco + arranque automático: ✅ en el emulador; falta el A16.
 7. ⬜ Pantalla de configuración del cuidador con PIN.
 
 ## Estado del código
 
 - Paquete / applicationId: `com.launcherfacil.app`, nombre "Launcher Fácil".
 - `MainActivity.kt`: edge-to-edge con barras oscuras y muestra `HomeScreen`.
-- `MainActivity.kt` → `LauncherApp()`: navegación simple con `enum Screen` (Home, Contacts, Dialpad); el botón Atrás vuelve a Home. Pide `READ_CONTACTS` y `CALL_PHONE` al arrancar.
+- `MainActivity.kt` → `LauncherApp()`: navegación simple con `enum Screen` (Home, Contacts, WhatsApp, Dialpad); el botón Atrás vuelve a Home y, **tras lanzar una llamada o videollamada, la app vuelve a Home** (al colgar se ve la pantalla principal). Pide `READ_CONTACTS` y `CALL_PHONE` al arrancar.
 - `ui/HomeScreen.kt`: reloj, batería y cuadrícula 2×2 (Llamar verde, videollamada de WhatsApp verde azulado, Teclado azul, SOS rojo).
 - `ui/ContactsScreen.kt`: cuadrícula de 2 columnas con los contactos **favoritos (★) de la agenda** y su foto (o una silueta si no tienen). Tocar = llamar. El nombre aparece pequeño, para el cuidador.
 - `contacts/Contacts.kt`: `loadFavoriteContacts` (un número por contacto, el principal si lo hay) y `loadContactPhoto`.
@@ -54,6 +54,16 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 - **Ubicación en segundo plano**: con la pantalla apagada, Android solo deja usar el GPS si la app tiene `ACCESS_BACKGROUND_LOCATION` ("Permitir siempre"). Sin ese permiso, `LocateService` no puede pasar a primer plano y responde "No se ha podido obtener la ubicación ahora mismo". **En el paso 6 (Device Owner) hay que concederlo automáticamente** con `setPermissionGrantState`. Para probar en el emulador: `adb shell pm grant com.launcherfacil.app android.permission.ACCESS_BACKGROUND_LOCATION`.
 - `sos/Foreground.kt`: `startLocationForeground`, compartido por `SosService` y `LocateService`; devuelve false si Android no lo permite.
 - Probar la petición por SMS en el emulador: `adb emu sms send 600111222 "¿Dónde estás?"` y consultar `adb shell content query --uri content://sms/sent`.
+- **Modo quiosco** (`kiosk/`): `AdminReceiver` (Device Owner) y `Kiosk`. `Kiosk.configure()` se ejecuta en cada `onCreate`, antes de la interfaz, y solo actúa si la app es Device Owner:
+  - `addPersistentPreferredActivity` HOME → MainActivity;
+  - `setLockTaskPackages` con la app, WhatsApp, el marcador por defecto y las pantallas de llamada de Google y Samsung (`com.android.server.telecom`, `com.android.phone`, `com.google.android.dialer`, `com.samsung.android.dialer`, `com.samsung.android.incallui`);
+  - `setLockTaskFeatures` = SYSTEM_INFO + GLOBAL_ACTIONS (barra de estado y menú de apagado; sin Inicio, Recientes ni notificaciones);
+  - `setKeyguardDisabled(true)`: sin pantalla de bloqueo al encender (solo funciona si el móvil no tiene PIN, patrón ni contraseña; la salida de emergencia lo reactiva);
+  - concede todos los permisos de la app (incluida `ACCESS_BACKGROUND_LOCATION`) y CAMERA, RECORD_AUDIO y READ_CONTACTS a WhatsApp, porque los diálogos de permisos no pueden abrirse dentro del quiosco.
+  `Kiosk.enterLockTask()` se llama en `onResume`. MainActivity es `singleTask` con HOME/DEFAULT además de LAUNCHER.
+- **Salida de emergencia (solo en debug)**: `adb shell am broadcast -a com.launcherfacil.app.DEBUG_EXIT_KIOSK -p com.launcherfacil.app` → sale del Lock Task, borra el HOME persistente y deja de ser Device Owner (`src/debug/.../DebugExitKioskReceiver.kt`, protegido con el permiso DUMP). **Sin esto, un Device Owner solo se quita con un restablecimiento de fábrica.** En release habrá que dar una salida desde la pantalla del cuidador (paso 7).
+- Probado en el emulador (2026-10-03): Inicio, Recientes y Ajustes bloqueados; llamadas, SOS, teclado y WhatsApp (falso) funcionan dentro del quiosco; tras reiniciar arranca solo y bloqueado; la petición de ubicación por SMS funciona con la pantalla apagada y sin `pm grant`.
+- Durante las pruebas con adb conviene `adb shell svc power stayon true`; si la pantalla se apaga, los `input tap` no hacen nada.
 - `ui/ContactPhoto.kt`: `ContactPhoto` (foto + nombre) y `CaregiverMessage`, compartidos por las pantallas de Contactos y WhatsApp.
 - Módulo **`whatsapp-stub/`**: WhatsApp falso (paquete `com.whatsapp`) **solo para el emulador**; muestra qué intent recibe. Solo se incluye en el build con `-PwithWhatsAppStub`: `gradlew -PwithWhatsAppStub :whatsapp-stub:installDebug`. Un `installDebug` normal no lo instala. **Nunca en un móvil con el WhatsApp real** (chocaría con el paquete). En el emulador, María y Lucía tienen filas de WhatsApp de prueba; Juan no.
 - `ui/Common.kt`: `BigTile`, `TileIcon` y `HomeBar` (barra con una casa para volver). `Calls.kt`: `placeCall` (`ACTION_CALL`).
@@ -64,7 +74,6 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 - Versiones: AGP 8.7.3, Kotlin 2.1.0, Gradle 8.11.1, Compose BOM 2024.12.01 (en `gradle/libs.versions.toml`).
 - Icono provisional: vector de una casa (`res/drawable/ic_launcher.xml`).
 - Git: repositorio inicializado; primer commit hecho el 2026-10-02 tras verificar el paso 1.
-- El manifiesto todavía usa la categoría LAUNCHER. Falta añadir HOME/DEFAULT en el paso 6.
 
 ## Entorno de desarrollo (lecciones del PC original)
 
@@ -85,6 +94,10 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 
 ## Siguiente paso al retomar
 
-Paso 6: modo quiosco y arranque automático, primero en el emulador. Incluye: `AdminReceiver` + `dpm set-device-owner`, Lock Task con `setLockTaskPackages` (launcher, WhatsApp, marcador/telecom), intent-filter HOME/DEFAULT + `addPersistentPreferredActivity`, y conceder automáticamente todos los permisos (sobre todo `ACCESS_BACKGROUND_LOCATION`). Ojo: en el emulador, `set-device-owner` exige que no haya cuentas; la imagen actual tiene Google Play, así que quizá haga falta un AVD con "Google APIs" sin cuenta, o hacer un wipe.
+Paso 7: pantalla de configuración del cuidador con PIN (elegir el contacto SOS y los autorizados para pedir la ubicación, la palabra clave, y salir del quiosco).
 
-Pendiente de probar en el A16: los SMS del SOS (que cada ubicación sea nueva), las videollamadas con el WhatsApp real y la petición de ubicación con la pantalla apagada.
+Pendiente de probar en el A16:
+- el modo quiosco: quitar las cuentas de Google/Samsung o restablecerlo, `dpm set-device-owner`, y comprobar los paquetes de llamada de Samsung;
+- los SMS del SOS (que cada ubicación sea nueva);
+- las videollamadas con el WhatsApp real;
+- la petición de ubicación con la pantalla apagada.

@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -18,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import com.launcherfacil.app.contacts.loadFavoriteContacts
 import com.launcherfacil.app.contacts.whatsAppVideoCall
+import com.launcherfacil.app.kiosk.Kiosk
 import com.launcherfacil.app.sos.SosService
 import com.launcherfacil.app.ui.ContactsScreen
 import com.launcherfacil.app.ui.DialpadScreen
@@ -42,29 +43,35 @@ class MainActivity : ComponentActivity() {
             navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT)
         )
         super.onCreate(savedInstanceState)
+        // Si es Device Owner: pantalla de inicio fija, apps permitidas y permisos.
+        // Va antes de la interfaz para que los permisos ya estén concedidos.
+        Kiosk.configure(this)
         // Solo para pruebas: `am start ... --ei debug_interval_seconds 15` acorta el
         // intervalo del SOS (el servicio lo ignora si la app no es depurable).
         val debugSosInterval = intent.getIntExtra(SosService.EXTRA_DEBUG_INTERVAL_SECONDS, 0)
-        setContent { LauncherApp(debugSosInterval) }
+        setContent { LauncherApp(debugSosInterval, homeRequests) }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Kiosk.enterLockTask(this)
+    }
+
+    // Pulsar Inicio (fuera del quiosco) con la app abierta: volver a la pantalla principal.
+    private var homeRequests by mutableIntStateOf(0)
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        if (intent.hasCategory(Intent.CATEGORY_HOME)) homeRequests++
     }
 }
 
 private enum class Screen { Home, Contacts, WhatsApp, Dialpad }
 
-private val PERMISSIONS = buildList {
-    add(Manifest.permission.READ_CONTACTS)
-    add(Manifest.permission.CALL_PHONE)
-    add(Manifest.permission.SEND_SMS)
-    add(Manifest.permission.RECEIVE_SMS)
-    add(Manifest.permission.READ_PHONE_STATE)
-    add(Manifest.permission.ACCESS_FINE_LOCATION)
-    add(Manifest.permission.ACCESS_COARSE_LOCATION)
-    // Para que se vea la notificación de "SOS activo".
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) add(Manifest.permission.POST_NOTIFICATIONS)
-}.toTypedArray()
+private val PERMISSIONS = APP_PERMISSIONS.toTypedArray()
 
 @Composable
-private fun LauncherApp(debugSosInterval: Int = 0) {
+private fun LauncherApp(debugSosInterval: Int = 0, homeRequests: Int = 0) {
     val context = LocalContext.current
     fun granted(p: String) =
         ContextCompat.checkSelfPermission(context, p) == PackageManager.PERMISSION_GRANTED
@@ -77,13 +84,21 @@ private fun LauncherApp(debugSosInterval: Int = 0) {
         canReadContacts = granted(Manifest.permission.READ_CONTACTS)
         canCall = granted(Manifest.permission.CALL_PHONE)
     }
-    // Se piden al arrancar. Como Device Owner (paso 6) se podrán conceder sin preguntar.
+    // Se piden al arrancar. Como Device Owner ya están concedidos y no se pregunta nada.
     LaunchedEffect(Unit) {
         if (PERMISSIONS.any { !granted(it) }) permissionLauncher.launch(PERMISSIONS)
     }
 
+    var screen by rememberSaveable { mutableStateOf(Screen.Home) }
+
+    // Al terminar una llamada o videollamada se vuelve siempre a la pantalla principal.
     fun call(number: String) {
-        if (canCall) context.placeCall(number) else permissionLauncher.launch(PERMISSIONS)
+        if (!canCall) {
+            permissionLauncher.launch(PERMISSIONS)
+            return
+        }
+        context.placeCall(number)
+        screen = Screen.Home
     }
 
     // SOS: llamada inmediata al contacto de confianza (por ahora, el primer favorito)
@@ -100,8 +115,8 @@ private fun LauncherApp(debugSosInterval: Int = 0) {
         }
     }
 
-    var screen by rememberSaveable { mutableStateOf(Screen.Home) }
     BackHandler(enabled = screen != Screen.Home) { screen = Screen.Home }
+    LaunchedEffect(homeRequests) { screen = Screen.Home }
 
     when (screen) {
         Screen.Home -> HomeScreen(
@@ -119,7 +134,9 @@ private fun LauncherApp(debugSosInterval: Int = 0) {
         Screen.WhatsApp -> WhatsAppScreen(
             hasPermission = canReadContacts,
             onRequestPermission = { permissionLauncher.launch(PERMISSIONS) },
-            onVideoCall = { if (!context.whatsAppVideoCall(it)) whatsAppFailed(context) },
+            onVideoCall = {
+                if (context.whatsAppVideoCall(it)) screen = Screen.Home else whatsAppFailed(context)
+            },
             onHome = { screen = Screen.Home }
         )
         Screen.Dialpad -> DialpadScreen(
