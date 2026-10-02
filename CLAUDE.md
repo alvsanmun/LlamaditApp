@@ -32,7 +32,7 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 2. ✅ Pantalla principal: reloj, batería y botones grandes (los botones aún no hacen nada).
 3. ✅ Llamadas: **3a** contactos con foto y teclado numérico. **3b** SOS.
 4. ✅ Videollamadas de WhatsApp (solo vídeo, sin voz) (probado en el emulador con un WhatsApp falso; falta probarlo con el real en el A16).
-5. ⬜ Localización bajo demanda por SMS.
+5. ✅ Localización bajo demanda por SMS (probado en el emulador, también con la pantalla apagada).
 6. ⬜ Modo quiosco + arranque automático (primero en el emulador, luego en el A16).
 7. ⬜ Pantalla de configuración del cuidador con PIN.
 
@@ -50,6 +50,10 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 - Permisos: contactos, llamada, SMS, **`READ_PHONE_STATE`** (en Android reciente `sendMultipartTextMessage` lanza `SecurityException: getGroupIdLevel1` sin él), ubicación y notificaciones.
 - Probar el SOS rápido (solo en debug): `adb shell am start -S -n com.launcherfacil.app/.MainActivity --ei debug_interval_seconds 15`, mantener pulsado SOS y consultar `adb shell content query --uri content://sms/sent`. Mover la ubicación: `adb emu geo fix <lon> <lat>`.
 - `ui/WhatsAppScreen.kt`: favoritos (★) que tienen WhatsApp. **WhatsApp solo se usa para videollamadas** (decisión del 2026-10-03): tocar la foto inicia la videollamada; una cámara en la esquina lo indica. Las llamadas de voz van por teléfono normal. Si WhatsApp no está instalado, o ningún favorito lo tiene, se muestra un mensaje para el cuidador. `contacts/WhatsApp.kt`: consulta de `ContactsContract.Data` y apertura con `ACTION_VIEW` + `setPackage("com.whatsapp")`. El manifiesto declara `<queries>` para `com.whatsapp`. No se admite WhatsApp Business (`com.whatsapp.w4b`).
+- **Localización bajo demanda** (`locate/`): `SmsReceiver` (broadcast `SMS_RECEIVED`, protegido con `BROADCAST_SMS`) → si el texto es una palabra clave (`UBICACION` o `DONDE ESTAS`, sin importar tildes, mayúsculas ni signos) y el remitente es un **favorito (★)** → `LocateService` (servicio en primer plano de tipo location) obtiene una posición puntual y responde por SMS con el enlace de Google Maps. Los demás remitentes se ignoran sin responder, y en el móvil no se muestra nada. Comparación de números: coinciden si las 9 últimas cifras son iguales, o si Android dice que son el mismo número (así +34600… = 600…; en el emulador, cuyo país es "us", la comparación de Android sola fallaba).
+- **Ubicación en segundo plano**: con la pantalla apagada, Android solo deja usar el GPS si la app tiene `ACCESS_BACKGROUND_LOCATION` ("Permitir siempre"). Sin ese permiso, `LocateService` no puede pasar a primer plano y responde "No se ha podido obtener la ubicación ahora mismo". **En el paso 6 (Device Owner) hay que concederlo automáticamente** con `setPermissionGrantState`. Para probar en el emulador: `adb shell pm grant com.launcherfacil.app android.permission.ACCESS_BACKGROUND_LOCATION`.
+- `sos/Foreground.kt`: `startLocationForeground`, compartido por `SosService` y `LocateService`; devuelve false si Android no lo permite.
+- Probar la petición por SMS en el emulador: `adb emu sms send 600111222 "¿Dónde estás?"` y consultar `adb shell content query --uri content://sms/sent`.
 - `ui/ContactPhoto.kt`: `ContactPhoto` (foto + nombre) y `CaregiverMessage`, compartidos por las pantallas de Contactos y WhatsApp.
 - Módulo **`whatsapp-stub/`**: WhatsApp falso (paquete `com.whatsapp`) **solo para el emulador**; muestra qué intent recibe. Solo se incluye en el build con `-PwithWhatsAppStub`: `gradlew -PwithWhatsAppStub :whatsapp-stub:installDebug`. Un `installDebug` normal no lo instala. **Nunca en un móvil con el WhatsApp real** (chocaría con el paquete). En el emulador, María y Lucía tienen filas de WhatsApp de prueba; Juan no.
 - `ui/Common.kt`: `BigTile`, `TileIcon` y `HomeBar` (barra con una casa para volver). `Calls.kt`: `placeCall` (`ACTION_CALL`).
@@ -81,6 +85,6 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 
 ## Siguiente paso al retomar
 
-Paso 5: localización bajo demanda por SMS (palabra clave desde un número autorizado → respuesta con un enlace de Google Maps). Se puede aprovechar `sos/Location.kt` y `sos/Sms.kt`.
+Paso 6: modo quiosco y arranque automático, primero en el emulador. Incluye: `AdminReceiver` + `dpm set-device-owner`, Lock Task con `setLockTaskPackages` (launcher, WhatsApp, marcador/telecom), intent-filter HOME/DEFAULT + `addPersistentPreferredActivity`, y conceder automáticamente todos los permisos (sobre todo `ACCESS_BACKGROUND_LOCATION`). Ojo: en el emulador, `set-device-owner` exige que no haya cuentas; la imagen actual tiene Google Play, así que quizá haga falta un AVD con "Google APIs" sin cuenta, o hacer un wipe.
 
-Pendiente de probar en el A16: los SMS del SOS (que cada ubicación sea nueva) y las videollamadas con el WhatsApp real.
+Pendiente de probar en el A16: los SMS del SOS (que cada ubicación sea nueva), las videollamadas con el WhatsApp real y la petición de ubicación con la pantalla apagada.

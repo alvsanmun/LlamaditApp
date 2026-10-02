@@ -1,21 +1,15 @@
 package com.launcherfacil.app.sos
 
 import android.Manifest
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import android.content.pm.ServiceInfo
 import android.location.Location
-import android.os.Build
 import android.os.IBinder
 import android.util.Log
-import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
-import com.launcherfacil.app.R
 import com.launcherfacil.app.contacts.loadFavoriteContacts
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,7 +36,6 @@ class SosService : Service() {
         const val EXTRA_DEBUG_INTERVAL_SECONDS = "debug_interval_seconds"
 
         private const val TAG = "SosService"
-        private const val CHANNEL_ID = "sos"
         private const val NOTIFICATION_ID = 1
     }
 
@@ -56,9 +49,11 @@ class SosService : Service() {
             this, Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
 
-        // Sin permiso de ubicación las actualizaciones no aportan nada: un solo SMS.
-        val updates = if (hasLocation) UPDATES else 0
-        if (hasLocation) startInForeground()
+        // Sin ubicación (o sin poder pasar a primer plano) las actualizaciones no
+        // aportan nada: un solo SMS.
+        val foreground = hasLocation &&
+            startLocationForeground(NOTIFICATION_ID, "SOS activo: enviando la ubicación durante 30 minutos")
+        val updates = if (foreground) UPDATES else 0
 
         val debuggable = applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
         val intervalMs = intent?.getIntExtra(EXTRA_DEBUG_INTERVAL_SECONDS, 0)
@@ -103,24 +98,5 @@ class SosService : Service() {
             index < total -> "SOS: ubicación actualizada ($index/$total): $where"
             else -> "SOS: última ubicación ($index/$total): $where"
         }
-    }
-
-    private fun startInForeground() {
-        val manager = getSystemService(NotificationManager::class.java)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            manager.createNotificationChannel(
-                NotificationChannel(CHANNEL_ID, "SOS", NotificationManager.IMPORTANCE_DEFAULT)
-            )
-        }
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_call)
-            .setContentTitle("SOS activo")
-            .setContentText("Enviando la ubicación por SMS durante 30 minutos")
-            .setOngoing(true)
-            .build()
-        val type = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION
-        } else 0
-        ServiceCompat.startForeground(this, NOTIFICATION_ID, notification, type)
     }
 }
