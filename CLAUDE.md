@@ -29,7 +29,7 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 ## Plan por pasos (estado)
 
 1. ✅ Entorno + app "Hola" funcionando (verificado en el emulador el 2026-10-02).
-2. ⬜ Pantalla principal: reloj, batería y botones grandes.
+2. ✅ Pantalla principal: reloj, batería y botones grandes (los botones aún no hacen nada).
 3. ⬜ Llamadas: contactos con foto, teclado numérico y SOS.
 4. ⬜ Llamadas y videollamadas de WhatsApp.
 5. ⬜ Localización bajo demanda por SMS.
@@ -39,7 +39,11 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 ## Estado del código
 
 - Paquete / applicationId: `com.launcherfacil.app`, nombre "Launcher Fácil".
-- `MainActivity.kt`: pantalla verde con "Hola 👋" (solo para comprobar el entorno).
+- `MainActivity.kt`: edge-to-edge con barras oscuras y muestra `HomeScreen`.
+- `ui/HomeScreen.kt`: reloj, batería y cuadrícula 2×2 (Llamar verde, WhatsApp verde azulado, Teclado azul, SOS rojo). Los callbacks `onCall`/`onWhatsApp`/`onDialpad`/`onSos` están vacíos; solo dan respuesta háptica.
+- `ui/Clock.kt` (hora H:mm 120sp + fecha según el idioma del sistema), `ui/Battery.kt` (icono dibujado con Canvas, color verde >50 %, ámbar >20 %, rojo; rayo al cargar), `ui/Colors.kt`.
+- Iconos: `ic_call`, `ic_dialpad` (Material, Apache 2.0) e `ic_whatsapp_call` (bocadillo con teléfono, sin el logotipo real).
+- Probar la batería en el emulador: `adb shell dumpsys battery set level 15` / `set status 2` (cargando) / `dumpsys battery reset`.
 - Versiones: AGP 8.7.3, Kotlin 2.1.0, Gradle 8.11.1, Compose BOM 2024.12.01 (en `gradle/libs.versions.toml`).
 - Icono provisional: vector de una casa (`res/drawable/ic_launcher.xml`).
 - Git: repositorio inicializado; primer commit hecho el 2026-10-02 tras verificar el paso 1.
@@ -64,4 +68,4 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 
 ## Siguiente paso al retomar
 
-Paso 2: pantalla principal con el reloj y la batería en grande, y los botones grandes de Llamar, WhatsApp, Teclado y SOS (por ahora solo de adorno).
+Paso 3: llamadas (contactos con foto, teclado numérico y SOS).

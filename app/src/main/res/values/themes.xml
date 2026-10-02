@@ -1,5 +1,5 @@
 <resources>
     <style name="Theme.LauncherFacil" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowBackground">#FF101418</item>
     </style>
 </resources>
