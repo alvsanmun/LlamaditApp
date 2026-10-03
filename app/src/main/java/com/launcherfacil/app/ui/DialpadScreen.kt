@@ -96,7 +96,7 @@ fun DialpadScreen(onCall: (String) -> Unit, onHome: () -> Unit) {
 }
 
 @Composable
-private fun ColumnScope.KeyRow(
+internal fun ColumnScope.KeyRow(
     content: @Composable RowScope.() -> Unit
 ) {
     Row(
@@ -107,7 +107,7 @@ private fun ColumnScope.KeyRow(
 }
 
 @Composable
-private fun DigitKey(digit: String, modifier: Modifier, onClick: () -> Unit) {
+internal fun DigitKey(digit: String, modifier: Modifier, onClick: () -> Unit) {
     KeyBox(color = AzulTeclado, onClick = onClick, modifier = modifier) {
         Text(digit, color = TextoClaro, fontSize = 48.sp, fontWeight = FontWeight.Bold)
     }
@@ -115,7 +115,7 @@ private fun DigitKey(digit: String, modifier: Modifier, onClick: () -> Unit) {
 
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
-private fun KeyBox(
+internal fun KeyBox(
     color: Color,
     onClick: () -> Unit,
     modifier: Modifier,

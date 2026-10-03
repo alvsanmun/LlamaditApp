@@ -3,6 +3,7 @@ package com.launcherfacil.app.kiosk
 import android.app.Activity
 import android.app.ActivityManager
 import android.app.admin.DevicePolicyManager
+import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -89,6 +90,45 @@ object Kiosk {
             }
             if (!ok) Log.w(TAG, "No se pudo conceder $permission a $pkg")
         }
+    }
+
+    fun isLocked(context: Context): Boolean =
+        context.getSystemService(ActivityManager::class.java).lockTaskModeState !=
+            ActivityManager.LOCK_TASK_MODE_NONE
+
+    /**
+     * Para el cuidador: sale del Lock Task y abre otra app (Contactos, Ajustes...).
+     * Al volver al launcher, [enterLockTask] lo vuelve a bloquear.
+     */
+    fun pauseAndOpen(activity: Activity, intent: Intent): Boolean {
+        if (isLocked(activity)) activity.stopLockTask()
+        return try {
+            activity.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            true
+        } catch (e: ActivityNotFoundException) {
+            Log.w(TAG, "No se pudo abrir $intent", e)
+            false
+        }
+    }
+
+    /**
+     * Desactiva el modo quiosco para siempre: sale del Lock Task, quita la pantalla de
+     * inicio fija y deja de ser Device Owner. Para volver a activarlo hay que repetir
+     * `dpm set-device-owner` (y el móvil no debe tener cuentas).
+     */
+    fun disable(context: Context) {
+        if (!isDeviceOwner(context)) return
+        val dpm = context.dpm()
+        val admin = AdminReceiver.component(context)
+        if (context is Activity && isLocked(context)) context.stopLockTask()
+        // Vaciar la lista de Lock Task también saca del modo quiosco.
+        dpm.setLockTaskPackages(admin, emptyArray())
+        dpm.clearPackagePersistentPreferredActivities(admin, context.packageName)
+        dpm.setKeyguardDisabled(admin, false)
+        // Obsoleto, pero sigue siendo la única forma de que la app deje de ser Device Owner.
+        @Suppress("DEPRECATION")
+        dpm.clearDeviceOwnerApp(context.packageName)
+        Log.w(TAG, "Modo quiosco desactivado y Device Owner eliminado")
     }
 
     /** Entra en Lock Task si es Device Owner y aún no está dentro. */

@@ -5,31 +5,30 @@ import android.location.Location
 import android.os.Build
 import android.telephony.PhoneNumberUtils
 import android.telephony.TelephonyManager
-import com.launcherfacil.app.contacts.loadFavoriteContacts
+import com.launcherfacil.app.config.CaregiverSettings
+import com.launcherfacil.app.config.locateContacts
 import com.launcherfacil.app.sos.mapsLink
 import java.text.DateFormat
 import java.text.Normalizer
 import java.util.Date
 import java.util.Locale
 
-// Palabras clave aceptadas (se comparan sin tildes, mayúsculas ni signos).
-// Se podrán cambiar en la configuración del cuidador (paso 7).
-private val KEYWORDS = setOf("UBICACION", "DONDE ESTAS")
-
-/** ¿El texto del SMS es una petición de ubicación? */
-fun isLocateRequest(body: String): Boolean {
-    val normalized = Normalizer.normalize(body, Normalizer.Form.NFD)
+/** Texto sin tildes, mayúsculas ni signos (¿?¡!.), para comparar palabras clave. */
+private fun normalize(text: String): String =
+    Normalizer.normalize(text, Normalizer.Form.NFD)
         .replace(Regex("\\p{Mn}+"), "")          // quita tildes
         .uppercase(Locale.ROOT)
-        .replace(Regex("[^A-Z0-9 ]"), " ")        // quita signos (¿?¡!.)
+        .replace(Regex("[^A-Z0-9 ]"), " ")        // quita signos
         .replace(Regex("\\s+"), " ")
         .trim()
-    return normalized in KEYWORDS
-}
 
-/** ¿El remitente está autorizado? Por ahora: cualquier contacto favorito (★). */
+/** ¿El texto del SMS es una de las palabras clave que ha configurado el cuidador? */
+fun isLocateRequest(context: Context, body: String): Boolean =
+    normalize(body) in CaregiverSettings(context).keywords.map(::normalize)
+
+/** ¿El remitente puede pedir la ubicación? (Por defecto, cualquier favorito.) */
 suspend fun isAuthorizedSender(context: Context, sender: String): Boolean =
-    loadFavoriteContacts(context).any { samePhoneNumber(context, it.phone, sender) }
+    locateContacts(context).any { samePhoneNumber(context, it.phone, sender) }
 
 /**
  * Compara números aunque uno lleve prefijo (+34) y el otro no. Además de la

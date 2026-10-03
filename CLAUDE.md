@@ -24,7 +24,7 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 | WhatsApp | No hay API oficial. Buscar en `ContactsContract.Data` las filas con mimetype `vnd.android.cursor.item/vnd.com.whatsapp.video.call` (vídeo; la de voz, `...voip.call`, no se usa), y lanzar `ACTION_VIEW` sobre `content://com.android.contacts/data/<id>` con el paquete `com.whatsapp`. El contacto debe estar guardado en la agenda y tener WhatsApp. |
 | SOS | Mantener pulsado 2 s (con un anillo de progreso). Llama **en el acto** al contacto de confianza y, en paralelo, `SosService` (servicio en primer plano de tipo location) le envía un SMS con un enlace de Google Maps y luego **3 actualizaciones cada 10 min** (30 min en total). Después se para solo; no hay palabra clave para pararlo. No se usa WhatsApp: no tiene API para enviar mensajes ni para compartir la ubicación en tiempo real (descartado, 2026-10-03). Android **no permite** que una app de terceros llame directamente al 112 (solo abre el marcador con el número, y hace falta un toque más). |
 | Localización bajo demanda | Un móvil autorizado envía un **SMS con palabra clave**. El launcher (con `RECEIVE_SMS`) comprueba el remitente, obtiene una posición GPS puntual y responde por SMS con un enlace de Google Maps. Sin servidor. Más adelante, quizá una app acompañante con Firebase. |
-| Configuración | Pantalla oculta para el cuidador, protegida con PIN, donde se añaden contactos y fotos. |
+| Configuración | Acceso oculto: **mantener pulsado el reloj 5 s** → PIN de 4 cifras (la primera vez se crea, dos veces) → pantalla del cuidador. Los contactos y las fotos se gestionan en la app Contactos del sistema (favoritos ★), que se abre desde ahí pausando el quiosco. |
 
 ## Plan por pasos (estado)
 
@@ -34,7 +34,7 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 4. ✅ Videollamadas de WhatsApp (solo vídeo, sin voz) (probado en el emulador con un WhatsApp falso; falta probarlo con el real en el A16).
 5. ✅ Localización bajo demanda por SMS (probado en el emulador, también con la pantalla apagada).
 6. ⏳ Modo quiosco + arranque automático: ✅ en el emulador; falta el A16.
-7. ⬜ Pantalla de configuración del cuidador con PIN.
+7. ✅ Pantalla de configuración del cuidador con PIN (probado en el emulador).
 
 ## Estado del código
 
@@ -46,7 +46,7 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 - `contacts/Contacts.kt`: `loadFavoriteContacts` (un número por contacto, el principal si lo hay) y `loadContactPhoto`.
 - `ui/DialpadScreen.kt`: teclado 1‑9/0, borrar (pulsación larga = todo) y llamar (mínimo 3 cifras: con menos, Android lo trata como USSD).
 - `ui/SosButton.kt`: pulsación larga de 2 s con anillo. `sos/SosService.kt`: secuencia de SMS (`UPDATES = 3`, `INTERVAL_MS = 10 min`). `sos/Location.kt`: posición puntual (GPS 20 s → red → última conocida). `sos/Sms.kt`: `sendSms` multiparte.
-- Contacto SOS provisional: el **primer favorito por orden alfabético** (en las pruebas, Juan). Si no hay ninguno, abre el marcador con el 112. Se podrá elegir en el paso 7.
+- Contacto SOS: el elegido en la configuración del cuidador o, si no hay ninguno elegido, el **primer favorito por orden alfabético**. Si no hay favoritos, abre el marcador con el 112.
 - Permisos: contactos, llamada, SMS, **`READ_PHONE_STATE`** (en Android reciente `sendMultipartTextMessage` lanza `SecurityException: getGroupIdLevel1` sin él), ubicación y notificaciones.
 - Probar el SOS rápido (solo en debug): `adb shell am start -S -n com.launcherfacil.app/.MainActivity --ei debug_interval_seconds 15`, mantener pulsado SOS y consultar `adb shell content query --uri content://sms/sent`. Mover la ubicación: `adb emu geo fix <lon> <lat>`.
 - `ui/WhatsAppScreen.kt`: favoritos (★) que tienen WhatsApp. **WhatsApp solo se usa para videollamadas** (decisión del 2026-10-03): tocar la foto inicia la videollamada; una cámara en la esquina lo indica. Las llamadas de voz van por teléfono normal. Si WhatsApp no está instalado, o ningún favorito lo tiene, se muestra un mensaje para el cuidador. `contacts/WhatsApp.kt`: consulta de `ContactsContract.Data` y apertura con `ACTION_VIEW` + `setPackage("com.whatsapp")`. El manifiesto declara `<queries>` para `com.whatsapp`. No se admite WhatsApp Business (`com.whatsapp.w4b`).
@@ -61,9 +61,17 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
   - `setKeyguardDisabled(true)`: sin pantalla de bloqueo al encender (solo funciona si el móvil no tiene PIN, patrón ni contraseña; la salida de emergencia lo reactiva);
   - concede todos los permisos de la app (incluida `ACCESS_BACKGROUND_LOCATION`) y CAMERA, RECORD_AUDIO y READ_CONTACTS a WhatsApp, porque los diálogos de permisos no pueden abrirse dentro del quiosco.
   `Kiosk.enterLockTask()` se llama en `onResume`. MainActivity es `singleTask` con HOME/DEFAULT además de LAUNCHER.
-- **Salida de emergencia (solo en debug)**: `adb shell am broadcast -a com.launcherfacil.app.DEBUG_EXIT_KIOSK -p com.launcherfacil.app` → sale del Lock Task, borra el HOME persistente y deja de ser Device Owner (`src/debug/.../DebugExitKioskReceiver.kt`, protegido con el permiso DUMP). **Sin esto, un Device Owner solo se quita con un restablecimiento de fábrica.** En release habrá que dar una salida desde la pantalla del cuidador (paso 7).
+- **Salida de emergencia (solo en debug)**: `adb shell am broadcast -a com.launcherfacil.app.DEBUG_EXIT_KIOSK -p com.launcherfacil.app` → sale del Lock Task, borra el HOME persistente y deja de ser Device Owner (`src/debug/.../DebugExitKioskReceiver.kt`, protegido con el permiso DUMP; llama a `Kiosk.disable`). Sirve por si se olvida el PIN. En release, la salida es el botón "Desactivar el modo quiosco" de la configuración del cuidador. **Sin una de las dos, un Device Owner solo se quita con un restablecimiento de fábrica.**
 - Probado en el emulador (2026-10-03): Inicio, Recientes y Ajustes bloqueados; llamadas, SOS, teclado y WhatsApp (falso) funcionan dentro del quiosco; tras reiniciar arranca solo y bloqueado; la petición de ubicación por SMS funciona con la pantalla apagada y sin `pm grant`.
 - Durante las pruebas con adb conviene `adb shell svc power stayon true`; si la pantalla se apaga, los `input tap` no hacen nada.
+- **Configuración del cuidador** (paso 7):
+  - `config/CaregiverSettings.kt` (SharedPreferences "caregiver"): PIN guardado como SHA-256 con sal (nunca en claro); `sosContactId` (null = primer favorito); `locateContactIds` (null = todos los favoritos); `keywords` (por defecto UBICACION y DONDE ESTAS). Funciones `resolveSosContact()` y `locateContacts()`, usadas por el SOS y por `locate/`.
+  - `HomeScreen`: mantener pulsado el reloj 5 s (`Modifier.holdFor`, sin respuesta visual, solo vibración) → `Screen.Pin` (o `Screen.NewPin` si aún no hay PIN).
+  - `ui/PinScreen.kt`: teclado reutilizado de `DialpadScreen` (`KeyRow`, `DigitKey` y `KeyBox` son `internal`); en modo creación pide el PIN dos veces.
+  - `ui/SettingsScreen.kt` (Material3 oscuro, con texto): contacto SOS (radio), quién puede pedir la ubicación (casillas), palabras clave (separadas por comas), cambiar el PIN, "Abrir Contactos" y "Abrir Ajustes de Android" (`Kiosk.pauseAndOpen`: sale del Lock Task, que vuelve en el siguiente `onResume` al regresar al launcher) y "Desactivar el modo quiosco" (con confirmación → `Kiosk.disable`).
+  - Al apagar la pantalla (`ACTION_SCREEN_OFF`), el PIN y la configuración se cierran y se vuelve a Home.
+  - `AdminReceiver.onEnabled`: al hacer `dpm set-device-owner` aplica el quiosco y abre el launcher, que se bloquea sin reiniciar nada.
+  - **PIN de pruebas en el emulador: 1234.** En el emulador, el SOS está asignado a María y Juan no puede pedir la ubicación.
 - `ui/ContactPhoto.kt`: `ContactPhoto` (foto + nombre) y `CaregiverMessage`, compartidos por las pantallas de Contactos y WhatsApp.
 - Módulo **`whatsapp-stub/`**: WhatsApp falso (paquete `com.whatsapp`) **solo para el emulador**; muestra qué intent recibe. Solo se incluye en el build con `-PwithWhatsAppStub`: `gradlew -PwithWhatsAppStub :whatsapp-stub:installDebug`. Un `installDebug` normal no lo instala. **Nunca en un móvil con el WhatsApp real** (chocaría con el paquete). En el emulador, María y Lucía tienen filas de WhatsApp de prueba; Juan no.
 - `ui/Common.kt`: `BigTile`, `TileIcon` y `HomeBar` (barra con una casa para volver). `Calls.kt`: `placeCall` (`ACTION_CALL`).
@@ -94,10 +102,10 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 
 ## Siguiente paso al retomar
 
-Paso 7: pantalla de configuración del cuidador con PIN (elegir el contacto SOS y los autorizados para pedir la ubicación, la palabra clave, y salir del quiosco).
+Los 7 pasos están hechos en el emulador. Lo siguiente es probarlo todo en el **Samsung A16** cuando llegue:
+1. Opciones de desarrollador + depuración USB + Samsung USB Driver.
+2. Instalar WhatsApp y comprobar que añade sus filas a la agenda; marcar los favoritos (★) con foto.
+3. Quitar las cuentas de Google/Samsung (o restablecer el móvil sin añadir ninguna), dejarlo **sin PIN de bloqueo**, `gradlew installDebug` y `adb shell dpm set-device-owner com.launcherfacil.app/.kiosk.AdminReceiver`.
+4. Probar: llamadas, teclado, videollamadas de WhatsApp (el real), SOS (que cada ubicación del SMS sea nueva), petición de ubicación con la pantalla apagada, reinicio, y los paquetes de llamada de Samsung dentro del quiosco.
 
-Pendiente de probar en el A16:
-- el modo quiosco: quitar las cuentas de Google/Samsung o restablecerlo, `dpm set-device-owner`, y comprobar los paquetes de llamada de Samsung;
-- los SMS del SOS (que cada ubicación sea nueva);
-- las videollamadas con el WhatsApp real;
-- la petición de ubicación con la pantalla apagada.
+Ideas pendientes (sin decidir): bloquear el PIN tras varios intentos fallidos, una versión release firmada, y la app acompañante con Firebase.

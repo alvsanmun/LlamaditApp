@@ -25,7 +25,7 @@ class SmsReceiver : BroadcastReceiver() {
         val sender = messages.firstOrNull()?.originatingAddress ?: return
         // Un SMS largo llega en varias partes.
         val body = messages.joinToString("") { it.messageBody.orEmpty() }
-        if (!isLocateRequest(body)) return
+        if (!isLocateRequest(context, body)) return
 
         val result = goAsync()
         CoroutineScope(Dispatchers.Main).launch {

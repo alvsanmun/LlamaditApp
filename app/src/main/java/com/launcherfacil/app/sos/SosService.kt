@@ -10,7 +10,7 @@ import android.os.IBinder
 import android.util.Log
 import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
-import com.launcherfacil.app.contacts.loadFavoriteContacts
+import com.launcherfacil.app.config.resolveSosContact
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -63,7 +63,7 @@ class SosService : Service() {
 
         job?.cancel()
         job = scope.launch {
-            val contact = loadFavoriteContacts(this@SosService).firstOrNull()
+            val contact = resolveSosContact(this@SosService)
             if (contact == null) {
                 Log.w(TAG, "No hay contacto de confianza: no se envía SMS")
             } else {
