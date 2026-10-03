@@ -40,8 +40,8 @@ private const val MIN_DIGITS = 3
 private const val MAX_DIGITS = 15
 
 @Composable
-fun DialpadScreen(onCall: (String) -> Unit, onHome: () -> Unit) {
-    var number by rememberSaveable { mutableStateOf("") }
+fun DialpadScreen(onCall: (String) -> Unit, onHome: () -> Unit, initialNumber: String = "") {
+    var number by rememberSaveable(initialNumber) { mutableStateOf(initialNumber.take(MAX_DIGITS)) }
 
     Column(
         modifier = Modifier

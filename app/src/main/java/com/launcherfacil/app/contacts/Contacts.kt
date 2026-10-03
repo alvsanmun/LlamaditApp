@@ -3,6 +3,7 @@ package com.launcherfacil.app.contacts
 import android.content.ContentUris
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.provider.ContactsContract
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import androidx.compose.ui.graphics.ImageBitmap
@@ -52,3 +53,24 @@ suspend fun loadContactPhoto(context: Context, contactId: Long): ImageBitmap? =
         ContactsContract.Contacts.openContactPhotoInputStream(context.contentResolver, uri, true)
             ?.use { BitmapFactory.decodeStream(it)?.asImageBitmap() }
     }
+
+/** Busca en la agenda el contacto de un número (para la pantalla de llamada). */
+suspend fun findContactByNumber(context: Context, number: String): Contact? =
+    withContext(Dispatchers.IO) {
+        val uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number))
+        try {
+            context.contentResolver.query(
+                uri,
+                arrayOf(ContactsContract.PhoneLookup._ID, ContactsContract.PhoneLookup.DISPLAY_NAME),
+                null, null, null
+            )?.use { c ->
+                if (c.moveToFirst()) Contact(c.getLong(0), c.getString(1).orEmpty(), number) else null
+            }
+        } catch (e: SecurityException) {
+            null // Sin permiso de contactos: se mostrará solo el número.
+        }
+    }
+
+/** Busca un favorito por su nombre (WhatsApp muestra el nombre de la agenda). */
+suspend fun findFavoriteByName(context: Context, name: String): Contact? =
+    loadFavoriteContacts(context).firstOrNull { it.name.equals(name.trim(), ignoreCase = true) }

@@ -72,7 +72,18 @@ object Kiosk {
         //    (Solo funciona si el móvil no tiene PIN, patrón ni contraseña.)
         dpm.setKeyguardDisabled(admin, true)
 
-        // 5. Permisos concedidos sin preguntar (los diálogos no se pueden mostrar en el quiosco).
+        // 5. Ser la app de Teléfono: así las llamadas usan nuestra pantalla (foto grande y
+        //    botones enormes). Las notificaciones de llamada del sistema no se verían
+        //    dentro del quiosco. Desde Android 14 el Device Owner puede elegirla.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            try {
+                dpm.setDefaultDialerApplication(context.packageName)
+            } catch (e: Exception) {
+                Log.w(TAG, "No se pudo poner como app de Teléfono", e)
+            }
+        }
+
+        // 6. Permisos concedidos sin preguntar (los diálogos no se pueden mostrar en el quiosco).
         grant(context, context.packageName, APP_PERMISSIONS + BACKGROUND_LOCATION)
         grant(context, WHATSAPP_PACKAGE, WHATSAPP_PERMISSIONS)
     }

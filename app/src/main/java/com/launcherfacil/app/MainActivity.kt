@@ -30,6 +30,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.launcherfacil.app.config.CaregiverSettings
 import com.launcherfacil.app.config.resolveSosContact
@@ -58,7 +59,8 @@ class MainActivity : ComponentActivity() {
         // Solo para pruebas: `am start ... --ei debug_interval_seconds 15` acorta el
         // intervalo del SOS (el servicio lo ignora si la app no es depurable).
         val debugSosInterval = intent.getIntExtra(SosService.EXTRA_DEBUG_INTERVAL_SECONDS, 0)
-        setContent { LauncherApp(debugSosInterval, homeRequests) }
+        handleDial(intent)
+        setContent { LauncherApp(debugSosInterval, homeRequests, dialRequest) }
     }
 
     override fun onResume() {
@@ -69,20 +71,37 @@ class MainActivity : ComponentActivity() {
     // Pulsar Inicio (fuera del quiosco) con la app abierta: volver a la pantalla principal.
     private var homeRequests by mutableIntStateOf(0)
 
+    // Otra app (o el SOS sin contactos, con el 112) pide "marcar": abrir el teclado con
+    // el número escrito. Se usa un objeto nuevo cada vez para que Compose lo note.
+    private var dialRequest by mutableStateOf<DialRequest?>(null)
+
+    private fun handleDial(intent: Intent) {
+        if (intent.action != Intent.ACTION_DIAL) return
+        val number = intent.data?.schemeSpecificPart.orEmpty().filter { it.isDigit() || it == '+' }
+        dialRequest = DialRequest(number)
+    }
+
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         if (intent.hasCategory(Intent.CATEGORY_HOME)) homeRequests++
+        handleDial(intent)
         // Por si la app acaba de ser nombrada Device Owner estando ya abierta.
         Kiosk.enterLockTask(this)
     }
 }
+
+private class DialRequest(val number: String)
 
 private enum class Screen { Home, Contacts, WhatsApp, Dialpad, Pin, NewPin, Settings }
 
 private val PERMISSIONS = APP_PERMISSIONS.toTypedArray()
 
 @Composable
-private fun LauncherApp(debugSosInterval: Int = 0, homeRequests: Int = 0) {
+private fun LauncherApp(
+    debugSosInterval: Int = 0,
+    homeRequests: Int = 0,
+    dialRequest: DialRequest? = null
+) {
     val context = LocalContext.current
     fun granted(p: String) =
         ContextCompat.checkSelfPermission(context, p) == PackageManager.PERMISSION_GRANTED
@@ -128,6 +147,7 @@ private fun LauncherApp(debugSosInterval: Int = 0, homeRequests: Int = 0) {
 
     BackHandler(enabled = screen != Screen.Home) { screen = Screen.Home }
     LaunchedEffect(homeRequests) { screen = Screen.Home }
+    LaunchedEffect(dialRequest) { if (dialRequest != null) screen = Screen.Dialpad }
 
     // Configuración del cuidador: se cierra al apagar la pantalla.
     val settings = remember { CaregiverSettings(context) }
@@ -166,7 +186,8 @@ private fun LauncherApp(debugSosInterval: Int = 0, homeRequests: Int = 0) {
         )
         Screen.Dialpad -> DialpadScreen(
             onCall = ::call,
-            onHome = { screen = Screen.Home }
+            onHome = { screen = Screen.Home },
+            initialNumber = dialRequest?.number.orEmpty()
         )
         Screen.Pin, Screen.NewPin -> key(screen) {
             PinScreen(
@@ -189,6 +210,12 @@ private fun LauncherApp(debugSosInterval: Int = 0, homeRequests: Int = 0) {
             },
             onOpenAndroidSettings = {
                 if (!Kiosk.pauseAndOpen(activity, Intent(Settings.ACTION_SETTINGS))) openFailed(context)
+            },
+            whatsAppAccess = NotificationManagerCompat.getEnabledListenerPackages(context)
+                .contains(context.packageName),
+            onOpenNotificationAccess = {
+                val intent = Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
+                if (!Kiosk.pauseAndOpen(activity, intent)) openFailed(context)
             },
             onDisableKiosk = {
                 Kiosk.disable(context)

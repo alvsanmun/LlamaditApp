@@ -48,6 +48,8 @@ fun SettingsScreen(
     onChangePin: () -> Unit,
     onOpenContacts: () -> Unit,
     onOpenAndroidSettings: () -> Unit,
+    whatsAppAccess: Boolean,
+    onOpenNotificationAccess: () -> Unit,
     onDisableKiosk: () -> Unit,
     onHome: () -> Unit
 ) {
@@ -109,6 +111,13 @@ fun SettingsScreen(
                     supportingText = { Text("Separadas por comas. Da igual mayúsculas, tildes o signos.") },
                     modifier = Modifier.fillMaxWidth()
                 )
+
+                Section("Llamadas de WhatsApp")
+                Hint(
+                    if (whatsAppAccess) "Activado: las llamadas de WhatsApp se ven con la pantalla grande."
+                    else "Desactivado: hay que dar \"acceso a notificaciones\" a Launcher Fácil."
+                )
+                if (!whatsAppAccess) ActionButton("Activar acceso a notificaciones", onOpenNotificationAccess)
 
                 Section("Seguridad")
                 ActionButton("Cambiar el PIN", onChangePin)
