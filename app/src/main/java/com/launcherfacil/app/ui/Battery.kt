@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.sp
 
 data class BatteryState(val percent: Int, val charging: Boolean)
 
-private fun Intent.toBatteryState(): BatteryState {
+internal fun Intent.toBatteryState(): BatteryState {
     val level = getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
     val scale = getIntExtra(BatteryManager.EXTRA_SCALE, 100)
     val status = getIntExtra(BatteryManager.EXTRA_STATUS, -1)

@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import com.launcherfacil.app.sos.currentLocation
 import com.launcherfacil.app.sos.sendSms
+import com.launcherfacil.app.sos.withBattery
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,7 +43,7 @@ class SmsReceiver : BroadcastReceiver() {
                     // sea Device Owner, paso 6). Plan B: responder aquí con menos tiempo.
                     Log.w(TAG, "No se pudo arrancar LocateService; respuesta rápida", e)
                     val location = currentLocation(context, gpsTimeoutMs = 6_000)
-                    val text = locateReply(location)
+                    val text = withBattery(context, locateReply(location))
                     val sent = context.sendSms(sender, text)
                     Log.i(TAG, "Respuesta rápida enviada=$sent: $text")
                 }

@@ -9,6 +9,7 @@ import androidx.core.app.ServiceCompat
 import com.launcherfacil.app.sos.currentLocation
 import com.launcherfacil.app.sos.sendSms
 import com.launcherfacil.app.sos.startLocationForeground
+import com.launcherfacil.app.sos.withBattery
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -49,7 +50,7 @@ class LocateService : Service() {
         pending++
         scope.launch {
             val location = currentLocation(this@LocateService, gpsTimeoutMs)
-            val text = locateReply(location)
+            val text = withBattery(this@LocateService, locateReply(location))
             val sent = sendSms(replyTo, text)
             Log.i(TAG, "Respuesta a $replyTo enviada=$sent: $text")
             pending--

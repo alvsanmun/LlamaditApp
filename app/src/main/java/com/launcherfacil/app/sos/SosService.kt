@@ -70,7 +70,7 @@ class SosService : Service() {
                 for (i in 0..updates) {
                     if (i > 0) delay(intervalMs)
                     val location = currentLocation(this@SosService)
-                    val text = message(location, i, updates)
+                    val text = withBattery(this@SosService, message(location, i, updates))
                     val sent = sendSms(contact.phone, text)
                     Log.i(TAG, "SMS ${i + 1}/${updates + 1} enviado=$sent: $text")
                 }
