@@ -147,6 +147,9 @@ object Kiosk {
         if (!isDeviceOwner(activity)) return
         val am = activity.getSystemService(ActivityManager::class.java)
         if (am.lockTaskModeState != ActivityManager.LOCK_TASK_MODE_NONE) return
+        // Recién nombrada Device Owner con la app ya abierta (en Samsung no se puede
+        // forzar su cierre para que pase por onCreate): aplicar el quiosco ahora.
+        if (!activity.dpm().isLockTaskPermitted(activity.packageName)) configure(activity)
         if (!activity.dpm().isLockTaskPermitted(activity.packageName)) return
         activity.startLockTask()
     }

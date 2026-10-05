@@ -11,7 +11,7 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 5. Pantalla principal con los botones anteriores, el **reloj en grande** y el **estado de la batería en grande**.
 6. **Modo quiosco**: la persona no puede salir del launcher y el móvil siempre arranca con él.
 7. **Localización bajo demanda**: otro móvil puede ver dónde está el teléfono, pero solo cuando lo pide. Nada de seguimiento continuo.
-8. Dispositivo físico de pruebas: **Samsung Galaxy A16** (aún no disponible el 2026-10-02).
+8. Dispositivo físico de pruebas: **Samsung Galaxy A16** (SM-A165F, Android 16 / API 36, One UI 8.5; serie adb `R5GL52BCW4N`). Llegó el 2026-10-05, **todavía sin SIM**.
 
 ## Decisiones técnicas acordadas
 
@@ -35,7 +35,7 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 3. ✅ Llamadas: **3a** contactos con foto y teclado numérico. **3b** SOS.
 4. ✅ Videollamadas de WhatsApp (solo vídeo, sin voz) (probado en el emulador con un WhatsApp falso; falta probarlo con el real en el A16).
 5. ✅ Localización bajo demanda por SMS (probado en el emulador, también con la pantalla apagada).
-6. ⏳ Modo quiosco + arranque automático: ✅ en el emulador; falta el A16.
+6. ✅ Modo quiosco + arranque automático: probado en el emulador y en el **A16** (2026-10-05).
 7. ✅ Pantalla de configuración del cuidador con PIN (probado en el emulador).
 
 ## Estado del código
@@ -109,17 +109,23 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
   - AVD en uso: `Medium_Phone_API_37.0` (lo creó Studio, imagen Google Play x86_64, API 37). No hay cmdline-tools instaladas, así que los AVD se crean desde Studio.
   - Arrancarlo desde la terminal (con PowerShell `Start-Process` queda independiente; las tareas en segundo plano de Claude se cortan a los 30 min): `%LOCALAPPDATA%\Android\Sdk\emulator\emulator.exe -avd Medium_Phone_API_37.0`
   - JDK 21 para Gradle: `%USERPROFILE%\.jdks\jbr-21.0.11`. Hay otro en `C:\Program Files\Android\openjdk\jdk-21.0.8`.
-- Samsung A16: activar las opciones de desarrollador (tocar 7 veces "Número de compilación") y la depuración USB, e instalar el Samsung Android USB Driver en Windows.
+- **Samsung A16, lecciones de la puesta en marcha (2026-10-05):**
+  - Para activar la depuración USB hay que **desactivar el "Bloqueador automático"** (Ajustes → Seguridad y privacidad). Dejarlo desactivado mientras se desarrolle: si no, no se puede instalar por adb.
+  - La app Google Meet (`com.google.android.apps.tachyon`) crea sola una cuenta "Meet" que **impide `dpm set-device-owner`**. Se quitó con `adb shell pm uninstall --user 0 com.google.android.apps.tachyon` (se recupera con `pm install-existing com.google.android.apps.tachyon`).
+  - En Samsung, `DeviceAdminReceiver.onEnabled` llega **antes** de que la app sea Device Owner: `AdminReceiver` espera (hasta 9 s) a serlo antes de aplicar el quiosco. Además, `Kiosk.enterLockTask` aplica `configure()` si la app es Device Owner pero el Lock Task aún no está permitido.
+  - **Una app Device Owner no se puede forzar a cerrar** (`am force-stop` no hace nada). Para que vuelva a pasar por `onCreate`, reinstalarla (`installDebug`) o reiniciar el móvil.
+  - Con varios dispositivos conectados (emulador + A16), usar `ANDROID_SERIAL=R5GL52BCW4N` (o `adb -s`) para Gradle y adb.
+  - Los permisos de WhatsApp (cámara, micrófono, contactos) se conceden en `Kiosk.configure`, que corre al arrancar la app: **después de instalar WhatsApp, reiniciar el móvil** (o reinstalar el launcher) para que se apliquen.
 
 ## Siguiente paso al retomar
 
-Los 7 pasos están hechos en el emulador. Lo siguiente es probarlo todo en el **Samsung A16** cuando llegue:
-1. Opciones de desarrollador + depuración USB + Samsung USB Driver.
-2. Instalar WhatsApp y comprobar que añade sus filas a la agenda; marcar los favoritos (★) con foto.
-3. Quitar las cuentas de Google/Samsung (o restablecer el móvil sin añadir ninguna), dejarlo **sin PIN de bloqueo**, `gradlew installDebug` y `adb shell dpm set-device-owner com.launcherfacil.app/.kiosk.AdminReceiver`.
-4. Comprobar que la app es la de Teléfono (`cmd role get-role-holders android.app.role.DIALER`) y activar el acceso a notificaciones (comando de arriba).
-5. Probar: llamadas salientes y entrantes con nuestra pantalla (pantalla encendida y apagada, auricular, altavoz y sensor de proximidad), teclado, SOS (que cada ubicación del SMS sea nueva), petición de ubicación con la pantalla apagada y reinicio.
-6. **Prueba de WhatsApp**, desde el móvil de un cuidador:
+Estado del A16 (2026-10-05): launcher instalado, **Device Owner activo**, quiosco probado (Inicio, Recientes y Ajustes bloqueados; sin pantalla de bloqueo; tras reiniciar arranca bloqueado), app de Teléfono = la nuestra, ubicación "siempre" concedida. Sin cuentas. **Sin SIM** y sin WhatsApp.
+
+Pendiente en el A16:
+1. **Favoritos con foto**: en la configuración del cuidador (reloj 5 s → PIN) → "Abrir Contactos" → crear los contactos reales, marcarlos con ★ y ponerles foto. Se puede hacer ya, sin SIM.
+2. **Cuando llegue la SIM**: probar llamadas salientes y entrantes con nuestra pantalla (pantalla encendida y apagada, auricular, altavoz y sensor de proximidad), teclado, SOS (que cada ubicación del SMS sea nueva) y la petición de ubicación con la pantalla apagada.
+3. **WhatsApp** (necesita la SIM para verificar el número): configuración del cuidador → "Abrir Ajustes de Android" → Cuentas → añadir la cuenta de Google (ya se puede, el Device Owner está activo) → instalar WhatsApp desde Play Store (con el quiosco pausado; si hace falta, `adb shell am start -a android.intent.action.VIEW -d market://details?id=com.whatsapp`) → verificar el número → **reiniciar el móvil** para que el quiosco le conceda cámara, micrófono y contactos → activar el acceso a notificaciones (`adb shell cmd notification allow_listener com.launcherfacil.app/com.launcherfacil.app.whatsapp.WhatsAppCallListener`).
+4. **Prueba de WhatsApp**, desde el móvil de un cuidador:
    - Videollamada saliente: tocar la foto en la pantalla de WhatsApp.
    - Videollamada entrante con la pantalla **encendida** y con la pantalla **apagada**: debe salir nuestra pantalla (foto grande, rojo y verde). Probar contestar y rechazar, y que se cierre sola si el cuidador cuelga antes.
    - Llamada de voz entrante de WhatsApp: también debe salir nuestra pantalla (sin la cámara).
@@ -128,4 +134,4 @@ Los 7 pasos están hechos en el emulador. Lo siguiente es probarlo todo en el **
 
 Puesta en marcha en los móviles de los cuidadores (sin app; vale para iPhone y Android): guardar el número del A16 como contacto y hacer que sus llamadas y SMS suenen aunque el móvil esté en silencio. En iPhone: Contacto → Tono y Tono de mensaje → activar **"Saltar silencio"** (Emergency Bypass). En Android: marcarlo como favorito, permitirlo como excepción en "No molestar" y ponerle un tono distinto.
 
-Ideas pendientes (sin decidir): bloquear el PIN tras varios intentos fallidos, una versión release firmada, rechazar o filtrar las llamadas de números desconocidos (estafas a personas mayores), y que el SOS sin favoritos llame al 112 directamente (como app de Teléfono, Android lo permite).
+Ideas aparcadas por decisión del usuario (2026-10-05): bloquear el PIN tras varios intentos fallidos, versión release firmada, filtrar llamadas de números desconocidos y SOS al 112 directo.
