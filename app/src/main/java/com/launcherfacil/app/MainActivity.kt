@@ -9,6 +9,8 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
+import android.provider.CallLog
+import android.provider.Telephony
 import android.provider.Settings
 import android.widget.Toast
 import android.view.KeyEvent
@@ -26,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -36,11 +39,16 @@ import androidx.core.content.ContextCompat
 import com.launcherfacil.app.config.CaregiverSettings
 import com.launcherfacil.app.config.resolveSosContact
 import com.launcherfacil.app.contacts.whatsAppVideoCall
+import com.launcherfacil.app.inbox.countNewMissedCalls
+import com.launcherfacil.app.inbox.countNewSms
+import com.launcherfacil.app.inbox.rememberContentVersion
 import com.launcherfacil.app.kiosk.Kiosk
 import com.launcherfacil.app.sos.SosService
 import com.launcherfacil.app.ui.ContactsScreen
 import com.launcherfacil.app.ui.DialpadScreen
 import com.launcherfacil.app.ui.HomeScreen
+import com.launcherfacil.app.ui.MessagesScreen
+import com.launcherfacil.app.ui.MissedCallsScreen
 import com.launcherfacil.app.ui.PinScreen
 import com.launcherfacil.app.ui.SettingsScreen
 import com.launcherfacil.app.ui.WhatsAppScreen
@@ -100,7 +108,7 @@ class MainActivity : ComponentActivity() {
 
 private class DialRequest(val number: String)
 
-private enum class Screen { Home, Contacts, WhatsApp, Dialpad, Pin, NewPin, Settings }
+private enum class Screen { Home, Contacts, WhatsApp, Dialpad, Messages, MissedCalls, Pin, NewPin, Settings }
 
 private val PERMISSIONS = APP_PERMISSIONS.toTypedArray()
 
@@ -170,13 +178,28 @@ private fun LauncherApp(
     }
     val activity = context as Activity
 
+    // Números de los botones de mensajes y llamadas perdidas: se recalculan al llegar
+    // un SMS o una llamada y al volver a la pantalla principal.
+    val inboxVersion = rememberContentVersion(Telephony.Sms.CONTENT_URI, CallLog.Calls.CONTENT_URI)
+    val newSms by produceState(0, inboxVersion, screen) { value = countNewSms(context) }
+    val newMissedCalls by produceState(0, inboxVersion, screen) { value = countNewMissedCalls(context) }
+
     when (screen) {
         Screen.Home -> HomeScreen(
             onCall = { screen = Screen.Contacts },
             onWhatsApp = { screen = Screen.WhatsApp },
             onDialpad = { screen = Screen.Dialpad },
             onSos = ::sos,
-            onCaregiver = { screen = if (settings.hasPin) Screen.Pin else Screen.NewPin }
+            onCaregiver = { screen = if (settings.hasPin) Screen.Pin else Screen.NewPin },
+            onMessages = { screen = Screen.Messages },
+            onMissedCalls = { screen = Screen.MissedCalls },
+            newSms = newSms,
+            newMissedCalls = newMissedCalls
+        )
+        Screen.Messages -> MessagesScreen(onHome = { screen = Screen.Home })
+        Screen.MissedCalls -> MissedCallsScreen(
+            onCallBack = ::call,
+            onHome = { screen = Screen.Home }
         )
         Screen.Contacts -> ContactsScreen(
             hasPermission = canReadContacts,

@@ -10,6 +10,10 @@ val APP_PERMISSIONS: List<String> = buildList {
     add(Manifest.permission.SEND_SMS)
     add(Manifest.permission.RECEIVE_SMS)
     add(Manifest.permission.READ_PHONE_STATE)
+    // Botones de mensajes y llamadas perdidas.
+    add(Manifest.permission.READ_SMS)
+    add(Manifest.permission.READ_CALL_LOG)
+    add(Manifest.permission.WRITE_CALL_LOG)
     add(Manifest.permission.ACCESS_FINE_LOCATION)
     add(Manifest.permission.ACCESS_COARSE_LOCATION)
     // Para que se vea la notificación de "SOS activo".
