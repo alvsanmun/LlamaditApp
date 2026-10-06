@@ -40,6 +40,66 @@ object Kiosk {
         "com.samsung.android.incallui",
     )
 
+    /**
+     * Apps del móvil que no se usan: se ocultan (no se ejecutan, no gastan batería ni
+     * datos y no se ven), pero no se borran; [disable] las vuelve a mostrar. Lista
+     * aprobada por el usuario el 2026-10-06 para el Samsung A16. Se mantienen, entre
+     * otras: Contactos, Cámara, Galería, Google Mensajes (la app de SMS), Play Store,
+     * Google Play Services, el teléfono de Samsung y "Encontrar mi móvil".
+     */
+    private val HIDDEN_PACKAGES = listOf(
+        // Navegador, mapas, vídeo y fotos de Google.
+        "com.android.chrome",
+        "com.sec.android.app.chromecustomizations",
+        "com.google.android.apps.maps",
+        "com.samsung.android.mapsagent",
+        "com.samsung.android.tvplus",
+        "com.google.android.apps.photos",
+        // Facebook preinstalado (servicios en segundo plano).
+        "com.facebook.appmanager",
+        "com.facebook.services",
+        "com.facebook.system",
+        // Extras de Samsung.
+        "com.samsung.android.calendar",
+        "com.samsung.android.app.reminder",
+        "com.sec.android.app.clockpackage",
+        "com.sec.android.app.myfiles",
+        "com.sec.android.app.kidshome",
+        "com.samsung.android.app.routines",
+        "com.samsung.android.forest",
+        "com.samsung.android.game.gametools",
+        "com.samsung.android.game.gos",
+        "com.samsung.android.app.sharelive",
+        "com.sec.android.easyMover",
+        "com.sec.android.easyMover.Agent",
+        "com.samsung.android.smartswitchassistant",
+        "com.samsung.android.mdx.kit",
+        "com.samsung.android.aremoji",
+        "com.samsung.android.app.dressroom",
+        "com.samsung.android.themestore",
+        "com.samsung.android.wallpaper.live",
+        "com.android.wallpaper.livepicker",
+        "com.samsung.android.stickercenter",
+        "com.samsung.android.app.taskedge",
+        "com.samsung.android.app.clipboardedge",
+        "com.samsung.android.service.peoplestripe",
+        "com.samsung.android.dynamiclock",
+        "com.samsung.android.samsungpass",
+        "com.samsung.android.samsungpassautofill",
+        "com.samsung.android.scloud",
+        "com.samsung.android.callassistant",
+        "com.samsung.android.app.watchmanagerstub",
+        "com.samsung.android.beaconmanager",
+        // Samsung Mensajes: la app de SMS predeterminada es Google Mensajes.
+        "com.samsung.android.messaging",
+        // Extras de Google.
+        "com.google.android.projection.gearhead",
+        "com.google.android.gms.location.history",
+        "com.google.android.printservice.recommendation",
+        "com.google.android.feedback",
+        "com.google.android.apps.accessibility.voiceaccess",
+    )
+
     private fun Context.dpm() = getSystemService(DevicePolicyManager::class.java)
 
     fun isDeviceOwner(context: Context): Boolean =
@@ -105,6 +165,23 @@ object Kiosk {
 
         // 8. Bluetooth desactivado: no se usa y gasta batería.
         dpm.addUserRestriction(admin, UserManager.DISALLOW_BLUETOOTH)
+
+        // 9. Apps innecesarias ocultas (no se ejecutan ni gastan batería).
+        setHidden(context, true)
+    }
+
+    private fun setHidden(context: Context, hidden: Boolean) {
+        val dpm = context.dpm()
+        val admin = AdminReceiver.component(context)
+        var count = 0
+        for (pkg in HIDDEN_PACKAGES) {
+            try {
+                if (dpm.setApplicationHidden(admin, pkg, hidden)) count++
+            } catch (e: Exception) {
+                Log.w(TAG, "No se pudo ${if (hidden) "ocultar" else "mostrar"} $pkg", e)
+            }
+        }
+        Log.i(TAG, "${if (hidden) "Ocultas" else "Visibles de nuevo"}: $count de ${HIDDEN_PACKAGES.size} apps")
     }
 
     private fun grant(context: Context, pkg: String, permissions: List<String>) {
@@ -157,6 +234,7 @@ object Kiosk {
         dpm.setKeyguardDisabled(admin, false)
         dpm.setSystemUpdatePolicy(admin, null)
         dpm.clearUserRestriction(admin, UserManager.DISALLOW_BLUETOOTH)
+        setHidden(context, false)
         // Obsoleto, pero sigue siendo la única forma de que la app deje de ser Device Owner.
         @Suppress("DEPRECATION")
         dpm.clearDeviceOwnerApp(context.packageName)
