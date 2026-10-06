@@ -18,6 +18,7 @@ import com.launcherfacil.app.APP_PERMISSIONS
 import com.launcherfacil.app.BACKGROUND_LOCATION
 import com.launcherfacil.app.MainActivity
 import com.launcherfacil.app.WHATSAPP_PERMISSIONS
+import com.launcherfacil.app.config.CaregiverSettings
 import com.launcherfacil.app.contacts.WHATSAPP_PACKAGE
 
 /**
@@ -172,8 +173,9 @@ object Kiosk {
         for (restriction in NETWORK_RESTRICTIONS) dpm.addUserRestriction(admin, restriction)
         setWifiEnabled(context, false)
 
-        // 10. Apps innecesarias ocultas (no se ejecutan ni gastan batería).
-        setHidden(context, true)
+        // 10. Apps innecesarias ocultas (no se ejecutan ni gastan batería), salvo con el
+        //     quiosco en pausa.
+        setHidden(context, !isPaused(context))
     }
 
     /** Restricciones de red: sin Wi-Fi (solo 4G) y sin modo avión. */
@@ -265,9 +267,31 @@ object Kiosk {
         Log.w(TAG, "Modo quiosco desactivado y Device Owner eliminado")
     }
 
-    /** Entra en Lock Task si es Device Owner y aún no está dentro. */
+    fun isPaused(context: Context): Boolean = CaregiverSettings(context).kioskPaused
+
+    /**
+     * Pausa el quiosco SIN dejar de ser Device Owner: se quita el bloqueo y vuelven a
+     * verse las apps ocultas, también tras reiniciar, hasta que se llame a [resume].
+     * Se mantienen la app de Teléfono, los permisos, el Wi-Fi apagado, etc.
+     */
+    fun pause(activity: Activity) {
+        CaregiverSettings(activity).kioskPaused = true
+        if (isLocked(activity)) activity.stopLockTask()
+        if (isDeviceOwner(activity)) setHidden(activity, false)
+        Log.i(TAG, "Modo quiosco en pausa")
+    }
+
+    /** Vuelve a activar el quiosco tras [pause]. */
+    fun resume(activity: Activity) {
+        CaregiverSettings(activity).kioskPaused = false
+        configure(activity)
+        enterLockTask(activity)
+        Log.i(TAG, "Modo quiosco activo de nuevo")
+    }
+
+    /** Entra en Lock Task si es Device Owner, no está en pausa y aún no está dentro. */
     fun enterLockTask(activity: Activity) {
-        if (!isDeviceOwner(activity)) return
+        if (!isDeviceOwner(activity) || isPaused(activity)) return
         val am = activity.getSystemService(ActivityManager::class.java)
         if (am.lockTaskModeState != ActivityManager.LOCK_TASK_MODE_NONE) return
         // Recién nombrada Device Owner con la app ya abierta (en Samsung no se puede

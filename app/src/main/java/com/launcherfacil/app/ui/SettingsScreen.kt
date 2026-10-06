@@ -50,6 +50,9 @@ fun SettingsScreen(
     onOpenAndroidSettings: () -> Unit,
     whatsAppAccess: Boolean,
     onOpenNotificationAccess: () -> Unit,
+    kioskPaused: Boolean,
+    onPauseKiosk: () -> Unit,
+    onResumeKiosk: () -> Unit,
     onDisableKiosk: () -> Unit,
     onHome: () -> Unit
 ) {
@@ -124,15 +127,27 @@ fun SettingsScreen(
 
                 Section("Otras apps")
                 Hint(
-                    if (isDeviceOwner) "Se sale del modo quiosco hasta volver a esta app."
-                    else "La app no es Device Owner: el modo quiosco no está activo."
+                    when {
+                        !isDeviceOwner -> "La app no es Device Owner: el modo quiosco no está activo."
+                        kioskPaused -> "El modo quiosco está en pausa."
+                        else -> "Se sale del modo quiosco hasta volver a esta app."
+                    }
                 )
                 ActionButton("Abrir Contactos (favoritos y fotos)", onOpenContacts)
                 ActionButton("Abrir Ajustes de Android", onOpenAndroidSettings)
 
                 if (isDeviceOwner) {
                     Section("Modo quiosco")
-                    ActionButton("Desactivar el modo quiosco", { confirmDisable = true }, danger = true)
+                    if (kioskPaused) {
+                        Hint("En pausa: el móvil se usa con normalidad (también tras reiniciar). Actívalo al terminar.")
+                        ActionButton("Activar el modo quiosco", onResumeKiosk, color = VerdeLlamar)
+                    } else {
+                        Hint("Activo. Pausarlo permite instalar o configurar cosas; se vuelve a activar aquí, sin ordenador.")
+                        ActionButton("Pausar el modo quiosco", onPauseKiosk)
+                    }
+                    Spacer(Modifier.height(16.dp))
+                    Hint("Solo para desinstalar el launcher o entregar el móvil:")
+                    ActionButton("Quitar el Device Owner", { confirmDisable = true }, color = RojoSos)
                 }
                 Spacer(Modifier.height(24.dp))
             }
@@ -141,19 +156,20 @@ fun SettingsScreen(
         if (confirmDisable) {
             AlertDialog(
                 onDismissRequest = { confirmDisable = false },
-                title = { Text("¿Desactivar el modo quiosco?") },
+                title = { Text("¿Quitar el Device Owner?") },
                 text = {
                     Text(
-                        "La persona podrá salir del launcher y usar todo el teléfono. " +
-                            "Para volver a activarlo hace falta un ordenador (adb) y que el " +
-                            "teléfono no tenga cuentas de Google ni de Samsung."
+                        "Se desactiva el modo quiosco para siempre. Para volver a activarlo " +
+                            "hace falta un ordenador (adb) y quitar antes todas las cuentas del " +
+                            "teléfono (Google, WhatsApp...). Si solo quieres instalar o configurar " +
+                            "algo, usa \"Pausar el modo quiosco\"."
                     )
                 },
                 confirmButton = {
                     TextButton(onClick = {
                         confirmDisable = false
                         onDisableKiosk()
-                    }) { Text("Desactivar") }
+                    }) { Text("Quitar") }
                 },
                 dismissButton = {
                     TextButton(onClick = { confirmDisable = false }) { Text("Cancelar") }
@@ -195,11 +211,11 @@ private fun OptionRow(
 }
 
 @Composable
-private fun ActionButton(text: String, onClick: () -> Unit, danger: Boolean = false) {
+private fun ActionButton(text: String, onClick: () -> Unit, color: Color = GrisBoton) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = if (danger) RojoSos else GrisBoton,
+            containerColor = color,
             contentColor = TextoClaro
         ),
         modifier = Modifier.fillMaxWidth().height(56.dp)

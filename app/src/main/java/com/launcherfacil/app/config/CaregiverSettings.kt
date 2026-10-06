@@ -20,6 +20,7 @@ class CaregiverSettings(context: Context) {
         private const val KEY_SOS_CONTACT = "sos_contact_id"
         private const val KEY_LOCATE_CONTACTS = "locate_contact_ids"
         private const val KEY_KEYWORDS = "keywords"
+        private const val KEY_KIOSK_PAUSED = "kiosk_paused"
     }
 
     private val prefs = context.applicationContext
@@ -70,6 +71,12 @@ class CaregiverSettings(context: Context) {
             if (value == null) remove(KEY_LOCATE_CONTACTS)
             else putStringSet(KEY_LOCATE_CONTACTS, value.map { it.toString() }.toSet())
         }
+
+    // --- Modo quiosco en pausa (el cuidador lo usa para instalar o configurar) ---
+
+    var kioskPaused: Boolean
+        get() = prefs.getBoolean(KEY_KIOSK_PAUSED, false)
+        set(value) = prefs.edit { putBoolean(KEY_KIOSK_PAUSED, value) }
 
     // --- Palabras clave para pedir la ubicación ---
 

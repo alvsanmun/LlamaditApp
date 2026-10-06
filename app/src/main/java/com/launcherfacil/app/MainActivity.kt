@@ -177,6 +177,7 @@ private fun LauncherApp(
         onDispose { context.unregisterReceiver(receiver) }
     }
     val activity = context as Activity
+    var kioskPaused by remember { mutableStateOf(Kiosk.isPaused(context)) }
 
     // Números de los botones de mensajes y llamadas perdidas: se recalculan al llegar
     // un SMS o una llamada y al volver a la pantalla principal.
@@ -247,6 +248,16 @@ private fun LauncherApp(
             onOpenNotificationAccess = {
                 val intent = Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
                 if (!Kiosk.pauseAndOpen(activity, intent)) openFailed(context)
+            },
+            kioskPaused = kioskPaused,
+            onPauseKiosk = {
+                Kiosk.pause(activity)
+                kioskPaused = true
+            },
+            onResumeKiosk = {
+                Kiosk.resume(activity)
+                kioskPaused = false
+                screen = Screen.Home
             },
             onDisableKiosk = {
                 Kiosk.disable(context)
