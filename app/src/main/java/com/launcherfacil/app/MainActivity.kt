@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.Toast
+import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.BackHandler
@@ -43,6 +44,8 @@ import com.launcherfacil.app.ui.HomeScreen
 import com.launcherfacil.app.ui.PinScreen
 import com.launcherfacil.app.ui.SettingsScreen
 import com.launcherfacil.app.ui.WhatsAppScreen
+import com.launcherfacil.app.volume.VolumeController
+import com.launcherfacil.app.volume.WithVolumeOverlay
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -60,8 +63,13 @@ class MainActivity : ComponentActivity() {
         // intervalo del SOS (el servicio lo ignora si la app no es depurable).
         val debugSosInterval = intent.getIntExtra(SosService.EXTRA_DEBUG_INTERVAL_SECONDS, 0)
         handleDial(intent)
-        setContent { LauncherApp(debugSosInterval, homeRequests, dialRequest) }
+        VolumeController.applySoundPolicy(this)
+        setContent { WithVolumeOverlay { LauncherApp(debugSosInterval, homeRequests, dialRequest) } }
     }
+
+    // Botones de volumen: solo el volumen del teléfono, con el panel grande.
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean =
+        VolumeController.onKeyEvent(this, event) || super.dispatchKeyEvent(event)
 
     override fun onResume() {
         super.onResume()

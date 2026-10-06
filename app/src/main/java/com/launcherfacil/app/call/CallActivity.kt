@@ -3,6 +3,7 @@ package com.launcherfacil.app.call
 import android.os.Bundle
 import android.os.PowerManager
 import android.telecom.Call
+import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
@@ -27,6 +28,8 @@ import com.launcherfacil.app.ui.GrisBoton
 import com.launcherfacil.app.ui.RojoSos
 import com.launcherfacil.app.ui.VerdeLlamar
 import com.launcherfacil.app.ui.formatDuration
+import com.launcherfacil.app.volume.VolumeController
+import com.launcherfacil.app.volume.WithVolumeOverlay
 import kotlinx.coroutines.delay
 
 /** Pantalla de llamada normal: entrante (descolgar/colgar) y en curso (colgar/altavoz). */
@@ -37,8 +40,12 @@ class CallActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setupCallWindow()
         super.onCreate(savedInstanceState)
-        setContent { CallRoute(onFinished = ::finish, onProximity = ::setProximity) }
+        setContent { WithVolumeOverlay { CallRoute(onFinished = ::finish, onProximity = ::setProximity) } }
     }
+
+    // Botones de volumen: solo el volumen del teléfono, con el panel grande.
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean =
+        VolumeController.onKeyEvent(this, event) || super.dispatchKeyEvent(event)
 
     /** Apaga la pantalla al acercar el móvil a la oreja (para no colgar con la mejilla). */
     private fun setProximity(enabled: Boolean) {

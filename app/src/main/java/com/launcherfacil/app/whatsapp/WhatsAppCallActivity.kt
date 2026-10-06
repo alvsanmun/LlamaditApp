@@ -1,6 +1,7 @@
 package com.launcherfacil.app.whatsapp
 
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
@@ -20,6 +21,8 @@ import com.launcherfacil.app.ui.CallButton
 import com.launcherfacil.app.ui.CallLayout
 import com.launcherfacil.app.ui.RojoSos
 import com.launcherfacil.app.ui.VerdeLlamar
+import com.launcherfacil.app.volume.VolumeController
+import com.launcherfacil.app.volume.WithVolumeOverlay
 
 /**
  * Llamada entrante de WhatsApp con nuestra pantalla. Al contestar, WhatsApp abre
@@ -29,8 +32,12 @@ class WhatsAppCallActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setupCallWindow()
         super.onCreate(savedInstanceState)
-        setContent { WhatsAppCallRoute(onFinished = ::finish) }
+        setContent { WithVolumeOverlay { WhatsAppCallRoute(onFinished = ::finish) } }
     }
+
+    // Botones de volumen: solo el volumen del teléfono, con el panel grande.
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean =
+        VolumeController.onKeyEvent(this, event) || super.dispatchKeyEvent(event)
 }
 
 @Composable
