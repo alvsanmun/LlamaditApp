@@ -8,8 +8,8 @@ import android.util.Log
 
 /**
  * Android nos entrega aquí todas las llamadas normales (entrantes y salientes)
- * porque somos la app de Teléfono predeterminada. Mostramos nuestra pantalla.
- * El tono de llamada lo sigue poniendo el sistema.
+ * porque somos la app de Teléfono predeterminada. Mostramos nuestra pantalla y
+ * ponemos nosotros el tono ([CallRinger]) y la vibración ([RingVibrator]).
  */
 class CallService : InCallService() {
 
@@ -32,6 +32,15 @@ class CallService : InCallService() {
     @Deprecated("Sustituido por onCallEndpointChanged en Android 14, pero sigue llamándose")
     override fun onCallAudioStateChanged(audioState: CallAudioState?) {
         CallManager.onAudioStateChanged(audioState)
+    }
+
+    /**
+     * Android lo pide al pulsar los botones de volumen (o el de encendido) mientras
+     * suena una llamada. A propósito NO se silencia: la persona podría perder la
+     * llamada sin darse cuenta.
+     */
+    override fun onSilenceRinger() {
+        Log.i("CallService", "Petición de silenciar el tono: se ignora")
     }
 
     override fun onDestroy() {

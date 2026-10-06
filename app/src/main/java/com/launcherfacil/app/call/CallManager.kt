@@ -63,7 +63,9 @@ object CallManager {
 
     private fun publish() {
         service?.let { svc ->
-            RingVibrator.update(svc, calls.any { it.stateCompat() == Call.STATE_RINGING })
+            val ringing = calls.any { it.stateCompat() == Call.STATE_RINGING }
+            CallRinger.update(svc, ringing)
+            RingVibrator.update(svc, ringing)
         }
         _call.value = current()?.let {
             CallInfo(
