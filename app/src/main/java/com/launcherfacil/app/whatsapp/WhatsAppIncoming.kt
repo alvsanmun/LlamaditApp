@@ -33,8 +33,18 @@ object WhatsAppIncoming {
     private val _call = MutableStateFlow<WhatsAppCall?>(null)
     val call: StateFlow<WhatsAppCall?> = _call
 
-    fun show(call: WhatsAppCall) {
+    /** Último momento en que se contestó o rechazó desde nuestra pantalla. */
+    private var handledAt = 0L
+
+    // Tras contestar, WhatsApp vuelve a publicar un instante la notificación de "entrante"
+    // (visto en el A16 el 2026-10-06): durante este tiempo se ignora.
+    private const val IGNORE_AFTER_HANDLED_MS = 5_000L
+
+    /** Muestra la llamada; devuelve false si se ignora (acaba de contestarse o rechazarse). */
+    fun show(call: WhatsAppCall): Boolean {
+        if (System.currentTimeMillis() - handledAt < IGNORE_AFTER_HANDLED_MS) return false
         _call.value = call
+        return true
     }
 
     fun clear(key: String? = null) {
@@ -51,6 +61,7 @@ object WhatsAppIncoming {
      */
     private fun send(context: Context, intent: PendingIntent?) {
         if (intent == null) return
+        handledAt = System.currentTimeMillis()
         val options = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             ActivityOptions.makeBasic()
                 .setPendingIntentBackgroundActivityStartMode(

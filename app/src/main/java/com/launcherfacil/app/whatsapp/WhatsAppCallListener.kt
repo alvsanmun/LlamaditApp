@@ -1,5 +1,6 @@
 package com.launcherfacil.app.whatsapp
 
+import android.app.Notification
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
@@ -35,9 +36,19 @@ class WhatsAppCallListener : NotificationListenerService() {
     private fun check(sbn: StatusBarNotification) {
         if (sbn.packageName != WHATSAPP_PACKAGE) return
         logWhatsAppNotification(sbn)
-        val call = parseWhatsAppCall(this, sbn) ?: return
+        val call = parseWhatsAppCall(this, sbn)
+        if (call == null) {
+            // Cualquier otra notificación de llamada (sobre todo "Videollamada en curso",
+            // tras contestar) significa que ya no está sonando: se cierra nuestra
+            // pantalla para que se vea la de WhatsApp.
+            if (sbn.notification.category == Notification.CATEGORY_CALL) WhatsAppIncoming.clear()
+            return
+        }
         Log.i(TAG, "Llamada entrante de WhatsApp: ${call.name} (vídeo=${call.isVideo})")
-        WhatsAppIncoming.show(call)
+        if (!WhatsAppIncoming.show(call)) {
+            Log.i(TAG, "Recién contestada o rechazada: se ignora")
+            return
+        }
         // Con la pantalla apagada, WhatsApp abre su propia pantalla a la vez que
         // nosotros: se vuelve a traer la nuestra al frente un par de veces.
         for (delayMs in listOf(0L, 700L, 1500L)) {
