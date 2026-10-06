@@ -25,6 +25,9 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- Sensor de proximidad durante las llamadas (apaga la pantalla junto a la oreja). -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- El quiosco apaga el Wi-Fi: el móvil solo usa 4G. -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <!-- Android 11+: para poder comprobar si WhatsApp está instalado. -->
     <queries>

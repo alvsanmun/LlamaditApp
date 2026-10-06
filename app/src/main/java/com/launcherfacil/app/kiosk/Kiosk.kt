@@ -9,6 +9,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.UserManager
 import android.telecom.TelecomManager
@@ -166,8 +167,30 @@ object Kiosk {
         // 8. Bluetooth desactivado: no se usa y gasta batería.
         dpm.addUserRestriction(admin, UserManager.DISALLOW_BLUETOOTH)
 
-        // 9. Apps innecesarias ocultas (no se ejecutan ni gastan batería).
+        // 9. Solo 4G: Wi-Fi apagado y bloqueado (nadie puede encenderlo ni configurar
+        //    redes), y sin modo avión (dejaría el móvil sin llamadas, SMS ni SOS).
+        for (restriction in NETWORK_RESTRICTIONS) dpm.addUserRestriction(admin, restriction)
+        setWifiEnabled(context, false)
+
+        // 10. Apps innecesarias ocultas (no se ejecutan ni gastan batería).
         setHidden(context, true)
+    }
+
+    /** Restricciones de red: sin Wi-Fi (solo 4G) y sin modo avión. */
+    private val NETWORK_RESTRICTIONS = buildList {
+        add(UserManager.DISALLOW_CONFIG_WIFI)
+        add(UserManager.DISALLOW_AIRPLANE_MODE)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) add(UserManager.DISALLOW_CHANGE_WIFI_STATE)
+    }
+
+    /** El Device Owner aún puede encender y apagar el Wi-Fi (las apps normales ya no). */
+    private fun setWifiEnabled(context: Context, enabled: Boolean) {
+        try {
+            @Suppress("DEPRECATION")
+            context.applicationContext.getSystemService(WifiManager::class.java)?.isWifiEnabled = enabled
+        } catch (e: Exception) {
+            Log.w(TAG, "No se pudo ${if (enabled) "encender" else "apagar"} el Wi-Fi", e)
+        }
     }
 
     private fun setHidden(context: Context, hidden: Boolean) {
@@ -234,6 +257,7 @@ object Kiosk {
         dpm.setKeyguardDisabled(admin, false)
         dpm.setSystemUpdatePolicy(admin, null)
         dpm.clearUserRestriction(admin, UserManager.DISALLOW_BLUETOOTH)
+        for (restriction in NETWORK_RESTRICTIONS) dpm.clearUserRestriction(admin, restriction)
         setHidden(context, false)
         // Obsoleto, pero sigue siendo la única forma de que la app deje de ser Device Owner.
         @Suppress("DEPRECATION")
