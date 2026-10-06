@@ -3,6 +3,7 @@ package com.launcherfacil.app.call
 import android.os.Bundle
 import android.os.PowerManager
 import android.telecom.Call
+import android.util.Log
 import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
@@ -49,14 +50,20 @@ class CallActivity : ComponentActivity() {
 
     /** Apaga la pantalla al acercar el móvil a la oreja (para no colgar con la mejilla). */
     private fun setProximity(enabled: Boolean) {
-        val pm = getSystemService(PowerManager::class.java)
-        if (enabled && proximityLock == null &&
-            pm.isWakeLockLevelSupported(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK)
-        ) {
-            proximityLock = pm.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, "launcherfacil:call")
-                .also { it.acquire(3 * 60 * 60 * 1000L) }
-        } else if (!enabled) {
-            proximityLock?.takeIf { it.isHeld }?.release()
+        // Nunca debe tumbar la pantalla de llamada: si falla, se sigue sin sensor.
+        try {
+            val pm = getSystemService(PowerManager::class.java)
+            if (enabled && proximityLock == null &&
+                pm.isWakeLockLevelSupported(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK)
+            ) {
+                proximityLock = pm.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, "launcherfacil:call")
+                    .also { it.acquire(3 * 60 * 60 * 1000L) }
+            } else if (!enabled) {
+                proximityLock?.takeIf { it.isHeld }?.release()
+                proximityLock = null
+            }
+        } catch (e: RuntimeException) {
+            Log.w("CallActivity", "Sensor de proximidad no disponible", e)
             proximityLock = null
         }
     }

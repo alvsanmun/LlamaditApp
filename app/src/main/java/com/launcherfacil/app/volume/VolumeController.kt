@@ -54,8 +54,10 @@ object VolumeController {
         } catch (e: SecurityException) {
             Log.w(TAG, "No se pudo cambiar el volumen (¿No molestar?)", e)
         }
-        // Un pitido corto al nuevo volumen para oír cómo sonará (no en llamada ni en silencio).
-        if (!inCall && level > 0) beep()
+        // Un pitido corto al nuevo volumen para oír cómo sonará (no en llamada, ni mientras
+        // suena una llamada, ni en silencio).
+        val ringing = am.mode == AudioManager.MODE_RINGTONE
+        if (!inCall && !ringing && level > 0) beep()
         _change.value = VolumeChange(level, max, up, System.nanoTime())
     }
 
