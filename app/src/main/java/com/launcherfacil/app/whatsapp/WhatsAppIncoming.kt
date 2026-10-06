@@ -84,7 +84,9 @@ private const val EXTRA_CALL_IS_VIDEO = "android.callIsVideo"
 private const val EXTRA_CALL_PERSON = "android.callPerson"
 private const val EXTRA_ANSWER_INTENT = "android.answerIntent"
 private const val EXTRA_DECLINE_INTENT = "android.declineIntent"
+private const val EXTRA_HANG_UP_INTENT = "android.hangUpIntent"
 private const val CALL_TYPE_INCOMING = 1
+private const val CALL_TYPE_ONGOING = 2
 
 // Si WhatsApp no usa CallStyle, se buscan los botones por su texto (varios idiomas).
 private val ANSWER_WORDS = Regex("contestar|responder|aceptar|atender|answer|accept|respond", RegexOption.IGNORE_CASE)
@@ -123,6 +125,13 @@ fun parseWhatsAppCall(context: Context, sbn: StatusBarNotification): WhatsAppCal
 
     val icon = person?.icon ?: n.getLargeIcon()
     return WhatsAppCall(sbn.key, name, isVideo, icon?.toBitmap(context), answer, decline)
+}
+
+/** ¿Es la notificación de una llamada de WhatsApp en curso ("Videollamada en curso")? */
+fun isOngoingCall(sbn: StatusBarNotification): Boolean {
+    val extras = sbn.notification.extras ?: return false
+    return extras.getInt(EXTRA_CALL_TYPE, 0) == CALL_TYPE_ONGOING ||
+        extras.parcelable<PendingIntent>(EXTRA_HANG_UP_INTENT) != null
 }
 
 /** Vuelca la notificación al log: sirve para ajustar el reconocimiento en el A16. */

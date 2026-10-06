@@ -25,6 +25,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
@@ -39,7 +41,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.launcherfacil.app.config.CaregiverSettings
 import com.launcherfacil.app.contacts.Contact
+import com.launcherfacil.app.contacts.contactsWithWhatsApp
 import com.launcherfacil.app.contacts.loadFavoriteContacts
+import com.launcherfacil.app.contacts.setHasWhatsApp
+import kotlinx.coroutines.launch
 
 /** Configuración del cuidador. Aquí sí hay texto: no la usa la persona. */
 @Composable
@@ -64,6 +69,9 @@ fun SettingsScreen(
     var locateIds by remember { mutableStateOf(settings.locateContactIds) }
     var keywords by remember { mutableStateOf(settings.keywords.joinToString(", ")) }
     var confirmDisable by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+    var whatsAppIds by remember { mutableStateOf(emptySet<Long>()) }
+    LaunchedEffect(Unit) { whatsAppIds = contactsWithWhatsApp(context) }
 
     MaterialTheme(colorScheme = darkColorScheme(primary = Color(0xFF90CAF9))) {
         Column(
@@ -99,6 +107,21 @@ fun SettingsScreen(
                         val updated = if (checked) current - contact.id else current + contact.id
                         locateIds = updated
                         settings.locateContactIds = updated
+                    }) {
+                        Checkbox(checked = checked, onCheckedChange = null)
+                    }
+                }
+
+                Section("Tienen WhatsApp (videollamada)")
+                Hint("Márcalo si esa persona usa WhatsApp: aparecerá en el botón de videollamada.")
+                favorites.forEach { contact ->
+                    val checked = contact.id in whatsAppIds
+                    OptionRow(contact.name, contact.phone, onClick = {
+                        scope.launch {
+                            if (setHasWhatsApp(context, contact, !checked)) {
+                                whatsAppIds = if (checked) whatsAppIds - contact.id else whatsAppIds + contact.id
+                            }
+                        }
                     }) {
                         Checkbox(checked = checked, onCheckedChange = null)
                     }

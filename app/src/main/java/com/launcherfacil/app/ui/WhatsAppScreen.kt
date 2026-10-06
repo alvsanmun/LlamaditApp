@@ -64,7 +64,7 @@ fun WhatsAppScreen(
             )
             list == null -> Unit
             list.isEmpty() -> CaregiverMessage(
-                "Ningún contacto favorito (★) tiene WhatsApp.\nEl contacto debe estar guardado en la agenda con su número y usar WhatsApp."
+                "Ningún favorito está marcado con WhatsApp.\nMárcalos en la configuración del cuidador (reloj 5 s → PIN → \"Tienen WhatsApp\")."
             )
             else -> LazyVerticalGrid(
                 columns = GridCells.Fixed(2),

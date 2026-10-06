@@ -7,6 +7,7 @@ import android.os.Looper
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
+import com.launcherfacil.app.MainActivity
 import com.launcherfacil.app.contacts.WHATSAPP_PACKAGE
 
 /**
@@ -28,14 +29,36 @@ class WhatsAppCallListener : NotificationListenerService() {
 
     override fun onNotificationPosted(sbn: StatusBarNotification) = check(sbn)
 
+    /** Notificaciones de llamada de WhatsApp en curso (entrante contestada o saliente). */
+    private val ongoingKeys = mutableSetOf<String>()
+
     override fun onNotificationRemoved(sbn: StatusBarNotification) {
+        if (sbn.packageName != WHATSAPP_PACKAGE) return
         // Contestada, rechazada o perdida: se cierra nuestra pantalla.
-        if (sbn.packageName == WHATSAPP_PACKAGE) WhatsAppIncoming.clear(sbn.key)
+        WhatsAppIncoming.clear(sbn.key)
+        // Fin de una videollamada: WhatsApp se quedaría en su pantalla; volvemos al launcher.
+        if (ongoingKeys.remove(sbn.key) && ongoingKeys.isEmpty()) {
+            Log.i(TAG, "Fin de la llamada de WhatsApp: vuelta al launcher")
+            handler.postDelayed(::goHome, 500)
+        }
+    }
+
+    private fun goHome() {
+        try {
+            startActivity(
+                Intent(this, MainActivity::class.java).addFlags(
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                )
+            )
+        } catch (e: Exception) {
+            Log.e(TAG, "No se pudo volver al launcher", e)
+        }
     }
 
     private fun check(sbn: StatusBarNotification) {
         if (sbn.packageName != WHATSAPP_PACKAGE) return
         logWhatsAppNotification(sbn)
+        if (isOngoingCall(sbn)) ongoingKeys += sbn.key
         val call = parseWhatsAppCall(this, sbn)
         if (call == null) {
             // Cualquier otra notificación de llamada (sobre todo "Videollamada en curso",

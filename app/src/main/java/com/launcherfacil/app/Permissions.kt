@@ -6,6 +6,8 @@ import android.os.Build
 /** Permisos que la app pide (o se concede sola si es Device Owner). */
 val APP_PERMISSIONS: List<String> = buildList {
     add(Manifest.permission.READ_CONTACTS)
+    // Marcar "Tiene WhatsApp": el launcher escribe la fila de videollamada en el contacto.
+    add(Manifest.permission.WRITE_CONTACTS)
     add(Manifest.permission.CALL_PHONE)
     add(Manifest.permission.SEND_SMS)
     add(Manifest.permission.RECEIVE_SMS)

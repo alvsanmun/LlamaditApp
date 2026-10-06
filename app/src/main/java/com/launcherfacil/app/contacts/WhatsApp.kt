@@ -1,10 +1,12 @@
 package com.launcherfacil.app.contacts
 
 import android.content.ActivityNotFoundException
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.provider.ContactsContract
 import android.provider.ContactsContract.Data
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
@@ -60,3 +62,69 @@ fun Context.whatsAppVideoCall(contact: WhatsAppContact): Boolean {
         false
     }
 }
+
+// --- Marcar a mano quién tiene WhatsApp ---
+//
+// WhatsApp 2.26 ya no escribe en la agenda sus filas de videollamada (visto en el A16
+// el 2026-10-06), pero sigue abriendo la videollamada al recibir una. Así que la fila la
+// escribe el launcher cuando el cuidador marca "Tiene WhatsApp" en un favorito.
+
+/** Identificador de WhatsApp de un número: solo cifras con prefijo de país + "@s.whatsapp.net". */
+fun whatsAppJid(phone: String): String? {
+    var digits = phone.filter { it.isDigit() }
+    if (digits.startsWith("00")) digits = digits.drop(2)
+    // Números españoles sin prefijo (9 cifras): se añade el 34.
+    if (digits.length == 9 && !phone.trim().startsWith("+")) digits = "34$digits"
+    return if (digits.length >= 10) "$digits@s.whatsapp.net" else null
+}
+
+/** Ids de los contactos que tienen fila de videollamada de WhatsApp. */
+suspend fun contactsWithWhatsApp(context: Context): Set<Long> = withContext(Dispatchers.IO) {
+    val ids = mutableSetOf<Long>()
+    context.contentResolver.query(
+        Data.CONTENT_URI, arrayOf(Data.CONTACT_ID), "${Data.MIMETYPE} = ?", arrayOf(MIME_VIDEO), null
+    )?.use { c -> while (c.moveToNext()) ids += c.getLong(0) }
+    ids
+}
+
+/** Añade o quita la fila de videollamada de WhatsApp del contacto. Devuelve si lo consiguió. */
+suspend fun setHasWhatsApp(context: Context, contact: Contact, has: Boolean): Boolean =
+    withContext(Dispatchers.IO) {
+        val resolver = context.contentResolver
+        // Contactos "en bruto" del contacto que no son de WhatsApp (los del teléfono o Google).
+        val rawIds = mutableListOf<Long>()
+        resolver.query(
+            ContactsContract.RawContacts.CONTENT_URI,
+            arrayOf(ContactsContract.RawContacts._ID),
+            "${ContactsContract.RawContacts.CONTACT_ID} = ? AND ${ContactsContract.RawContacts.DELETED} = 0 AND " +
+                "(${ContactsContract.RawContacts.ACCOUNT_TYPE} IS NULL OR ${ContactsContract.RawContacts.ACCOUNT_TYPE} != ?)",
+            arrayOf(contact.id.toString(), WHATSAPP_PACKAGE), null
+        )?.use { c -> while (c.moveToNext()) rawIds += c.getLong(0) }
+        if (rawIds.isEmpty()) return@withContext false
+
+        try {
+            val inList = rawIds.joinToString(",")
+            if (has) {
+                if (contact.id in contactsWithWhatsApp(context)) return@withContext true
+                val jid = whatsAppJid(contact.phone) ?: return@withContext false
+                val values = ContentValues().apply {
+                    put(Data.RAW_CONTACT_ID, rawIds.first())
+                    put(Data.MIMETYPE, MIME_VIDEO)
+                    put(Data.DATA1, jid)
+                    put(Data.DATA2, "WhatsApp")
+                    put(Data.DATA3, "Videollamada")
+                }
+                resolver.insert(Data.CONTENT_URI, values) != null
+            } else {
+                resolver.delete(
+                    Data.CONTENT_URI,
+                    "${Data.MIMETYPE} = ? AND ${Data.RAW_CONTACT_ID} IN ($inList)",
+                    arrayOf(MIME_VIDEO)
+                )
+                true
+            }
+        } catch (e: SecurityException) {
+            Log.w("WhatsApp", "Sin permiso para escribir en la agenda", e)
+            false
+        }
+    }

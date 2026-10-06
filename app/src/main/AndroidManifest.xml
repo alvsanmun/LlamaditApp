@@ -4,6 +4,8 @@
     <uses-feature android:name="android.hardware.telephony" android:required="false" />
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- Escribir la fila de videollamada de WhatsApp en los favoritos marcados. -->
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <!-- En Android reciente, enviar SMS consulta datos de la SIM y exige este permiso. -->
