@@ -3,12 +3,14 @@ package com.launcherfacil.app.kiosk
 import android.app.Activity
 import android.app.ActivityManager
 import android.app.admin.DevicePolicyManager
+import android.app.admin.SystemUpdatePolicy
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
+import android.os.UserManager
 import android.telecom.TelecomManager
 import android.util.Log
 import com.launcherfacil.app.APP_PERMISSIONS
@@ -23,6 +25,10 @@ import com.launcherfacil.app.contacts.WHATSAPP_PACKAGE
  */
 object Kiosk {
     private const val TAG = "Kiosk"
+
+    // Ventana de actualizaciones del sistema, en minutos desde medianoche.
+    private const val UPDATE_START_MIN = 2 * 60
+    private const val UPDATE_END_MIN = 4 * 60
 
     // Pantallas de llamada que deben poder abrirse dentro del quiosco. Se incluyen
     // las de Google (emulador) y las de Samsung (A16); las que no existan se ignoran.
@@ -86,6 +92,19 @@ object Kiosk {
         // 6. Permisos concedidos sin preguntar (los diálogos no se pueden mostrar en el quiosco).
         grant(context, context.packageName, APP_PERMISSIONS + BACKGROUND_LOCATION)
         grant(context, WHATSAPP_PACKAGE, WHATSAPP_PERMISSIONS)
+
+        // 7. Actualizaciones del sistema automáticas de madrugada (de 2:00 a 4:00):
+        //    se instalan y el móvil se reinicia solo, sin preguntar a la persona.
+        try {
+            dpm.setSystemUpdatePolicy(
+                admin, SystemUpdatePolicy.createWindowedInstallPolicy(UPDATE_START_MIN, UPDATE_END_MIN)
+            )
+        } catch (e: Exception) {
+            Log.w(TAG, "No se pudo fijar la política de actualizaciones", e)
+        }
+
+        // 8. Bluetooth desactivado: no se usa y gasta batería.
+        dpm.addUserRestriction(admin, UserManager.DISALLOW_BLUETOOTH)
     }
 
     private fun grant(context: Context, pkg: String, permissions: List<String>) {
@@ -136,6 +155,8 @@ object Kiosk {
         dpm.setLockTaskPackages(admin, emptyArray())
         dpm.clearPackagePersistentPreferredActivities(admin, context.packageName)
         dpm.setKeyguardDisabled(admin, false)
+        dpm.setSystemUpdatePolicy(admin, null)
+        dpm.clearUserRestriction(admin, UserManager.DISALLOW_BLUETOOTH)
         // Obsoleto, pero sigue siendo la única forma de que la app deje de ser Device Owner.
         @Suppress("DEPRECATION")
         dpm.clearDeviceOwnerApp(context.packageName)

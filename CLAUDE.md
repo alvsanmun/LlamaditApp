@@ -11,7 +11,7 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 5. Pantalla principal con los botones anteriores, el **reloj en grande** y el **estado de la batería en grande**.
 6. **Modo quiosco**: la persona no puede salir del launcher y el móvil siempre arranca con él.
 7. **Localización bajo demanda**: otro móvil puede ver dónde está el teléfono, pero solo cuando lo pide. Nada de seguimiento continuo.
-8. Dispositivo físico de pruebas: **Samsung Galaxy A16** (SM-A165F, Android 16 / API 36, One UI 8.5; serie adb `R5GL52BCW4N`). Llegó el 2026-10-05, **todavía sin SIM**.
+8. Dispositivo físico de pruebas: **Samsung Galaxy A16** (SM-A165F, Android 16 / API 36, One UI 8.5; serie adb `R5GL52BCW4N`). Llegó el 2026-10-05. SIM de **DIGI** desde el 2026-10-06, **sin PIN** (para que tras un reinicio quede operativo sin hacer nada).
 
 ## Decisiones técnicas acordadas
 
@@ -61,6 +61,8 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
   - `addPersistentPreferredActivity` HOME → MainActivity;
   - `setLockTaskPackages` con la app, WhatsApp, el marcador por defecto y las pantallas de llamada de Google y Samsung (`com.android.server.telecom`, `com.android.phone`, `com.google.android.dialer`, `com.samsung.android.dialer`, `com.samsung.android.incallui`);
   - `setLockTaskFeatures` = SYSTEM_INFO + GLOBAL_ACTIONS (barra de estado y menú de apagado; sin Inicio, Recientes ni notificaciones);
+  - `setSystemUpdatePolicy` = instalación automática de **2:00 a 4:00** (el móvil se actualiza y reinicia solo);
+  - `DISALLOW_BLUETOOTH`: Bluetooth apagado y bloqueado (no se usa; ahorra batería);
   - `setKeyguardDisabled(true)`: sin pantalla de bloqueo al encender (solo funciona si el móvil no tiene PIN, patrón ni contraseña; la salida de emergencia lo reactiva);
   - concede todos los permisos de la app (incluida `ACCESS_BACKGROUND_LOCATION`) y CAMERA, RECORD_AUDIO y READ_CONTACTS a WhatsApp, porque los diálogos de permisos no pueden abrirse dentro del quiosco.
   `Kiosk.enterLockTask()` se llama en `onResume`. MainActivity es `singleTask` con HOME/DEFAULT además de LAUNCHER.
@@ -83,7 +85,8 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
   - Activar: `adb shell cmd notification allow_listener com.launcherfacil.app/com.launcherfacil.app.whatsapp.WhatsAppCallListener` (o en la configuración del cuidador, "Activar acceso a notificaciones").
   - El WhatsApp falso simula una llamada entrante con CallStyle: `adb shell am broadcast -n com.whatsapp/com.launcherfacil.whatsappstub.SimulateCallReceiver --es name "María" --ez video true` (antes `adb shell pm grant com.whatsapp android.permission.POST_NOTIFICATIONS`).
 - **Fotos de prueba (solo en debug)**: `DebugTestPhotosReceiver` dibuja una cara distinta como foto de cada favorito: `adb shell pm grant com.launcherfacil.app android.permission.WRITE_CONTACTS` y `adb shell am broadcast -a com.launcherfacil.app.DEBUG_TEST_PHOTOS -p com.launcherfacil.app`. En el emulador ya están puestas.
-- **Volumen** (`volume/`, 2026-10-06): `VolumeController.onKeyEvent` se llama desde `dispatchKeyEvent` de MainActivity, CallActivity y WhatsAppCallActivity. Los botones solo cambian el **tono de llamada** (`STREAM_RING`) o, durante una llamada (`MODE_IN_CALL`/`IN_COMMUNICATION`), la voz (`STREAM_VOICE_CALL`); nunca bajan del nivel 1 (no se puede silenciar) y pone el modo de timbre en normal. Pitido corto al nuevo volumen (no en llamada). Sin el panel del sistema: `WithVolumeOverlay` pone encima un panel grande (altavoz, flecha verde ↑ o ámbar ↓ que salta, "escalera" de barras) y oscurece el resto 2 s. `applySoundPolicy` (al arrancar): timbre normal y ≥1, vídeos/música (`STREAM_MUSIC`) a 0. Dentro de la pantalla de videollamada de WhatsApp los botones los gestiona WhatsApp (panel del sistema).
+- **Volumen** (`volume/`, 2026-10-06): `VolumeController.onKeyEvent` se llama desde `dispatchKeyEvent` de MainActivity, CallActivity y WhatsAppCallActivity. Los botones solo cambian el **tono de llamada** (`STREAM_RING`) o, durante una llamada (`MODE_IN_CALL`/`IN_COMMUNICATION`), la voz (`STREAM_VOICE_CALL`, mínimo 1). El tono **se puede silenciar** (0 → `RINGER_MODE_VIBRATE`, nunca silencio total). Pitido corto al nuevo volumen (no en llamada ni a 0). Sin el panel del sistema: `WithVolumeOverlay` pone encima un panel grande (**diseño D**, elegido el 2026-10-06 entre 4 opciones: flecha verde ↑ o ámbar ↓ que salta, altavoz tachado rojo a 0, "escalera" de barras) y oscurece el resto 2 s. `applySoundPolicy` (al arrancar): modo de timbre según el volumen y vídeos/música (`STREAM_MUSIC`) a 0.
+- **Vibración**: las llamadas normales entrantes **siempre vibran** (`call/RingVibrator`, desde `CallManager.publish` mientras haya una llamada sonando), con cualquier volumen. Dentro de la pantalla de videollamada de WhatsApp los botones los gestiona WhatsApp (panel del sistema).
 - `ui/ContactPhoto.kt`: `ContactPhoto` (foto + nombre) y `CaregiverMessage`, compartidos por las pantallas de Contactos y WhatsApp.
 - Módulo **`whatsapp-stub/`**: WhatsApp falso (paquete `com.whatsapp`) **solo para el emulador**; muestra qué intent recibe. Solo se incluye en el build con `-PwithWhatsAppStub`: `gradlew -PwithWhatsAppStub :whatsapp-stub:installDebug`. Un `installDebug` normal no lo instala. **Nunca en un móvil con el WhatsApp real** (chocaría con el paquete). En el emulador, María y Lucía tienen filas de WhatsApp de prueba; Juan no.
 - `ui/Common.kt`: `BigTile`, `TileIcon` y `HomeBar` (barra con una casa para volver). `Calls.kt`: `placeCall` (`ACTION_CALL`).
@@ -120,7 +123,7 @@ Launcher Android para que **personas analfabetas** usen un móvil solo con imág
 
 ## Siguiente paso al retomar
 
-Estado del A16 (2026-10-05): launcher instalado, **Device Owner activo**, quiosco probado (Inicio, Recientes y Ajustes bloqueados; sin pantalla de bloqueo; tras reiniciar arranca bloqueado), app de Teléfono = la nuestra, ubicación "siempre" concedida. Sin cuentas. **Sin SIM** y sin WhatsApp.
+Estado del A16 (2026-10-05): launcher instalado, **Device Owner activo**, quiosco probado (Inicio, Recientes y Ajustes bloqueados; sin pantalla de bloqueo; tras reiniciar arranca bloqueado), app de Teléfono = la nuestra, ubicación "siempre" concedida. Sin cuentas y sin WhatsApp. SIM de DIGI puesta (sin PIN), 2 favoritos con foto, Bluetooth bloqueado y actualizaciones de madrugada (2026-10-06).
 
 Pendiente en el A16:
 1. **Favoritos con foto**: en la configuración del cuidador (reloj 5 s → PIN) → "Abrir Contactos" → crear los contactos reales, marcarlos con ★ y ponerles foto. Se puede hacer ya, sin SIM.

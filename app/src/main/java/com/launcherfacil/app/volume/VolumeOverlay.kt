@@ -46,6 +46,8 @@ import com.launcherfacil.app.ui.VerdeLlamar
 import kotlinx.coroutines.delay
 
 private const val VISIBLE_MS = 2000L
+private val AmbarBajar = Color(0xFFFFB300)
+private val RojoSilencio = Color(0xFFE53935)
 
 /** Envuelve el contenido de una pantalla y le pone encima el panel grande de volumen. */
 @Composable
@@ -57,8 +59,9 @@ fun WithVolumeOverlay(content: @Composable () -> Unit) {
 }
 
 /**
- * Panel grande de volumen: altavoz, una flecha que salta hacia arriba o hacia abajo
- * y una "escalera" de barras que se llenan. Desaparece a los 2 segundos.
+ * Panel grande de volumen (diseño D): una flecha que salta hacia arriba (verde) o hacia
+ * abajo (ámbar) y una "escalera" de barras que se llenan; en silencio, un altavoz
+ * tachado en rojo. Desaparece a los 2 segundos.
  */
 @Composable
 private fun BoxScope.VolumeOverlay() {
@@ -101,25 +104,25 @@ private fun BoxScope.VolumeOverlay() {
                 .padding(28.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_volume_up),
-                    contentDescription = null,
-                    tint = TextoClaro,
-                    modifier = Modifier.size(120.dp)
-                )
-                Spacer(Modifier.size(16.dp))
-                Icon(
-                    painter = painterResource(
-                        if (current.up) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down
-                    ),
-                    contentDescription = null,
-                    tint = if (current.up) VerdeLlamar else Color(0xFFFFB300),
-                    modifier = Modifier
-                        .size(120.dp)
-                        .graphicsLayer { translationY = -arrowOffset.value }
-                )
-            }
+            val muted = current.level == 0
+            Icon(
+                painter = painterResource(
+                    when {
+                        muted -> R.drawable.ic_volume_off
+                        current.up -> R.drawable.ic_arrow_up
+                        else -> R.drawable.ic_arrow_down
+                    }
+                ),
+                contentDescription = null,
+                tint = when {
+                    muted -> RojoSilencio
+                    current.up -> VerdeLlamar
+                    else -> AmbarBajar
+                },
+                modifier = Modifier
+                    .size(140.dp)
+                    .graphicsLayer { translationY = if (muted) 0f else -arrowOffset.value }
+            )
             Spacer(Modifier.height(24.dp))
             VolumeStairs(current.level, current.max)
         }

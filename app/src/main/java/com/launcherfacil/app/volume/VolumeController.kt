@@ -13,14 +13,12 @@ data class VolumeChange(val level: Int, val max: Int, val up: Boolean, val id: L
 
 /**
  * Botones de volumen: solo cambian el volumen del teléfono (el tono de llamada o,
- * durante una llamada, la voz de quien habla). Nunca baja hasta silencio, para no
- * perder llamadas. Los demás sonidos (vídeos, música) quedan a cero.
+ * durante una llamada, la voz de quien habla). El tono se puede silenciar del todo:
+ * entonces el móvil queda en "solo vibración" (las llamadas siempre vibran, ver
+ * [com.launcherfacil.app.call.RingVibrator]). Vídeos y música quedan a cero.
  */
 object VolumeController {
     private const val TAG = "Volume"
-
-    /** El tono de llamada nunca baja de aquí (1 = el nivel más bajo audible). */
-    private const val MIN_RING_LEVEL = 1
 
     private val _change = MutableStateFlow<VolumeChange?>(null)
     val change: StateFlow<VolumeChange?> = _change
@@ -47,18 +45,17 @@ object VolumeController {
             am.mode == AudioManager.MODE_IN_COMMUNICATION
         val stream = if (inCall) AudioManager.STREAM_VOICE_CALL else AudioManager.STREAM_RING
         val max = am.getStreamMaxVolume(stream)
-        val min = if (inCall) 1 else MIN_RING_LEVEL
+        // Durante una llamada no se deja a 0: no se oiría a la otra persona.
+        val min = if (inCall) 1 else 0
         val level = (am.getStreamVolume(stream) + if (up) 1 else -1).coerceIn(min, max)
         try {
-            if (!inCall && am.ringerMode != AudioManager.RINGER_MODE_NORMAL) {
-                am.ringerMode = AudioManager.RINGER_MODE_NORMAL
-            }
             am.setStreamVolume(stream, level, 0) // 0 = sin el panel del sistema
+            if (!inCall) setRingerModeFor(am, level)
         } catch (e: SecurityException) {
             Log.w(TAG, "No se pudo cambiar el volumen (¿No molestar?)", e)
         }
-        // Un pitido corto al nuevo volumen para oír cómo sonará (no durante una llamada).
-        if (!inCall) beep()
+        // Un pitido corto al nuevo volumen para oír cómo sonará (no en llamada ni en silencio).
+        if (!inCall && level > 0) beep()
         _change.value = VolumeChange(level, max, up, System.nanoTime())
     }
 
@@ -72,19 +69,20 @@ object VolumeController {
         }
     }
 
+    /** Tono a 0 → "solo vibración" (nunca silencio total); si no, modo normal. */
+    private fun setRingerModeFor(am: AudioManager, ringLevel: Int) {
+        val mode = if (ringLevel == 0) AudioManager.RINGER_MODE_VIBRATE else AudioManager.RINGER_MODE_NORMAL
+        if (am.ringerMode != mode) am.ringerMode = mode
+    }
+
     /**
-     * Estado inicial de los sonidos: timbre normal y audible, vídeos y música a cero.
-     * Se llama al arrancar la app.
+     * Estado inicial de los sonidos: modo de timbre acorde al volumen (nunca silencio
+     * total, como mucho vibración) y vídeos y música a cero. Se llama al arrancar la app.
      */
     fun applySoundPolicy(context: Context) {
         val am = context.getSystemService(AudioManager::class.java) ?: return
         try {
-            if (am.ringerMode != AudioManager.RINGER_MODE_NORMAL) {
-                am.ringerMode = AudioManager.RINGER_MODE_NORMAL
-            }
-            if (am.getStreamVolume(AudioManager.STREAM_RING) < MIN_RING_LEVEL) {
-                am.setStreamVolume(AudioManager.STREAM_RING, MIN_RING_LEVEL, 0)
-            }
+            setRingerModeFor(am, am.getStreamVolume(AudioManager.STREAM_RING))
             am.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0)
         } catch (e: SecurityException) {
             Log.w(TAG, "No se pudo aplicar la política de sonido", e)

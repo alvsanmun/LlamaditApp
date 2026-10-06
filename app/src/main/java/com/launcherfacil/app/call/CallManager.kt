@@ -62,6 +62,9 @@ object CallManager {
             ?: calls.lastOrNull()
 
     private fun publish() {
+        service?.let { svc ->
+            RingVibrator.update(svc, calls.any { it.stateCompat() == Call.STATE_RINGING })
+        }
         _call.value = current()?.let {
             CallInfo(
                 state = it.stateCompat(),
