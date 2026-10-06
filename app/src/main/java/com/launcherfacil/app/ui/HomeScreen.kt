@@ -89,8 +89,8 @@ fun HomeScreen(
         }
 
         // Fila de botones más pequeños: mensajes y llamadas perdidas, con el número
-        // de nuevos en la esquina.
-        Spacer(Modifier.height(16.dp))
+        // de nuevos en la esquina. Bajos, para dejar más sitio a los cuatro grandes.
+        Spacer(Modifier.height(12.dp))
         Row(
             modifier = Modifier.fillMaxWidth().height(SMALL_ROW_HEIGHT),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -102,7 +102,7 @@ fun HomeScreen(
 }
 
 private const val CAREGIVER_HOLD_MS = 5000L
-private val SMALL_ROW_HEIGHT = 110.dp
+private val SMALL_ROW_HEIGHT = 76.dp
 
 @Composable
 private fun SmallTileWithBadge(
@@ -113,20 +113,20 @@ private fun SmallTileWithBadge(
     modifier: Modifier = Modifier
 ) {
     Box(modifier.fillMaxHeight()) {
-        BigTile(color, onClick, Modifier.fillMaxSize()) { TileIcon(icon, 0.6f) }
+        BigTile(color, onClick, Modifier.fillMaxSize()) { TileIcon(icon, 0.65f) }
         if (count > 0) {
             Box(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .padding(6.dp)
-                    .size(48.dp)
+                    .padding(4.dp)
+                    .size(40.dp)
                     .background(BateriaBaja, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     if (count > 99) "99+" else count.toString(),
                     color = TextoClaro,
-                    fontSize = if (count > 9) 20.sp else 26.sp,
+                    fontSize = if (count > 9) 17.sp else 22.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
