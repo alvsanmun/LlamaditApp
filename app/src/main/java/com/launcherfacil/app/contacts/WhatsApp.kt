@@ -9,6 +9,7 @@ import android.net.Uri
 import android.provider.ContactsContract
 import android.provider.ContactsContract.Data
 import android.util.Log
+import com.launcherfacil.app.config.inCaregiverOrder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -45,7 +46,7 @@ suspend fun loadFavoriteWhatsAppContacts(context: Context): List<WhatsAppContact
                 }
             }
         }
-        byContact.values.toList()
+        byContact.values.toList().inCaregiverOrder(context) { it.contactId }
     }
 
 /** Abre la fila de videollamada con WhatsApp, que la inicia directamente. */

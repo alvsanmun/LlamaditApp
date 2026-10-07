@@ -12,6 +12,8 @@ import android.content.IntentFilter
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.UserManager
+import android.provider.Settings
+import android.view.Surface
 import android.telecom.TelecomManager
 import android.util.Log
 import com.launcherfacil.app.APP_PERMISSIONS
@@ -176,6 +178,28 @@ object Kiosk {
         // 10. Apps innecesarias ocultas (no se ejecutan ni gastan batería), salvo con el
         //     quiosco en pausa.
         setHidden(context, !isPaused(context))
+
+        // 11. Siempre en vertical, también en las pantallas de otras apps (videollamada de
+        //     WhatsApp): giro automático apagado y rotación fija a 0.
+        lockPortrait(context)
+    }
+
+    /**
+     * Apaga el giro automático. Necesita el acceso especial "Modificar ajustes del
+     * sistema" (WRITE_SETTINGS), que el Device Owner no puede concederse solo:
+     *   adb shell appops set com.launcherfacil.app WRITE_SETTINGS allow
+     */
+    private fun lockPortrait(context: Context) {
+        if (!Settings.System.canWrite(context)) {
+            Log.w(TAG, "Sin permiso WRITE_SETTINGS: no se puede bloquear la rotación")
+            return
+        }
+        try {
+            Settings.System.putInt(context.contentResolver, Settings.System.ACCELEROMETER_ROTATION, 0)
+            Settings.System.putInt(context.contentResolver, Settings.System.USER_ROTATION, Surface.ROTATION_0)
+        } catch (e: Exception) {
+            Log.w(TAG, "No se pudo bloquear la rotación", e)
+        }
     }
 
     /** Restricciones de red: sin Wi-Fi (solo 4G) y sin modo avión. */

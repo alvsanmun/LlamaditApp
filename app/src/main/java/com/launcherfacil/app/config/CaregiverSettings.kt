@@ -21,6 +21,7 @@ class CaregiverSettings(context: Context) {
         private const val KEY_LOCATE_CONTACTS = "locate_contact_ids"
         private const val KEY_KEYWORDS = "keywords"
         private const val KEY_KIOSK_PAUSED = "kiosk_paused"
+        private const val KEY_CONTACT_ORDER = "contact_order"
     }
 
     private val prefs = context.applicationContext
@@ -78,6 +79,15 @@ class CaregiverSettings(context: Context) {
         get() = prefs.getBoolean(KEY_KIOSK_PAUSED, false)
         set(value) = prefs.edit { putBoolean(KEY_KIOSK_PAUSED, value) }
 
+    // --- Orden de los favoritos (el mismo en Llamar y en Videollamada) ---
+
+    /** Ids de contacto en el orden elegido; los que no estén van detrás, por nombre. */
+    var contactOrder: List<Long>
+        get() = prefs.getString(KEY_CONTACT_ORDER, null)
+            ?.split(",")?.mapNotNull { it.toLongOrNull() }
+            .orEmpty()
+        set(value) = prefs.edit { putString(KEY_CONTACT_ORDER, value.joinToString(",")) }
+
     // --- Palabras clave para pedir la ubicación ---
 
     var keywords: List<String>
@@ -100,4 +110,13 @@ suspend fun locateContacts(context: Context): List<Contact> {
     val favorites = loadFavoriteContacts(context)
     val allowed = CaregiverSettings(context).locateContactIds ?: return favorites
     return favorites.filter { it.id in allowed }
+}
+
+/**
+ * Ordena según el orden del cuidador. Los contactos que no ha colocado (favoritos
+ * nuevos) quedan al final en el orden que ya traían (alfabético).
+ */
+fun <T> List<T>.inCaregiverOrder(context: Context, id: (T) -> Long): List<T> {
+    val position = CaregiverSettings(context).contactOrder.withIndex().associate { it.value to it.index }
+    return sortedBy { position[id(it)] ?: Int.MAX_VALUE }
 }

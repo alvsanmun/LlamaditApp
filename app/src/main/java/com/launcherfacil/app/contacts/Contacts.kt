@@ -8,6 +8,7 @@ import android.provider.ContactsContract
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import com.launcherfacil.app.config.inCaregiverOrder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -43,7 +44,7 @@ suspend fun loadFavoriteContacts(context: Context): List<Contact> = withContext(
             }
         }
     }
-    byContact.values.map { it.first }
+    byContact.values.map { it.first }.inCaregiverOrder(context) { it.id }
 }
 
 /** Foto del contacto (en alta resolución si existe), o null si no tiene. */

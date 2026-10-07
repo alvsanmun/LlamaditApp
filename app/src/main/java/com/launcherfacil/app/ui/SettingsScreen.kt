@@ -1,5 +1,6 @@
 package com.launcherfacil.app.ui
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,13 +12,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
@@ -26,19 +32,20 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.launcherfacil.app.R
 import com.launcherfacil.app.config.CaregiverSettings
 import com.launcherfacil.app.contacts.Contact
 import com.launcherfacil.app.contacts.contactsWithWhatsApp
@@ -63,7 +70,16 @@ fun SettingsScreen(
 ) {
     val context = LocalContext.current
     val settings = remember { CaregiverSettings(context) }
-    val favorites by produceState<List<Contact>>(emptyList()) { value = loadFavoriteContacts(context) }
+    var favorites by remember { mutableStateOf(emptyList<Contact>()) }
+    LaunchedEffect(Unit) { favorites = loadFavoriteContacts(context) }
+
+    // Sube o baja un favorito y guarda el orden (Llamar y Videollamada usan el mismo).
+    fun move(index: Int, by: Int) {
+        val target = index + by
+        if (target !in favorites.indices) return
+        favorites = favorites.toMutableList().apply { add(target, removeAt(index)) }
+        settings.contactOrder = favorites.map { it.id }
+    }
 
     var sosId by remember { mutableStateOf(settings.sosContactId) }
     var locateIds by remember { mutableStateOf(settings.locateContactIds) }
@@ -86,6 +102,19 @@ fun SettingsScreen(
                 modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
+                Section("Orden de los contactos")
+                Hint("El mismo orden en Llamar y en Videollamada. Los favoritos nuevos salen al final.")
+                favorites.forEachIndexed { index, contact ->
+                    OrderRow(
+                        title = contact.name,
+                        subtitle = contact.phone,
+                        canMoveUp = index > 0,
+                        canMoveDown = index < favorites.lastIndex,
+                        onMoveUp = { move(index, -1) },
+                        onMoveDown = { move(index, +1) }
+                    )
+                }
+
                 Section("Contacto para el SOS")
                 if (favorites.isEmpty()) Hint("No hay contactos favoritos (★).")
                 // Si no se ha elegido, se usa el primer favorito.
@@ -230,6 +259,44 @@ private fun OptionRow(
             Text(title, color = TextoClaro, fontSize = 18.sp)
             Text(subtitle, color = TextoSuave, fontSize = 14.sp)
         }
+    }
+}
+
+@Composable
+private fun OrderRow(
+    title: String,
+    subtitle: String,
+    canMoveUp: Boolean,
+    canMoveDown: Boolean,
+    onMoveUp: () -> Unit,
+    onMoveDown: () -> Unit
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(Modifier.weight(1f)) {
+            Text(title, color = TextoClaro, fontSize = 18.sp)
+            Text(subtitle, color = TextoSuave, fontSize = 14.sp)
+        }
+        MoveButton(R.drawable.ic_arrow_up, canMoveUp, onMoveUp)
+        Spacer(Modifier.width(8.dp))
+        MoveButton(R.drawable.ic_arrow_down, canMoveDown, onMoveDown)
+    }
+}
+
+@Composable
+private fun MoveButton(@DrawableRes icon: Int, enabled: Boolean, onClick: () -> Unit) {
+    FilledIconButton(
+        onClick = onClick,
+        enabled = enabled,
+        colors = IconButtonDefaults.filledIconButtonColors(
+            containerColor = GrisBoton,
+            contentColor = TextoClaro
+        ),
+        modifier = Modifier.size(52.dp)
+    ) {
+        Icon(painterResource(icon), contentDescription = null, modifier = Modifier.size(30.dp))
     }
 }
 
