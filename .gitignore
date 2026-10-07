@@ -10,3 +10,8 @@ build/
 .cxx/
 *.apk
 *.aab
+
+# Firma de la versión final: nunca en git
+keystore.properties
+*.jks
+*.keystore

@@ -32,6 +32,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,6 +52,7 @@ import com.launcherfacil.app.contacts.findContactByNumber
 import com.launcherfacil.app.contacts.loadContactPhoto
 import com.launcherfacil.app.inbox.MissedCall
 import com.launcherfacil.app.inbox.SmsMessage
+import com.launcherfacil.app.inbox.deleteMissedCalls
 import com.launcherfacil.app.inbox.formatWhen
 import com.launcherfacil.app.inbox.hideSms
 import com.launcherfacil.app.inbox.loadInboxSms
@@ -58,6 +60,7 @@ import com.launcherfacil.app.inbox.loadMissedCalls
 import com.launcherfacil.app.inbox.markMissedCallsSeen
 import com.launcherfacil.app.inbox.markSmsSeen
 import com.launcherfacil.app.inbox.rememberContentVersion
+import kotlinx.coroutines.launch
 
 val NaranjaMensajes = Color(0xFFEF6C00)
 val MoradoPerdidas = Color(0xFF6A1B9A)
@@ -150,6 +153,20 @@ fun MissedCallsScreen(onCallBack: (String) -> Unit, onHome: () -> Unit) {
     val version = rememberContentVersion(CallLog.Calls.CONTENT_URI)
     val calls by produceState<List<MissedCall>?>(null, version) { value = loadMissedCalls(context) }
     LaunchedEffect(Unit) { markMissedCallsSeen(context) }
+    val scope = rememberCoroutineScope()
+    var confirmClear by remember { mutableStateOf(false) }
+
+    if (confirmClear) {
+        BackHandler { confirmClear = false }
+        ConfirmDelete(
+            onConfirm = {
+                confirmClear = false
+                scope.launch { deleteMissedCalls(context) }
+            },
+            onCancel = { confirmClear = false }
+        )
+        return
+    }
 
     ListScaffold(onHome) {
         val list = calls
@@ -174,6 +191,43 @@ fun MissedCallsScreen(onCallBack: (String) -> Unit, onHome: () -> Unit) {
                         )
                     }
                 }
+                // Al final: papelera grande para borrar todo el historial (pide confirmación).
+                item(key = "clear") {
+                    BigTile(RojoSos, { confirmClear = true }, Modifier.fillMaxWidth().height(110.dp)) {
+                        TileIcon(R.drawable.ic_delete, 0.6f)
+                    }
+                }
+            }
+        }
+    }
+}
+
+/** Confirmación sin texto: papelera grande arriba, y abajo ✗ (no) y ✓ (sí, borrar). */
+@Composable
+private fun ConfirmDelete(onConfirm: () -> Unit, onCancel: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Fondo)
+            .safeDrawingPadding()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
+            Icon(
+                painterResource(R.drawable.ic_delete), null,
+                tint = RojoSos, modifier = Modifier.size(220.dp)
+            )
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth().height(180.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            BigTile(GrisBoton, onCancel, Modifier.weight(1f).fillMaxSize()) {
+                TileIcon(R.drawable.ic_close, 0.6f)
+            }
+            BigTile(RojoSos, onConfirm, Modifier.weight(1f).fillMaxSize()) {
+                TileIcon(R.drawable.ic_check, 0.6f)
             }
         }
     }

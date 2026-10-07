@@ -105,7 +105,12 @@ fun parseWhatsAppCall(context: Context, sbn: StatusBarNotification): WhatsAppCal
     val callType = extras.getInt(EXTRA_CALL_TYPE, 0)
     if (callType != 0 && callType != CALL_TYPE_INCOMING) return null // en curso, filtrado...
 
-    val actions = n.actions.orEmpty()
+    // Los botones solo se buscan por su texto en notificaciones de llamada: los mensajes
+    // traen "Responder" (contestar por escrito) y se tomaban por llamadas (A16, 2026-10-07).
+    // Los botones con campo de texto (RemoteInput) nunca son de llamada.
+    val actions = if (n.category == Notification.CATEGORY_CALL) {
+        n.actions.orEmpty().filter { it.remoteInputs.isNullOrEmpty() }
+    } else emptyList()
     val answer = extras.parcelable<PendingIntent>(EXTRA_ANSWER_INTENT)
         ?: actions.firstOrNull { ANSWER_WORDS.containsMatchIn(it.title ?: "") }?.actionIntent
         ?: return null

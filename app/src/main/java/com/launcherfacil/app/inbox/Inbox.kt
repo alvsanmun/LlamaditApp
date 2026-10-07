@@ -106,6 +106,16 @@ suspend fun countNewMissedCalls(context: Context): Int = withContext(Dispatchers
     }
 }
 
+/** Borra todas las llamadas perdidas del registro del teléfono (no las demás llamadas). */
+suspend fun deleteMissedCalls(context: Context): Int = withContext(Dispatchers.IO) {
+    try {
+        context.contentResolver.delete(CallLog.Calls.CONTENT_URI, MISSED, null)
+    } catch (e: SecurityException) {
+        Log.w(TAG, "Sin permiso para borrar las llamadas perdidas", e)
+        0
+    }
+}
+
 /** Marca las perdidas como vistas (somos la app de Teléfono: nos toca a nosotros). */
 suspend fun markMissedCallsSeen(context: Context) = withContext(Dispatchers.IO) {
     try {
