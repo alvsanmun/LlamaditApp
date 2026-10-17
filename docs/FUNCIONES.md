@@ -1,6 +1,6 @@
-# Funciones de Launcher Fácil
+# Funciones de LlamaditApp
 
-Launcher Fácil tiene dos partes:
+LlamaditApp tiene dos partes:
 
 - **Lo que ve la persona**: solo imágenes, colores y botones grandes. No hace falta leer.
 - **El panel del cuidador**: oculto y protegido con PIN. Aquí sí hay texto.
@@ -39,7 +39,7 @@ Los contactos, sus fotos y quién es favorito se gestionan en la app **Contactos
 Las mismas fotos, en el mismo orden, pero solo de las personas marcadas como "Tiene WhatsApp". Una cámara pequeña en la esquina indica que es videollamada. Tocar la foto **inicia la videollamada directamente**, sin pasar por los chats de WhatsApp.
 
 - Solo videollamadas: las llamadas de voz se hacen con el botón verde normal.
-- Durante la videollamada se ve la pantalla de WhatsApp, con su botón rojo para colgar. Al colgar se vuelve sola a Launcher Fácil.
+- Durante la videollamada se ve la pantalla de WhatsApp, con su botón rojo para colgar. Al colgar se vuelve sola a LlamaditApp.
 - Requiere WhatsApp (no WhatsApp Business) instalado y con la sesión iniciada.
 
 ## 4. Teclado
@@ -73,7 +73,7 @@ Si no hay ningún contacto favorito, abre el marcador con el **112** ya escrito 
   <img src="img/capturas/11-whatsapp-entrante.jpg" alt="Videollamada entrante de WhatsApp" width="230">
 </p>
 
-Launcher Fácil es la app de Teléfono del móvil, así que todas las llamadas usan su propia pantalla:
+LlamaditApp es la app de Teléfono del móvil, así que todas las llamadas usan su propia pantalla:
 
 - **Foto grande** de quien llama (o una silueta si no está en la agenda).
 - **Verde** (que late) para contestar, **rojo** para rechazar. Un solo toque, sin deslizar.
@@ -92,7 +92,7 @@ Las **videollamadas de WhatsApp** entrantes también se muestran con esta pantal
 
 Lista de los SMS recibidos con la foto de quien escribe. Al tocar uno se lee en grande, con una papelera para quitarlo de la lista. Las peticiones de ubicación de los familiares no aparecen.
 
-> Los mensajes "borrados" solo desaparecen de Launcher Fácil. Siguen en la app de mensajes del sistema, que es la única que puede borrarlos del teléfono.
+> Los mensajes "borrados" solo desaparecen de LlamaditApp. Siguen en la app de mensajes del sistema, que es la única que puede borrarlos del teléfono.
 
 ## 8. Llamadas perdidas
 
@@ -114,7 +114,7 @@ Los botones laterales solo cambian el **volumen del timbre** (o, durante una lla
 
 ## 10. Localización bajo demanda
 
-Un familiar autorizado envía al teléfono un SMS con una palabra clave (por defecto `UBICACION` o `DONDE ESTAS`; da igual mayúsculas, tildes o signos). Launcher Fácil le responde automáticamente con un SMS:
+Un familiar autorizado envía al teléfono un SMS con una palabra clave (por defecto `UBICACION` o `DONDE ESTAS`; da igual mayúsculas, tildes o signos). LlamaditApp le responde automáticamente con un SMS:
 
 > Ubicación: https://maps.google.com/?q=40.416775,-3.703790 (±12 m, 10:45) · Batería 64 %
 
@@ -125,9 +125,9 @@ Un familiar autorizado envía al teléfono un SMS con una palabra clave (por def
 
 ## 11. Modo quiosco
 
-- La persona **no puede salir** de Launcher Fácil: no hay botón de inicio, ni de apps recientes, ni panel de notificaciones.
-- Solo se pueden abrir Launcher Fácil, WhatsApp (para las videollamadas) y las pantallas de llamada del sistema.
-- Tras reiniciar o quedarse sin batería, el móvil **arranca directamente** en Launcher Fácil y sin pantalla de bloqueo.
+- La persona **no puede salir** de LlamaditApp: no hay botón de inicio, ni de apps recientes, ni panel de notificaciones.
+- Solo se pueden abrir LlamaditApp, WhatsApp (para las videollamadas) y las pantallas de llamada del sistema.
+- Tras reiniciar o quedarse sin batería, el móvil **arranca directamente** en LlamaditApp y sin pantalla de bloqueo.
 - **Solo datos móviles**: el Wi-Fi está apagado y bloqueado, y el modo avión no se puede activar (dejaría el teléfono sin llamadas ni SOS).
 - **Bluetooth apagado** y bloqueado (no se usa y gasta batería).
 - **Pantalla siempre en vertical**, también en las videollamadas.
@@ -158,7 +158,7 @@ Un familiar autorizado envía al teléfono un SMS con una palabra clave (por def
 | **Seguridad** | Cambiar el PIN. |
 | **Otras apps** | Abrir **Contactos** (añadir personas, fotos y favoritos ★) o los **Ajustes de Android**. El quiosco se pausa mientras tanto y vuelve al regresar. |
 | **Modo quiosco** | **Pausar** (el móvil se usa con normalidad, por ejemplo para instalar algo) y **Activar** de nuevo, sin ordenador. |
-| **Quitar el Device Owner** | Solo para desinstalar Launcher Fácil o entregar el móvil a otra persona. Volver a activar el quiosco exige un ordenador. |
+| **Quitar el Device Owner** | Solo para desinstalar LlamaditApp o entregar el móvil a otra persona. Volver a activar el quiosco exige un ordenador. |
 
 > ⚠️ **Apunta el PIN en un sitio seguro.** En la versión final no hay otra forma de entrar al panel: si se olvida, solo queda restablecer el teléfono de fábrica.
 

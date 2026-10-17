@@ -1,9 +1,9 @@
-# Launcher Fácil
+# LlamaditApp
 
-**Un móvil Android que se usa solo con imágenes.** Launcher Fácil convierte un teléfono Android en un dispositivo sencillo para personas que no saben leer o que se pierden con un móvil normal: fotos grandes de las personas para llamarlas, un botón SOS, el reloj y la batería en grande, y nada más. Un cuidador lo configura todo desde un panel oculto protegido con PIN.
+**Un móvil Android que se usa solo con imágenes.** LlamaditApp convierte un teléfono Android en un dispositivo sencillo para personas que no saben leer o que se pierden con un móvil normal: fotos grandes de las personas para llamarlas, un botón SOS, el reloj y la batería en grande, y nada más. Un cuidador lo configura todo desde un panel oculto protegido con PIN.
 
 <p align="center">
-  <img src="docs/img/capturas/01-inicio.jpg" alt="Pantalla principal de Launcher Fácil" width="260">
+  <img src="docs/img/capturas/01-inicio.jpg" alt="Pantalla principal de LlamaditApp" width="260">
 </p>
 
 ## Qué hace
@@ -20,7 +20,7 @@
 | 🕐 **Reloj y batería** | Siempre en grande en la pantalla principal. |
 | 🔊 **Volumen** | Los botones solo cambian el volumen del teléfono, con un panel enorme que se entiende sin leer. El móvil siempre vibra al recibir una llamada. |
 | 📍 **¿Dónde está?** | Un familiar autorizado envía un SMS con la palabra `UBICACION` y recibe la posición en Google Maps y el nivel de batería. Solo cuando se pide: no hay seguimiento continuo. |
-| 🔒 **Modo quiosco** | La persona no puede salir del launcher, ni desconfigurar el móvil, ni abrir otras apps. Tras reiniciar, arranca directamente en Launcher Fácil. |
+| 🔒 **Modo quiosco** | La persona no puede salir del launcher, ni desconfigurar el móvil, ni abrir otras apps. Tras reiniciar, arranca directamente en LlamaditApp. |
 
 Y por debajo, sin que la persona haga nada: Wi-Fi y Bluetooth apagados (solo datos móviles), pantalla siempre en vertical, apps innecesarias ocultas, sin pantalla de bloqueo y actualizaciones del sistema de madrugada.
 
@@ -79,8 +79,19 @@ Después: mantener pulsado el **reloj 5 segundos** → crear el PIN del cuidador
 
 ## Privacidad
 
-Launcher Fácil **no tiene servidor ni envía datos a ningún sitio**. La ubicación solo sale del móvil por SMS, cuando la pide un contacto autorizado o cuando se pulsa SOS, y va directamente al teléfono de ese familiar. No hay cuentas, ni publicidad, ni analítica.
+LlamaditApp **no tiene servidor ni envía datos a ningún sitio**. La ubicación solo sale del móvil por SMS, cuando la pide un contacto autorizado o cuando se pulsa SOS, y va directamente al teléfono de ese familiar. No hay cuentas, ni publicidad, ni analítica.
 
 ## Tecnología
 
 Kotlin + Jetpack Compose. Android 8.0+ (minSdk 26, targetSdk 35). La app es *Device Owner* (modo quiosco con Lock Task), la app de Teléfono predeterminada (`InCallService`) y lee las notificaciones de WhatsApp para mostrar sus llamadas con la pantalla propia.
+
+## Licencia
+
+Copyright (C) 2026 alvsanmun
+
+LlamaditApp es **software libre**: puedes usarlo, estudiarlo, modificarlo y redistribuirlo bajo los términos de la **[GNU Affero General Public License, versión 3](LICENSE)** o, a tu elección, cualquier versión posterior. Se distribuye con la esperanza de que sea útil, pero **sin ninguna garantía**; consulta el archivo [LICENSE](LICENSE) para más detalles.
+
+- Si distribuyes una versión modificada, debes publicar también su código fuente bajo la misma licencia.
+- Te pedimos, además, que uses **otro nombre y otro `applicationId`** para tu versión, para que no se confunda con esta ni choque con ella al instalarse.
+- Las fotos de personas de `docs/img/capturas/` son de [Unsplash](https://unsplash.com) y tienen su propia licencia (créditos en [FUNCIONES.md](docs/FUNCIONES.md)); **no están cubiertas por la AGPLv3**.
+- Las librerías de Android (AndroidX, Jetpack Compose) y los iconos de Material Design se usan bajo la licencia Apache 2.0, compatible con la AGPLv3.

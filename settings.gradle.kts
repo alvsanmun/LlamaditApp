@@ -14,7 +14,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "LauncherFacil"
+rootProject.name = "LlamaditApp"
 include(":app")
 // WhatsApp falso para el emulador. Solo se incluye si se pide expresamente, para que
 // `gradlew installDebug` no lo instale nunca en el móvil real:

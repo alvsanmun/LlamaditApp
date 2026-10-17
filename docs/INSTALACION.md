@@ -6,7 +6,7 @@ Esta guía deja un móvil Android listo para entregar, empezando desde un teléf
 
 Los pasos y nombres de menús son los de un **Samsung Galaxy A16** (Android 16, One UI 8). En otras marcas los menús se llaman parecido; donde hay diferencias importantes se indica.
 
-> **¿Por qué hace falta un ordenador?** Para que la persona no pueda salir de Launcher Fácil, la app tiene que ser el *administrador del dispositivo* (*Device Owner*). Android solo permite nombrarlo desde un ordenador y con el móvil sin cuentas. Es una medida de seguridad de Android, y solo hay que hacerlo una vez.
+> **¿Por qué hace falta un ordenador?** Para que la persona no pueda salir de LlamaditApp, la app tiene que ser el *administrador del dispositivo* (*Device Owner*). Android solo permite nombrarlo desde un ordenador y con el móvil sin cuentas. Es una medida de seguridad de Android, y solo hay que hacerlo una vez.
 
 ---
 
@@ -29,8 +29,8 @@ Los pasos y nombres de menús son los de un **Samsung Galaxy A16** (Android 16, 
    - Elige el idioma.
    - **No añadas ninguna cuenta de Google** ("Omitir"). Se añadirá más tarde.
    - **No añadas cuenta de Samsung** ("Omitir").
-   - **No pongas PIN, patrón ni huella** ("Omitir" / "Ninguno"). Launcher Fácil quita la pantalla de bloqueo, y eso solo funciona si el móvil no tiene ninguna.
-   - Puedes conectarte a un Wi-Fi durante el asistente; luego Launcher Fácil lo apagará.
+   - **No pongas PIN, patrón ni huella** ("Omitir" / "Ninguno"). LlamaditApp quita la pantalla de bloqueo, y eso solo funciona si el móvil no tiene ninguna.
+   - Puedes conectarte a un Wi-Fi durante el asistente; luego LlamaditApp lo apagará.
 4. **Quita el PIN de la SIM**, para que tras un reinicio el teléfono funcione sin que nadie tenga que hacer nada: *Ajustes → Seguridad y privacidad → Otros ajustes de seguridad → Configurar bloqueo de SIM → desactivar "Bloquear tarjeta SIM"* (pide el PIN actual).
 
 ## Paso 2. Activar la depuración USB
@@ -54,7 +54,7 @@ Los pasos y nombres de menús son los de un **Samsung Galaxy A16** (Android 16, 
 
 > En Windows, si la terminal no encuentra `adb`, escribe `.\adb` en lugar de `adb` en todos los comandos.
 
-## Paso 4. Instalar Launcher Fácil
+## Paso 4. Instalar LlamaditApp
 
 Copia `launcher-facil.apk` a la carpeta de platform-tools y ejecuta:
 
@@ -80,13 +80,13 @@ Debe responder `Success`.
    > adb shell pm uninstall --user 0 com.google.android.apps.tachyon
    > ```
 
-2. Nombra a Launcher Fácil administrador del dispositivo:
+2. Nombra a LlamaditApp administrador del dispositivo:
 
    ```bash
    adb shell dpm set-device-owner com.launcherfacil.app/.kiosk.AdminReceiver
    ```
 
-   Debe responder `Success: Device owner set to package ...`. **En unos segundos Launcher Fácil se abre y queda bloqueado**: ya no se puede salir de él. En ese momento también se apagan el Wi-Fi y el Bluetooth, se ocultan las apps innecesarias y Launcher Fácil pasa a ser la app de Teléfono.
+   Debe responder `Success: Device owner set to package ...`. **En unos segundos LlamaditApp se abre y queda bloqueado**: ya no se puede salir de él. En ese momento también se apagan el Wi-Fi y el Bluetooth, se ocultan las apps innecesarias y LlamaditApp pasa a ser la app de Teléfono.
 
    Si responde `Not allowed to set the device owner because there are already some accounts on the device`, vuelve al punto 1: queda alguna cuenta.
 
@@ -108,13 +108,13 @@ Debe responder `Success`.
    adb shell settings put global SOFTWARE_UPDATE_WIFI_ONLY2 0
    ```
 
-6. Reinicia el móvil para comprobar que arranca directamente en Launcher Fácil, sin pantalla de bloqueo:
+6. Reinicia el móvil para comprobar que arranca directamente en LlamaditApp, sin pantalla de bloqueo:
 
    ```bash
    adb reboot
    ```
 
-> **Android 13 o anterior:** Launcher Fácil no puede hacerse app de Teléfono él solo. Hazlo a mano desde el panel del cuidador: *Abrir Ajustes de Android → Aplicaciones → Aplicaciones predeterminadas → App de teléfono → Launcher Fácil*.
+> **Android 13 o anterior:** LlamaditApp no puede hacerse app de Teléfono él solo. Hazlo a mano desde el panel del cuidador: *Abrir Ajustes de Android → Aplicaciones → Aplicaciones predeterminadas → App de teléfono → LlamaditApp*.
 
 ## Paso 6. Crear el PIN del cuidador
 
@@ -130,9 +130,9 @@ En el panel del cuidador, toca **"Abrir Contactos (favoritos y fotos)"**. Para c
 
 1. Crea el contacto con su **nombre y número**.
 2. Ponle una **foto grande y clara de su cara** (toca el icono de la cámara al editar el contacto). Es lo que verá la persona.
-3. Márcalo como **favorito ★**. **Solo los favoritos aparecen** en Launcher Fácil.
+3. Márcalo como **favorito ★**. **Solo los favoritos aparecen** en LlamaditApp.
 
-Cuando termines, vuelve atrás hasta Launcher Fácil: el modo quiosco vuelve a activarse solo.
+Cuando termines, vuelve atrás hasta LlamaditApp: el modo quiosco vuelve a activarse solo.
 
 ## Paso 8. Cuenta de Google y WhatsApp (opcional)
 
@@ -140,11 +140,11 @@ Solo si va a usar videollamadas de WhatsApp.
 
 1. En el panel del cuidador, toca **"Pausar el modo quiosco"**. El móvil se puede usar con normalidad (también tras reiniciar) hasta que lo vuelvas a activar.
 2. Toca **"Abrir Ajustes de Android"** y añade la **cuenta de Google**: *Cuentas y copia de seguridad → Administrar cuentas → Añadir cuenta → Google*.
-3. Abre **Play Store**. Launcher Fácil sigue siendo la pantalla de inicio y no tiene lista de apps, así que se abre desde los ajustes: *Ajustes → Aplicaciones → Google Play Store → Abrir*. Instala **WhatsApp**, ábrelo y regístralo con el número de la SIM (llegará un SMS de verificación).
+3. Abre **Play Store**. LlamaditApp sigue siendo la pantalla de inicio y no tiene lista de apps, así que se abre desde los ajustes: *Ajustes → Aplicaciones → Google Play Store → Abrir*. Instala **WhatsApp**, ábrelo y regístralo con el número de la SIM (llegará un SMS de verificación).
 4. En Play Store: *foto de perfil → Ajustes → Preferencias de red → Actualizar apps automáticamente → "Usando cualquier red"*. Así WhatsApp se mantendrá actualizado con los datos móviles.
-5. Pulsa el botón de inicio para volver a Launcher Fácil, entra en el panel del cuidador y toca **"Activar el modo quiosco"**. Al activarlo, Launcher Fácil concede a WhatsApp los permisos de cámara, micrófono y contactos (dentro del quiosco no se pueden mostrar los avisos de permisos).
+5. Pulsa el botón de inicio para volver a LlamaditApp, entra en el panel del cuidador y toca **"Activar el modo quiosco"**. Al activarlo, LlamaditApp concede a WhatsApp los permisos de cámara, micrófono y contactos (dentro del quiosco no se pueden mostrar los avisos de permisos).
 6. En la sección **"Tienen WhatsApp (videollamada)"**, marca las personas que usan WhatsApp. Aparecerán en el botón de videollamada.
-7. Si la sección **"Llamadas de WhatsApp"** dice *Desactivado*, toca **"Activar acceso a notificaciones"** y activa Launcher Fácil en la lista.
+7. Si la sección **"Llamadas de WhatsApp"** dice *Desactivado*, toca **"Activar acceso a notificaciones"** y activa LlamaditApp en la lista.
 
 > Si en la primera videollamada WhatsApp pide algún permiso o no se ve la cámara, **reinicia el móvil** una vez.
 
@@ -162,7 +162,7 @@ Hay ajustes del teléfono que una app no puede cambiar y que conviene dejar bien
 - **"No molestar" desactivado** y sin horarios programados: si no, las llamadas no suenan.
 - **Ubicación activada**, con la precisión de Google: si no, el SOS no puede enviar la posición.
 - **Fecha y hora automáticas**.
-- **Launcher Fácil y WhatsApp en "Aplicaciones que nunca se suspenden"** (*Ajustes → Batería → Límites de uso en segundo plano*).
+- **LlamaditApp y WhatsApp en "Aplicaciones que nunca se suspenden"** (*Ajustes → Batería → Límites de uso en segundo plano*).
 - **Funciones de chat (RCS) desactivadas** en la app Mensajes: así las peticiones de ubicación llegan siempre como SMS.
 - **Notificaciones de llamadas de WhatsApp activadas**.
 - **Tiempo de espera de la pantalla** de 1 o 2 minutos.
@@ -179,15 +179,15 @@ Antes de entregar el móvil, prueba:
 - [ ] Teclado: marcar un número a mano.
 - [ ] SOS (avisa antes a la persona de confianza): mantenerlo pulsado 2 s. Llama y llega el SMS con la ubicación.
 - [ ] Desde el móvil de un familiar, enviar `UBICACION` por SMS: llega la respuesta con el enlace.
-- [ ] Videollamada de WhatsApp saliente y entrante. Al colgar, vuelve a Launcher Fácil.
+- [ ] Videollamada de WhatsApp saliente y entrante. Al colgar, vuelve a LlamaditApp.
 - [ ] Botones de volumen: aparece el panel grande.
-- [ ] Reiniciar el móvil: arranca solo en Launcher Fácil.
+- [ ] Reiniciar el móvil: arranca solo en LlamaditApp.
 - [ ] Intentar salir con los botones de inicio y de apps recientes: no se puede.
 
 ## Paso 12. Antes de entregarlo
 
 - Desconecta el cable USB.
-- (Opcional) Con el quiosco en pausa, desactiva la **depuración USB** y vuelve a activar el **Bloqueador automático** de Samsung. Ten en cuenta que, para instalar después una versión nueva de Launcher Fácil desde el ordenador, tendrás que volver a activarlos.
+- (Opcional) Con el quiosco en pausa, desactiva la **depuración USB** y vuelve a activar el **Bloqueador automático** de Samsung. Ten en cuenta que, para instalar después una versión nueva de LlamaditApp desde el ordenador, tendrás que volver a activarlos.
 - Asegúrate de que el modo quiosco está **activado** (en el panel debe verse el botón "Pausar el modo quiosco").
 
 ## Paso 13. Configurar los móviles de los familiares
@@ -201,7 +201,7 @@ Recuérdales también cómo pedir la ubicación: un SMS con la palabra `UBICACIO
 
 ---
 
-## Actualizar Launcher Fácil
+## Actualizar LlamaditApp
 
 Con el móvil conectado al ordenador (depuración USB activa):
 
@@ -211,10 +211,10 @@ adb install -r launcher-facil.apk
 
 Se conservan el PIN, los ajustes y el modo quiosco. La versión nueva tiene que estar firmada con la misma clave que la instalada.
 
-## Desinstalar Launcher Fácil o entregar el móvil a otra persona
+## Desinstalar LlamaditApp o entregar el móvil a otra persona
 
 1. Panel del cuidador → **"Quitar el Device Owner"** → confirmar. El modo quiosco se desactiva para siempre y las apps ocultas vuelven a aparecer.
-2. Desinstala Launcher Fácil como cualquier otra app, o restablece el móvil de fábrica.
+2. Desinstala LlamaditApp como cualquier otra app, o restablece el móvil de fábrica.
 
 > Para **volver a activar** el modo quiosco después de quitar el Device Owner hay que repetir el paso 5, y para eso el móvil no puede tener cuentas (Google, WhatsApp…). Si solo quieres instalar o cambiar algo, usa **"Pausar el modo quiosco"**, que no tiene ese problema.
 

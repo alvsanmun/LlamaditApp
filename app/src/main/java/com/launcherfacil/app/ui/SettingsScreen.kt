@@ -1,5 +1,25 @@
+/*
+ * LlamaditApp
+ * Copyright (C) 2026 alvsanmun
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.launcherfacil.app.ui
 
+import android.content.Context
+import android.content.pm.PackageManager
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -170,7 +190,7 @@ fun SettingsScreen(
                 Section("Llamadas de WhatsApp")
                 Hint(
                     if (whatsAppAccess) "Activado: las llamadas de WhatsApp se ven con la pantalla grande."
-                    else "Desactivado: hay que dar \"acceso a notificaciones\" a Launcher Fácil."
+                    else "Desactivado: hay que dar \"acceso a notificaciones\" a LlamaditApp."
                 )
                 if (!whatsAppAccess) ActionButton("Activar acceso a notificaciones", onOpenNotificationAccess)
 
@@ -201,6 +221,17 @@ fun SettingsScreen(
                     Hint("Solo para desinstalar el launcher o entregar el móvil:")
                     ActionButton("Quitar el Device Owner", { confirmDisable = true }, color = RojoSos)
                 }
+
+                // Avisos legales que pide la licencia (GNU AGPL v3, sección 5 d).
+                Section("Acerca de")
+                Text("LlamaditApp ${appVersion(context)}", color = TextoClaro, fontSize = 18.sp)
+                Hint("Copyright (C) 2026 alvsanmun")
+                Hint(
+                    "Software libre: puedes redistribuirlo y modificarlo bajo los términos de la " +
+                        "licencia GNU Affero General Public License, versión 3 o posterior. " +
+                        "Se distribuye SIN NINGUNA GARANTÍA."
+                )
+                Hint("Código fuente y licencia: $SOURCE_URL")
                 Spacer(Modifier.height(24.dp))
             }
         }
@@ -312,4 +343,13 @@ private fun ActionButton(text: String, onClick: () -> Unit, color: Color = GrisB
     ) {
         Text(text, fontSize = 18.sp)
     }
+}
+
+/** Repositorio con el código fuente (la licencia AGPL obliga a ofrecerlo). */
+private const val SOURCE_URL = "https://github.com/alvsanmun/LlamaditApp"
+
+private fun appVersion(context: Context): String = try {
+    context.packageManager.getPackageInfo(context.packageName, 0).versionName.orEmpty()
+} catch (e: PackageManager.NameNotFoundException) {
+    ""
 }

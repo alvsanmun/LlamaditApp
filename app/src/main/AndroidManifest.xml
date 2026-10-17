@@ -47,7 +47,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.LauncherFacil">
+        android:theme="@style/Theme.LlamaditApp">
 
         <activity
             android:name=".MainActivity"
@@ -112,7 +112,7 @@
         <service
             android:name=".whatsapp.WhatsAppCallListener"
             android:exported="true"
-            android:label="Launcher Fácil: llamadas de WhatsApp"
+            android:label="LlamaditApp: llamadas de WhatsApp"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />

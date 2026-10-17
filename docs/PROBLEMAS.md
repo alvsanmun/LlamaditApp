@@ -17,8 +17,8 @@ El móvil tiene otro usuario o un perfil de trabajo (o Carpeta segura). Elimína
 ### He olvidado el PIN del cuidador
 En la versión final no hay forma de recuperarlo: hay que **restablecer el móvil de fábrica** (con los botones físicos, en el modo de recuperación) y volver a instalar. En la versión de desarrollo existe una salida de emergencia por `adb` (ver [DESARROLLO.md](DESARROLLO.md)).
 
-### Una llamada entrante no muestra la pantalla de Launcher Fácil
-Launcher Fácil debe ser la **app de Teléfono predeterminada**. Compruébalo con `adb shell cmd role get-role-holders android.app.role.DIALER`: debe salir `com.launcherfacil.app`. En Android 14 o superior lo hace solo al activar el quiosco; en versiones anteriores, elígelo a mano en *Ajustes → Aplicaciones → Aplicaciones predeterminadas → App de teléfono*.
+### Una llamada entrante no muestra la pantalla de LlamaditApp
+LlamaditApp debe ser la **app de Teléfono predeterminada**. Compruébalo con `adb shell cmd role get-role-holders android.app.role.DIALER`: debe salir `com.launcherfacil.app`. En Android 14 o superior lo hace solo al activar el quiosco; en versiones anteriores, elígelo a mano en *Ajustes → Aplicaciones → Aplicaciones predeterminadas → App de teléfono*.
 
 ### Las videollamadas entrantes de WhatsApp no salen con la pantalla grande
 Falta el **acceso a notificaciones**. En el panel del cuidador, sección "Llamadas de WhatsApp", toca *Activar acceso a notificaciones*, o ejecuta el comando del paso 5 de la [guía de instalación](INSTALACION.md).
@@ -48,4 +48,4 @@ Falta el permiso para fijar la rotación: `adb shell appops set com.launcherfaci
 Panel del cuidador → **"Pausar el modo quiosco"**. Al terminar, **"Activar el modo quiosco"**. No uses "Quitar el Device Owner": para deshacerlo hace falta un ordenador y quitar todas las cuentas del móvil.
 
 ### `adb install` falla con `INSTALL_FAILED_UPDATE_INCOMPATIBLE`
-La versión instalada está firmada con otra clave. Como Launcher Fácil es Device Owner, no se puede desinstalar directamente: quita antes el Device Owner desde el panel del cuidador, desinstala y vuelve a instalar desde el paso 4 de la guía.
+La versión instalada está firmada con otra clave. Como LlamaditApp es Device Owner, no se puede desinstalar directamente: quita antes el Device Owner desde el panel del cuidador, desinstala y vuelve a instalar desde el paso 4 de la guía.
