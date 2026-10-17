@@ -45,6 +45,8 @@ export JAVA_HOME=~/.jdks/jbr-21.0.11
 
 Sin `keystore.properties`, el APK de release sale sin firmar y no se puede instalar.
 
+Con `keystore.properties`, **la versión debug también se firma con esa clave**: así se puede instalar encima de la versión final para seguir probando en el mismo móvil (sin él, se usa la clave de depuración de Android).
+
 > Un APK de debug y uno de release tienen firmas distintas: no se puede instalar uno encima del otro.
 
 ## Estructura

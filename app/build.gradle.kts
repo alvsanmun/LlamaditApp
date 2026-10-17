@@ -14,8 +14,8 @@ android {
         applicationId = "com.launcherfacil.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "0.1"
+        versionCode = 2
+        versionName = "1.0"
     }
 
     // Firma de la versión final: datos en keystore.properties (fuera de git).
@@ -36,6 +36,11 @@ android {
         release {
             isMinifyEnabled = false
             signingConfig = signingConfigs.findByName("release")
+        }
+        // La versión de pruebas también se firma con la clave final (si está disponible):
+        // así se puede instalar encima de la versión final en el móvil y seguir probando.
+        debug {
+            signingConfigs.findByName("release")?.let { signingConfig = it }
         }
     }
 
