@@ -69,7 +69,8 @@ Sin `keystore.properties`, el APK de release sale sin firmar y no se puede insta
 # Salida de emergencia: quita el modo quiosco y el Device Owner (por si se olvida el PIN)
 adb shell am broadcast -a com.launcherfacil.app.DEBUG_EXIT_KIOSK -p com.launcherfacil.app
 
-# Fotos de prueba dibujadas para los favoritos
+# Fotos de prueba para los favoritos: usa <nombre>.jpg (en minúsculas y sin tildes) de
+# /sdcard/Android/data/com.launcherfacil.app/files/fotos/ si existe; si no, dibuja una cara
 adb shell am broadcast -a com.launcherfacil.app.DEBUG_TEST_PHOTOS -p com.launcherfacil.app
 
 # SOS con intervalos de 15 s en lugar de 10 min

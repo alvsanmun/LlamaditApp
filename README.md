@@ -3,7 +3,7 @@
 **Un móvil Android que se usa solo con imágenes.** Launcher Fácil convierte un teléfono Android en un dispositivo sencillo para personas que no saben leer o que se pierden con un móvil normal: fotos grandes de las personas para llamarlas, un botón SOS, el reloj y la batería en grande, y nada más. Un cuidador lo configura todo desde un panel oculto protegido con PIN.
 
 <p align="center">
-  <img src="docs/img/pantalla-principal.svg" alt="Pantalla principal de Launcher Fácil" width="260">
+  <img src="docs/img/capturas/01-inicio.jpg" alt="Pantalla principal de Launcher Fácil" width="260">
 </p>
 
 ## Qué hace
@@ -25,6 +25,27 @@
 Y por debajo, sin que la persona haga nada: Wi-Fi y Bluetooth apagados (solo datos móviles), pantalla siempre en vertical, apps innecesarias ocultas, sin pantalla de bloqueo y actualizaciones del sistema de madrugada.
 
 Más detalles en **[docs/FUNCIONES.md](docs/FUNCIONES.md)**.
+
+## Así se ve
+
+| Llamar | Videollamada | Llamada entrante |
+|:---:|:---:|:---:|
+| <img src="docs/img/capturas/02-llamar.jpg" width="220" alt="Llamar"> | <img src="docs/img/capturas/03-videollamada.jpg" width="220" alt="Videollamada"> | <img src="docs/img/capturas/05-llamada-entrante.jpg" width="220" alt="Llamada entrante"> |
+| Toca la foto para llamar | Toca la foto y empieza la videollamada de WhatsApp | Verde para coger, rojo para colgar |
+
+| SOS | Mensajes | Llamadas perdidas |
+|:---:|:---:|:---:|
+| <img src="docs/img/capturas/13-sos.jpg" width="220" alt="SOS"> | <img src="docs/img/capturas/07-mensajes.jpg" width="220" alt="Mensajes"> | <img src="docs/img/capturas/09-perdidas.jpg" width="220" alt="Llamadas perdidas"> |
+| Mantener pulsado 2 s: llama y envía la ubicación | Los SMS, con la foto de quien escribe | Toca una para devolver la llamada |
+
+| Teclado | Volumen | Panel del cuidador |
+|:---:|:---:|:---:|
+| <img src="docs/img/capturas/04-teclado.jpg" width="220" alt="Teclado"> | <img src="docs/img/capturas/12-volumen.jpg" width="220" alt="Volumen"> | <img src="docs/img/capturas/15-panel-1.jpg" width="220" alt="Panel del cuidador"> |
+| Números enormes | Un panel que se entiende sin leer | Oculto y con PIN, solo para el cuidador |
+
+Todas las pantallas, explicadas una a una, en **[docs/FUNCIONES.md](docs/FUNCIONES.md)**.
+
+<sub>Capturas del emulador con contactos inventados; fotos de Unsplash (créditos en [FUNCIONES.md](docs/FUNCIONES.md)).</sub>
 
 ## Requisitos
 

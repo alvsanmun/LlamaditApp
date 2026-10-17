@@ -5,6 +5,7 @@ import android.content.ContentProviderOperation
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -13,6 +14,8 @@ import android.provider.ContactsContract
 import android.provider.ContactsContract.CommonDataKinds.Photo
 import android.util.Log
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.text.Normalizer
 
 /**
  * SOLO EN DEBUG: dibuja una cara sencilla y la guarda como foto de cada contacto
@@ -20,6 +23,10 @@ import java.io.ByteArrayOutputStream
  *
  *   adb shell pm grant com.launcherfacil.app android.permission.WRITE_CONTACTS
  *   adb shell am broadcast -a com.launcherfacil.app.DEBUG_TEST_PHOTOS -p com.launcherfacil.app
+ *
+ * Con fotos reales (capturas para la documentación): si existe
+ * /sdcard/Android/data/com.launcherfacil.app/files/fotos/<nombre>.jpg (nombre en
+ * minúsculas y sin tildes, p. ej. "maria.jpg"), se usa esa foto en lugar del dibujo.
  */
 class DebugTestPhotosReceiver : BroadcastReceiver() {
 
@@ -35,14 +42,16 @@ class DebugTestPhotosReceiver : BroadcastReceiver() {
         val resolver = context.contentResolver
         resolver.query(
             ContactsContract.RawContacts.CONTENT_URI,
-            arrayOf(ContactsContract.RawContacts._ID),
+            arrayOf(ContactsContract.RawContacts._ID, ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY),
             "${ContactsContract.RawContacts.STARRED} = 1 AND ${ContactsContract.RawContacts.DELETED} = 0",
             null, null
         )?.use { c ->
             var i = 0
             while (c.moveToNext()) {
                 val rawId = c.getLong(0)
-                val photo = drawFace(palettes[i++ % palettes.size])
+                val photo = loadPhoto(context, c.getString(1).orEmpty())
+                    ?: drawFace(palettes[i % palettes.size])
+                i++
                 val ops = arrayListOf(
                     ContentProviderOperation.newDelete(ContactsContract.Data.CONTENT_URI)
                         .withSelection(
@@ -59,6 +68,17 @@ class DebugTestPhotosReceiver : BroadcastReceiver() {
                 Log.i("DebugTestPhotos", "Foto de prueba guardada en el contacto $rawId")
             }
         }
+    }
+
+    /** Foto "<nombre>.jpg" de la carpeta fotos/ de la app, reducida a 720 px, o null. */
+    private fun loadPhoto(context: Context, name: String): ByteArray? {
+        val key = Normalizer.normalize(name.lowercase(), Normalizer.Form.NFD)
+            .replace(Regex("\\p{Mn}+"), "")
+        val file = File(context.getExternalFilesDir("fotos"), "$key.jpg")
+        if (!file.exists()) return null
+        val bitmap = BitmapFactory.decodeFile(file.path) ?: return null
+        val scaled = Bitmap.createScaledBitmap(bitmap, 720, 720 * bitmap.height / bitmap.width, true)
+        return ByteArrayOutputStream().also { scaled.compress(Bitmap.CompressFormat.JPEG, 90, it) }.toByteArray()
     }
 
     private fun drawFace(palette: Triple<Long, Long, Long>): ByteArray {
