@@ -15,3 +15,12 @@ build/
 keystore.properties
 *.jks
 *.keystore
+
+# Solo en local: no hacen falta para compilar el launcher
+CLAUDE.md
+.claude/
+README.md
+docs/
+web/
+.gitlab-ci.yml
+whatsapp-stub/
