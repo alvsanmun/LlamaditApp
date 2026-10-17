@@ -143,6 +143,7 @@ Un familiar autorizado envía al teléfono un SMS con una palabra clave (por def
   <img src="img/capturas/15-panel-1.jpg" alt="Orden de contactos y SOS" width="230">
   <img src="img/capturas/15-panel-2.jpg" alt="Ubicación y WhatsApp" width="230">
   <img src="img/capturas/15-panel-3.jpg" alt="Seguridad y modo quiosco" width="230">
+  <img src="img/capturas/16-acerca-de.jpg" alt="Acerca de: versión, copyright y licencia" width="230">
 </p>
 
 **Cómo entrar:** mantener pulsado el **reloj 5 segundos** (el teléfono vibra) e introducir el PIN de 4 cifras. La primera vez se crea el PIN (dos veces). El panel se cierra solo al apagar la pantalla.
@@ -159,6 +160,7 @@ Un familiar autorizado envía al teléfono un SMS con una palabra clave (por def
 | **Otras apps** | Abrir **Contactos** (añadir personas, fotos y favoritos ★) o los **Ajustes de Android**. El quiosco se pausa mientras tanto y vuelve al regresar. |
 | **Modo quiosco** | **Pausar** (el móvil se usa con normalidad, por ejemplo para instalar algo) y **Activar** de nuevo, sin ordenador. |
 | **Quitar el Device Owner** | Solo para desinstalar LlamaditApp o entregar el móvil a otra persona. Volver a activar el quiosco exige un ordenador. |
+| **Acerca de** | Versión de la app, copyright, licencia (GNU AGPL v3) y dirección del código fuente. |
 
 > ⚠️ **Apunta el PIN en un sitio seguro.** En la versión final no hay otra forma de entrar al panel: si se olvida, solo queda restablecer el teléfono de fábrica.
 
