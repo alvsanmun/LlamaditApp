@@ -71,6 +71,10 @@ private fun BoxScope.VolumeOverlay() {
 
     LaunchedEffect(change?.id) {
         val current = change ?: return@LaunchedEffect
+        // El último cambio queda guardado: una pantalla que se abre después (por ejemplo,
+        // la de llamada entrante) no debe volver a mostrarlo si ya es antiguo.
+        val ageMs = (System.nanoTime() - current.id) / 1_000_000
+        if (ageMs >= VISIBLE_MS) return@LaunchedEffect
         visible = true
         // Salto de la flecha en la dirección del cambio.
         arrowOffset.snapTo(if (current.up) 40f else -40f)
