@@ -21,6 +21,7 @@ package com.launcherfacil.app.sos
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import com.launcherfacil.app.R
 import com.launcherfacil.app.ui.toBatteryState
 
 /**
@@ -33,7 +34,10 @@ fun batteryText(context: Context): String {
     val intent = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
         ?: return ""
     val battery = intent.toBatteryState()
-    return if (battery.charging) "Batería ${battery.percent} % (cargando)" else "Batería ${battery.percent} %"
+    return context.getString(
+        if (battery.charging) R.string.battery_level_charging else R.string.battery_level,
+        battery.percent
+    )
 }
 
 /** Añade " · Batería N %" al final del texto (si se puede leer la batería). */

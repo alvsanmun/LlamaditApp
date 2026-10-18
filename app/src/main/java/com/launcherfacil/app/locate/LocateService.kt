@@ -24,6 +24,7 @@ import android.content.Intent
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.ServiceCompat
+import com.launcherfacil.app.R
 import com.launcherfacil.app.sos.currentLocation
 import com.launcherfacil.app.sos.sendSms
 import com.launcherfacil.app.sos.startLocationForeground
@@ -58,7 +59,7 @@ class LocateService : Service() {
         // Si Android no deja pasar a primer plano (app en segundo plano y aún sin
         // Device Owner), hay que terminar antes de que salte el límite de tiempo:
         // se usa un tiempo de GPS corto.
-        val foreground = startLocationForeground(NOTIFICATION_ID, "Enviando la ubicación por SMS")
+        val foreground = startLocationForeground(NOTIFICATION_ID, getString(R.string.notification_locate))
         val gpsTimeoutMs = if (foreground) 20_000L else 4_000L
         val replyTo = intent?.getStringExtra(EXTRA_REPLY_TO)
         if (replyTo == null) {
@@ -68,7 +69,7 @@ class LocateService : Service() {
         pending++
         scope.launch {
             val location = currentLocation(this@LocateService, gpsTimeoutMs)
-            val text = withBattery(this@LocateService, locateReply(location))
+            val text = withBattery(this@LocateService, locateReply(this@LocateService, location))
             val sent = sendSms(replyTo, text)
             Log.i(TAG, "Respuesta a $replyTo enviada=$sent: $text")
             pending--

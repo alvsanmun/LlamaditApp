@@ -61,7 +61,7 @@ class SmsReceiver : BroadcastReceiver() {
                     // sea Device Owner, paso 6). Plan B: responder aquí con menos tiempo.
                     Log.w(TAG, "No se pudo arrancar LocateService; respuesta rápida", e)
                     val location = currentLocation(context, gpsTimeoutMs = 6_000)
-                    val text = withBattery(context, locateReply(location))
+                    val text = withBattery(context, locateReply(context, location))
                     val sent = context.sendSms(sender, text)
                     Log.i(TAG, "Respuesta rápida enviada=$sent: $text")
                 }

@@ -23,6 +23,7 @@ import android.location.Location
 import android.os.Build
 import android.telephony.PhoneNumberUtils
 import android.telephony.TelephonyManager
+import com.launcherfacil.app.R
 import com.launcherfacil.app.config.CaregiverSettings
 import com.launcherfacil.app.config.locateContacts
 import com.launcherfacil.app.sos.mapsLink
@@ -71,10 +72,15 @@ private fun androidSamePhoneNumber(context: Context, a: String, b: String): Bool
         PhoneNumberUtils.compare(context, a, b)
     }
 
-fun locateReply(location: Location?): String =
+fun locateReply(context: Context, location: Location?): String =
     if (location != null) {
-        val time = DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(location.time))
-        "Ubicación: ${location.mapsLink()} (±${location.accuracy.toInt()} m, $time)"
+        context.getString(R.string.locate_reply, locationDetail(context, location))
     } else {
-        "No se ha podido obtener la ubicación ahora mismo."
+        context.getString(R.string.locate_reply_failed)
     }
+
+/** "https://maps.google.com/?q=… (±12 m, 10:45)": enlace, precisión y hora de la posición. */
+fun locationDetail(context: Context, location: Location): String {
+    val time = DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(location.time))
+    return context.getString(R.string.location_detail, location.mapsLink(), location.accuracy.toInt(), time)
+}

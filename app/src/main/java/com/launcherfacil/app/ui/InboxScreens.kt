@@ -318,7 +318,7 @@ private fun PersonRow(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-            Text(formatWhen(date, is24h), color = TextoSuave, fontSize = 18.sp)
+            Text(formatWhen(context, date, is24h), color = TextoSuave, fontSize = 18.sp)
             extra()
         }
     }

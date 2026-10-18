@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- de: translation of values/strings.xml. -->
+<resources>
+    <string name="whatsapp_listener_label">LlamaditApp: WhatsApp-Anrufe</string>
+    <string name="whatsapp_open_failed">WhatsApp konnte nicht geöffnet werden</string>
+    <string name="open_failed">Konnte nicht geöffnet werden</string>
+    <string name="whatsapp_video_row">Videoanruf</string>
+    <string name="battery_level">Akku %1$d %%</string>
+    <string name="battery_level_charging">Akku %1$d %% (lädt)</string>
+    <string name="location_detail">%1$s (±%2$d m, %3$s)</string>
+    <string name="locate_reply">Standort: %1$s</string>
+    <string name="locate_reply_failed">Der Standort konnte gerade nicht ermittelt werden.</string>
+    <string name="sos_first">SOS: Ich brauche Hilfe. Ich bin hier: %1$s</string>
+    <string name="sos_update">SOS: aktualisierter Standort (%1$d/%2$d): %3$s</string>
+    <string name="sos_last">SOS: letzter Standort (%1$d/%2$d): %3$s</string>
+    <string name="sos_no_location">der Standort konnte nicht ermittelt werden.</string>
+    <string name="notification_channel_location">Standort</string>
+    <string name="notification_locate">Standort wird per SMS gesendet</string>
+    <string name="notification_sos">SOS aktiv: Standort wird 30 Minuten lang gesendet</string>
+    <string name="yesterday_at">Gestern %1$s</string>
+    <string name="contacts_permission_needed">Die Berechtigung zum Lesen der Kontakte wird benötigt.</string>
+    <string name="give_permission">Berechtigung erteilen</string>
+    <string name="no_favorites">Es gibt keine Favoriten.\nMarkiere in der Kontakte-App die Personen, die hier erscheinen sollen, mit ★.</string>
+    <string name="whatsapp_not_installed">WhatsApp ist auf diesem Telefon nicht installiert.</string>
+    <string name="no_whatsapp_favorites">Kein Favorit ist mit WhatsApp markiert.\nMarkiere sie in den Einstellungen der Betreuungsperson (Uhr 5 s → PIN → „Haben WhatsApp\").</string>
+    <string name="pin_title">PIN der Betreuungsperson</string>
+    <string name="pin_create">Erstelle eine %1$d-stellige PIN</string>
+    <string name="pin_repeat">PIN wiederholen</string>
+    <string name="pin_wrong">Falsche PIN</string>
+    <string name="pin_mismatch">Die PINs stimmen nicht überein. Fang noch einmal an.</string>
+    <string name="settings_order_title">Reihenfolge der Kontakte</string>
+    <string name="settings_order_hint">Dieselbe Reihenfolge bei Anrufen und Videoanrufen. Neue Favoriten erscheinen am Ende.</string>
+    <string name="settings_sos_title">Kontakt für SOS</string>
+    <string name="settings_no_favorites">Es gibt keine Favoriten (★).</string>
+    <string name="settings_locate_title">Dürfen den Standort per SMS anfordern</string>
+    <string name="settings_whatsapp_title">Haben WhatsApp (Videoanruf)</string>
+    <string name="settings_whatsapp_hint">Ankreuzen, wenn diese Person WhatsApp nutzt: Sie erscheint dann beim Videoanruf-Knopf.</string>
+    <string name="settings_keywords_title">Stichwörter zum Anfordern des Standorts</string>
+    <string name="settings_keywords_hint">Durch Kommas getrennt. Groß-/Kleinschreibung, Akzente und Satzzeichen sind egal.</string>
+    <string name="settings_wa_calls_title">WhatsApp-Anrufe</string>
+    <string name="settings_wa_calls_on">Aktiviert: WhatsApp-Anrufe werden auf dem großen Bildschirm angezeigt.</string>
+    <string name="settings_wa_calls_off">Deaktiviert: LlamaditApp braucht „Zugriff auf Benachrichtigungen\".</string>
+    <string name="settings_wa_calls_enable">Zugriff auf Benachrichtigungen aktivieren</string>
+    <string name="settings_security_title">Sicherheit</string>
+    <string name="settings_change_pin">PIN ändern</string>
+    <string name="settings_other_apps_title">Andere Apps</string>
+    <string name="settings_not_device_owner">Die App ist nicht Device Owner: Der Kioskmodus ist nicht aktiv.</string>
+    <string name="settings_kiosk_paused_short">Der Kioskmodus ist pausiert.</string>
+    <string name="settings_leaves_kiosk">Der Kioskmodus wird verlassen, bis du zu dieser App zurückkehrst.</string>
+    <string name="settings_open_contacts">Kontakte öffnen (Favoriten und Fotos)</string>
+    <string name="settings_open_android_settings">Android-Einstellungen öffnen</string>
+    <string name="settings_kiosk_title">Kioskmodus</string>
+    <string name="settings_kiosk_paused_hint">Pausiert: Das Telefon funktioniert normal (auch nach einem Neustart). Aktiviere ihn wieder, wenn du fertig bist.</string>
+    <string name="settings_kiosk_resume">Kioskmodus aktivieren</string>
+    <string name="settings_kiosk_active_hint">Aktiv. Wenn du ihn pausierst, kannst du Dinge installieren oder einrichten; er wird hier ohne Computer wieder aktiviert.</string>
+    <string name="settings_kiosk_pause">Kioskmodus pausieren</string>
+    <string name="settings_remove_owner_hint">Nur um den Launcher zu deinstallieren oder das Telefon weiterzugeben:</string>
+    <string name="settings_remove_owner">Device Owner entfernen</string>
+    <string name="settings_about_title">Über</string>
+    <string name="settings_license">Freie Software: Du kannst sie unter den Bedingungen der GNU Affero General Public License, Version 3 oder später, weitergeben und verändern. Sie wird OHNE JEDE GEWÄHRLEISTUNG verbreitet.</string>
+    <string name="settings_source">Quellcode und Lizenz: %1$s</string>
+    <string name="remove_owner_dialog_title">Device Owner entfernen?</string>
+    <string name="remove_owner_dialog_text">Der Kioskmodus wird endgültig deaktiviert. Um ihn wieder zu aktivieren, braucht man einen Computer (adb) und muss vorher alle Konten vom Telefon entfernen (Google, WhatsApp…). Wenn du nur etwas installieren oder einrichten willst, nutze „Kioskmodus pausieren\".</string>
+    <string name="remove_owner_confirm">Entfernen</string>
+    <string name="cancel">Abbrechen</string>
+    <string-array name="default_keywords">
+        <item>STANDORT</item>
+        <item>WO BIST DU</item>
+    </string-array>
+</resources>

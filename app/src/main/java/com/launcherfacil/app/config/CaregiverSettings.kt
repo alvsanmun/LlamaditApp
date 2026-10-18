@@ -21,6 +21,7 @@ package com.launcherfacil.app.config
 import android.content.Context
 import android.util.Base64
 import androidx.core.content.edit
+import com.launcherfacil.app.R
 import com.launcherfacil.app.contacts.Contact
 import com.launcherfacil.app.contacts.loadFavoriteContacts
 import java.security.MessageDigest
@@ -30,7 +31,6 @@ import java.security.SecureRandom
 class CaregiverSettings(context: Context) {
 
     companion object {
-        val DEFAULT_KEYWORDS = listOf("UBICACION", "DONDE ESTAS")
         const val PIN_LENGTH = 4
 
         private const val KEY_PIN_HASH = "pin_hash"
@@ -42,8 +42,12 @@ class CaregiverSettings(context: Context) {
         private const val KEY_CONTACT_ORDER = "contact_order"
     }
 
-    private val prefs = context.applicationContext
-        .getSharedPreferences("caregiver", Context.MODE_PRIVATE)
+    private val appContext = context.applicationContext
+    private val prefs = appContext.getSharedPreferences("caregiver", Context.MODE_PRIVATE)
+
+    /** Palabras clave por defecto en el idioma del móvil (UBICACION, LOCATION, POSITION…). */
+    private val defaultKeywords: List<String>
+        get() = appContext.resources.getStringArray(R.array.default_keywords).toList()
 
     // --- PIN (se guarda solo el hash con sal, nunca el PIN en claro) ---
 
@@ -112,7 +116,7 @@ class CaregiverSettings(context: Context) {
         get() = prefs.getString(KEY_KEYWORDS, null)
             ?.split(",")?.map { it.trim() }?.filter { it.isNotEmpty() }
             ?.takeIf { it.isNotEmpty() }
-            ?: DEFAULT_KEYWORDS
+            ?: defaultKeywords
         set(value) = prefs.edit { putString(KEY_KEYWORDS, value.joinToString(",")) }
 }
 

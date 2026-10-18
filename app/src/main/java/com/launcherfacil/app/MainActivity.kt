@@ -287,7 +287,7 @@ private fun LauncherApp(
 }
 
 private fun whatsAppFailed(context: Context) =
-    Toast.makeText(context, "No se pudo abrir WhatsApp", Toast.LENGTH_LONG).show()
+    Toast.makeText(context, R.string.whatsapp_open_failed, Toast.LENGTH_LONG).show()
 
 private fun openFailed(context: Context) =
-    Toast.makeText(context, "No se pudo abrir", Toast.LENGTH_LONG).show()
+    Toast.makeText(context, R.string.open_failed, Toast.LENGTH_LONG).show()

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- it: translation of values/strings.xml. -->
+<resources>
+    <string name="whatsapp_listener_label">LlamaditApp: chiamate WhatsApp</string>
+    <string name="whatsapp_open_failed">Impossibile aprire WhatsApp</string>
+    <string name="open_failed">Impossibile aprire</string>
+    <string name="whatsapp_video_row">Videochiamata</string>
+    <string name="battery_level">Batteria %1$d%%</string>
+    <string name="battery_level_charging">Batteria %1$d%% (in carica)</string>
+    <string name="location_detail">%1$s (±%2$d m, %3$s)</string>
+    <string name="locate_reply">Posizione: %1$s</string>
+    <string name="locate_reply_failed">Impossibile ottenere la posizione in questo momento.</string>
+    <string name="sos_first">SOS: ho bisogno di aiuto. Sono qui: %1$s</string>
+    <string name="sos_update">SOS: posizione aggiornata (%1$d/%2$d): %3$s</string>
+    <string name="sos_last">SOS: ultima posizione (%1$d/%2$d): %3$s</string>
+    <string name="sos_no_location">impossibile ottenere la posizione.</string>
+    <string name="notification_channel_location">Posizione</string>
+    <string name="notification_locate">Invio della posizione via SMS</string>
+    <string name="notification_sos">SOS attivo: invio della posizione per 30 minuti</string>
+    <string name="yesterday_at">Ieri %1$s</string>
+    <string name="contacts_permission_needed">Serve l\'autorizzazione per leggere i contatti.</string>
+    <string name="give_permission">Dai l\'autorizzazione</string>
+    <string name="no_favorites">Non ci sono contatti preferiti.\nSegna con ★ nell\'app Contatti le persone che devono comparire qui.</string>
+    <string name="whatsapp_not_installed">WhatsApp non è installato su questo telefono.</string>
+    <string name="no_whatsapp_favorites">Nessun preferito è segnato con WhatsApp.\nSegnali nelle impostazioni del caregiver (orologio 5 s → PIN → \"Hanno WhatsApp\").</string>
+    <string name="pin_title">PIN del caregiver</string>
+    <string name="pin_create">Crea un PIN di %1$d cifre</string>
+    <string name="pin_repeat">Ripeti il PIN</string>
+    <string name="pin_wrong">PIN errato</string>
+    <string name="pin_mismatch">I PIN non coincidono. Ricomincia.</string>
+    <string name="settings_order_title">Ordine dei contatti</string>
+    <string name="settings_order_hint">Lo stesso ordine in Chiama e in Videochiamata. I nuovi preferiti compaiono alla fine.</string>
+    <string name="settings_sos_title">Contatto per l\'SOS</string>
+    <string name="settings_no_favorites">Non ci sono contatti preferiti (★).</string>
+    <string name="settings_locate_title">Possono chiedere la posizione via SMS</string>
+    <string name="settings_whatsapp_title">Hanno WhatsApp (videochiamata)</string>
+    <string name="settings_whatsapp_hint">Selezionalo se quella persona usa WhatsApp: comparirà nel pulsante della videochiamata.</string>
+    <string name="settings_keywords_title">Parole chiave per chiedere la posizione</string>
+    <string name="settings_keywords_hint">Separate da virgole. Maiuscole, accenti e punteggiatura non contano.</string>
+    <string name="settings_wa_calls_title">Chiamate WhatsApp</string>
+    <string name="settings_wa_calls_on">Attivo: le chiamate WhatsApp si vedono a schermo grande.</string>
+    <string name="settings_wa_calls_off">Disattivo: bisogna dare \"accesso alle notifiche\" a LlamaditApp.</string>
+    <string name="settings_wa_calls_enable">Attiva l\'accesso alle notifiche</string>
+    <string name="settings_security_title">Sicurezza</string>
+    <string name="settings_change_pin">Cambia il PIN</string>
+    <string name="settings_other_apps_title">Altre app</string>
+    <string name="settings_not_device_owner">L\'app non è Device Owner: la modalità kiosk non è attiva.</string>
+    <string name="settings_kiosk_paused_short">La modalità kiosk è in pausa.</string>
+    <string name="settings_leaves_kiosk">Si esce dalla modalità kiosk fino al ritorno in questa app.</string>
+    <string name="settings_open_contacts">Apri Contatti (preferiti e foto)</string>
+    <string name="settings_open_android_settings">Apri le Impostazioni di Android</string>
+    <string name="settings_kiosk_title">Modalità kiosk</string>
+    <string name="settings_kiosk_paused_hint">In pausa: il telefono si usa normalmente (anche dopo il riavvio). Riattivala quando hai finito.</string>
+    <string name="settings_kiosk_resume">Attiva la modalità kiosk</string>
+    <string name="settings_kiosk_active_hint">Attiva. Metterla in pausa permette di installare o configurare cose; si riattiva qui, senza computer.</string>
+    <string name="settings_kiosk_pause">Metti in pausa la modalità kiosk</string>
+    <string name="settings_remove_owner_hint">Solo per disinstallare il launcher o dare il telefono a un\'altra persona:</string>
+    <string name="settings_remove_owner">Rimuovi il Device Owner</string>
+    <string name="settings_about_title">Informazioni</string>
+    <string name="settings_license">Software libero: puoi ridistribuirlo e modificarlo secondo i termini della licenza GNU Affero General Public License, versione 3 o successiva. È distribuito SENZA ALCUNA GARANZIA.</string>
+    <string name="settings_source">Codice sorgente e licenza: %1$s</string>
+    <string name="remove_owner_dialog_title">Rimuovere il Device Owner?</string>
+    <string name="remove_owner_dialog_text">La modalità kiosk verrà disattivata per sempre. Per riattivarla serve un computer (adb) e rimuovere prima tutti gli account del telefono (Google, WhatsApp...). Se vuoi solo installare o configurare qualcosa, usa \"Metti in pausa la modalità kiosk\".</string>
+    <string name="remove_owner_confirm">Rimuovi</string>
+    <string name="cancel">Annulla</string>
+    <string-array name="default_keywords">
+        <item>POSIZIONE</item>
+        <item>DOVE SEI</item>
+    </string-array>
+</resources>

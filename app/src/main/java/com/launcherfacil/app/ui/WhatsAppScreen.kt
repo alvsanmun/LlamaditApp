@@ -42,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.launcherfacil.app.R
 import com.launcherfacil.app.contacts.WhatsAppContact
@@ -74,15 +75,15 @@ fun WhatsAppScreen(
 
         val list = contacts
         when {
-            !installed -> CaregiverMessage("WhatsApp no está instalado en este teléfono.")
+            !installed -> CaregiverMessage(stringResource(R.string.whatsapp_not_installed))
             !hasPermission -> CaregiverMessage(
-                "Hace falta permiso para leer los contactos.",
-                actionText = "Dar permiso",
+                stringResource(R.string.contacts_permission_needed),
+                actionText = stringResource(R.string.give_permission),
                 onAction = onRequestPermission
             )
             list == null -> Unit
             list.isEmpty() -> CaregiverMessage(
-                "Ningún favorito está marcado con WhatsApp.\nMárcalos en la configuración del cuidador (reloj 5 s → PIN → \"Tienen WhatsApp\")."
+                stringResource(R.string.no_whatsapp_favorites)
             )
             else -> LazyVerticalGrid(
                 columns = GridCells.Fixed(2),

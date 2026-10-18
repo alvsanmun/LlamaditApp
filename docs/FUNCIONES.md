@@ -154,7 +154,7 @@ Un familiar autorizado envía al teléfono un SMS con una palabra clave (por def
 | **Contacto para el SOS** | A quién llama y avisa el botón SOS. |
 | **Pueden pedir la ubicación por SMS** | Qué favoritos pueden pedir la ubicación. |
 | **Tienen WhatsApp (videollamada)** | Marcar quién usa WhatsApp: aparecerá en el botón de videollamada. |
-| **Palabras clave** | Las palabras que deben enviar para pedir la ubicación, separadas por comas. |
+| **Palabras clave** | Las palabras que deben enviar para pedir la ubicación, separadas por comas. Por defecto dependen del idioma del teléfono (`UBICACION` y `DONDE ESTAS` en español, `LOCATION` y `WHERE ARE YOU` en inglés…). |
 | **Llamadas de WhatsApp** | Activar el "acceso a notificaciones", necesario para ver las videollamadas entrantes con la pantalla propia. |
 | **Seguridad** | Cambiar el PIN. |
 | **Otras apps** | Abrir **Contactos** (añadir personas, fotos y favoritos ★) o los **Ajustes de Android**. El quiosco se pausa mientras tanto y vuelve al regresar. |

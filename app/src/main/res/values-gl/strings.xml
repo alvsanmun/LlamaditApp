@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- gl: translation of values/strings.xml. -->
+<resources>
+    <string name="whatsapp_listener_label">LlamaditApp: chamadas de WhatsApp</string>
+    <string name="whatsapp_open_failed">Non se puido abrir WhatsApp</string>
+    <string name="open_failed">Non se puido abrir</string>
+    <string name="whatsapp_video_row">Videochamada</string>
+    <string name="battery_level">Batería %1$d %%</string>
+    <string name="battery_level_charging">Batería %1$d %% (cargando)</string>
+    <string name="location_detail">%1$s (±%2$d m, %3$s)</string>
+    <string name="locate_reply">Localización: %1$s</string>
+    <string name="locate_reply_failed">Non se puido obter a localización agora mesmo.</string>
+    <string name="sos_first">SOS: necesito axuda. Estou aquí: %1$s</string>
+    <string name="sos_update">SOS: localización actualizada (%1$d/%2$d): %3$s</string>
+    <string name="sos_last">SOS: última localización (%1$d/%2$d): %3$s</string>
+    <string name="sos_no_location">non se puido obter a localización.</string>
+    <string name="notification_channel_location">Localización</string>
+    <string name="notification_locate">Enviando a localización por SMS</string>
+    <string name="notification_sos">SOS activo: enviando a localización durante 30 minutos</string>
+    <string name="yesterday_at">Onte %1$s</string>
+    <string name="contacts_permission_needed">Cómpre permiso para ler os contactos.</string>
+    <string name="give_permission">Dar permiso</string>
+    <string name="no_favorites">Non hai contactos favoritos.\nMarca con ★ na app Contactos as persoas que deben aparecer aquí.</string>
+    <string name="whatsapp_not_installed">WhatsApp non está instalado neste teléfono.</string>
+    <string name="no_whatsapp_favorites">Ningún favorito está marcado con WhatsApp.\nMárcaos na configuración do coidador (reloxo 5 s → PIN → \"Teñen WhatsApp\").</string>
+    <string name="pin_title">PIN do coidador</string>
+    <string name="pin_create">Crea un PIN de %1$d cifras</string>
+    <string name="pin_repeat">Repite o PIN</string>
+    <string name="pin_wrong">PIN incorrecto</string>
+    <string name="pin_mismatch">Os PIN non coinciden. Volve empezar.</string>
+    <string name="settings_order_title">Orde dos contactos</string>
+    <string name="settings_order_hint">A mesma orde en Chamar e en Videochamada. Os favoritos novos saen ao final.</string>
+    <string name="settings_sos_title">Contacto para o SOS</string>
+    <string name="settings_no_favorites">Non hai contactos favoritos (★).</string>
+    <string name="settings_locate_title">Poden pedir a localización por SMS</string>
+    <string name="settings_whatsapp_title">Teñen WhatsApp (videochamada)</string>
+    <string name="settings_whatsapp_hint">Márcao se esa persoa usa WhatsApp: aparecerá no botón de videochamada.</string>
+    <string name="settings_keywords_title">Palabras clave para pedir a localización</string>
+    <string name="settings_keywords_hint">Separadas por comas. Dá igual maiúsculas, tiles ou signos.</string>
+    <string name="settings_wa_calls_title">Chamadas de WhatsApp</string>
+    <string name="settings_wa_calls_on">Activado: as chamadas de WhatsApp vense coa pantalla grande.</string>
+    <string name="settings_wa_calls_off">Desactivado: hai que dar \"acceso ás notificacións\" a LlamaditApp.</string>
+    <string name="settings_wa_calls_enable">Activar o acceso ás notificacións</string>
+    <string name="settings_security_title">Seguridade</string>
+    <string name="settings_change_pin">Cambiar o PIN</string>
+    <string name="settings_other_apps_title">Outras apps</string>
+    <string name="settings_not_device_owner">A app non é Device Owner: o modo quiosco non está activo.</string>
+    <string name="settings_kiosk_paused_short">O modo quiosco está en pausa.</string>
+    <string name="settings_leaves_kiosk">Sáese do modo quiosco ata volver a esta app.</string>
+    <string name="settings_open_contacts">Abrir Contactos (favoritos e fotos)</string>
+    <string name="settings_open_android_settings">Abrir a configuración de Android</string>
+    <string name="settings_kiosk_title">Modo quiosco</string>
+    <string name="settings_kiosk_paused_hint">En pausa: o móbil úsase con normalidade (tamén despois de reiniciar). Actívao ao rematar.</string>
+    <string name="settings_kiosk_resume">Activar o modo quiosco</string>
+    <string name="settings_kiosk_active_hint">Activo. Poñelo en pausa permite instalar ou configurar cousas; vólvese activar aquí, sen ordenador.</string>
+    <string name="settings_kiosk_pause">Poñer en pausa o modo quiosco</string>
+    <string name="settings_remove_owner_hint">Só para desinstalar o launcher ou entregar o móbil:</string>
+    <string name="settings_remove_owner">Quitar o Device Owner</string>
+    <string name="settings_about_title">Acerca de</string>
+    <string name="settings_license">Software libre: podes redistribuílo e modificalo segundo os termos da licenza GNU Affero General Public License, versión 3 ou posterior. Distribúese SEN NINGUNHA GARANTÍA.</string>
+    <string name="settings_source">Código fonte e licenza: %1$s</string>
+    <string name="remove_owner_dialog_title">Quitar o Device Owner?</string>
+    <string name="remove_owner_dialog_text">Desactívase o modo quiosco para sempre. Para volvelo activar cómpre un ordenador (adb) e quitar antes todas as contas do teléfono (Google, WhatsApp...). Se só queres instalar ou configurar algo, usa \"Poñer en pausa o modo quiosco\".</string>
+    <string name="remove_owner_confirm">Quitar</string>
+    <string name="cancel">Cancelar</string>
+    <string-array name="default_keywords">
+        <item>LOCALIZACION</item>
+        <item>ONDE ESTAS</item>
+    </string-array>
+</resources>

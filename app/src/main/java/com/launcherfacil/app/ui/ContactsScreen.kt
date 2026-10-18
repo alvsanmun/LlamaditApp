@@ -36,7 +36,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.launcherfacil.app.R
 import com.launcherfacil.app.contacts.Contact
 import com.launcherfacil.app.contacts.loadFavoriteContacts
 
@@ -65,13 +67,13 @@ fun ContactsScreen(
         val list = contacts
         when {
             !hasPermission -> CaregiverMessage(
-                "Hace falta permiso para leer los contactos.",
-                actionText = "Dar permiso",
+                stringResource(R.string.contacts_permission_needed),
+                actionText = stringResource(R.string.give_permission),
                 onAction = onRequestPermission
             )
             list == null -> Unit // Cargando: es casi instantáneo.
             list.isEmpty() -> CaregiverMessage(
-                "No hay contactos favoritos.\nMarca con ★ en la app Contactos las personas que deben aparecer aquí."
+                stringResource(R.string.no_favorites)
             )
             else -> LazyVerticalGrid(
                 columns = GridCells.Fixed(2),

@@ -28,7 +28,9 @@ import android.os.IBinder
 import android.util.Log
 import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
+import com.launcherfacil.app.R
 import com.launcherfacil.app.config.resolveSosContact
+import com.launcherfacil.app.locate.locationDetail
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -36,8 +38,6 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.text.DateFormat
-import java.util.Date
 
 /**
  * Tras pulsar SOS: envía un SMS con la ubicación al contacto de confianza y
@@ -70,7 +70,7 @@ class SosService : Service() {
         // Sin ubicación (o sin poder pasar a primer plano) las actualizaciones no
         // aportan nada: un solo SMS.
         val foreground = hasLocation &&
-            startLocationForeground(NOTIFICATION_ID, "SOS activo: enviando la ubicación durante 30 minutos")
+            startLocationForeground(NOTIFICATION_ID, getString(R.string.notification_sos))
         val updates = if (foreground) UPDATES else 0
 
         val debuggable = applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
@@ -105,16 +105,11 @@ class SosService : Service() {
     }
 
     private fun message(location: Location?, index: Int, total: Int): String {
-        val where = if (location != null) {
-            val time = DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(location.time))
-            "${location.mapsLink()} (±${location.accuracy.toInt()} m, $time)"
-        } else {
-            "no se ha podido obtener la ubicación."
-        }
+        val where = if (location != null) locationDetail(this, location) else getString(R.string.sos_no_location)
         return when {
-            index == 0 -> "SOS: necesito ayuda. Estoy aquí: $where"
-            index < total -> "SOS: ubicación actualizada ($index/$total): $where"
-            else -> "SOS: última ubicación ($index/$total): $where"
+            index == 0 -> getString(R.string.sos_first, where)
+            index < total -> getString(R.string.sos_update, index, total, where)
+            else -> getString(R.string.sos_last, index, total, where)
         }
     }
 }

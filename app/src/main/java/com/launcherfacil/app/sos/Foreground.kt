@@ -39,7 +39,7 @@ fun Service.startLocationForeground(notificationId: Int, text: String): Boolean 
     val manager = getSystemService(NotificationManager::class.java)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         manager.createNotificationChannel(
-            NotificationChannel(CHANNEL_ID, "Ubicación", NotificationManager.IMPORTANCE_DEFAULT)
+            NotificationChannel(CHANNEL_ID, getString(R.string.notification_channel_location), NotificationManager.IMPORTANCE_DEFAULT)
         )
     }
     val notification = NotificationCompat.Builder(this, CHANNEL_ID)

@@ -1,3 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Default language (English). Translations go in values-xx/strings.xml. -->
 <resources>
-    <string name="app_name">LlamaditApp</string>
+    <string name="app_name" translatable="false">LlamaditApp</string>
+    <!-- Name of the notification access entry in Android settings -->
+    <string name="whatsapp_listener_label">LlamaditApp: WhatsApp calls</string>
+    <!-- Toast when WhatsApp cannot be opened -->
+    <string name="whatsapp_open_failed">Could not open WhatsApp</string>
+    <!-- Toast when another app cannot be opened -->
+    <string name="open_failed">Could not open it</string>
+    <!-- Label of the WhatsApp video call row written in the contact -->
+    <string name="whatsapp_video_row">Video call</string>
+    <!-- Appended to SMS. %1$d = percent -->
+    <string name="battery_level">Battery %1$d%%</string>
+    <!-- Appended to SMS. %1$d = percent -->
+    <string name="battery_level_charging">Battery %1$d%% (charging)</string>
+    <!-- SMS. %1$s = Google Maps link, %2$d = accuracy in metres, %3$s = time -->
+    <string name="location_detail">%1$s (±%2$d m, %3$s)</string>
+    <!-- SMS reply to a location request. %1$s = location_detail -->
+    <string name="locate_reply">Location: %1$s</string>
+    <!-- SMS reply when the location could not be obtained -->
+    <string name="locate_reply_failed">Could not get the location right now.</string>
+    <!-- First SOS SMS. %1$s = location_detail or sos_no_location -->
+    <string name="sos_first">SOS: I need help. I am here: %1$s</string>
+    <!-- SOS update SMS. %1$d = number, %2$d = total, %3$s = location -->
+    <string name="sos_update">SOS: updated location (%1$d/%2$d): %3$s</string>
+    <!-- Last SOS SMS. %1$d = number, %2$d = total, %3$s = location -->
+    <string name="sos_last">SOS: last location (%1$d/%2$d): %3$s</string>
+    <!-- Inside the SOS SMS when there is no location -->
+    <string name="sos_no_location">could not get the location.</string>
+    <!-- Notification channel name -->
+    <string name="notification_channel_location">Location</string>
+    <!-- Ongoing notification while answering a location request -->
+    <string name="notification_locate">Sending the location by SMS</string>
+    <!-- Ongoing notification while SOS is active -->
+    <string name="notification_sos">SOS active: sending the location for 30 minutes</string>
+    <!-- Message/call time. %1$s = time -->
+    <string name="yesterday_at">Yesterday %1$s</string>
+    <string name="contacts_permission_needed">Permission to read the contacts is needed.</string>
+    <string name="give_permission">Give permission</string>
+    <!-- Shown to the caregiver when there are no starred contacts -->
+    <string name="no_favorites">There are no favorite contacts.\nStar (★) the people who should appear here in the Contacts app.</string>
+    <string name="whatsapp_not_installed">WhatsApp is not installed on this phone.</string>
+    <string name="no_whatsapp_favorites">No favorite is marked as having WhatsApp.\nMark them in the caregiver settings (clock 5 s → PIN → \"Have WhatsApp\").</string>
+    <string name="pin_title">Caregiver PIN</string>
+    <!-- %1$d = number of digits -->
+    <string name="pin_create">Create a %1$d-digit PIN</string>
+    <string name="pin_repeat">Repeat the PIN</string>
+    <string name="pin_wrong">Wrong PIN</string>
+    <string name="pin_mismatch">The PINs do not match. Start again.</string>
+    <string name="settings_order_title">Order of the contacts</string>
+    <string name="settings_order_hint">The same order in Call and in Video call. New favorites appear at the end.</string>
+    <string name="settings_sos_title">SOS contact</string>
+    <string name="settings_no_favorites">There are no favorite contacts (★).</string>
+    <string name="settings_locate_title">Can request the location by SMS</string>
+    <string name="settings_whatsapp_title">Have WhatsApp (video call)</string>
+    <string name="settings_whatsapp_hint">Tick it if that person uses WhatsApp: they will appear in the video call button.</string>
+    <string name="settings_keywords_title">Keywords to request the location</string>
+    <string name="settings_keywords_hint">Separated by commas. Capital letters, accents and punctuation do not matter.</string>
+    <string name="settings_wa_calls_title">WhatsApp calls</string>
+    <string name="settings_wa_calls_on">On: WhatsApp calls are shown on the large screen.</string>
+    <string name="settings_wa_calls_off">Off: LlamaditApp needs \"notification access\".</string>
+    <string name="settings_wa_calls_enable">Turn on notification access</string>
+    <string name="settings_security_title">Security</string>
+    <string name="settings_change_pin">Change the PIN</string>
+    <string name="settings_other_apps_title">Other apps</string>
+    <string name="settings_not_device_owner">The app is not Device Owner: kiosk mode is not active.</string>
+    <string name="settings_kiosk_paused_short">Kiosk mode is paused.</string>
+    <string name="settings_leaves_kiosk">Kiosk mode is left until you come back to this app.</string>
+    <string name="settings_open_contacts">Open Contacts (favorites and photos)</string>
+    <string name="settings_open_android_settings">Open Android settings</string>
+    <string name="settings_kiosk_title">Kiosk mode</string>
+    <string name="settings_kiosk_paused_hint">Paused: the phone works normally (also after restarting). Turn it back on when you finish.</string>
+    <string name="settings_kiosk_resume">Turn on kiosk mode</string>
+    <string name="settings_kiosk_active_hint">On. Pausing it lets you install or set up things; it is turned back on here, without a computer.</string>
+    <string name="settings_kiosk_pause">Pause kiosk mode</string>
+    <string name="settings_remove_owner_hint">Only to uninstall the launcher or give the phone to someone else:</string>
+    <string name="settings_remove_owner">Remove Device Owner</string>
+    <string name="settings_about_title">About</string>
+    <!-- Legal notice required by the GNU AGPL -->
+    <string name="settings_license">Free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License, version 3 or later. It comes with ABSOLUTELY NO WARRANTY.</string>
+    <!-- %1$s = repository URL -->
+    <string name="settings_source">Source code and license: %1$s</string>
+    <string name="remove_owner_dialog_title">Remove Device Owner?</string>
+    <string name="remove_owner_dialog_text">Kiosk mode will be turned off for good. Turning it back on requires a computer (adb) and removing all accounts from the phone first (Google, WhatsApp…). If you only want to install or set up something, use \"Pause kiosk mode\".</string>
+    <string name="remove_owner_confirm">Remove</string>
+    <string name="cancel">Cancel</string>
+    <!-- Default keywords to request the location by SMS (without accents). -->
+    <string-array name="default_keywords">
+        <item>LOCATION</item>
+        <item>WHERE ARE YOU</item>
+    </string-array>
 </resources>

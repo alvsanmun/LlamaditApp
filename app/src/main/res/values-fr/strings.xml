@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- fr: translation of values/strings.xml. -->
+<resources>
+    <string name="whatsapp_listener_label">LlamaditApp : appels WhatsApp</string>
+    <string name="whatsapp_open_failed">Impossible d\'ouvrir WhatsApp</string>
+    <string name="open_failed">Impossible d\'ouvrir</string>
+    <string name="whatsapp_video_row">Appel vidéo</string>
+    <string name="battery_level">Batterie %1$d %%</string>
+    <string name="battery_level_charging">Batterie %1$d %% (en charge)</string>
+    <string name="location_detail">%1$s (±%2$d m, %3$s)</string>
+    <string name="locate_reply">Position : %1$s</string>
+    <string name="locate_reply_failed">Impossible d\'obtenir la position pour le moment.</string>
+    <string name="sos_first">SOS : j\'ai besoin d\'aide. Je suis ici : %1$s</string>
+    <string name="sos_update">SOS : position mise à jour (%1$d/%2$d) : %3$s</string>
+    <string name="sos_last">SOS : dernière position (%1$d/%2$d) : %3$s</string>
+    <string name="sos_no_location">impossible d\'obtenir la position.</string>
+    <string name="notification_channel_location">Position</string>
+    <string name="notification_locate">Envoi de la position par SMS</string>
+    <string name="notification_sos">SOS actif : envoi de la position pendant 30 minutes</string>
+    <string name="yesterday_at">Hier %1$s</string>
+    <string name="contacts_permission_needed">L\'autorisation de lire les contacts est nécessaire.</string>
+    <string name="give_permission">Donner l\'autorisation</string>
+    <string name="no_favorites">Aucun contact favori.\nMarquez d\'une ★ dans l\'appli Contacts les personnes qui doivent apparaître ici.</string>
+    <string name="whatsapp_not_installed">WhatsApp n\'est pas installé sur ce téléphone.</string>
+    <string name="no_whatsapp_favorites">Aucun favori n\'est marqué comme ayant WhatsApp.\nMarquez-les dans les réglages de l\'aidant (horloge 5 s → PIN → « Ont WhatsApp »).</string>
+    <string name="pin_title">PIN de l\'aidant</string>
+    <string name="pin_create">Créez un PIN à %1$d chiffres</string>
+    <string name="pin_repeat">Répétez le PIN</string>
+    <string name="pin_wrong">PIN incorrect</string>
+    <string name="pin_mismatch">Les PIN ne correspondent pas. Recommencez.</string>
+    <string name="settings_order_title">Ordre des contacts</string>
+    <string name="settings_order_hint">Le même ordre dans Appeler et dans Appel vidéo. Les nouveaux favoris apparaissent à la fin.</string>
+    <string name="settings_sos_title">Contact pour le SOS</string>
+    <string name="settings_no_favorites">Aucun contact favori (★).</string>
+    <string name="settings_locate_title">Peuvent demander la position par SMS</string>
+    <string name="settings_whatsapp_title">Ont WhatsApp (appel vidéo)</string>
+    <string name="settings_whatsapp_hint">Cochez si cette personne utilise WhatsApp : elle apparaîtra dans le bouton d\'appel vidéo.</string>
+    <string name="settings_keywords_title">Mots-clés pour demander la position</string>
+    <string name="settings_keywords_hint">Séparés par des virgules. Majuscules, accents et ponctuation sans importance.</string>
+    <string name="settings_wa_calls_title">Appels WhatsApp</string>
+    <string name="settings_wa_calls_on">Activé : les appels WhatsApp s\'affichent en grand écran.</string>
+    <string name="settings_wa_calls_off">Désactivé : il faut donner « l\'accès aux notifications » à LlamaditApp.</string>
+    <string name="settings_wa_calls_enable">Activer l\'accès aux notifications</string>
+    <string name="settings_security_title">Sécurité</string>
+    <string name="settings_change_pin">Changer le PIN</string>
+    <string name="settings_other_apps_title">Autres applis</string>
+    <string name="settings_not_device_owner">L\'appli n\'est pas Device Owner : le mode kiosque n\'est pas actif.</string>
+    <string name="settings_kiosk_paused_short">Le mode kiosque est en pause.</string>
+    <string name="settings_leaves_kiosk">On quitte le mode kiosque jusqu\'au retour dans cette appli.</string>
+    <string name="settings_open_contacts">Ouvrir Contacts (favoris et photos)</string>
+    <string name="settings_open_android_settings">Ouvrir les paramètres Android</string>
+    <string name="settings_kiosk_title">Mode kiosque</string>
+    <string name="settings_kiosk_paused_hint">En pause : le téléphone s\'utilise normalement (même après un redémarrage). Réactivez-le quand vous avez fini.</string>
+    <string name="settings_kiosk_resume">Activer le mode kiosque</string>
+    <string name="settings_kiosk_active_hint">Actif. Le mettre en pause permet d\'installer ou de configurer des choses ; il se réactive ici, sans ordinateur.</string>
+    <string name="settings_kiosk_pause">Mettre le mode kiosque en pause</string>
+    <string name="settings_remove_owner_hint">Uniquement pour désinstaller le launcher ou donner le téléphone à quelqu\'un d\'autre :</string>
+    <string name="settings_remove_owner">Retirer le Device Owner</string>
+    <string name="settings_about_title">À propos</string>
+    <string name="settings_license">Logiciel libre : vous pouvez le redistribuer et le modifier selon les termes de la licence GNU Affero General Public License, version 3 ou ultérieure. Il est distribué SANS AUCUNE GARANTIE.</string>
+    <string name="settings_source">Code source et licence : %1$s</string>
+    <string name="remove_owner_dialog_title">Retirer le Device Owner ?</string>
+    <string name="remove_owner_dialog_text">Le mode kiosque sera désactivé définitivement. Pour le réactiver, il faut un ordinateur (adb) et retirer d\'abord tous les comptes du téléphone (Google, WhatsApp…). Si vous voulez seulement installer ou configurer quelque chose, utilisez « Mettre le mode kiosque en pause ».</string>
+    <string name="remove_owner_confirm">Retirer</string>
+    <string name="cancel">Annuler</string>
+    <string-array name="default_keywords">
+        <item>POSITION</item>
+        <item>OU ES TU</item>
+    </string-array>
+</resources>

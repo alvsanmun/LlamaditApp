@@ -18,6 +18,7 @@
 
 package com.launcherfacil.app.inbox
 
+import android.content.Context
 import android.database.ContentObserver
 import android.net.Uri
 import android.os.Handler
@@ -31,6 +32,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import com.launcherfacil.app.R
 import java.util.Date
 import java.util.Locale
 
@@ -61,11 +63,11 @@ fun rememberContentVersion(vararg uris: Uri): Int {
 }
 
 /** "14:32" si es de hoy, "Ayer 09:10", o "3 oct 18:20". */
-fun formatWhen(millis: Long, is24h: Boolean): String {
+fun formatWhen(context: Context, millis: Long, is24h: Boolean): String {
     val time = DateFormat.format(if (is24h) "H:mm" else "h:mm a", Date(millis)).toString()
     return when {
         DateUtils.isToday(millis) -> time
-        DateUtils.isToday(millis + DateUtils.DAY_IN_MILLIS) -> "Ayer $time"
+        DateUtils.isToday(millis + DateUtils.DAY_IN_MILLIS) -> context.getString(R.string.yesterday_at, time)
         else -> {
             val day = DateFormat.format("d MMM", Date(millis)).toString().lowercase(Locale.getDefault())
             "$day $time"

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- eu: translation of values/strings.xml. -->
+<resources>
+    <string name="whatsapp_listener_label">LlamaditApp: WhatsApp deiak</string>
+    <string name="whatsapp_open_failed">Ezin izan da WhatsApp ireki</string>
+    <string name="open_failed">Ezin izan da ireki</string>
+    <string name="whatsapp_video_row">Bideo-deia</string>
+    <string name="battery_level">Bateria: %% %1$d</string>
+    <string name="battery_level_charging">Bateria: %% %1$d (kargatzen)</string>
+    <string name="location_detail">%1$s (±%2$d m, %3$s)</string>
+    <string name="locate_reply">Kokapena: %1$s</string>
+    <string name="locate_reply_failed">Ezin izan da kokapena lortu oraintxe.</string>
+    <string name="sos_first">SOS: laguntza behar dut. Hemen nago: %1$s</string>
+    <string name="sos_update">SOS: kokapen eguneratua (%1$d/%2$d): %3$s</string>
+    <string name="sos_last">SOS: azken kokapena (%1$d/%2$d): %3$s</string>
+    <string name="sos_no_location">ezin izan da kokapena lortu.</string>
+    <string name="notification_channel_location">Kokapena</string>
+    <string name="notification_locate">Kokapena SMS bidez bidaltzen</string>
+    <string name="notification_sos">SOS aktibo: kokapena bidaltzen 30 minutuz</string>
+    <string name="yesterday_at">Atzo %1$s</string>
+    <string name="contacts_permission_needed">Kontaktuak irakurtzeko baimena behar da.</string>
+    <string name="give_permission">Baimena eman</string>
+    <string name="no_favorites">Ez dago kontaktu gogokorik.\nMarkatu ★ batekin Kontaktuak aplikazioan hemen agertu behar diren pertsonak.</string>
+    <string name="whatsapp_not_installed">WhatsApp ez dago telefono honetan instalatuta.</string>
+    <string name="no_whatsapp_favorites">Gogokoen artean ez dago WhatsApp duenik markatuta.\nMarkatu itzazu zaintzailearen ezarpenetan (erlojua 5 s → PIN → \"WhatsApp dute\").</string>
+    <string name="pin_title">Zaintzailearen PINa</string>
+    <string name="pin_create">Sortu %1$d zenbakiko PIN bat</string>
+    <string name="pin_repeat">Errepikatu PINa</string>
+    <string name="pin_wrong">PIN okerra</string>
+    <string name="pin_mismatch">PINak ez datoz bat. Hasi berriro.</string>
+    <string name="settings_order_title">Kontaktuen ordena</string>
+    <string name="settings_order_hint">Ordena bera Deitu eta Bideo-deia botoietan. Gogoko berriak amaieran agertzen dira.</string>
+    <string name="settings_sos_title">SOSerako kontaktua</string>
+    <string name="settings_no_favorites">Ez dago kontaktu gogokorik (★).</string>
+    <string name="settings_locate_title">Kokapena SMS bidez eska dezakete</string>
+    <string name="settings_whatsapp_title">WhatsApp dute (bideo-deia)</string>
+    <string name="settings_whatsapp_hint">Markatu pertsona horrek WhatsApp erabiltzen badu: bideo-deiaren botoian agertuko da.</string>
+    <string name="settings_keywords_title">Kokapena eskatzeko gako-hitzak</string>
+    <string name="settings_keywords_hint">Komaz bereizita. Berdin dio maiuskulek, azentuek edo ikurrek.</string>
+    <string name="settings_wa_calls_title">WhatsApp deiak</string>
+    <string name="settings_wa_calls_on">Aktibatuta: WhatsApp deiak pantaila handian ikusten dira.</string>
+    <string name="settings_wa_calls_off">Desaktibatuta: LlamaditApp-i \"jakinarazpenetarako sarbidea\" eman behar zaio.</string>
+    <string name="settings_wa_calls_enable">Aktibatu jakinarazpenetarako sarbidea</string>
+    <string name="settings_security_title">Segurtasuna</string>
+    <string name="settings_change_pin">Aldatu PINa</string>
+    <string name="settings_other_apps_title">Beste aplikazio batzuk</string>
+    <string name="settings_not_device_owner">Aplikazioa ez da Device Owner: kiosko modua ez dago aktibo.</string>
+    <string name="settings_kiosk_paused_short">Kiosko modua pausatuta dago.</string>
+    <string name="settings_leaves_kiosk">Kiosko modutik irteten da aplikazio honetara itzuli arte.</string>
+    <string name="settings_open_contacts">Ireki Kontaktuak (gogokoak eta argazkiak)</string>
+    <string name="settings_open_android_settings">Ireki Androiden ezarpenak</string>
+    <string name="settings_kiosk_title">Kiosko modua</string>
+    <string name="settings_kiosk_paused_hint">Pausatuta: mugikorra normal erabiltzen da (berrabiarazi ondoren ere). Aktibatu amaitzean.</string>
+    <string name="settings_kiosk_resume">Aktibatu kiosko modua</string>
+    <string name="settings_kiosk_active_hint">Aktibo. Pausatzeak gauzak instalatzeko edo konfiguratzeko aukera ematen du; hemen bertan aktibatzen da berriro, ordenagailurik gabe.</string>
+    <string name="settings_kiosk_pause">Pausatu kiosko modua</string>
+    <string name="settings_remove_owner_hint">Launcherra desinstalatzeko edo mugikorra beste norbaiti emateko bakarrik:</string>
+    <string name="settings_remove_owner">Kendu Device Owner</string>
+    <string name="settings_about_title">Honi buruz</string>
+    <string name="settings_license">Software librea: GNU Affero General Public License lizentziaren 3. bertsioaren edo ondorengoen arabera birbana eta alda dezakezu. INOLAKO BERMERIK GABE banatzen da.</string>
+    <string name="settings_source">Iturburu-kodea eta lizentzia: %1$s</string>
+    <string name="remove_owner_dialog_title">Device Owner kendu?</string>
+    <string name="remove_owner_dialog_text">Kiosko modua betiko desaktibatuko da. Berriro aktibatzeko ordenagailu bat (adb) behar da, eta lehenago telefonoko kontu guztiak kendu (Google, WhatsApp...). Zerbait instalatu edo konfiguratu nahi baduzu soilik, erabili \"Pausatu kiosko modua\".</string>
+    <string name="remove_owner_confirm">Kendu</string>
+    <string name="cancel">Utzi</string>
+    <string-array name="default_keywords">
+        <item>KOKAPENA</item>
+        <item>NON ZAUDE</item>
+    </string-array>
+</resources>

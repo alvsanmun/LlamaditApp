@@ -62,6 +62,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -122,8 +123,8 @@ fun SettingsScreen(
                 modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Section("Orden de los contactos")
-                Hint("El mismo orden en Llamar y en Videollamada. Los favoritos nuevos salen al final.")
+                Section(stringResource(R.string.settings_order_title))
+                Hint(stringResource(R.string.settings_order_hint))
                 favorites.forEachIndexed { index, contact ->
                     OrderRow(
                         title = contact.name,
@@ -135,8 +136,8 @@ fun SettingsScreen(
                     )
                 }
 
-                Section("Contacto para el SOS")
-                if (favorites.isEmpty()) Hint("No hay contactos favoritos (★).")
+                Section(stringResource(R.string.settings_sos_title))
+                if (favorites.isEmpty()) Hint(stringResource(R.string.settings_no_favorites))
                 // Si no se ha elegido, se usa el primer favorito.
                 val effectiveSos = favorites.firstOrNull { it.id == sosId } ?: favorites.firstOrNull()
                 favorites.forEach { contact ->
@@ -148,7 +149,7 @@ fun SettingsScreen(
                     }
                 }
 
-                Section("Pueden pedir la ubicación por SMS")
+                Section(stringResource(R.string.settings_locate_title))
                 favorites.forEach { contact ->
                     val checked = locateIds?.contains(contact.id) ?: true
                     OptionRow(contact.name, contact.phone, onClick = {
@@ -161,8 +162,8 @@ fun SettingsScreen(
                     }
                 }
 
-                Section("Tienen WhatsApp (videollamada)")
-                Hint("Márcalo si esa persona usa WhatsApp: aparecerá en el botón de videollamada.")
+                Section(stringResource(R.string.settings_whatsapp_title))
+                Hint(stringResource(R.string.settings_whatsapp_hint))
                 favorites.forEach { contact ->
                     val checked = contact.id in whatsAppIds
                     OptionRow(contact.name, contact.phone, onClick = {
@@ -176,62 +177,58 @@ fun SettingsScreen(
                     }
                 }
 
-                Section("Palabras clave para pedir la ubicación")
+                Section(stringResource(R.string.settings_keywords_title))
                 OutlinedTextField(
                     value = keywords,
                     onValueChange = {
                         keywords = it
                         settings.keywords = it.split(",")
                     },
-                    supportingText = { Text("Separadas por comas. Da igual mayúsculas, tildes o signos.") },
+                    supportingText = { Text(stringResource(R.string.settings_keywords_hint)) },
                     modifier = Modifier.fillMaxWidth()
                 )
 
-                Section("Llamadas de WhatsApp")
+                Section(stringResource(R.string.settings_wa_calls_title))
                 Hint(
-                    if (whatsAppAccess) "Activado: las llamadas de WhatsApp se ven con la pantalla grande."
-                    else "Desactivado: hay que dar \"acceso a notificaciones\" a LlamaditApp."
+                    if (whatsAppAccess) stringResource(R.string.settings_wa_calls_on)
+                    else stringResource(R.string.settings_wa_calls_off)
                 )
-                if (!whatsAppAccess) ActionButton("Activar acceso a notificaciones", onOpenNotificationAccess)
+                if (!whatsAppAccess) ActionButton(stringResource(R.string.settings_wa_calls_enable), onOpenNotificationAccess)
 
-                Section("Seguridad")
-                ActionButton("Cambiar el PIN", onChangePin)
+                Section(stringResource(R.string.settings_security_title))
+                ActionButton(stringResource(R.string.settings_change_pin), onChangePin)
 
-                Section("Otras apps")
+                Section(stringResource(R.string.settings_other_apps_title))
                 Hint(
                     when {
-                        !isDeviceOwner -> "La app no es Device Owner: el modo quiosco no está activo."
-                        kioskPaused -> "El modo quiosco está en pausa."
-                        else -> "Se sale del modo quiosco hasta volver a esta app."
+                        !isDeviceOwner -> stringResource(R.string.settings_not_device_owner)
+                        kioskPaused -> stringResource(R.string.settings_kiosk_paused_short)
+                        else -> stringResource(R.string.settings_leaves_kiosk)
                     }
                 )
-                ActionButton("Abrir Contactos (favoritos y fotos)", onOpenContacts)
-                ActionButton("Abrir Ajustes de Android", onOpenAndroidSettings)
+                ActionButton(stringResource(R.string.settings_open_contacts), onOpenContacts)
+                ActionButton(stringResource(R.string.settings_open_android_settings), onOpenAndroidSettings)
 
                 if (isDeviceOwner) {
-                    Section("Modo quiosco")
+                    Section(stringResource(R.string.settings_kiosk_title))
                     if (kioskPaused) {
-                        Hint("En pausa: el móvil se usa con normalidad (también tras reiniciar). Actívalo al terminar.")
-                        ActionButton("Activar el modo quiosco", onResumeKiosk, color = VerdeLlamar)
+                        Hint(stringResource(R.string.settings_kiosk_paused_hint))
+                        ActionButton(stringResource(R.string.settings_kiosk_resume), onResumeKiosk, color = VerdeLlamar)
                     } else {
-                        Hint("Activo. Pausarlo permite instalar o configurar cosas; se vuelve a activar aquí, sin ordenador.")
-                        ActionButton("Pausar el modo quiosco", onPauseKiosk)
+                        Hint(stringResource(R.string.settings_kiosk_active_hint))
+                        ActionButton(stringResource(R.string.settings_kiosk_pause), onPauseKiosk)
                     }
                     Spacer(Modifier.height(16.dp))
-                    Hint("Solo para desinstalar el launcher o entregar el móvil:")
-                    ActionButton("Quitar el Device Owner", { confirmDisable = true }, color = RojoSos)
+                    Hint(stringResource(R.string.settings_remove_owner_hint))
+                    ActionButton(stringResource(R.string.settings_remove_owner), { confirmDisable = true }, color = RojoSos)
                 }
 
                 // Avisos legales que pide la licencia (GNU AGPL v3, sección 5 d).
-                Section("Acerca de")
-                Text("LlamaditApp ${appVersion(context)}", color = TextoClaro, fontSize = 18.sp)
+                Section(stringResource(R.string.settings_about_title))
+                Text("${stringResource(R.string.app_name)} ${appVersion(context)}", color = TextoClaro, fontSize = 18.sp)
                 Hint("Copyright (C) 2026 alvsanmun")
-                Hint(
-                    "Software libre: puedes redistribuirlo y modificarlo bajo los términos de la " +
-                        "licencia GNU Affero General Public License, versión 3 o posterior. " +
-                        "Se distribuye SIN NINGUNA GARANTÍA."
-                )
-                Hint("Código fuente y licencia: $SOURCE_URL")
+                Hint(stringResource(R.string.settings_license))
+                Hint(stringResource(R.string.settings_source, SOURCE_URL))
                 Spacer(Modifier.height(24.dp))
             }
         }
@@ -239,23 +236,18 @@ fun SettingsScreen(
         if (confirmDisable) {
             AlertDialog(
                 onDismissRequest = { confirmDisable = false },
-                title = { Text("¿Quitar el Device Owner?") },
+                title = { Text(stringResource(R.string.remove_owner_dialog_title)) },
                 text = {
-                    Text(
-                        "Se desactiva el modo quiosco para siempre. Para volver a activarlo " +
-                            "hace falta un ordenador (adb) y quitar antes todas las cuentas del " +
-                            "teléfono (Google, WhatsApp...). Si solo quieres instalar o configurar " +
-                            "algo, usa \"Pausar el modo quiosco\"."
-                    )
+                    Text(stringResource(R.string.remove_owner_dialog_text))
                 },
                 confirmButton = {
                     TextButton(onClick = {
                         confirmDisable = false
                         onDisableKiosk()
-                    }) { Text("Quitar") }
+                    }) { Text(stringResource(R.string.remove_owner_confirm)) }
                 },
                 dismissButton = {
-                    TextButton(onClick = { confirmDisable = false }) { Text("Cancelar") }
+                    TextButton(onClick = { confirmDisable = false }) { Text(stringResource(R.string.cancel)) }
                 }
             )
         }

@@ -39,6 +39,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -63,14 +64,16 @@ fun PinScreen(
     var error by rememberSaveable { mutableStateOf<String?>(null) }
 
     val title = when {
-        !creating -> "PIN del cuidador"
-        firstPin == null -> "Crea un PIN de $PIN_LENGTH cifras"
-        else -> "Repite el PIN"
+        !creating -> stringResource(R.string.pin_title)
+        firstPin == null -> stringResource(R.string.pin_create, PIN_LENGTH)
+        else -> stringResource(R.string.pin_repeat)
     }
+    val wrongPin = stringResource(R.string.pin_wrong)
+    val mismatch = stringResource(R.string.pin_mismatch)
 
     fun complete(value: String) {
         when {
-            !creating -> if (onCheck(value)) onSuccess() else error = "PIN incorrecto"
+            !creating -> if (onCheck(value)) onSuccess() else error = wrongPin
             firstPin == null -> {
                 firstPin = value
                 error = null
@@ -78,7 +81,7 @@ fun PinScreen(
             value == firstPin -> onCreated(value)
             else -> {
                 firstPin = null
-                error = "Los PIN no coinciden. Vuelve a empezar."
+                error = mismatch
             }
         }
         pin = ""

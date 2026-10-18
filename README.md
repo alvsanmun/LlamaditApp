@@ -76,6 +76,13 @@ Después: mantener pulsado el **reloj 5 segundos** → crear el PIN del cuidador
 - [Configuración recomendada de Android](docs/CONFIGURACION.md): ajustes del teléfono, la SIM, WhatsApp y los móviles de los familiares para que todo funcione bien.
 - [Solución de problemas](docs/PROBLEMAS.md).
 - [Compilar el proyecto](docs/DESARROLLO.md): para desarrolladores.
+- [Traducir la app](docs/TRADUCIR.md): cómo añadir o revisar un idioma.
+
+## Idiomas
+
+La persona que usa LlamaditApp no necesita leer, pero el panel del cuidador y los SMS del SOS sí tienen texto. Están traducidos a **español, inglés, catalán, gallego, euskera, portugués, francés, italiano y alemán**. La app usa el idioma del teléfono; si no está traducido, se muestra en inglés. En Android 13 o superior se puede elegir otro idioma solo para la app (*Ajustes → Aplicaciones → LlamaditApp → Idioma*).
+
+¿Hablas otro idioma o quieres revisar una traducción? Consulta **[docs/TRADUCIR.md](docs/TRADUCIR.md)**.
 
 ## Privacidad
 

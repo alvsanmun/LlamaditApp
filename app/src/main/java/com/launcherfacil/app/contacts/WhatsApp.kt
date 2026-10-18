@@ -27,6 +27,7 @@ import android.net.Uri
 import android.provider.ContactsContract
 import android.provider.ContactsContract.Data
 import android.util.Log
+import com.launcherfacil.app.R
 import com.launcherfacil.app.config.inCaregiverOrder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -131,7 +132,7 @@ suspend fun setHasWhatsApp(context: Context, contact: Contact, has: Boolean): Bo
                     put(Data.MIMETYPE, MIME_VIDEO)
                     put(Data.DATA1, jid)
                     put(Data.DATA2, "WhatsApp")
-                    put(Data.DATA3, "Videollamada")
+                    put(Data.DATA3, context.getString(R.string.whatsapp_video_row))
                 }
                 resolver.insert(Data.CONTENT_URI, values) != null
             } else {

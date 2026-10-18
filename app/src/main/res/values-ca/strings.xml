@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ca: translation of values/strings.xml. -->
+<resources>
+    <string name="whatsapp_listener_label">LlamaditApp: trucades de WhatsApp</string>
+    <string name="whatsapp_open_failed">No s\'ha pogut obrir WhatsApp</string>
+    <string name="open_failed">No s\'ha pogut obrir</string>
+    <string name="whatsapp_video_row">Videotrucada</string>
+    <string name="battery_level">Bateria %1$d %%</string>
+    <string name="battery_level_charging">Bateria %1$d %% (carregant)</string>
+    <string name="location_detail">%1$s (±%2$d m, %3$s)</string>
+    <string name="locate_reply">Ubicació: %1$s</string>
+    <string name="locate_reply_failed">No s\'ha pogut obtenir la ubicació ara mateix.</string>
+    <string name="sos_first">SOS: necessito ajuda. Soc aquí: %1$s</string>
+    <string name="sos_update">SOS: ubicació actualitzada (%1$d/%2$d): %3$s</string>
+    <string name="sos_last">SOS: última ubicació (%1$d/%2$d): %3$s</string>
+    <string name="sos_no_location">no s\'ha pogut obtenir la ubicació.</string>
+    <string name="notification_channel_location">Ubicació</string>
+    <string name="notification_locate">Enviant la ubicació per SMS</string>
+    <string name="notification_sos">SOS actiu: enviant la ubicació durant 30 minuts</string>
+    <string name="yesterday_at">Ahir %1$s</string>
+    <string name="contacts_permission_needed">Cal permís per llegir els contactes.</string>
+    <string name="give_permission">Donar permís</string>
+    <string name="no_favorites">No hi ha contactes preferits.\nMarca amb ★ a l\'app Contactes les persones que han d\'aparèixer aquí.</string>
+    <string name="whatsapp_not_installed">WhatsApp no està instal·lat en aquest telèfon.</string>
+    <string name="no_whatsapp_favorites">Cap preferit no està marcat amb WhatsApp.\nMarca\'ls a la configuració del cuidador (rellotge 5 s → PIN → \"Tenen WhatsApp\").</string>
+    <string name="pin_title">PIN del cuidador</string>
+    <string name="pin_create">Crea un PIN de %1$d xifres</string>
+    <string name="pin_repeat">Repeteix el PIN</string>
+    <string name="pin_wrong">PIN incorrecte</string>
+    <string name="pin_mismatch">Els PIN no coincideixen. Torna a començar.</string>
+    <string name="settings_order_title">Ordre dels contactes</string>
+    <string name="settings_order_hint">El mateix ordre a Trucar i a Videotrucada. Els preferits nous surten al final.</string>
+    <string name="settings_sos_title">Contacte per a l\'SOS</string>
+    <string name="settings_no_favorites">No hi ha contactes preferits (★).</string>
+    <string name="settings_locate_title">Poden demanar la ubicació per SMS</string>
+    <string name="settings_whatsapp_title">Tenen WhatsApp (videotrucada)</string>
+    <string name="settings_whatsapp_hint">Marca-ho si aquesta persona fa servir WhatsApp: apareixerà al botó de videotrucada.</string>
+    <string name="settings_keywords_title">Paraules clau per demanar la ubicació</string>
+    <string name="settings_keywords_hint">Separades per comes. Tant és majúscules, accents o signes.</string>
+    <string name="settings_wa_calls_title">Trucades de WhatsApp</string>
+    <string name="settings_wa_calls_on">Activat: les trucades de WhatsApp es veuen amb la pantalla gran.</string>
+    <string name="settings_wa_calls_off">Desactivat: cal donar \"accés a les notificacions\" a LlamaditApp.</string>
+    <string name="settings_wa_calls_enable">Activar accés a les notificacions</string>
+    <string name="settings_security_title">Seguretat</string>
+    <string name="settings_change_pin">Canviar el PIN</string>
+    <string name="settings_other_apps_title">Altres apps</string>
+    <string name="settings_not_device_owner">L\'app no és Device Owner: el mode quiosc no està actiu.</string>
+    <string name="settings_kiosk_paused_short">El mode quiosc està en pausa.</string>
+    <string name="settings_leaves_kiosk">Se surt del mode quiosc fins que tornis a aquesta app.</string>
+    <string name="settings_open_contacts">Obrir Contactes (preferits i fotos)</string>
+    <string name="settings_open_android_settings">Obrir la configuració d\'Android</string>
+    <string name="settings_kiosk_title">Mode quiosc</string>
+    <string name="settings_kiosk_paused_hint">En pausa: el mòbil es fa servir amb normalitat (també després de reiniciar). Activa\'l quan acabis.</string>
+    <string name="settings_kiosk_resume">Activar el mode quiosc</string>
+    <string name="settings_kiosk_active_hint">Actiu. Posar-lo en pausa permet instal·lar o configurar coses; es torna a activar aquí, sense ordinador.</string>
+    <string name="settings_kiosk_pause">Posar en pausa el mode quiosc</string>
+    <string name="settings_remove_owner_hint">Només per desinstal·lar el launcher o donar el mòbil a una altra persona:</string>
+    <string name="settings_remove_owner">Treure el Device Owner</string>
+    <string name="settings_about_title">Quant a</string>
+    <string name="settings_license">Programari lliure: el pots redistribuir i modificar segons els termes de la llicència GNU Affero General Public License, versió 3 o posterior. Es distribueix SENSE CAP GARANTIA.</string>
+    <string name="settings_source">Codi font i llicència: %1$s</string>
+    <string name="remove_owner_dialog_title">Treure el Device Owner?</string>
+    <string name="remove_owner_dialog_text">Es desactiva el mode quiosc per sempre. Per tornar-lo a activar cal un ordinador (adb) i treure abans tots els comptes del telèfon (Google, WhatsApp...). Si només vols instal·lar o configurar alguna cosa, fes servir \"Posar en pausa el mode quiosc\".</string>
+    <string name="remove_owner_confirm">Treure</string>
+    <string name="cancel">Cancel·lar</string>
+    <string-array name="default_keywords">
+        <item>UBICACIO</item>
+        <item>ON ETS</item>
+    </string-array>
+</resources>
