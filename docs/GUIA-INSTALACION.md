@@ -297,8 +297,9 @@ Solo si la persona va a hacer **videollamadas de WhatsApp**.
 2. Pulsa **Abrir Ajustes de Android** y añade una **cuenta de Google**: **Cuentas y copia de seguridad → Administrar cuentas → Añadir cuenta → Google**.
 3. Abre **Play Store**: en Ajustes ve a **Aplicaciones → Google Play Store → Abrir**. Busca e instala **WhatsApp**, ábrelo y regístralo con el número de la SIM (llegará un SMS con un código).
 4. En Play Store, toca tu foto de perfil → **Ajustes → Preferencias de red → Actualizar aplicaciones automáticamente → Usando cualquier red**.
-5. Pulsa el botón de **inicio** del móvil para volver a LlamaditApp, entra en el panel (reloj 5 segundos y PIN) y pulsa **Activar el modo quiosco**.
-6. En **Tienen WhatsApp (videollamada)**, marca a las personas que usan WhatsApp.
+5. **Que WhatsApp no se duerma** (imprescindible): si no, las videollamadas pueden no sonar. **Samsung:** **Ajustes → Batería → Límites de uso en segundo plano → Aplicaciones sin autoinactivación → +**, marca **WhatsApp** y pulsa **Añadir** (capturas en el [apartado 11](#11-ajuste-de-batería-recomendado)). **Otros móviles:** **Ajustes → Aplicaciones → WhatsApp → Batería → Sin restricciones**.
+6. Pulsa el botón de **inicio** del móvil para volver a LlamaditApp, entra en el panel (reloj 5 segundos y PIN) y pulsa **Activar el modo quiosco**.
+7. En **Tienen WhatsApp (videollamada)**, marca a las personas que usan WhatsApp.
 
 ---
 
@@ -332,7 +333,7 @@ Prueba cada cosa antes de entregarlo:
 - [ ] **SOS** (avisa antes a la persona de confianza): mantén pulsado el botón rojo 2 segundos. Debe llamar y enviarle un SMS con la ubicación.
 - [ ] **Ubicación:** desde el móvil de un familiar, envía un SMS con la palabra **UBICACION**. Debe llegar la respuesta con un enlace de Google Maps.
 - [ ] **Volumen:** pulsa los botones de volumen; debe aparecer un panel grande.
-- [ ] **WhatsApp** (si se usa): haz una videollamada desde la foto y recibe otra.
+- [ ] **WhatsApp** (si se usa): haz una videollamada desde la foto y recibe otra. Comprueba que WhatsApp está en **Aplicaciones sin autoinactivación**.
 - [ ] **Reinicio:** apaga y enciende el móvil. Debe arrancar directamente en LlamaditApp.
 - [ ] **Bloqueo:** intenta salir con los botones de inicio y de aplicaciones recientes. No debe dejar.
 

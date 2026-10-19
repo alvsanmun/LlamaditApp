@@ -144,6 +144,7 @@ Solo si va a usar videollamadas de WhatsApp.
 2. Toca **"Abrir Ajustes de Android"** y añade la **cuenta de Google**: *Cuentas y copia de seguridad → Administrar cuentas → Añadir cuenta → Google*.
 3. Abre **Play Store**. LlamaditApp sigue siendo la pantalla de inicio y no tiene lista de apps, así que se abre desde los ajustes: *Ajustes → Aplicaciones → Google Play Store → Abrir*. Instala **WhatsApp**, ábrelo y regístralo con el número de la SIM (llegará un SMS de verificación).
 4. En Play Store: *foto de perfil → Ajustes → Preferencias de red → Actualizar apps automáticamente → "Usando cualquier red"*. Así WhatsApp se mantendrá actualizado con los datos móviles.
+4b. **Que WhatsApp no se duerma** (imprescindible): *Ajustes → Batería → Límites de uso en segundo plano → Aplicaciones sin autoinactivación → + → WhatsApp* (otros móviles: *Ajustes → Aplicaciones → WhatsApp → Batería → Sin restricciones*). Si no, las videollamadas pueden no sonar.
 5. Pulsa el botón de inicio para volver a LlamaditApp, entra en el panel del cuidador y toca **"Activar el modo quiosco"**. Al activarlo, LlamaditApp concede a WhatsApp los permisos de cámara, micrófono y contactos (dentro del quiosco no se pueden mostrar los avisos de permisos).
 6. En la sección **"Tienen WhatsApp (videollamada)"**, marca las personas que usan WhatsApp. Aparecerán en el botón de videollamada.
 7. Si la sección **"Llamadas de WhatsApp"** dice *Desactivado*, toca **"Activar acceso a notificaciones"** y activa LlamaditApp en la lista.
