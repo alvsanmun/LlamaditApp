@@ -20,6 +20,7 @@ package com.launcherfacil.app.ui
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.provider.ContactsContract
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -72,6 +73,7 @@ import com.launcherfacil.app.contacts.Contact
 import com.launcherfacil.app.contacts.contactsWithWhatsApp
 import com.launcherfacil.app.contacts.loadFavoriteContacts
 import com.launcherfacil.app.contacts.setHasWhatsApp
+import com.launcherfacil.app.inbox.rememberContentVersion
 import kotlinx.coroutines.launch
 
 /** Configuración del cuidador. Aquí sí hay texto: no la usa la persona. */
@@ -92,7 +94,10 @@ fun SettingsScreen(
     val context = LocalContext.current
     val settings = remember { CaregiverSettings(context) }
     var favorites by remember { mutableStateOf(emptyList<Contact>()) }
-    LaunchedEffect(Unit) { favorites = loadFavoriteContacts(context) }
+    // Se recarga al cambiar la agenda: por ejemplo, al volver de Contactos tras añadir
+    // un favorito (antes el panel seguía diciendo que no había ninguno).
+    val contactsVersion = rememberContentVersion(ContactsContract.Contacts.CONTENT_URI)
+    LaunchedEffect(contactsVersion) { favorites = loadFavoriteContacts(context) }
 
     // Sube o baja un favorito y guarda el orden (Llamar y Videollamada usan el mismo).
     fun move(index: Int, by: Int) {
@@ -108,7 +113,7 @@ fun SettingsScreen(
     var confirmDisable by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     var whatsAppIds by remember { mutableStateOf(emptySet<Long>()) }
-    LaunchedEffect(Unit) { whatsAppIds = contactsWithWhatsApp(context) }
+    LaunchedEffect(contactsVersion) { whatsAppIds = contactsWithWhatsApp(context) }
 
     MaterialTheme(colorScheme = darkColorScheme(primary = Color(0xFF90CAF9))) {
         Column(

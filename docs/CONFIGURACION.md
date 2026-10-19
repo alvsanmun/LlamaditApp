@@ -16,7 +16,7 @@ Cada ajuste está marcado como:
 
 | Ajuste | Dónde | Por qué |
 |---|---|---|
-| **Quitar el PIN de la SIM** · Imprescindible | *Ajustes → Seguridad y privacidad → Otros ajustes de seguridad → Configurar bloqueo de SIM → desactivar "Bloquear tarjeta SIM"* | Si el móvil se reinicia (por una actualización o porque se quede sin batería), pediría el PIN y se quedaría sin llamadas ni SOS hasta que alguien lo escribiera. |
+| **Quitar el PIN de la SIM** · Imprescindible | *Ajustes → Seguridad y privacidad → Más ajustes de seguridad → Seguridad de tarjeta SIM → desactivar "Bloquear tarjeta SIM"* | Si el móvil se reinicia (por una actualización o porque se quede sin batería), pediría el PIN y se quedaría sin llamadas ni SOS hasta que alguien lo escribiera. |
 | **Tarifa con llamadas, SMS y datos** · Imprescindible | Con el operador | El SOS y la localización van por **SMS**. Los datos móviles hacen falta para WhatsApp y las actualizaciones, porque el Wi-Fi estará apagado. |
 | **Desactivar el buzón de voz** · Recomendado | Llamando al operador (o con el código que te indique) | Si salta el buzón, quien llama cree que ha hablado con la persona, que nunca lo escuchará. Sin buzón, la llamada queda como **perdida** y sale el número rojo en LlamaditApp. |
 | **Avisos de "te han llamado"** · Recomendado | Con el operador | Si el móvil estuvo sin cobertura o apagado, el operador avisa por SMS de las llamadas recibidas. |
@@ -33,7 +33,7 @@ Cada ajuste está marcado como:
 
 | Ajuste | Dónde | Por qué |
 |---|---|---|
-| **Que LlamaditApp y WhatsApp nunca se suspendan** · Recomendado | *Ajustes → Batería → Límites de uso en segundo plano → Aplicaciones que nunca se suspenden → añadir LlamaditApp y WhatsApp* | Samsung "duerme" las apps para ahorrar batería. Si duerme WhatsApp, las videollamadas pueden llegar tarde; si duerme LlamaditApp, puede tardar en responder a una petición de ubicación. |
+| **Que WhatsApp nunca se suspenda** · Recomendado | *Ajustes → Batería → Límites de uso en segundo plano → Aplicaciones sin autoinactivación → + → WhatsApp* (en versiones anteriores de One UI: "Aplicaciones que nunca se suspenden") | Samsung "duerme" las apps para ahorrar batería. Si duerme WhatsApp, las videollamadas pueden llegar tarde. LlamaditApp no aparece en la lista porque, como administradora del móvil, Android ya la exime. |
 | **Sin ahorro de energía extremo** · Recomendado | *Ajustes → Batería → Ahorro de energía → Desactivado* | El modo de ahorro limita los datos en segundo plano y puede retrasar WhatsApp y la ubicación. |
 | **Desactivar "Poner en suspensión las apps sin usar"** · Recomendado | *Ajustes → Batería → Límites de uso en segundo plano* | Evita que el sistema retire permisos o duerma apps que se usan poco, como WhatsApp si apenas hay videollamadas. |
 
@@ -124,7 +124,7 @@ Antes de entregar el móvil, comprueba:
 - [ ] "No molestar" desactivado y sin horarios.
 - [ ] Ubicación activada.
 - [ ] Fecha y hora automáticas.
-- [ ] LlamaditApp y WhatsApp en "nunca se suspenden".
+- [ ] WhatsApp en "Aplicaciones sin autoinactivación".
 - [ ] Funciones de chat (RCS) desactivadas en Mensajes.
 - [ ] Play Store actualiza "usando cualquier red".
 - [ ] Notificaciones de llamadas de WhatsApp activadas, y acceso a notificaciones para LlamaditApp.

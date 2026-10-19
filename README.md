@@ -56,12 +56,14 @@ Todas las pantallas, explicadas una a una, en **[docs/FUNCIONES.md](docs/FUNCION
 
 ## Instalación
 
-La guía completa, paso a paso y desde un móvil de fábrica, está en **[docs/INSTALACION.md](docs/INSTALACION.md)**.
+**👉 [Guía de instalación paso a paso, con capturas](docs/GUIA-INSTALACION.md)**: desde un móvil de fábrica hasta entregarlo listo, pensada para quien no sabe de informática.
 
-Resumen para quien ya conoce `adb`:
+En Windows basta con descargar el **[instalador](https://github.com/alvsanmun/LlamaditApp/releases/latest/download/Instalador-LlamaditApp-Windows.zip)**, conectar el móvil por USB y hacer doble clic en `Instalar LlamaditApp.bat`: descarga solo lo necesario, instala la app y activa el modo quiosco.
+
+Resumen para quien ya conoce `adb` ([guía técnica](docs/INSTALACION.md)):
 
 ```bash
-adb install launcher-facil.apk
+adb install LlamaditApp.apk
 adb shell dpm set-device-owner com.launcherfacil.app/.kiosk.AdminReceiver
 adb shell appops set com.launcherfacil.app WRITE_SETTINGS allow
 adb shell cmd notification allow_listener com.launcherfacil.app/com.launcherfacil.app.whatsapp.WhatsAppCallListener
@@ -72,7 +74,8 @@ Después: mantener pulsado el **reloj 5 segundos** → crear el PIN del cuidador
 ## Documentación
 
 - [Funciones en detalle](docs/FUNCIONES.md): qué ve la persona y qué puede ajustar el cuidador.
-- [Instalación paso a paso desde cero](docs/INSTALACION.md).
+- [Guía de instalación paso a paso, con capturas](docs/GUIA-INSTALACION.md): para quien no sabe de informática.
+- [Instalación técnica con adb](docs/INSTALACION.md).
 - [Configuración recomendada de Android](docs/CONFIGURACION.md): ajustes del teléfono, la SIM, WhatsApp y los móviles de los familiares para que todo funcione bien.
 - [Solución de problemas](docs/PROBLEMAS.md).
 - [Compilar el proyecto](docs/DESARROLLO.md): para desarrolladores.

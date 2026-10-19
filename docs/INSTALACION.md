@@ -1,4 +1,6 @@
-# Instalación y configuración desde cero
+# Instalación y configuración desde cero (guía técnica)
+
+> 👉 ¿No sabes de informática? Sigue mejor la **[guía paso a paso con capturas](GUIA-INSTALACION.md)**, que usa el instalador de un clic para Windows. Esta es la versión técnica, con los comandos `adb`.
 
 Esta guía deja un móvil Android listo para entregar, empezando desde un teléfono recién sacado de la caja o restablecido de fábrica. Se tarda alrededor de **una hora** la primera vez.
 
@@ -23,7 +25,7 @@ Los pasos y nombres de menús son los de un **Samsung Galaxy A16** (Android 16, 
 
 ## Paso 1. Preparar el móvil
 
-1. Si el móvil ya se ha usado, **restablécelo de fábrica**: *Ajustes → Administración general → Restablecer → Restablecer valores de fábrica*.
+1. Si el móvil ya se ha usado, **restablécelo de fábrica**: *Ajustes → Administración general → Restablecer → Restablecer todos los datos*.
 2. Inserta la **SIM** y enciende el teléfono.
 3. En el asistente de bienvenida:
    - Elige el idioma.
@@ -31,7 +33,7 @@ Los pasos y nombres de menús son los de un **Samsung Galaxy A16** (Android 16, 
    - **No añadas cuenta de Samsung** ("Omitir").
    - **No pongas PIN, patrón ni huella** ("Omitir" / "Ninguno"). LlamaditApp quita la pantalla de bloqueo, y eso solo funciona si el móvil no tiene ninguna.
    - Puedes conectarte a un Wi-Fi durante el asistente; luego LlamaditApp lo apagará.
-4. **Quita el PIN de la SIM**, para que tras un reinicio el teléfono funcione sin que nadie tenga que hacer nada: *Ajustes → Seguridad y privacidad → Otros ajustes de seguridad → Configurar bloqueo de SIM → desactivar "Bloquear tarjeta SIM"* (pide el PIN actual).
+4. **Quita el PIN de la SIM**, para que tras un reinicio el teléfono funcione sin que nadie tenga que hacer nada: *Ajustes → Seguridad y privacidad → Más ajustes de seguridad → Seguridad de tarjeta SIM → desactivar "Bloquear tarjeta SIM"* (pide el PIN actual).
 
 ## Paso 2. Activar la depuración USB
 
@@ -162,7 +164,7 @@ Hay ajustes del teléfono que una app no puede cambiar y que conviene dejar bien
 - **"No molestar" desactivado** y sin horarios programados: si no, las llamadas no suenan.
 - **Ubicación activada**, con la precisión de Google: si no, el SOS no puede enviar la posición.
 - **Fecha y hora automáticas**.
-- **LlamaditApp y WhatsApp en "Aplicaciones que nunca se suspenden"** (*Ajustes → Batería → Límites de uso en segundo plano*).
+- **WhatsApp en "Aplicaciones sin autoinactivación"** (*Ajustes → Batería → Límites de uso en segundo plano*). LlamaditApp no hace falta: como administradora del móvil, Android ya la exime.
 - **Funciones de chat (RCS) desactivadas** en la app Mensajes: así las peticiones de ubicación llegan siempre como SMS.
 - **Notificaciones de llamadas de WhatsApp activadas**.
 - **Tiempo de espera de la pantalla** de 1 o 2 minutos.

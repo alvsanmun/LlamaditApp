@@ -1,0 +1,19 @@
+﻿LlamaditApp - instalador para Windows
+=====================================
+
+1. Prepara el móvil siguiendo la guía (restablecido de fábrica, sin cuentas
+   y con la "Depuración USB" activada):
+   https://github.com/alvsanmun/LlamaditApp/blob/main/docs/GUIA-INSTALACION.md
+
+2. Conecta el móvil a este ordenador con el cable USB.
+
+3. Haz doble clic en "Instalar LlamaditApp.bat" y sigue las instrucciones.
+
+El instalador descarga solo las herramientas oficiales de Android y la última
+versión de LlamaditApp. Si pones un archivo .apk de LlamaditApp en esta misma
+carpeta, usará ese en lugar de descargarlo.
+
+Si Windows muestra "Windows protegió su PC", pulsa "Más información" y luego
+"Ejecutar de todas formas".
+
+LlamaditApp es software libre (GNU AGPL v3). Copyright (C) 2026 alvsanmun.
