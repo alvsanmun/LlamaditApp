@@ -19,7 +19,11 @@ LlamaditApp tiene dos partes:
 - Los botones pequeños de abajo muestran un **número rojo** cuando hay mensajes nuevos o llamadas perdidas.
 - No hay barra de navegación abajo: la pantalla entera es para los botones. Si alguien desliza desde el borde inferior, la flecha de "atrás" aparece unos segundos y se vuelve a esconder.
 
-Desde cualquier pantalla, la **casa** grande de arriba vuelve a la pantalla principal. Tras hacer una llamada o videollamada, al colgar se vuelve también a la pantalla principal.
+Desde cualquier pantalla, la **casa** grande de arriba vuelve a la pantalla principal o, si el cuidador lo prefiere, una **flecha** fija abajo a la izquierda, como el botón Atrás de Android pero más grande.
+
+<p align="center">
+  <img src="img/capturas/29-flecha-abajo.jpg" alt="Pantalla Llamar con la flecha para volver abajo a la izquierda" width="230">
+</p> Tras hacer una llamada o videollamada, al colgar se vuelve también a la pantalla principal.
 
 ### Diseño a medida
 
@@ -55,6 +59,21 @@ Las mismas fotos, en el mismo orden, pero solo de las personas marcadas como "Ti
 - Solo videollamadas: las llamadas de voz se hacen con el botón verde normal.
 - Durante la videollamada se ve la pantalla de WhatsApp, con su botón rojo para colgar. Al colgar se vuelve sola a LlamaditApp.
 - Requiere WhatsApp (no WhatsApp Business) instalado y con la sesión iniciada.
+
+### WhatsApp completo (opcional)
+
+<p align="center">
+  <img src="img/capturas/30-whatsapp-boton.jpg" alt="Botón verde claro de WhatsApp con 4 mensajes nuevos" width="230">
+  <img src="img/capturas/31-whatsapp-casa.jpg" alt="Lista de chats con la pestaña de la casa en el borde derecho" width="230">
+</p>
+
+Un botón aparte, verde claro con un bocadillo, para quien quiera usar **WhatsApp entero**: chats, notas de voz, fotos y vídeos. Lleva un **número rojo** con los mensajes sin leer, que baja solo al leerlos.
+
+- Al tocarlo se abre WhatsApp, con el sonido de audios y vídeos activado.
+- Mientras se usa, una **pestaña pequeña con una casa**, pegada al borde derecho de la pantalla, vuelve a LlamaditApp con un toque. Es pequeña y semitransparente para tapar lo mínimo, y está por debajo de la barra de arriba de WhatsApp y por encima del teclado.
+- Si entra una llamada mientras tanto, la pestaña se esconde para no tapar la pantalla de la llamada; al colgar se vuelve a la pantalla principal.
+- Dentro del modo quiosco no se abren enlaces web ni otras apps desde WhatsApp.
+- La pestaña necesita el permiso "Mostrar sobre otras aplicaciones": lo da el instalador, o el cuidador desde el panel. Sin él, WhatsApp se abre igual y se sale con la flecha de atrás.
 
 ## 4. Teclado
 
@@ -195,6 +214,13 @@ La ruta necesita datos móviles, salvo que se haya descargado el mapa de la ciud
   <img src="img/capturas/22-panel-dibujo-sos.jpg" alt="Seis dibujos para el botón SOS" width="230">
 </p>
 
+**Botón para volver y WhatsApp completo:**
+
+<p align="center">
+  <img src="img/capturas/28-panel-boton-volver.jpg" alt="Elegir entre la casa grande arriba y la flecha abajo" width="230">
+  <img src="img/capturas/32-panel-whatsapp-completo.jpg" alt="Sección WhatsApp completo del panel" width="230">
+</p>
+
 **Volver a casa, contactos de Google y Wi-Fi:**
 
 <p align="center">
@@ -214,12 +240,14 @@ La ruta necesita datos móviles, salvo que se haya descargado el mapa de la ciud
 | **Pantalla principal** | Vista previa en pequeño y, por cada elemento, flechas ↑ y ↓ para moverlo, su tamaño (**pequeño** y **mediano** ocupan media fila, **grande** la fila entera) y un interruptor para ocultarlo. El reloj no se puede ocultar. "Volver al diseño original" lo deja como venía. |
 | **Volver a casa** | Marcar la casa con **"Usar mi ubicación actual"** (estando en ella) o escribiendo la dirección y **"Buscar esta dirección en el mapa"**. La dirección se puede corregir (piso, puerta). **"Probar la ruta"** abre la navegación una vez para aceptar las pantallas iniciales de Google Maps. El botón se activa en *Pantalla principal*. **Foto del portal** (hacerla con la cámara o elegirla de la galería) y **"Avisar por SMS al pulsar el botón"** (al contacto del SOS, activado por defecto) y **"Enviar la ubicación cada 10 minutos durante la ruta"** (desactivado por defecto). Al activar una función que envía SMS, el panel avisa de que, según la tarifa de la línea, los SMS podrían cobrarse. |
 | **Dibujo del botón SOS** | Las letras **SOS** (por defecto), una **ambulancia**, una **cruz**, una **sirena**, un **corazón** o una **señal de peligro**: el que mejor reconozca la persona. |
+| **Botón para volver** | Cómo se sale de cada pantalla: la **casa grande de arriba** (por defecto), que vuelve a la pantalla principal, o una **flecha fija abajo a la izquierda**, como el botón Atrás de Android pero más grande (en un mensaje abierto vuelve a la lista). El cambio se ve al momento. |
 | **Orden de los contactos** | Flechas ↑ y ↓ para elegir el orden. Es el mismo en Llamar y en Videollamada. Los favoritos nuevos salen al final. |
 | **Contactos desde una cuenta de Google** | Las cuentas de Google del móvil, cuántos favoritos (★) trae cada una y si sus contactos se sincronizan solos; botones **"Sincronizar ahora"** y **"Añadir una cuenta de Google"**. Así los contactos (nombre, foto y teléfono) se pueden gestionar desde cualquier móvil u ordenador en [contacts.google.com](https://contacts.google.com), marcándolos con la estrella. Conviene una cuenta solo para este móvil. |
 | **Contacto para el SOS** | A quién llama y avisa el botón SOS. |
 | **Pueden pedir la ubicación por SMS** | Qué favoritos pueden pedir la ubicación. |
 | **Tienen WhatsApp (videollamada)** | Marcar quién usa WhatsApp: aparecerá en el botón de videollamada. |
 | **Palabras clave** | Las palabras que deben enviar para pedir la ubicación, separadas por comas. Por defecto dependen del idioma del teléfono (`UBICACION` y `DONDE ESTAS` en español, `LOCATION` y `WHERE ARE YOU` en inglés…). |
+| **WhatsApp completo** | Explica el botón "WhatsApp (chats)" (se activa en *Pantalla principal*) y comprueba el permiso de la pestaña para volver, con un botón para darlo si falta. |
 | **Llamadas de WhatsApp** | Activar el "acceso a notificaciones", necesario para ver las videollamadas entrantes con la pantalla propia. |
 | **Seguridad** | Cambiar el PIN. |
 | **Wi-Fi** | Apagado y bloqueado por defecto (solo la SIM). Al encenderlo aparece **"Elegir una red Wi-Fi"**, que abre los Ajustes de Android para conectarse. Al apagarlo se vuelve a bloquear; las redes guardadas se recuerdan. |
@@ -249,4 +277,4 @@ La ruta necesita datos móviles, salvo que se haya descargado el mapa de la ciud
 
 ---
 
-<sub>Capturas hechas en el emulador de Android con contactos inventados; la dirección de ejemplo es la Plaza de España de Sevilla y el portal es un dibujo. Fotos de los contactos: [Daniel Lara](https://unsplash.com/es/fotos/t9tDSXN2U2E), [Vitaly Gariev](https://unsplash.com/es/fotos/4HNK1yce-Vg), [Igor Rodrigues](https://unsplash.com/es/fotos/6IGd3-F3Cao), [Sergey Mikheev](https://unsplash.com/es/fotos/H982yXJ7vOk) y [Vitaly Gariev](https://unsplash.com/es/fotos/IihDS3WZGlY) en Unsplash (licencia de Unsplash).</sub>
+<sub>Capturas hechas en el emulador de Android con contactos inventados; la dirección de ejemplo es la Plaza de España de Sevilla y el portal es un dibujo. La lista de chats es de una app de prueba, no del WhatsApp real. Fotos de los contactos: [Daniel Lara](https://unsplash.com/es/fotos/t9tDSXN2U2E), [Vitaly Gariev](https://unsplash.com/es/fotos/4HNK1yce-Vg), [Igor Rodrigues](https://unsplash.com/es/fotos/6IGd3-F3Cao), [Sergey Mikheev](https://unsplash.com/es/fotos/H982yXJ7vOk) y [Vitaly Gariev](https://unsplash.com/es/fotos/IihDS3WZGlY) en Unsplash (licencia de Unsplash).</sub>

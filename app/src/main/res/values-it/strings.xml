@@ -136,6 +136,18 @@
     <string name="settings_google_syncing">Sincronizzazione… le modifiche compaiono in pochi minuti.</string>
     <string name="settings_google_add">Aggiungi un account Google</string>
 
+    <string name="settings_back_title">Pulsante per tornare</string>
+    <string name="settings_back_hint">Scegli quello che la persona riconosce meglio per uscire da una schermata: la casa grande in alto, che torna alla schermata principale, o una freccia fissa in basso a sinistra, come il pulsante Indietro di Android ma più grande.</string>
+    <string name="settings_back_house">Casa grande in alto</string>
+    <string name="settings_back_arrow">Freccia in basso a sinistra</string>
+
+    <string name="home_item_whatsapp_app">WhatsApp (chat)</string>
+    <string name="settings_wa_app_title">WhatsApp completo</string>
+    <string name="settings_wa_app_hint">Attiva il pulsante \"WhatsApp (chat)\" in Schermata principale perché la persona possa usare WhatsApp per intero: chat, note vocali, foto e video. Il pulsante mostra un numero rosso con i messaggi nuovi. Mentre WhatsApp è aperto, una piccola linguetta con una casa sul bordo destro dello schermo torna a LlamaditApp. In modalità chiosco non si aprono link web né altre app.</string>
+    <string name="settings_wa_app_overlay_on">Il pulsante per tornare sopra WhatsApp è consentito.</string>
+    <string name="settings_wa_app_overlay_off">Il pulsante per tornare sopra WhatsApp richiede l\'autorizzazione \"Mostra sopra altre app\". Senza, WhatsApp si apre comunque e bisogna uscire con la freccia indietro.</string>
+    <string name="settings_wa_app_overlay_allow">Consenti il pulsante per tornare</string>
+
     <string-array name="default_keywords">
         <item>POSIZIONE</item>
         <item>DOVE SEI</item>

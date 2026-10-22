@@ -24,7 +24,7 @@ import android.content.Context
 import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
-import android.media.AudioManager
+import com.launcherfacil.app.volume.VolumeController
 import android.net.Uri
 import android.os.Build
 import android.util.Log
@@ -38,22 +38,12 @@ import kotlin.coroutines.resume
 private const val TAG = "GoHome"
 const val MAPS_PACKAGE = "com.google.android.apps.maps"
 
-/** Volumen de la voz de la ruta (el de multimedia, que la app deja a cero). */
-private const val GUIDANCE_VOLUME = 0.8f
-
 /**
  * Abre la navegación a pie de Google Maps hacia casa, con voz. Antes sube el volumen
  * de multimedia (la voz de Maps lo usa); vuelve a cero al regresar al launcher.
  */
 fun Activity.startWalkingRoute(lat: Double, lng: Double): Boolean {
-    getSystemService(AudioManager::class.java)?.let { am ->
-        val max = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
-        try {
-            am.setStreamVolume(AudioManager.STREAM_MUSIC, (max * GUIDANCE_VOLUME).toInt().coerceAtLeast(1), 0)
-        } catch (e: SecurityException) {
-            Log.w(TAG, "No se pudo subir el volumen de la ruta", e)
-        }
-    }
+    VolumeController.raiseMediaVolume(this)
     val navigation = Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=$lat,$lng&mode=w"))
         .setPackage(MAPS_PACKAGE)
     // Sin Google Maps: la ruta a pie en la web o en otra app de mapas.

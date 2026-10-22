@@ -69,6 +69,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.launcherfacil.app.R
+import com.launcherfacil.app.config.BackButton
 import com.launcherfacil.app.config.CaregiverSettings
 import com.launcherfacil.app.contacts.Contact
 import com.launcherfacil.app.contacts.contactsWithWhatsApp
@@ -76,6 +77,7 @@ import com.launcherfacil.app.contacts.loadFavoriteContacts
 import com.launcherfacil.app.contacts.setHasWhatsApp
 import com.launcherfacil.app.inbox.rememberContentVersion
 import com.launcherfacil.app.kiosk.Kiosk
+import com.launcherfacil.app.whatsapp.WhatsAppHomeButton
 import kotlinx.coroutines.launch
 
 /** Configuración del cuidador. Aquí sí hay texto: no la usa la persona. */
@@ -86,6 +88,7 @@ fun SettingsScreen(
     onOpenContacts: () -> Unit,
     onOpenAndroidSettings: () -> Unit,
     onAddGoogleAccount: () -> Unit,
+    onAllowOverlay: () -> Unit,
     onOpenWifiSettings: () -> Unit,
     onOpenHousePin: (Double, Double) -> Unit,
     onTestRoute: (Double, Double) -> Unit,
@@ -94,6 +97,8 @@ fun SettingsScreen(
     kioskPaused: Boolean,
     onPauseKiosk: () -> Unit,
     onResumeKiosk: () -> Unit,
+    backButton: BackButton,
+    onBackButtonChange: (BackButton) -> Unit,
     onDisableKiosk: () -> Unit,
     onHome: () -> Unit
 ) {
@@ -155,6 +160,10 @@ fun SettingsScreen(
                     sosIcon = it
                     settings.sosIcon = it
                 }
+
+                Section(stringResource(R.string.settings_back_title))
+                Hint(stringResource(R.string.settings_back_hint))
+                BackButtonPicker(backButton, onBackButtonChange)
 
                 Section(stringResource(R.string.settings_order_title))
                 Hint(stringResource(R.string.settings_order_hint))
@@ -227,6 +236,17 @@ fun SettingsScreen(
                     supportingText = { Text(stringResource(R.string.settings_keywords_hint)) },
                     modifier = Modifier.fillMaxWidth()
                 )
+
+                Section(stringResource(R.string.settings_wa_app_title))
+                Hint(stringResource(R.string.settings_wa_app_hint))
+                // Se vuelve a mirar al volver de los Ajustes (allí se da el permiso).
+                val overlayAllowed = rememberOnResume { WhatsAppHomeButton.canShow(context) }
+                if (overlayAllowed) {
+                    Hint(stringResource(R.string.settings_wa_app_overlay_on))
+                } else {
+                    Text("⚠ " + stringResource(R.string.settings_wa_app_overlay_off), color = BateriaMedia, fontSize = 15.sp)
+                    ActionButton(stringResource(R.string.settings_wa_app_overlay_allow), onAllowOverlay)
+                }
 
                 Section(stringResource(R.string.settings_wa_calls_title))
                 Hint(

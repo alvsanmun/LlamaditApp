@@ -55,6 +55,18 @@ class WhatsAppCallActivity : ComponentActivity() {
     }
 
     // Botones de volumen: solo el volumen del teléfono, con el panel grande.
+    // Encima de WhatsApp completo, la casa flotante no debe tapar esta pantalla; al
+    // terminar la llamada se vuelve a WhatsApp y la casa vuelve a aparecer.
+    override fun onResume() {
+        super.onResume()
+        WhatsAppHomeButton.hide()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (WhatsAppApp.active) WhatsAppHomeButton.show(applicationContext)
+    }
+
     // Sin la barra de navegación de abajo (solo quedaba Atrás, que confundía).
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)

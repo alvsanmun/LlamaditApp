@@ -214,6 +214,8 @@ if (-not $yaInstalado) {
 }
 Adb shell appops set $Paquete WRITE_SETTINGS allow | Out-Null
 Bien 'Pantalla siempre en vertical.'
+Adb shell appops set $Paquete SYSTEM_ALERT_WINDOW allow | Out-Null
+Bien 'Botón para volver encima de WhatsApp.'
 Adb shell cmd notification allow_listener $Escucha | Out-Null
 Bien 'Videollamadas de WhatsApp con la pantalla grande.'
 if ($marca -match 'samsung') {

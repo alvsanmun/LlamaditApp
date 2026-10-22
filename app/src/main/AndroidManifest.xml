@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <!-- Escribir la fila de videollamada de WhatsApp en los favoritos marcados. -->
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <!-- WhatsApp completo: la casa para volver, dibujada encima de WhatsApp. -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- Contactos desde una cuenta de Google: ver las cuentas y su sincronización. -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />

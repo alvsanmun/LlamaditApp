@@ -12,6 +12,7 @@
 |---|---|
 | 📞 **Llamar** | Toca la foto de la persona. Nada más. |
 | 🎥 **Videollamada de WhatsApp** | Toca la foto y la videollamada empieza sola, sin pasar por WhatsApp. |
+| 💬 **WhatsApp completo** | Opcional: un botón aparte abre WhatsApp entero (chats, audios, fotos y vídeos), con un número rojo de mensajes nuevos y una pestaña con una casa para volver. |
 | 🔢 **Teclado** | Números enormes para marcar a mano. |
 | 🆘 **SOS** | Mantiene pulsado el botón rojo 2 segundos: llama al contacto de confianza y le envía su ubicación por SMS (y 3 actualizaciones más, cada 10 minutos). |
 | 📲 **Llamadas entrantes** | Pantalla propia con la foto en grande: verde para coger, rojo para colgar. Un solo toque, sin deslizar. También para las videollamadas de WhatsApp. |
@@ -50,6 +51,11 @@ Más detalles en **[docs/FUNCIONES.md](docs/FUNCIONES.md)**.
 |:---:|:---:|:---:|
 | <img src="docs/img/capturas/17-inicio-personalizado.jpg" width="220" alt="Pantalla principal personalizada"> | <img src="docs/img/capturas/18-volver-a-casa.jpg" width="220" alt="Volver a casa"> | <img src="docs/img/capturas/19-llegada-portal.jpg" width="220" alt="Foto del portal al llegar"> |
 | Botones movidos, ocultos y con otro dibujo en el SOS | La dirección en grande y la flecha de la ruta | La foto del portal y la casa para volver |
+
+| WhatsApp completo | Dentro de WhatsApp | Botón para volver |
+|:---:|:---:|:---:|
+| <img src="docs/img/capturas/30-whatsapp-boton.jpg" width="220" alt="Botón de WhatsApp con mensajes nuevos"> | <img src="docs/img/capturas/31-whatsapp-casa.jpg" width="220" alt="Pestaña de la casa encima de los chats"> | <img src="docs/img/capturas/29-flecha-abajo.jpg" width="220" alt="Flecha abajo a la izquierda"> |
+| Con el número de mensajes nuevos | Una pestaña pequeña con una casa vuelve a LlamaditApp | Casa arriba o flecha abajo, a elegir |
 
 Todas las pantallas, explicadas una a una, en **[docs/FUNCIONES.md](docs/FUNCIONES.md)**.
 

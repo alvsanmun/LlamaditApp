@@ -136,6 +136,18 @@
     <string name="settings_google_syncing">Sincronizando… os cambios aparecen nuns minutos.</string>
     <string name="settings_google_add">Engadir unha conta de Google</string>
 
+    <string name="settings_back_title">Botón para volver</string>
+    <string name="settings_back_hint">Escolle o que mellor recoñeza a persoa para saír dunha pantalla: a casa grande de arriba, que volve á pantalla principal, ou unha frecha fixa abaixo á esquerda, como o botón Atrás de Android pero máis grande.</string>
+    <string name="settings_back_house">Casa grande arriba</string>
+    <string name="settings_back_arrow">Frecha abaixo á esquerda</string>
+
+    <string name="home_item_whatsapp_app">WhatsApp (chats)</string>
+    <string name="settings_wa_app_title">WhatsApp completo</string>
+    <string name="settings_wa_app_hint">Activa o botón \"WhatsApp (chats)\" en Pantalla principal para que a persoa poida usar WhatsApp enteiro: chats, notas de voz, fotos e vídeos. O botón amosa un número vermello coas mensaxes novas. Mentres WhatsApp está aberto, unha lapela pequena cunha casa no bordo dereito da pantalla volve a LlamaditApp. Dentro do modo quiosco non se abren ligazóns web nin outras apps.</string>
+    <string name="settings_wa_app_overlay_on">O botón para volver enriba de WhatsApp está permitido.</string>
+    <string name="settings_wa_app_overlay_off">O botón para volver enriba de WhatsApp precisa o permiso \"Mostrar sobre outras aplicacións\". Sen el, WhatsApp ábrese igual e hai que saír coa frecha de atrás.</string>
+    <string name="settings_wa_app_overlay_allow">Permitir o botón para volver</string>
+
     <string-array name="default_keywords">
         <item>LOCALIZACION</item>
         <item>ONDE ESTAS</item>

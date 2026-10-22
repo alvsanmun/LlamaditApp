@@ -43,6 +43,7 @@ class CaregiverSettings(context: Context) {
         private const val KEY_WIFI_ENABLED = "wifi_enabled"
         private const val KEY_SOS_ICON = "sos_icon"
         private const val KEY_HOME_LAYOUT = "home_layout"
+        private const val KEY_BACK_BUTTON = "back_button"
         private const val KEY_HOUSE_LAT = "house_lat"
         private const val KEY_HOUSE_LNG = "house_lng"
         private const val KEY_HOUSE_ADDRESS = "house_address"
@@ -130,6 +131,12 @@ class CaregiverSettings(context: Context) {
         get() = SosIcon.entries.firstOrNull { it.name == prefs.getString(KEY_SOS_ICON, null) } ?: SosIcon.TEXT
         set(value) = prefs.edit { putString(KEY_SOS_ICON, value.name) }
 
+    // --- Botón para volver: la casa grande de arriba (por defecto) o una flecha abajo ---
+
+    var backButton: BackButton
+        get() = BackButton.entries.firstOrNull { it.name == prefs.getString(KEY_BACK_BUTTON, null) } ?: BackButton.HOUSE_TOP
+        set(value) = prefs.edit { putString(KEY_BACK_BUTTON, value.name) }
+
     // --- Diseño de la pantalla principal (orden, tamaño y botones visibles) ---
 
     var homeLayout: List<HomeEntry>
@@ -183,6 +190,12 @@ class CaregiverSettings(context: Context) {
             ?: defaultKeywords
         set(value) = prefs.edit { putString(KEY_KEYWORDS, value.joinToString(",")) }
 }
+
+/**
+ * Cómo se vuelve atrás en las pantallas: la barra grande con la casa, arriba, o una
+ * flecha fija abajo a la izquierda (como el botón Atrás de Android, pero más grande).
+ */
+enum class BackButton { HOUSE_TOP, ARROW_BOTTOM }
 
 /** Dibujos posibles para el botón SOS, para quien no reconozca las letras. */
 enum class SosIcon { TEXT, AMBULANCE, CROSS, SIREN, HEART, WARNING }

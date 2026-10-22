@@ -161,6 +161,18 @@
     <string name="settings_google_syncing">Syncing… changes appear in a few minutes.</string>
     <string name="settings_google_add">Add a Google account</string>
 
+    <string name="settings_back_title">Button to go back</string>
+    <string name="settings_back_hint">Choose what the person recognizes best to leave a screen: the large house at the top, which goes back to the home screen, or a fixed arrow at the bottom left, like the Android back button but larger.</string>
+    <string name="settings_back_house">Large house at the top</string>
+    <string name="settings_back_arrow">Arrow at the bottom left</string>
+
+    <string name="home_item_whatsapp_app">WhatsApp (chats)</string>
+    <string name="settings_wa_app_title">Full WhatsApp</string>
+    <string name="settings_wa_app_hint">Turn on the \"WhatsApp (chats)\" button in Home screen so the person can use the whole of WhatsApp: chats, voice notes, photos and videos. The button shows a red number with the new messages. While WhatsApp is open, a small tab with a house on the right edge of the screen goes back to LlamaditApp. Inside kiosk mode, web links and other apps do not open.</string>
+    <string name="settings_wa_app_overlay_on">The button to go back over WhatsApp is allowed.</string>
+    <string name="settings_wa_app_overlay_off">The button to go back over WhatsApp needs the permission \"Display over other apps\". Without it, WhatsApp opens anyway and the person must leave it with the back arrow.</string>
+    <string name="settings_wa_app_overlay_allow">Allow the button to go back</string>
+
     <string-array name="default_keywords">
         <item>LOCATION</item>
         <item>WHERE ARE YOU</item>

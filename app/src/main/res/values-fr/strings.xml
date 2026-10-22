@@ -136,6 +136,18 @@
     <string name="settings_google_syncing">Synchronisation… les modifications apparaissent en quelques minutes.</string>
     <string name="settings_google_add">Ajouter un compte Google</string>
 
+    <string name="settings_back_title">Bouton pour revenir</string>
+    <string name="settings_back_hint">Choisissez ce que la personne reconnaît le mieux pour quitter un écran : la grande maison en haut, qui revient à l\'écran d\'accueil, ou une flèche fixe en bas à gauche, comme le bouton Retour d\'Android mais plus grande.</string>
+    <string name="settings_back_house">Grande maison en haut</string>
+    <string name="settings_back_arrow">Flèche en bas à gauche</string>
+
+    <string name="home_item_whatsapp_app">WhatsApp (discussions)</string>
+    <string name="settings_wa_app_title">WhatsApp complet</string>
+    <string name="settings_wa_app_hint">Activez le bouton « WhatsApp (discussions) » dans Écran d\'accueil pour que la personne puisse utiliser tout WhatsApp : discussions, messages vocaux, photos et vidéos. Le bouton affiche un nombre rouge avec les nouveaux messages. Pendant que WhatsApp est ouvert, un petit onglet avec une maison sur le bord droit de l\'écran revient à LlamaditApp. En mode kiosque, les liens web et les autres applications ne s\'ouvrent pas.</string>
+    <string name="settings_wa_app_overlay_on">Le bouton pour revenir par-dessus WhatsApp est autorisé.</string>
+    <string name="settings_wa_app_overlay_off">Le bouton pour revenir par-dessus WhatsApp a besoin de l\'autorisation « Superposer à d\'autres applis ». Sans elle, WhatsApp s\'ouvre quand même et il faut le quitter avec la flèche retour.</string>
+    <string name="settings_wa_app_overlay_allow">Autoriser le bouton pour revenir</string>
+
     <string-array name="default_keywords">
         <item>POSITION</item>
         <item>OU ES TU</item>

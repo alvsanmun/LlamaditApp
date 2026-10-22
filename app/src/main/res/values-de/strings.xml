@@ -136,6 +136,18 @@
     <string name="settings_google_syncing">Wird synchronisiert… Änderungen erscheinen in wenigen Minuten.</string>
     <string name="settings_google_add">Google-Konto hinzufügen</string>
 
+    <string name="settings_back_title">Taste zum Zurückgehen</string>
+    <string name="settings_back_hint">Wählen Sie, was die Person am besten erkennt, um einen Bildschirm zu verlassen: das große Haus oben, das zum Startbildschirm führt, oder einen festen Pfeil unten links, wie die Zurück-Taste von Android, aber größer.</string>
+    <string name="settings_back_house">Großes Haus oben</string>
+    <string name="settings_back_arrow">Pfeil unten links</string>
+
+    <string name="home_item_whatsapp_app">WhatsApp (Chats)</string>
+    <string name="settings_wa_app_title">WhatsApp vollständig</string>
+    <string name="settings_wa_app_hint">Aktivieren Sie die Taste „WhatsApp (Chats)\" unter Startbildschirm, damit die Person ganz WhatsApp nutzen kann: Chats, Sprachnachrichten, Fotos und Videos. Die Taste zeigt eine rote Zahl mit den neuen Nachrichten. Solange WhatsApp offen ist, führt ein kleiner Reiter mit einem Haus am rechten Bildschirmrand zurück zu LlamaditApp. Im Kioskmodus öffnen sich keine Weblinks und keine anderen Apps.</string>
+    <string name="settings_wa_app_overlay_on">Die Zurück-Taste über WhatsApp ist erlaubt.</string>
+    <string name="settings_wa_app_overlay_off">Die Zurück-Taste über WhatsApp braucht die Berechtigung „Über anderen Apps einblenden\". Ohne sie öffnet sich WhatsApp trotzdem, und man muss es mit dem Zurück-Pfeil verlassen.</string>
+    <string name="settings_wa_app_overlay_allow">Zurück-Taste erlauben</string>
+
     <string-array name="default_keywords">
         <item>STANDORT</item>
         <item>WO BIST DU</item>

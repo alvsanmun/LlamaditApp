@@ -32,4 +32,6 @@ val RojoSos = Color(0xFFD32F2F)
 val BateriaAlta = Color(0xFF43A047)
 val BateriaMedia = Color(0xFFFFB300)
 val BateriaBaja = Color(0xFFE53935)
+/** WhatsApp completo (chats): verde claro, distinto del verde de Llamar y del verde azulado de la videollamada. */
+val CianWhatsApp = Color(0xFF7CB342)
 val GrisBoton = Color(0xFF455A64)

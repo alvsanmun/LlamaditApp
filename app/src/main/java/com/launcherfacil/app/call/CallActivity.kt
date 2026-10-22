@@ -48,6 +48,8 @@ import com.launcherfacil.app.ui.RojoSos
 import com.launcherfacil.app.ui.VerdeLlamar
 import com.launcherfacil.app.ui.formatDuration
 import com.launcherfacil.app.ui.hideNavigationBar
+import com.launcherfacil.app.whatsapp.WhatsAppApp
+import com.launcherfacil.app.whatsapp.WhatsAppHomeButton
 import com.launcherfacil.app.volume.VolumeController
 import com.launcherfacil.app.volume.WithVolumeOverlay
 import kotlinx.coroutines.delay
@@ -64,6 +66,18 @@ class CallActivity : ComponentActivity() {
     }
 
     // Botones de volumen: solo el volumen del teléfono, con el panel grande.
+    // Encima de WhatsApp completo, la casa flotante no debe tapar esta pantalla; al
+    // terminar la llamada se vuelve a WhatsApp y la casa vuelve a aparecer.
+    override fun onResume() {
+        super.onResume()
+        WhatsAppHomeButton.hide()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (WhatsAppApp.active) WhatsAppHomeButton.show(applicationContext)
+    }
+
     // Sin la barra de navegación de abajo (solo quedaba Atrás, que confundía).
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)

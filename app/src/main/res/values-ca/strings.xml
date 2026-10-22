@@ -136,6 +136,18 @@
     <string name="settings_google_syncing">Sincronitzant… els canvis apareixen en uns minuts.</string>
     <string name="settings_google_add">Afegir un compte de Google</string>
 
+    <string name="settings_back_title">Botó per tornar</string>
+    <string name="settings_back_hint">Tria el que la persona reconegui millor per sortir d\'una pantalla: la casa gran de dalt, que torna a la pantalla principal, o una fletxa fixa a baix a l\'esquerra, com el botó Enrere d\'Android però més gran.</string>
+    <string name="settings_back_house">Casa gran a dalt</string>
+    <string name="settings_back_arrow">Fletxa a baix a l\'esquerra</string>
+
+    <string name="home_item_whatsapp_app">WhatsApp (xats)</string>
+    <string name="settings_wa_app_title">WhatsApp complet</string>
+    <string name="settings_wa_app_hint">Activa el botó \"WhatsApp (xats)\" a Pantalla principal perquè la persona pugui fer servir tot WhatsApp: xats, notes de veu, fotos i vídeos. El botó mostra un número vermell amb els missatges nous. Mentre WhatsApp és obert, una pestanya petita amb una casa a la vora dreta de la pantalla torna a LlamaditApp. Dins del mode quiosc no s\'obren enllaços web ni altres apps.</string>
+    <string name="settings_wa_app_overlay_on">El botó per tornar damunt de WhatsApp està permès.</string>
+    <string name="settings_wa_app_overlay_off">El botó per tornar damunt de WhatsApp necessita el permís \"Mostrar sobre altres aplicacions\". Sense, WhatsApp s\'obre igualment i cal sortir-ne amb la fletxa enrere.</string>
+    <string name="settings_wa_app_overlay_allow">Permetre el botó per tornar</string>
+
     <string-array name="default_keywords">
         <item>UBICACIO</item>
         <item>ON ETS</item>

@@ -95,6 +95,7 @@ Si se usa WhatsApp o si los contactos se gestionan desde una cuenta de Google (e
 | Ajuste | Dónde | Por qué |
 |---|---|---|
 | **Notificaciones de llamadas activadas** · Imprescindible | *WhatsApp → Ajustes → Notificaciones → Llamadas*, y en *Ajustes de Android → Notificaciones → WhatsApp* | LlamaditApp detecta las videollamadas entrantes **por su notificación**. Si están silenciadas, no aparecerá la pantalla grande. |
+| **"Mostrar sobre otras aplicaciones" para LlamaditApp** · Imprescindible si se usa WhatsApp completo | Panel del cuidador → *WhatsApp completo* → "Permitir el botón para volver" (el instalador ya lo da) | Es la pestaña con la casa que se ve encima de WhatsApp para volver a LlamaditApp. |
 | **Acceso a notificaciones para LlamaditApp** · Imprescindible | Panel del cuidador → "Activar acceso a notificaciones" | Lo mismo: sin este permiso, LlamaditApp no ve las llamadas de WhatsApp. |
 | **No descargar fotos ni vídeos automáticamente** · Recomendado | *WhatsApp → Ajustes → Almacenamiento y datos → Descarga automática → nada en "Datos móviles"* | La persona no usa los chats; así no gasta datos ni almacenamiento. |
 | **Silenciar los grupos** · Recomendado | En cada grupo → *Silenciar notificaciones → Siempre* | Evita que el móvil suene a todas horas con mensajes que la persona no va a leer. |

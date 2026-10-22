@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -51,9 +52,12 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.launcherfacil.app.R
+import com.launcherfacil.app.config.BackButton
 import com.launcherfacil.app.config.ButtonSize
 import com.launcherfacil.app.config.DEFAULT_HOME_LAYOUT
 import com.launcherfacil.app.config.HomeEntry
@@ -195,6 +199,7 @@ private fun ItemBadge(item: HomeItem, sosIcon: SosIcon) {
         HomeItem.MESSAGES -> NaranjaMensajes to R.drawable.ic_sms
         HomeItem.MISSED_CALLS -> MoradoPerdidas to R.drawable.ic_phone_missed
         HomeItem.GO_HOME -> MarronCasa to R.drawable.ic_go_home
+        HomeItem.WHATSAPP_APP -> CianWhatsApp to R.drawable.ic_chat
     }
     Box(
         Modifier.size(48.dp).clip(RoundedCornerShape(12.dp)).background(color),
@@ -210,8 +215,8 @@ private fun ItemBadge(item: HomeItem, sosIcon: SosIcon) {
 }
 
 @Composable
-private fun BadgeIcon(@DrawableRes id: Int) {
-    Icon(painterResource(id), contentDescription = null, tint = TextoClaro, modifier = Modifier.size(30.dp))
+private fun BadgeIcon(@DrawableRes id: Int, size: Dp = 30.dp) {
+    Icon(painterResource(id), contentDescription = null, tint = TextoClaro, modifier = Modifier.size(size))
 }
 
 @Composable
@@ -259,6 +264,7 @@ private fun HomeItem.label(): Int = when (this) {
     HomeItem.MESSAGES -> R.string.home_item_messages
     HomeItem.MISSED_CALLS -> R.string.home_item_missed
     HomeItem.GO_HOME -> R.string.home_item_go_home
+    HomeItem.WHATSAPP_APP -> R.string.home_item_whatsapp_app
 }
 
 @StringRes
@@ -266,4 +272,69 @@ private fun ButtonSize.label(): Int = when (this) {
     ButtonSize.SMALL -> R.string.size_small
     ButtonSize.MEDIUM -> R.string.size_medium
     ButtonSize.LARGE -> R.string.size_large
+}
+
+/**
+ * Botón para volver: dos miniaturas de una pantalla, una con la casa grande arriba y
+ * otra con la flecha abajo a la izquierda. La elegida lleva un marco.
+ */
+@Composable
+fun BackButtonPicker(selected: BackButton, onSelect: (BackButton) -> Unit) {
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+        BackButton.entries.forEach { option ->
+            val shape = RoundedCornerShape(20.dp)
+            Column(
+                Modifier
+                    .weight(1f)
+                    .clip(shape)
+                    .background(Color.White.copy(alpha = 0.05f))
+                    .then(if (option == selected) Modifier.border(4.dp, TextoClaro, shape) else Modifier)
+                    .clickable { onSelect(option) }
+                    .padding(12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                // Miniatura: un "móvil" con fotos de contactos y el botón para volver.
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(0.62f)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Fondo)
+                        .border(2.dp, GrisBoton, RoundedCornerShape(12.dp))
+                        .padding(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    if (option == BackButton.HOUSE_TOP) {
+                        Box(
+                            Modifier.fillMaxWidth().height(28.dp).clip(RoundedCornerShape(8.dp)).background(GrisBoton),
+                            contentAlignment = Alignment.Center
+                        ) { BadgeIcon(R.drawable.ic_home, 20.dp) }
+                    }
+                    repeat(2) {
+                        Row(Modifier.fillMaxWidth().weight(1f), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                            repeat(2) {
+                                Box(
+                                    Modifier.weight(1f).fillMaxSize().clip(RoundedCornerShape(8.dp))
+                                        .background(Color.White.copy(alpha = 0.18f))
+                                )
+                            }
+                        }
+                    }
+                    if (option == BackButton.ARROW_BOTTOM) {
+                        Box(
+                            Modifier.width(48.dp).height(32.dp).clip(RoundedCornerShape(8.dp)).background(GrisBoton),
+                            contentAlignment = Alignment.Center
+                        ) { BadgeIcon(R.drawable.ic_arrow_back, 22.dp) }
+                    }
+                }
+                Text(
+                    stringResource(if (option == BackButton.HOUSE_TOP) R.string.settings_back_house else R.string.settings_back_arrow),
+                    color = if (option == selected) TextoClaro else TextoSuave,
+                    fontSize = 15.sp,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+    }
 }

@@ -136,6 +136,18 @@
     <string name="settings_google_syncing">Sinkronizatzen… aldaketak minutu gutxitan agertzen dira.</string>
     <string name="settings_google_add">Gehitu Google kontu bat</string>
 
+    <string name="settings_back_title">Itzultzeko botoia</string>
+    <string name="settings_back_hint">Aukeratu pertsonak hobekien ezagutzen duena pantaila batetik irteteko: goiko etxe handia, pantaila nagusira itzultzen dena, edo beheko ezkerreko gezi finko bat, Androiden Atzera botoia bezala baina handiagoa.</string>
+    <string name="settings_back_house">Etxe handia goian</string>
+    <string name="settings_back_arrow">Gezia behean ezkerrean</string>
+
+    <string name="home_item_whatsapp_app">WhatsApp (txatak)</string>
+    <string name="settings_wa_app_title">WhatsApp osoa</string>
+    <string name="settings_wa_app_hint">Aktibatu \"WhatsApp (txatak)\" botoia Pantaila nagusian, pertsonak WhatsApp osoa erabil dezan: txatak, ahots-oharrak, argazkiak eta bideoak. Botoiak zenbaki gorri bat erakusten du mezu berriekin. WhatsApp irekita dagoen bitartean, pantailaren eskuineko ertzeko fitxa txiki batek (etxe batekin) LlamaditApp-era itzultzen du. Kiosko moduan ez dira web-estekak ez beste aplikazioak irekitzen.</string>
+    <string name="settings_wa_app_overlay_on">WhatsApp-en gaineko itzultzeko botoia baimenduta dago.</string>
+    <string name="settings_wa_app_overlay_off">WhatsApp-en gaineko itzultzeko botoiak \"Bistaratu beste aplikazioen gainean\" baimena behar du. Hori gabe, WhatsApp ireki egiten da, baina atzera geziarekin irten behar da.</string>
+    <string name="settings_wa_app_overlay_allow">Baimendu itzultzeko botoia</string>
+
     <string-array name="default_keywords">
         <item>KOKAPENA</item>
         <item>NON ZAUDE</item>

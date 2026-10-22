@@ -136,6 +136,18 @@
     <string name="settings_google_syncing">A sincronizar… as alterações aparecem em poucos minutos.</string>
     <string name="settings_google_add">Adicionar uma conta Google</string>
 
+    <string name="settings_back_title">Botão para voltar</string>
+    <string name="settings_back_hint">Escolhe o que a pessoa reconhece melhor para sair de um ecrã: a casa grande em cima, que volta ao ecrã principal, ou uma seta fixa em baixo à esquerda, como o botão Voltar do Android mas maior.</string>
+    <string name="settings_back_house">Casa grande em cima</string>
+    <string name="settings_back_arrow">Seta em baixo à esquerda</string>
+
+    <string name="home_item_whatsapp_app">WhatsApp (conversas)</string>
+    <string name="settings_wa_app_title">WhatsApp completo</string>
+    <string name="settings_wa_app_hint">Ativa o botão \"WhatsApp (conversas)\" em Ecrã principal para que a pessoa possa usar o WhatsApp inteiro: conversas, notas de voz, fotos e vídeos. O botão mostra um número vermelho com as mensagens novas. Enquanto o WhatsApp está aberto, um separador pequeno com uma casa na margem direita do ecrã volta ao LlamaditApp. Dentro do modo quiosque não se abrem ligações web nem outras apps.</string>
+    <string name="settings_wa_app_overlay_on">O botão para voltar sobre o WhatsApp está permitido.</string>
+    <string name="settings_wa_app_overlay_off">O botão para voltar sobre o WhatsApp precisa da permissão \"Sobrepor a outras apps\". Sem ela, o WhatsApp abre na mesma e é preciso sair com a seta para trás.</string>
+    <string name="settings_wa_app_overlay_allow">Permitir o botão para voltar</string>
+
     <string-array name="default_keywords">
         <item>LOCALIZACAO</item>
         <item>ONDE ESTAS</item>

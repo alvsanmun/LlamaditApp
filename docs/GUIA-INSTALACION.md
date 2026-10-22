@@ -24,6 +24,7 @@ Esta guía explica, con capturas de cada pantalla, cómo dejar un móvil Android
    - [9.1. Adaptar la pantalla principal](#91-adaptar-la-pantalla-principal)
    - [9.2. Volver a casa (opcional)](#92-volver-a-casa-opcional)
    - [9.3. Wi-Fi (opcional)](#93-wi-fi-opcional)
+   - [9.4. WhatsApp completo (opcional)](#94-whatsapp-completo-opcional)
 10. [WhatsApp (opcional)](#10-whatsapp-opcional)
 11. [Ajuste de batería recomendado](#11-ajuste-de-batería-recomendado)
 12. [Comprobar que todo funciona y entregar el móvil](#12-comprobar-que-todo-funciona-y-entregar-el-móvil)
@@ -324,6 +325,15 @@ En la parte de arriba del panel, **Pantalla principal**, se ve una **vista previ
 
 El **reloj** siempre se ve (es la entrada a este panel), pero se puede mover. **Volver al diseño original** lo deja todo como venía.
 
+En **Botón para volver** elige cómo saldrá la persona de cada pantalla: la **casa grande de arriba** (como viene) o una **flecha abajo a la izquierda**, parecida al botón Atrás de los móviles. Si ya estaba acostumbrada a esa flecha, la segunda opción le resultará más familiar. El cambio se ve al momento.
+
+<table><tr>
+<td><img src="img/capturas/28-panel-boton-volver.jpg" width="230" alt="Elegir el botón para volver"></td>
+<td><img src="img/capturas/29-flecha-abajo.jpg" width="230" alt="La flecha abajo a la izquierda"></td>
+</tr><tr>
+<td align="center">① Elige casa o flecha</td><td align="center">② Así queda con la flecha</td>
+</tr></table>
+
 En **Dibujo del botón SOS** elige lo que mejor reconozca la persona: las letras **SOS**, una **ambulancia**, una **cruz**, una **sirena**, un **corazón** o una **señal de peligro**.
 
 <table><tr>
@@ -376,7 +386,25 @@ Por defecto el móvil va **solo con la SIM**: el Wi-Fi está apagado y nadie lo 
 <td align="center">Wi-Fi encendido</td>
 </tr></table>
 
-Pulsa la **casa** de arriba para volver a la pantalla principal.
+### 9.4. WhatsApp completo (opcional)
+
+Además de las videollamadas, la persona puede usar **WhatsApp entero** (chats, notas de voz, fotos y vídeos) con un botón aparte. Necesita WhatsApp instalado (paso 10).
+
+1. En **Pantalla principal**, activa el interruptor de **WhatsApp (chats)** y colócalo donde quieras.
+2. En la sección **WhatsApp completo**, comprueba que pone **"El botón para volver encima de WhatsApp está permitido"**. Si no, pulsa **Permitir el botón para volver**, toca **LlamaditApp**, activa el interruptor y vuelve atrás.
+3. Pruébalo: el botón verde claro abre WhatsApp, y la **pestaña con la casa** del borde derecho vuelve a LlamaditApp.
+
+<table><tr>
+<td><img src="img/capturas/32-panel-whatsapp-completo.jpg" width="230" alt="Sección WhatsApp completo"></td>
+<td><img src="img/capturas/30-whatsapp-boton.jpg" width="230" alt="Botón de WhatsApp con mensajes nuevos"></td>
+<td><img src="img/capturas/31-whatsapp-casa.jpg" width="230" alt="Pestaña de la casa encima de los chats"></td>
+</tr><tr>
+<td align="center">① Permiso de la pestaña</td><td align="center">② Botón con el número<br>de mensajes nuevos</td><td align="center">③ La casa para volver</td>
+</tr></table>
+
+> Dentro del modo quiosco, WhatsApp no puede abrir otras apps: los enlaces a páginas web o "compartir con…" no funcionan. Los chats, los audios, la cámara y las llamadas, sí.
+
+Pulsa la **casa** de arriba (o la flecha de abajo) para volver a la pantalla principal.
 
 ---
 
@@ -425,6 +453,7 @@ Prueba cada cosa antes de entregarlo:
 - [ ] **Ubicación:** desde el móvil de un familiar, envía un SMS con la palabra **UBICACION**. Debe llegar la respuesta con un enlace de Google Maps.
 - [ ] **Volumen:** pulsa los botones de volumen; debe aparecer un panel grande.
 - [ ] **Volver a casa** (si se usa): lejos de casa, pulsa el botón marrón (debe salir la dirección y, si está activado, llegar el SMS) y luego la flecha; al llegar debe salir la foto del portal.
+- [ ] **WhatsApp completo** (si se usa): abre WhatsApp con el botón verde claro, envía una nota de voz y vuelve con la pestaña de la casa.
 - [ ] **Contactos de Google** (si se usan): crea un contacto con estrella en contacts.google.com y comprueba que aparece en **Llamar**.
 - [ ] **WhatsApp** (si se usa): haz una videollamada desde la foto y recibe otra. Comprueba que WhatsApp está en **Aplicaciones sin autoinactivación**.
 - [ ] **Reinicio:** apaga y enciende el móvil. Debe arrancar directamente en LlamaditApp.

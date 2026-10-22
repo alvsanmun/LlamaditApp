@@ -43,19 +43,25 @@ class WhatsAppCallListener : NotificationListenerService() {
 
     override fun onListenerConnected() {
         activeNotifications?.forEach(::check)
+        WhatsAppApp.updateUnread(activeNotifications)
     }
 
-    override fun onNotificationPosted(sbn: StatusBarNotification) = check(sbn)
+    override fun onNotificationPosted(sbn: StatusBarNotification) {
+        check(sbn)
+        if (sbn.packageName == WHATSAPP_PACKAGE) WhatsAppApp.updateUnread(activeNotifications)
+    }
 
     /** Notificaciones de llamada de WhatsApp en curso (entrante contestada o saliente). */
     private val ongoingKeys = mutableSetOf<String>()
 
     override fun onNotificationRemoved(sbn: StatusBarNotification) {
         if (sbn.packageName != WHATSAPP_PACKAGE) return
+        WhatsAppApp.updateUnread(activeNotifications)
         // Contestada, rechazada o perdida: se cierra nuestra pantalla.
         WhatsAppIncoming.clear(sbn.key)
         // Fin de una videollamada: WhatsApp se quedaría en su pantalla; volvemos al launcher.
-        if (ongoingKeys.remove(sbn.key) && ongoingKeys.isEmpty()) {
+        // Con WhatsApp completo abierto (llamada hecha desde un chat) se queda en el chat.
+        if (ongoingKeys.remove(sbn.key) && ongoingKeys.isEmpty() && !WhatsAppApp.active) {
             Log.i(TAG, "Fin de la llamada de WhatsApp: vuelta al launcher")
             handler.postDelayed(::goHome, 500)
         }

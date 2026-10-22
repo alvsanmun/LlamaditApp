@@ -123,15 +123,17 @@ Fíjate en las líneas **"ya controla este móvil: solo se actualizará"** y **"
 
 ## 6. Configura las novedades
 
-Lo nuevo de la versión 1.3, todo desde el panel del cuidador:
+Lo nuevo de las últimas versiones, todo desde el panel del cuidador:
 
 | Novedad | Dónde se explica |
 |---|---|
-| **Pantalla principal a medida**: mover, agrandar u ocultar botones, y otro dibujo para el SOS (ambulancia, cruz, corazón…) | [Guía, paso 9.1](GUIA-INSTALACION.md#91-adaptar-la-pantalla-principal) |
-| **Volver a casa**: dirección en grande, ruta a pie con voz y foto del portal al llegar | [Guía, paso 9.2](GUIA-INSTALACION.md#92-volver-a-casa-opcional) |
-| **Wi-Fi opcional** | [Guía, paso 9.3](GUIA-INSTALACION.md#93-wi-fi-opcional) |
-| **Contactos desde una cuenta de Google** | [Guía, paso 8, opción B](GUIA-INSTALACION.md#opción-b-desde-una-cuenta-de-google) |
-| **Avisos por SMS de "Volver a casa"** y aviso del coste de los SMS | [Funciones: Volver a casa](FUNCIONES.md#11-volver-a-casa) |
+| **WhatsApp completo** (1.4): un botón aparte para usar los chats, audios, fotos y vídeos, con una pestaña con una casa para volver | [Guía, paso 9.4](GUIA-INSTALACION.md#94-whatsapp-completo-opcional) |
+| **Botón para volver** (1.4): la casa grande de arriba o una flecha abajo a la izquierda | [Guía, paso 9.1](GUIA-INSTALACION.md#91-adaptar-la-pantalla-principal) |
+| **Pantalla principal a medida** (1.3): mover, agrandar u ocultar botones, y otro dibujo para el SOS (ambulancia, cruz, corazón…) | [Guía, paso 9.1](GUIA-INSTALACION.md#91-adaptar-la-pantalla-principal) |
+| **Volver a casa** (1.3): dirección en grande, ruta a pie con voz y foto del portal al llegar | [Guía, paso 9.2](GUIA-INSTALACION.md#92-volver-a-casa-opcional) |
+| **Wi-Fi opcional** (1.3) | [Guía, paso 9.3](GUIA-INSTALACION.md#93-wi-fi-opcional) |
+| **Contactos desde una cuenta de Google** (1.3) | [Guía, paso 8, opción B](GUIA-INSTALACION.md#opción-b-desde-una-cuenta-de-google) |
+| **Avisos por SMS de "Volver a casa"** y aviso del coste de los SMS (1.3) | [Funciones: Volver a casa](FUNCIONES.md#11-volver-a-casa) |
 
 Y algunos [consejos](FUNCIONES.md#consejos), como descargar el mapa de la ciudad en Google Maps para que la ruta a casa funcione sin datos.
 

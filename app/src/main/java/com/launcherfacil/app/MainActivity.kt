@@ -27,6 +27,8 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
+import androidx.compose.runtime.collectAsState
+import android.net.Uri
 import android.provider.CallLog
 import android.provider.Telephony
 import android.provider.Settings
@@ -35,6 +37,18 @@ import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Modifier
+import com.launcherfacil.app.config.BackButton
+import com.launcherfacil.app.ui.BackBar
+import com.launcherfacil.app.ui.Fondo
+import com.launcherfacil.app.ui.LocalBackButton
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -65,6 +79,7 @@ import com.launcherfacil.app.sos.SosService
 import com.launcherfacil.app.ui.ContactsScreen
 import com.launcherfacil.app.ui.DialpadScreen
 import com.launcherfacil.app.ui.HomeScreen
+import com.launcherfacil.app.whatsapp.WhatsAppApp
 import com.launcherfacil.app.contacts.GOOGLE_ACCOUNT_TYPE
 import com.launcherfacil.app.ui.GoHomeScreen
 import com.launcherfacil.app.gohome.housePinIntent
@@ -113,6 +128,8 @@ class MainActivity : ComponentActivity() {
         super.onResume()
         Kiosk.enterLockTask(this)
         hideNavigationBar()
+        // Si se venía de WhatsApp completo, se quita la casa flotante.
+        WhatsAppApp.onLauncherVisible()
         // Vídeos y música a cero también al volver de la ruta de Google Maps (que sube
         // el volumen de multimedia para que se oiga la voz).
         VolumeController.applySoundPolicy(this)
@@ -237,125 +254,155 @@ private fun LauncherApp(
     val inboxVersion = rememberContentVersion(Telephony.Sms.CONTENT_URI, CallLog.Calls.CONTENT_URI)
     val newSms by produceState(0, inboxVersion, screen) { value = countNewSms(context) }
     val newMissedCalls by produceState(0, inboxVersion, screen) { value = countNewMissedCalls(context) }
+    val whatsAppUnread by WhatsAppApp.unread.collectAsState()
 
-    when (screen) {
-        Screen.Home -> HomeScreen(
-            onCall = { screen = Screen.Contacts },
-            onWhatsApp = { screen = Screen.WhatsApp },
-            onDialpad = { screen = Screen.Dialpad },
-            onSos = ::sos,
-            onCaregiver = { screen = if (settings.hasPin) Screen.Pin else Screen.NewPin },
-            onMessages = { screen = Screen.Messages },
-            onMissedCalls = { screen = Screen.MissedCalls },
-            onGoHome = {
-                // Aviso al cuidador: quiere volver a casa (con su ubicación, por SMS).
-                if (settings.goHomeAlert) GoHomeService.alert(context)
-                screen = Screen.GoHome
-            },
-            newSms = newSms,
-            newMissedCalls = newMissedCalls,
-            // Se leen al volver a esta pantalla: así se ven los cambios del cuidador.
-            layout = remember { settings.homeLayout },
-            sosIcon = remember { settings.sosIcon }
-        )
-        Screen.Arrived -> ArrivedScreen(onHome = { screen = Screen.Home })
-        Screen.Messages -> MessagesScreen(onHome = { screen = Screen.Home })
-        Screen.GoHome -> {
-            val house = remember { settings.housePosition }
-            GoHomeScreen(
-                address = remember { settings.houseAddress },
-                hasHouse = house != null,
-                onStartRoute = {
-                    if (house == null || !activity.startWalkingRoute(house.first, house.second)) {
-                        openFailed(context)
-                    } else {
-                        // Maps no avisa al terminar: la app mira el GPS para saber cuándo llega.
-                        GoHomeService.watch(context, house.first, house.second, debugSosInterval)
+    // Botón para volver que ha elegido el cuidador: la casa de arriba o la flecha de abajo.
+    var backButton by remember { mutableStateOf(settings.backButton) }
+    val backDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+    CompositionLocalProvider(LocalBackButton provides backButton) {
+        Column(Modifier.fillMaxSize().background(Fondo)) {
+            Box(Modifier.weight(1f).fillMaxWidth()) {
+                when (screen) {
+                    Screen.Home -> HomeScreen(
+                        onCall = { screen = Screen.Contacts },
+                        onWhatsApp = { screen = Screen.WhatsApp },
+                        onDialpad = { screen = Screen.Dialpad },
+                        onSos = ::sos,
+                        onCaregiver = { screen = if (settings.hasPin) Screen.Pin else Screen.NewPin },
+                        onMessages = { screen = Screen.Messages },
+                        onMissedCalls = { screen = Screen.MissedCalls },
+                        onWhatsAppApp = { if (!WhatsAppApp.open(activity)) whatsAppFailed(context) },
+                        whatsAppUnread = whatsAppUnread,
+                        onGoHome = {
+                            // Aviso al cuidador: quiere volver a casa (con su ubicación, por SMS).
+                            if (settings.goHomeAlert) GoHomeService.alert(context)
+                            screen = Screen.GoHome
+                        },
+                        newSms = newSms,
+                        newMissedCalls = newMissedCalls,
+                        // Se leen al volver a esta pantalla: así se ven los cambios del cuidador.
+                        layout = remember { settings.homeLayout },
+                        sosIcon = remember { settings.sosIcon }
+                    )
+                    Screen.Arrived -> ArrivedScreen(onHome = { screen = Screen.Home })
+                    Screen.Messages -> MessagesScreen(onHome = { screen = Screen.Home })
+                    Screen.GoHome -> {
+                        val house = remember { settings.housePosition }
+                        GoHomeScreen(
+                            address = remember { settings.houseAddress },
+                            hasHouse = house != null,
+                            onStartRoute = {
+                                if (house == null || !activity.startWalkingRoute(house.first, house.second)) {
+                                    openFailed(context)
+                                } else {
+                                    // Maps no avisa al terminar: la app mira el GPS para saber cuándo llega.
+                                    GoHomeService.watch(context, house.first, house.second, debugSosInterval)
+                                }
+                            },
+                            onHome = { screen = Screen.Home }
+                        )
                     }
-                },
-                onHome = { screen = Screen.Home }
-            )
+                    Screen.MissedCalls -> MissedCallsScreen(
+                        onCallBack = ::call,
+                        onHome = { screen = Screen.Home }
+                    )
+                    Screen.Contacts -> ContactsScreen(
+                        hasPermission = canReadContacts,
+                        onRequestPermission = { permissionLauncher.launch(PERMISSIONS) },
+                        onContactClick = { call(it.phone) },
+                        onHome = { screen = Screen.Home }
+                    )
+                    Screen.WhatsApp -> WhatsAppScreen(
+                        hasPermission = canReadContacts,
+                        onRequestPermission = { permissionLauncher.launch(PERMISSIONS) },
+                        onVideoCall = {
+                            if (context.whatsAppVideoCall(it)) screen = Screen.Home else whatsAppFailed(context)
+                        },
+                        onHome = { screen = Screen.Home }
+                    )
+                    Screen.Dialpad -> DialpadScreen(
+                        onCall = ::call,
+                        onHome = { screen = Screen.Home },
+                        initialNumber = dialRequest?.number.orEmpty()
+                    )
+                    Screen.Pin, Screen.NewPin -> key(screen) {
+                        PinScreen(
+                            creating = screen == Screen.NewPin,
+                            onCheck = settings::checkPin,
+                            onSuccess = { screen = Screen.Settings },
+                            onCreated = {
+                                settings.setPin(it)
+                                screen = Screen.Settings
+                            },
+                            onHome = { screen = Screen.Home }
+                        )
+                    }
+                    Screen.Settings -> SettingsScreen(
+                        isDeviceOwner = Kiosk.isDeviceOwner(context),
+                        onChangePin = { screen = Screen.NewPin },
+                        onOpenContacts = {
+                            val contacts = Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_CONTACTS)
+                            if (!Kiosk.pauseAndOpen(activity, contacts)) openFailed(context)
+                        },
+                        onOpenHousePin = { lat, lng ->
+                            if (!Kiosk.pauseAndOpen(activity, housePinIntent(lat, lng))) openFailed(context)
+                        },
+                        onTestRoute = { lat, lng -> if (!activity.startWalkingRoute(lat, lng)) openFailed(context) },
+                        onOpenWifiSettings = {
+                            if (!Kiosk.pauseAndOpen(activity, Intent(Settings.ACTION_WIFI_SETTINGS))) openFailed(context)
+                        },
+                        onAllowOverlay = {
+                            // La casa encima de WhatsApp necesita "Mostrar sobre otras aplicaciones".
+                            val intent = Intent(
+                                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                                Uri.parse("package:${context.packageName}")
+                            )
+                            if (!Kiosk.pauseAndOpen(activity, intent)) openFailed(context)
+                        },
+                        onAddGoogleAccount = {
+                            // Contactos desde Google: se añade la cuenta en los Ajustes (fuera del quiosco).
+                            val intent = Intent(Settings.ACTION_ADD_ACCOUNT)
+                                .putExtra(Settings.EXTRA_ACCOUNT_TYPES, arrayOf(GOOGLE_ACCOUNT_TYPE))
+                            if (!Kiosk.pauseAndOpen(activity, intent)) openFailed(context)
+                        },
+                        onOpenAndroidSettings = {
+                            if (!Kiosk.pauseAndOpen(activity, Intent(Settings.ACTION_SETTINGS))) openFailed(context)
+                        },
+                        whatsAppAccess = NotificationManagerCompat.getEnabledListenerPackages(context)
+                            .contains(context.packageName),
+                        onOpenNotificationAccess = {
+                            val intent = Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
+                            if (!Kiosk.pauseAndOpen(activity, intent)) openFailed(context)
+                        },
+                        kioskPaused = kioskPaused,
+                        onPauseKiosk = {
+                            Kiosk.pause(activity)
+                            kioskPaused = true
+                        },
+                        onResumeKiosk = {
+                            Kiosk.resume(activity)
+                            kioskPaused = false
+                            screen = Screen.Home
+                        },
+                        backButton = backButton,
+                        onBackButtonChange = {
+                            backButton = it
+                            settings.backButton = it
+                        },
+                        onDisableKiosk = {
+                            Kiosk.disable(context)
+                            screen = Screen.Home
+                        },
+                        onHome = { screen = Screen.Home }
+                    )
+                }
+            }
+            // La flecha hace lo mismo que el botón Atrás de Android (en un mensaje abierto
+            // vuelve a la lista). La pantalla principal y la de llegada a casa no la llevan.
+            if (backButton == BackButton.ARROW_BOTTOM && screen != Screen.Home && screen != Screen.Arrived) {
+                BackBar(onBack = { backDispatcher?.onBackPressed() })
+            }
         }
-        Screen.MissedCalls -> MissedCallsScreen(
-            onCallBack = ::call,
-            onHome = { screen = Screen.Home }
-        )
-        Screen.Contacts -> ContactsScreen(
-            hasPermission = canReadContacts,
-            onRequestPermission = { permissionLauncher.launch(PERMISSIONS) },
-            onContactClick = { call(it.phone) },
-            onHome = { screen = Screen.Home }
-        )
-        Screen.WhatsApp -> WhatsAppScreen(
-            hasPermission = canReadContacts,
-            onRequestPermission = { permissionLauncher.launch(PERMISSIONS) },
-            onVideoCall = {
-                if (context.whatsAppVideoCall(it)) screen = Screen.Home else whatsAppFailed(context)
-            },
-            onHome = { screen = Screen.Home }
-        )
-        Screen.Dialpad -> DialpadScreen(
-            onCall = ::call,
-            onHome = { screen = Screen.Home },
-            initialNumber = dialRequest?.number.orEmpty()
-        )
-        Screen.Pin, Screen.NewPin -> key(screen) {
-            PinScreen(
-                creating = screen == Screen.NewPin,
-                onCheck = settings::checkPin,
-                onSuccess = { screen = Screen.Settings },
-                onCreated = {
-                    settings.setPin(it)
-                    screen = Screen.Settings
-                },
-                onHome = { screen = Screen.Home }
-            )
-        }
-        Screen.Settings -> SettingsScreen(
-            isDeviceOwner = Kiosk.isDeviceOwner(context),
-            onChangePin = { screen = Screen.NewPin },
-            onOpenContacts = {
-                val contacts = Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_CONTACTS)
-                if (!Kiosk.pauseAndOpen(activity, contacts)) openFailed(context)
-            },
-            onOpenHousePin = { lat, lng ->
-                if (!Kiosk.pauseAndOpen(activity, housePinIntent(lat, lng))) openFailed(context)
-            },
-            onTestRoute = { lat, lng -> if (!activity.startWalkingRoute(lat, lng)) openFailed(context) },
-            onOpenWifiSettings = {
-                if (!Kiosk.pauseAndOpen(activity, Intent(Settings.ACTION_WIFI_SETTINGS))) openFailed(context)
-            },
-            onAddGoogleAccount = {
-                // Contactos desde Google: se añade la cuenta en los Ajustes (fuera del quiosco).
-                val intent = Intent(Settings.ACTION_ADD_ACCOUNT)
-                    .putExtra(Settings.EXTRA_ACCOUNT_TYPES, arrayOf(GOOGLE_ACCOUNT_TYPE))
-                if (!Kiosk.pauseAndOpen(activity, intent)) openFailed(context)
-            },
-            onOpenAndroidSettings = {
-                if (!Kiosk.pauseAndOpen(activity, Intent(Settings.ACTION_SETTINGS))) openFailed(context)
-            },
-            whatsAppAccess = NotificationManagerCompat.getEnabledListenerPackages(context)
-                .contains(context.packageName),
-            onOpenNotificationAccess = {
-                val intent = Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
-                if (!Kiosk.pauseAndOpen(activity, intent)) openFailed(context)
-            },
-            kioskPaused = kioskPaused,
-            onPauseKiosk = {
-                Kiosk.pause(activity)
-                kioskPaused = true
-            },
-            onResumeKiosk = {
-                Kiosk.resume(activity)
-                kioskPaused = false
-                screen = Screen.Home
-            },
-            onDisableKiosk = {
-                Kiosk.disable(context)
-                screen = Screen.Home
-            },
-            onHome = { screen = Screen.Home }
-        )
     }
 }
 

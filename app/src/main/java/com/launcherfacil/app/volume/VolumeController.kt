@@ -99,6 +99,21 @@ object VolumeController {
      * Estado inicial de los sonidos: modo de timbre acorde al volumen (nunca silencio
      * total, como mucho vibración) y vídeos y música a cero. Se llama al arrancar la app.
      */
+    /**
+     * Sube el volumen de multimedia (que la app deja a cero) al [fraction] del máximo:
+     * lo usan la voz de Google Maps y los audios y vídeos de WhatsApp. Vuelve a cero
+     * con [applySoundPolicy] al regresar al launcher.
+     */
+    fun raiseMediaVolume(context: Context, fraction: Float = 0.8f) {
+        val am = context.getSystemService(AudioManager::class.java) ?: return
+        val max = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+        try {
+            am.setStreamVolume(AudioManager.STREAM_MUSIC, (max * fraction).toInt().coerceAtLeast(1), 0)
+        } catch (e: SecurityException) {
+            Log.w(TAG, "No se pudo subir el volumen de multimedia", e)
+        }
+    }
+
     fun applySoundPolicy(context: Context) {
         val am = context.getSystemService(AudioManager::class.java) ?: return
         try {

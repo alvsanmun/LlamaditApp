@@ -69,6 +69,8 @@ fun HomeScreen(
     onMessages: () -> Unit = {},
     onMissedCalls: () -> Unit = {},
     onGoHome: () -> Unit = {},
+    onWhatsAppApp: () -> Unit = {},
+    whatsAppUnread: Int = 0,
     newSms: Int = 0,
     newMissedCalls: Int = 0,
     layout: List<HomeEntry> = DEFAULT_HOME_LAYOUT,
@@ -115,6 +117,8 @@ fun HomeScreen(
                                 SmallTileWithBadge(NaranjaMensajes, R.drawable.ic_sms, newSms, onMessages, modifier, fraction)
                             HomeItem.MISSED_CALLS ->
                                 SmallTileWithBadge(MoradoPerdidas, R.drawable.ic_phone_missed, newMissedCalls, onMissedCalls, modifier, fraction)
+                            HomeItem.WHATSAPP_APP ->
+                                SmallTileWithBadge(CianWhatsApp, R.drawable.ic_chat, whatsAppUnread, onWhatsAppApp, modifier, fraction)
                             HomeItem.GO_HOME -> BigTile(MarronCasa, onGoHome, modifier) {
                                 TileIcon(R.drawable.ic_go_home, fraction)
                             }
