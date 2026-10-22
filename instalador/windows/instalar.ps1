@@ -1,10 +1,12 @@
 ﻿# LlamaditApp - instalador para Windows
 # Copyright (C) 2026 alvsanmun - GNU AGPL v3 o posterior
 #
-# Instala LlamaditApp en un móvil Android conectado por USB y activa el modo quiosco:
+# Instala LlamaditApp en un móvil Android conectado por USB y activa el modo quiosco,
+# o la actualiza si ya está instalada (sin borrar nada):
 #   1. Descarga las herramientas oficiales de Android (adb) si hace falta.
 #   2. Usa el APK que haya junto a este archivo o descarga la última versión de GitHub.
 #   3. Comprueba el móvil, instala la app, la nombra Device Owner y da los permisos.
+#      Si ya era Device Owner, solo la actualiza: se conservan contactos y configuración.
 # Se lanza con "Instalar LlamaditApp.bat" (doble clic).
 
 $ErrorActionPreference = 'Continue'
@@ -39,17 +41,20 @@ function Adb {
     return ($salida -join "`n").Trim()
 }
 
+$Host.UI.RawUI.WindowTitle = 'Instalador de LlamaditApp'
 Clear-Host
 Write-Host ''
 Write-Host '  LlamaditApp - instalador' -ForegroundColor White
 Write-Host '  -------------------------'
-Write-Host '  Este programa instala LlamaditApp en el móvil conectado por USB'
-Write-Host '  y activa el modo quiosco. Tarda unos minutos.'
+Write-Host '  Este programa instala LlamaditApp en el móvil conectado por USB y activa'
+Write-Host '  el modo quiosco. Si el móvil ya tiene LlamaditApp, solo la ACTUALIZA a la'
+Write-Host '  última versión: no se borra nada (contactos, PIN, configuración, WhatsApp).'
 Write-Host ''
 Write-Host '  Antes de seguir, comprueba que el móvil:'
-Write-Host '   - está recién restablecido de fábrica y SIN cuentas (Google, Samsung...),'
 Write-Host '   - tiene activada la "Depuración USB",'
-Write-Host '   - está conectado a este ordenador con el cable USB.'
+Write-Host '   - está conectado a este ordenador con el cable USB,'
+Write-Host '   - si es una instalación NUEVA: está recién restablecido de fábrica y SIN'
+Write-Host '     cuentas (Google, Samsung...). Para actualizar no hace falta.'
 Write-Host ''
 Pausa 'Pulsa Intro para empezar'
 
@@ -133,11 +138,15 @@ Bien "Móvil encontrado: $marca $modelo (Android $android)."
 
 $propietarios = Adb shell dpm list-owners
 $yaInstalado = $propietarios -match [regex]::Escape($Paquete)
+# Versión instalada ahora (para decir de cuál a cuál se actualiza).
+$antes = ''
+if ((Adb shell dumpsys package $Paquete) -match 'versionName=(\S+)') { $antes = $Matches[1] }
 
 # --- 4. Cuentas (si aún no es Device Owner) ---
 Titulo 'Paso 4 de 6: comprobando las cuentas'
 if ($yaInstalado) {
-    Bien 'LlamaditApp ya controla este móvil: solo se actualizará.'
+    Bien "LlamaditApp $antes ya controla este móvil: solo se actualizará."
+    Bien 'Se conservan los contactos, el PIN, la configuración y WhatsApp.'
 } else {
     $cuentas = (Adb shell dumpsys account) -split "`n" | Where-Object { $_ -match '^\s*Account \{' }
     $tipos = @($cuentas | ForEach-Object { if ($_ -match 'type=([^}]+)\}') { $Matches[1] } } | Sort-Object -Unique)
@@ -181,7 +190,9 @@ if ($resultado -notmatch 'Success') {
     }
     Terminar 1
 }
-Bien 'App instalada.'
+$despues = ''
+if ((Adb shell dumpsys package $Paquete) -match 'versionName=(\S+)') { $despues = $Matches[1] }
+if ($yaInstalado) { Bien "App actualizada: de la versión $antes a la $despues." } else { Bien "App instalada (versión $despues)." }
 
 # --- 6. Modo quiosco y permisos ---
 Titulo 'Paso 6 de 6: activando el modo quiosco'
@@ -211,12 +222,21 @@ if ($marca -match 'samsung') {
 }
 
 Write-Host ''
-Write-Host '  ¡Listo! LlamaditApp está instalada y el modo quiosco, activado.' -ForegroundColor Green
-Write-Host ''
-Write-Host '  Ahora, en el móvil:'
-Write-Host '   1. Mantén pulsado el reloj 5 segundos y crea el PIN del cuidador.'
-Write-Host '   2. Añade los contactos con su foto y márcalos como favoritos (estrella).'
-Write-Host '   3. Sigue la guía para el resto de la configuración.'
+if ($yaInstalado) {
+    Write-Host "  ¡Listo! LlamaditApp se ha actualizado a la versión $despues." -ForegroundColor Green
+    Write-Host ''
+    Write-Host '  Todo lo que había se conserva. Ahora, en el móvil:'
+    Write-Host '   1. Si pausaste el modo quiosco, entra en el panel (reloj 5 segundos y PIN)'
+    Write-Host '      y pulsa "Activar el modo quiosco".'
+    Write-Host '   2. Mira en el panel las funciones nuevas de esta versión.'
+} else {
+    Write-Host '  ¡Listo! LlamaditApp está instalada y el modo quiosco, activado.' -ForegroundColor Green
+    Write-Host ''
+    Write-Host '  Ahora, en el móvil:'
+    Write-Host '   1. Mantén pulsado el reloj 5 segundos y crea el PIN del cuidador.'
+    Write-Host '   2. Añade los contactos con su foto y márcalos como favoritos (estrella).'
+    Write-Host '   3. Sigue la guía para el resto de la configuración.'
+}
 Write-Host ''
 Write-Host '  Ya puedes desconectar el cable.'
 Terminar 0

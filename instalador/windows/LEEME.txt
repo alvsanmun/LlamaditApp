@@ -9,6 +9,11 @@
 
 3. Haz doble clic en "Instalar LlamaditApp.bat" y sigue las instrucciones.
 
+¿Ya tienes LlamaditApp en el móvil? Este mismo instalador la ACTUALIZA a la
+última versión sin borrar nada (contactos, PIN, configuración, WhatsApp). No hace
+falta restablecer el móvil. Instrucciones paso a paso:
+   https://github.com/alvsanmun/LlamaditApp/blob/main/docs/ACTUALIZAR.md
+
 El instalador descarga solo las herramientas oficiales de Android y la última
 versión de LlamaditApp. Si pones un archivo .apk de LlamaditApp en esta misma
 carpeta, usará ese en lugar de descargarlo.

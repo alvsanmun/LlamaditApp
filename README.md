@@ -69,6 +69,8 @@ Todas las pantallas, explicadas una a una, en **[docs/FUNCIONES.md](docs/FUNCION
 
 En Windows basta con descargar el **[instalador](https://github.com/alvsanmun/LlamaditApp/releases/latest/download/Instalador-LlamaditApp-Windows.zip)**, conectar el móvil por USB y hacer doble clic en `Instalar LlamaditApp.bat`: descarga solo lo necesario, instala la app y activa el modo quiosco.
 
+**¿Ya tienes LlamaditApp en el móvil?** 👉 **[Actualizar a la última versión](docs/ACTUALIZAR.md)**, sin restablecer el móvil y sin perder los contactos ni la configuración (por ejemplo, de la 1.1 a la 1.3).
+
 Resumen para quien ya conoce `adb` ([guía técnica](docs/INSTALACION.md)):
 
 ```bash
@@ -84,6 +86,7 @@ Después: mantener pulsado el **reloj 5 segundos** → crear el PIN del cuidador
 
 - [Funciones en detalle](docs/FUNCIONES.md): qué ve la persona y qué puede ajustar el cuidador.
 - [Guía de instalación paso a paso, con capturas](docs/GUIA-INSTALACION.md): para quien no sabe de informática.
+- [Actualizar a la última versión](docs/ACTUALIZAR.md): sin restablecer el móvil ni perder nada.
 - [Instalación técnica con adb](docs/INSTALACION.md).
 - [Configuración recomendada de Android](docs/CONFIGURACION.md): ajustes del teléfono, la SIM, WhatsApp y los móviles de los familiares para que todo funcione bien.
 - [Solución de problemas](docs/PROBLEMAS.md).

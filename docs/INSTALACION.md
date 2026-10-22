@@ -206,13 +206,15 @@ Recuérdales también cómo pedir la ubicación: un SMS con la palabra `UBICACIO
 
 ## Actualizar LlamaditApp
 
-Con el móvil conectado al ordenador (depuración USB activa):
+> Guía paso a paso con capturas, con el instalador de Windows: **[ACTUALIZAR.md](ACTUALIZAR.md)**.
+
+Con el móvil conectado al ordenador (depuración USB activa). Conviene pausar antes el modo quiosco desde el panel, por si el móvil tiene que preguntar "¿Permitir depuración USB?", y activarlo al terminar:
 
 ```bash
-adb install -r launcher-facil.apk
+adb install -r LlamaditApp-1.3.apk
 ```
 
-Se conservan el PIN, los ajustes y el modo quiosco. La versión nueva tiene que estar firmada con la misma clave que la instalada.
+Se conservan el PIN, los ajustes, los contactos y el modo quiosco, y se pueden saltar versiones (de la 1.1 a la 1.3, por ejemplo). La versión nueva tiene que estar firmada con la misma clave que la instalada: las de la [página de versiones](https://github.com/alvsanmun/LlamaditApp/releases) lo están todas.
 
 ## Desinstalar LlamaditApp o entregar el móvil a otra persona
 

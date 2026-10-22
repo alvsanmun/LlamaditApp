@@ -4,6 +4,8 @@ Esta guía explica, con capturas de cada pantalla, cómo dejar un móvil Android
 
 **Tiempo:** alrededor de una hora la primera vez.
 
+> 🔄 **¿El móvil ya tiene LlamaditApp y solo quieres la versión nueva?** No sigas esta guía: mira **[Actualizar a la última versión](ACTUALIZAR.md)**. No hace falta restablecer nada y se conserva todo.
+
 > 📱 Las capturas son de un **Samsung Galaxy A16** y de un móvil Android "puro" (como los Google Pixel). Si tu móvil es de otra marca, los menús se parecen mucho: cuando no encuentres algo, usa la **lupa de Ajustes** y escribe el nombre de lo que buscas.
 
 ---
