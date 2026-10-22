@@ -27,6 +27,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.UserManager
@@ -40,6 +41,7 @@ import com.launcherfacil.app.MainActivity
 import com.launcherfacil.app.WHATSAPP_PERMISSIONS
 import com.launcherfacil.app.config.CaregiverSettings
 import com.launcherfacil.app.contacts.WHATSAPP_PACKAGE
+import com.launcherfacil.app.gohome.MAPS_PACKAGE
 
 /**
  * Modo quiosco. Solo funciona si la app es Device Owner; si no, no hace nada y
@@ -142,7 +144,8 @@ object Kiosk {
 
         // 2. Apps que pueden abrirse dentro del quiosco.
         val dialer = context.getSystemService(TelecomManager::class.java)?.defaultDialerPackage
-        val allowed = (listOf(context.packageName, WHATSAPP_PACKAGE) + CALL_PACKAGES + listOfNotNull(dialer))
+        //    Google Maps, para la ruta a pie del botón "Volver a casa" (si está oculto, no se abre).
+        val allowed = (listOf(context.packageName, WHATSAPP_PACKAGE, MAPS_PACKAGE) + CALL_PACKAGES + listOfNotNull(dialer))
             .distinct()
         dpm.setLockTaskPackages(admin, allowed.toTypedArray())
 
@@ -188,14 +191,15 @@ object Kiosk {
         // 8. Bluetooth desactivado: no se usa y gasta batería.
         dpm.addUserRestriction(admin, UserManager.DISALLOW_BLUETOOTH)
 
-        // 9. Solo 4G: Wi-Fi apagado y bloqueado (nadie puede encenderlo ni configurar
-        //    redes), y sin modo avión (dejaría el móvil sin llamadas, SMS ni SOS).
-        for (restriction in NETWORK_RESTRICTIONS) dpm.addUserRestriction(admin, restriction)
-        setWifiEnabled(context, false)
+        // 9. Sin modo avión (dejaría el móvil sin llamadas, SMS ni SOS) y Wi-Fi según
+        //    elija el cuidador: por defecto apagado y bloqueado (solo la SIM).
+        dpm.addUserRestriction(admin, UserManager.DISALLOW_AIRPLANE_MODE)
+        applyWifi(context)
 
         // 10. Apps innecesarias ocultas (no se ejecutan ni gastan batería), salvo con el
         //     quiosco en pausa.
         setHidden(context, !isPaused(context))
+        applyMaps(context)
 
         // 11. Siempre en vertical, también en las pantallas de otras apps (videollamada de
         //     WhatsApp): giro automático apagado y rotación fija a 0.
@@ -220,11 +224,29 @@ object Kiosk {
         }
     }
 
-    /** Restricciones de red: sin Wi-Fi (solo 4G) y sin modo avión. */
-    private val NETWORK_RESTRICTIONS = buildList {
+    /** Restricciones que bloquean el Wi-Fi: nadie puede encenderlo ni configurar redes. */
+    private val WIFI_RESTRICTIONS = buildList {
         add(UserManager.DISALLOW_CONFIG_WIFI)
-        add(UserManager.DISALLOW_AIRPLANE_MODE)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) add(UserManager.DISALLOW_CHANGE_WIFI_STATE)
+    }
+
+    /**
+     * Aplica el Wi-Fi que ha elegido el cuidador. Apagado (por defecto): bloqueado y el
+     * móvil va solo con la SIM. Encendido: se desbloquea para elegir redes en los Ajustes
+     * de Android; las redes guardadas se conservan al volver a apagarlo.
+     */
+    fun applyWifi(context: Context) {
+        if (!isDeviceOwner(context)) return
+        val dpm = context.dpm()
+        val admin = AdminReceiver.component(context)
+        val enabled = CaregiverSettings(context).wifiEnabled
+        if (enabled) {
+            for (restriction in WIFI_RESTRICTIONS) dpm.clearUserRestriction(admin, restriction)
+            setWifiEnabled(context, true)
+        } else {
+            setWifiEnabled(context, false)
+            for (restriction in WIFI_RESTRICTIONS) dpm.addUserRestriction(admin, restriction)
+        }
     }
 
     /** El Device Owner aún puede encender y apagar el Wi-Fi (las apps normales ya no). */
@@ -237,11 +259,38 @@ object Kiosk {
         }
     }
 
+    /** Permisos de Google Maps para guiar la ruta (su diálogo no se vería en el quiosco). */
+    private val MAPS_PERMISSIONS = buildList {
+        add(android.Manifest.permission.ACCESS_FINE_LOCATION)
+        add(android.Manifest.permission.ACCESS_COARSE_LOCATION)
+        // La navegación va en una notificación; sin el permiso, Maps lo pregunta y el
+        // diálogo no responde dentro del quiosco.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) add(android.Manifest.permission.POST_NOTIFICATIONS)
+    }
+
+    /**
+     * Google Maps está entre las apps ocultas, salvo que haga falta para "Volver a casa"
+     * (el botón se ve o la casa está marcada). Se aplica al cambiar esa configuración.
+     */
+    fun applyMaps(context: Context) {
+        if (!isDeviceOwner(context)) return
+        val hidden = !isPaused(context) && !CaregiverSettings(context).needsMaps
+        try {
+            context.dpm().setApplicationHidden(AdminReceiver.component(context), MAPS_PACKAGE, hidden)
+        } catch (e: Exception) {
+            Log.w(TAG, "No se pudo ${if (hidden) "ocultar" else "mostrar"} Google Maps", e)
+        }
+        // Los permisos solo se pueden conceder con la app visible (oculta, Android lo rechaza).
+        if (!hidden) grant(context, MAPS_PACKAGE, MAPS_PERMISSIONS)
+    }
+
     private fun setHidden(context: Context, hidden: Boolean) {
         val dpm = context.dpm()
         val admin = AdminReceiver.component(context)
         var count = 0
+        val keepMaps = CaregiverSettings(context).needsMaps
         for (pkg in HIDDEN_PACKAGES) {
+            if (hidden && pkg == MAPS_PACKAGE && keepMaps) continue // Lo usa "Volver a casa".
             try {
                 if (dpm.setApplicationHidden(admin, pkg, hidden)) count++
             } catch (e: Exception) {
@@ -256,9 +305,16 @@ object Kiosk {
         val admin = AdminReceiver.component(context)
         for (permission in permissions) {
             val ok = try {
-                dpm.setPermissionGrantState(
-                    admin, pkg, permission, DevicePolicyManager.PERMISSION_GRANT_STATE_GRANTED
-                )
+                val granted = DevicePolicyManager.PERMISSION_GRANT_STATE_GRANTED
+                var result = dpm.setPermissionGrantState(admin, pkg, permission, granted)
+                // Si la política ya decía "concedido" pero Android no lo aplicó (se pidió con
+                // la app oculta, como Google Maps), repetirla no hace nada: se quita y se
+                // vuelve a poner para que se aplique de verdad.
+                if (result && context.packageManager.checkPermission(permission, pkg) != PackageManager.PERMISSION_GRANTED) {
+                    dpm.setPermissionGrantState(admin, pkg, permission, DevicePolicyManager.PERMISSION_GRANT_STATE_DEFAULT)
+                    result = dpm.setPermissionGrantState(admin, pkg, permission, granted)
+                }
+                result
             } catch (e: Exception) {
                 false // Por ejemplo, si WhatsApp no está instalado.
             }
@@ -301,7 +357,8 @@ object Kiosk {
         dpm.setKeyguardDisabled(admin, false)
         dpm.setSystemUpdatePolicy(admin, null)
         dpm.clearUserRestriction(admin, UserManager.DISALLOW_BLUETOOTH)
-        for (restriction in NETWORK_RESTRICTIONS) dpm.clearUserRestriction(admin, restriction)
+        dpm.clearUserRestriction(admin, UserManager.DISALLOW_AIRPLANE_MODE)
+        for (restriction in WIFI_RESTRICTIONS) dpm.clearUserRestriction(admin, restriction)
         setHidden(context, false)
         // Obsoleto, pero sigue siendo la única forma de que la app deje de ser Device Owner.
         @Suppress("DEPRECATION")
@@ -314,7 +371,7 @@ object Kiosk {
     /**
      * Pausa el quiosco SIN dejar de ser Device Owner: se quita el bloqueo y vuelven a
      * verse las apps ocultas, también tras reiniciar, hasta que se llame a [resume].
-     * Se mantienen la app de Teléfono, los permisos, el Wi-Fi apagado, etc.
+     * Se mantienen la app de Teléfono, los permisos, el Wi-Fi elegido, etc.
      */
     fun pause(activity: Activity) {
         CaregiverSettings(activity).kioskPaused = true

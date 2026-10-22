@@ -40,6 +40,14 @@ class CaregiverSettings(context: Context) {
         private const val KEY_KEYWORDS = "keywords"
         private const val KEY_KIOSK_PAUSED = "kiosk_paused"
         private const val KEY_CONTACT_ORDER = "contact_order"
+        private const val KEY_WIFI_ENABLED = "wifi_enabled"
+        private const val KEY_SOS_ICON = "sos_icon"
+        private const val KEY_HOME_LAYOUT = "home_layout"
+        private const val KEY_HOUSE_LAT = "house_lat"
+        private const val KEY_HOUSE_LNG = "house_lng"
+        private const val KEY_HOUSE_ADDRESS = "house_address"
+        private const val KEY_GO_HOME_ALERT = "go_home_alert"
+        private const val KEY_GO_HOME_UPDATES = "go_home_updates"
     }
 
     private val appContext = context.applicationContext
@@ -110,6 +118,62 @@ class CaregiverSettings(context: Context) {
             .orEmpty()
         set(value) = prefs.edit { putString(KEY_CONTACT_ORDER, value.joinToString(",")) }
 
+    // --- Wi-Fi (por defecto apagado: el móvil va solo con la SIM) ---
+
+    var wifiEnabled: Boolean
+        get() = prefs.getBoolean(KEY_WIFI_ENABLED, false)
+        set(value) = prefs.edit { putBoolean(KEY_WIFI_ENABLED, value) }
+
+    // --- Dibujo del botón SOS (por defecto, las letras "SOS") ---
+
+    var sosIcon: SosIcon
+        get() = SosIcon.entries.firstOrNull { it.name == prefs.getString(KEY_SOS_ICON, null) } ?: SosIcon.TEXT
+        set(value) = prefs.edit { putString(KEY_SOS_ICON, value.name) }
+
+    // --- Diseño de la pantalla principal (orden, tamaño y botones visibles) ---
+
+    var homeLayout: List<HomeEntry>
+        get() = decodeHomeLayout(prefs.getString(KEY_HOME_LAYOUT, null))
+        set(value) = prefs.edit { putString(KEY_HOME_LAYOUT, encodeHomeLayout(value)) }
+
+    // --- Casa de la persona (botón "Volver a casa") ---
+
+    /** Coordenadas de la casa, o null si el cuidador aún no la ha marcado. */
+    var housePosition: Pair<Double, Double>?
+        get() {
+            val lat = prefs.getString(KEY_HOUSE_LAT, null)?.toDoubleOrNull() ?: return null
+            val lng = prefs.getString(KEY_HOUSE_LNG, null)?.toDoubleOrNull() ?: return null
+            return lat to lng
+        }
+        set(value) = prefs.edit {
+            if (value == null) {
+                remove(KEY_HOUSE_LAT)
+                remove(KEY_HOUSE_LNG)
+            } else {
+                putString(KEY_HOUSE_LAT, value.first.toString())
+                putString(KEY_HOUSE_LNG, value.second.toString())
+            }
+        }
+
+    /** Dirección que se enseña en grande (la escribe o corrige el cuidador). */
+    var houseAddress: String
+        get() = prefs.getString(KEY_HOUSE_ADDRESS, null).orEmpty()
+        set(value) = prefs.edit { putString(KEY_HOUSE_ADDRESS, value) }
+
+    /** Avisar por SMS al contacto del SOS cuando la persona pulsa "Volver a casa". */
+    var goHomeAlert: Boolean
+        get() = prefs.getBoolean(KEY_GO_HOME_ALERT, true)
+        set(value) = prefs.edit { putBoolean(KEY_GO_HOME_ALERT, value) }
+
+    /** Durante la ruta a casa, enviar la ubicación por SMS cada 10 minutos hasta que llegue. */
+    var goHomeUpdates: Boolean
+        get() = prefs.getBoolean(KEY_GO_HOME_UPDATES, false)
+        set(value) = prefs.edit { putBoolean(KEY_GO_HOME_UPDATES, value) }
+
+    /** Hace falta Google Maps: el botón de casa se ve o la casa está marcada. */
+    val needsMaps: Boolean
+        get() = housePosition != null || homeLayout.any { it.item == HomeItem.GO_HOME && it.visible }
+
     // --- Palabras clave para pedir la ubicación ---
 
     var keywords: List<String>
@@ -119,6 +183,9 @@ class CaregiverSettings(context: Context) {
             ?: defaultKeywords
         set(value) = prefs.edit { putString(KEY_KEYWORDS, value.joinToString(",")) }
 }
+
+/** Dibujos posibles para el botón SOS, para quien no reconozca las letras. */
+enum class SosIcon { TEXT, AMBULANCE, CROSS, SIREN, HEART, WARNING }
 
 /** Contacto del SOS: el elegido por el cuidador o, si no hay, el primer favorito. */
 suspend fun resolveSosContact(context: Context): Contact? {

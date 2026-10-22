@@ -39,6 +39,7 @@ import com.launcherfacil.app.ui.CallButton
 import com.launcherfacil.app.ui.CallLayout
 import com.launcherfacil.app.ui.RojoSos
 import com.launcherfacil.app.ui.VerdeLlamar
+import com.launcherfacil.app.ui.hideNavigationBar
 import com.launcherfacil.app.volume.VolumeController
 import com.launcherfacil.app.volume.WithVolumeOverlay
 
@@ -54,6 +55,12 @@ class WhatsAppCallActivity : ComponentActivity() {
     }
 
     // Botones de volumen: solo el volumen del teléfono, con el panel grande.
+    // Sin la barra de navegación de abajo (solo quedaba Atrás, que confundía).
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) hideNavigationBar()
+    }
+
     override fun dispatchKeyEvent(event: KeyEvent): Boolean =
         VolumeController.onKeyEvent(this, event) || super.dispatchKeyEvent(event)
 }

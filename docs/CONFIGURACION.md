@@ -17,7 +17,7 @@ Cada ajuste está marcado como:
 | Ajuste | Dónde | Por qué |
 |---|---|---|
 | **Quitar el PIN de la SIM** · Imprescindible | *Ajustes → Seguridad y privacidad → Más ajustes de seguridad → Seguridad de tarjeta SIM → desactivar "Bloquear tarjeta SIM"* | Si el móvil se reinicia (por una actualización o porque se quede sin batería), pediría el PIN y se quedaría sin llamadas ni SOS hasta que alguien lo escribiera. |
-| **Tarifa con llamadas, SMS y datos** · Imprescindible | Con el operador | El SOS y la localización van por **SMS**. Los datos móviles hacen falta para WhatsApp y las actualizaciones, porque el Wi-Fi estará apagado. |
+| **Tarifa con llamadas, SMS y datos** · Imprescindible | Con el operador | El SOS y la localización van por **SMS**. Los datos móviles hacen falta para WhatsApp y las actualizaciones, porque el Wi-Fi está apagado salvo que el cuidador lo active en el panel. |
 | **Desactivar el buzón de voz** · Recomendado | Llamando al operador (o con el código que te indique) | Si salta el buzón, quien llama cree que ha hablado con la persona, que nunca lo escuchará. Sin buzón, la llamada queda como **perdida** y sale el número rojo en LlamaditApp. |
 | **Avisos de "te han llamado"** · Recomendado | Con el operador | Si el móvil estuvo sin cobertura o apagado, el operador avisa por SMS de las llamadas recibidas. |
 
@@ -68,6 +68,8 @@ Cada ajuste está marcado como:
 |---|---|---|
 | **Ubicación activada** · Imprescindible | *Ajustes → Ubicación → Activado* | Sin ella, el SOS y las peticiones de ubicación responden "No se ha podido obtener la ubicación". |
 | **Precisión de ubicación de Google activada** · Recomendado | *Ajustes → Ubicación → Servicios de ubicación → Precisión de la ubicación de Google* | Usa las antenas de telefonía cuando no hay GPS, por ejemplo dentro de casa. Como el Wi-Fi está apagado, ayuda mucho en interiores. |
+| **Mapa de la ciudad descargado en Google Maps** · Recomendado si se usa "Volver a casa" | Panel → *Probar la ruta* → en Maps, cerrar la navegación (**X**) → foto de perfil → *Mapas sin conexión* → *Selecciona tu propio mapa* → *Descargar* | La ruta a casa funciona aunque no haya datos (metro, sótanos, zonas sin cobertura). El mapa ocupa bastante: descárgalo con el Wi-Fi encendido un momento desde el panel. Google Maps lo actualiza solo. |
+| **Aceptar las pantallas de bienvenida de Google Maps** · Imprescindible si se usa "Volver a casa" | Panel → *Probar la ruta* (una vez) | Si no, la primera vez que la persona pulse la flecha se encontraría con las condiciones de la navegación de Google Maps. |
 
 ## 8. Mensajes (SMS)
 
@@ -78,12 +80,14 @@ Cada ajuste está marcado como:
 
 ## 9. Cuenta de Google y Play Store
 
-Solo si se usa WhatsApp (el modo quiosco debe activarse **antes** de añadir la cuenta; ver la [guía de instalación](INSTALACION.md)).
+Si se usa WhatsApp o si los contactos se gestionan desde una cuenta de Google (el modo quiosco debe activarse **antes** de añadir la cuenta; ver la [guía de instalación](INSTALACION.md)). Se añade desde el panel del cuidador → *Contactos desde una cuenta de Google* → **Añadir una cuenta de Google**.
 
 | Ajuste | Dónde | Por qué |
 |---|---|---|
 | **Actualizar apps "Usando cualquier red"** · Imprescindible si se usa WhatsApp | *Play Store → foto de perfil → Ajustes → Preferencias de red → Actualizar apps automáticamente* | Sin Wi-Fi, WhatsApp no se actualizaría nunca, y las versiones antiguas dejan de funcionar al cabo de unos meses. |
 | **Descargar actualizaciones del sistema por datos móviles** (solo Samsung) · Recomendado | Desde el ordenador: `adb shell settings put global SOFTWARE_UPDATE_WIFI_ONLY2 0` | Samsung solo descarga las actualizaciones por Wi-Fi, que estará apagado. Una app no puede cambiar este ajuste. |
+| **Una cuenta de Google solo para este móvil** · Recomendado | En [accounts.google.com](https://accounts.google.com), desde el ordenador | Así los contactos se gestionan desde [contacts.google.com](https://contacts.google.com) sin mezclarse con los del cuidador: en el móvil aparecen los favoritos (★) de todas sus cuentas. |
+| **Sincronización automática de contactos** · Imprescindible si se usan contactos de Google | Panel del cuidador → *Contactos desde una cuenta de Google* | Sin ella, los contactos nuevos o cambiados en contacts.google.com no llegan solos al móvil. El panel avisa si está apagada. |
 | **Copia de seguridad de Google** · Recomendado | *Ajustes → Cuentas y copia de seguridad → Copia de seguridad de Google Drive* | Guarda los contactos con sus fotos. Si el móvil se pierde o se rompe, se recuperan en el nuevo. |
 
 ## 10. WhatsApp
@@ -101,7 +105,7 @@ Solo si se usa WhatsApp (el modo quiosco debe activarse **antes** de añadir la 
 | Ajuste | Dónde | Por qué |
 |---|---|---|
 | **Una foto clara de la cara de cada persona** · Imprescindible | *Contactos → contacto → Editar → icono de la cámara* | Es lo único que ve la persona para saber a quién llama. Mejor de cerca, con buena luz y fondo liso. |
-| **Marcar como favorito ★** · Imprescindible | *Contactos → contacto → estrella* | Solo los favoritos aparecen en LlamaditApp. |
+| **Marcar como favorito ★** · Imprescindible | *Contactos → contacto → estrella*, o la estrella en [contacts.google.com](https://contacts.google.com) | Solo los favoritos aparecen en LlamaditApp. |
 | **Números con prefijo internacional** · Recomendado para números extranjeros | Al guardar el contacto: `+33 …`, `+44 …` | Los números españoles de 9 cifras se completan solos con +34. Los de otros países necesitan el prefijo para la videollamada de WhatsApp. |
 | **Pocos favoritos** · Recomendado | — | Con 4 a 6 caras la pantalla se entiende de un vistazo. Pon arriba a quien más llama (panel del cuidador → Orden de los contactos). |
 
@@ -129,5 +133,7 @@ Antes de entregar el móvil, comprueba:
 - [ ] Play Store actualiza "usando cualquier red".
 - [ ] Notificaciones de llamadas de WhatsApp activadas, y acceso a notificaciones para LlamaditApp.
 - [ ] Contactos favoritos con foto, en el orden adecuado.
+- [ ] Si se usa "Volver a casa": casa marcada, foto del portal, ruta probada una vez y mapa de la ciudad descargado.
+- [ ] La tarifa incluye SMS (SOS, ubicación y avisos de "Volver a casa").
 - [ ] Los familiares tienen el número guardado con "Saltar silencio".
 - [ ] El modo quiosco está **activado**.

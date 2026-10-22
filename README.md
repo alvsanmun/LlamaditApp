@@ -18,11 +18,14 @@
 | ✉️ **Mensajes** | Lista de SMS con la foto de quien escribe; se pueden leer en grande y borrar. |
 | 📵 **Llamadas perdidas** | Un número rojo avisa de que alguien ha llamado; tocar la llamada la devuelve. |
 | 🕐 **Reloj y batería** | Siempre en grande en la pantalla principal. |
+| 🏠 **Volver a casa** | Botón opcional: la dirección de casa en grande (para enseñarla a la policía o a un vecino) y una flecha que abre la ruta a pie de Google Maps con voz. Al llegar, la foto del portal. El cuidador puede recibir un SMS con la ubicación al pulsarlo y cada 10 minutos de camino. |
+| 🧩 **Diseño a medida** | El cuidador mueve, agranda u oculta los botones y elige el dibujo del SOS (letras, ambulancia, cruz…). |
+| 👥 **Contactos desde Google** | Opcional: el cuidador gestiona los contactos (nombre, foto y teléfono) desde cualquier ordenador en contacts.google.com, y llegan solos al móvil. |
 | 🔊 **Volumen** | Los botones solo cambian el volumen del teléfono, con un panel enorme que se entiende sin leer. El móvil siempre vibra al recibir una llamada. |
 | 📍 **¿Dónde está?** | Un familiar autorizado envía un SMS con la palabra `UBICACION` y recibe la posición en Google Maps y el nivel de batería. Solo cuando se pide: no hay seguimiento continuo. |
 | 🔒 **Modo quiosco** | La persona no puede salir del launcher, ni desconfigurar el móvil, ni abrir otras apps. Tras reiniciar, arranca directamente en LlamaditApp. |
 
-Y por debajo, sin que la persona haga nada: Wi-Fi y Bluetooth apagados (solo datos móviles), pantalla siempre en vertical, apps innecesarias ocultas, sin pantalla de bloqueo y actualizaciones del sistema de madrugada.
+Y por debajo, sin que la persona haga nada: Wi-Fi (salvo que el cuidador lo active) y Bluetooth apagados, pantalla siempre en vertical, apps innecesarias ocultas, sin pantalla de bloqueo y actualizaciones del sistema de madrugada.
 
 Más detalles en **[docs/FUNCIONES.md](docs/FUNCIONES.md)**.
 
@@ -43,6 +46,11 @@ Más detalles en **[docs/FUNCIONES.md](docs/FUNCIONES.md)**.
 | <img src="docs/img/capturas/04-teclado.jpg" width="220" alt="Teclado"> | <img src="docs/img/capturas/12-volumen.jpg" width="220" alt="Volumen"> | <img src="docs/img/capturas/15-panel-1.jpg" width="220" alt="Panel del cuidador"> |
 | Números enormes | Un panel que se entiende sin leer | Oculto y con PIN, solo para el cuidador |
 
+| Diseño a medida | Volver a casa | Al llegar |
+|:---:|:---:|:---:|
+| <img src="docs/img/capturas/17-inicio-personalizado.jpg" width="220" alt="Pantalla principal personalizada"> | <img src="docs/img/capturas/18-volver-a-casa.jpg" width="220" alt="Volver a casa"> | <img src="docs/img/capturas/19-llegada-portal.jpg" width="220" alt="Foto del portal al llegar"> |
+| Botones movidos, ocultos y con otro dibujo en el SOS | La dirección en grande y la flecha de la ruta | La foto del portal y la casa para volver |
+
 Todas las pantallas, explicadas una a una, en **[docs/FUNCIONES.md](docs/FUNCIONES.md)**.
 
 <sub>Capturas del emulador con contactos inventados; fotos de Unsplash (créditos en [FUNCIONES.md](docs/FUNCIONES.md)).</sub>
@@ -53,6 +61,7 @@ Todas las pantallas, explicadas una a una, en **[docs/FUNCIONES.md](docs/FUNCION
 - Un **ordenador** (Windows, macOS o Linux) con las herramientas de Android (`adb`), solo para la puesta en marcha.
 - El móvil debe estar **recién restablecido de fábrica** o sin ninguna cuenta (Google, Samsung…) en el momento de activar el modo quiosco. Es una exigencia de Android, no de la app.
 - Opcional: **WhatsApp** (no WhatsApp Business) para las videollamadas.
+- Opcional: **datos móviles** para la ruta de *Volver a casa* (o el mapa de la ciudad descargado en Google Maps) y para los contactos desde una cuenta de Google.
 
 ## Instalación
 

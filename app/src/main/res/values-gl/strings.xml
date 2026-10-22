@@ -63,6 +63,79 @@
     <string name="remove_owner_dialog_text">Desactívase o modo quiosco para sempre. Para volvelo activar cómpre un ordenador (adb) e quitar antes todas as contas do teléfono (Google, WhatsApp...). Se só queres instalar ou configurar algo, usa \"Poñer en pausa o modo quiosco\".</string>
     <string name="remove_owner_confirm">Quitar</string>
     <string name="cancel">Cancelar</string>
+    <string name="settings_home_title">Pantalla principal</string>
+    <string name="settings_home_hint">Cambia a orde e o tamaño dos botóns, ou oculta os que non se usen. Os botóns pequenos e medianos ocupan media fila; os grandes, a fila enteira. O reloxo sempre se ve: mantelo premido é a entrada a este panel.</string>
+    <string name="settings_home_reset">Volver ao deseño orixinal</string>
+    <string name="settings_home_always_visible">Sempre visible</string>
+    <string name="home_item_clock">Reloxo e data</string>
+    <string name="home_item_battery">Batería</string>
+    <string name="home_item_call">Chamar</string>
+    <string name="home_item_whatsapp">Videochamada de WhatsApp</string>
+    <string name="home_item_dialpad">Teclado</string>
+    <string name="home_item_sos">SOS</string>
+    <string name="home_item_messages">Mensaxes</string>
+    <string name="home_item_missed">Chamadas perdidas</string>
+    <string name="size_small">Pequeno</string>
+    <string name="size_medium">Mediano</string>
+    <string name="size_large">Grande</string>
+    <string name="settings_sos_icon_title">Debuxo do botón SOS</string>
+    <string name="settings_sos_icon_hint">Escolle o que mellor recoñeza a persoa. Sexa cal sexa o debuxo, hai que mantelo premido 2 segundos.</string>
+    <string name="settings_wifi_title">Wi-Fi</string>
+    <string name="settings_wifi_switch">Usar a wifi</string>
+    <string name="settings_wifi_off_hint">Apagada: o móbil só usa a rede móbil da SIM. Ninguén pode acendela agás desde aquí.</string>
+    <string name="settings_wifi_on_hint">Acendida: o móbil conéctase ás redes wifi gardadas. Escolle ou engade redes na Configuración de Android.</string>
+    <string name="settings_wifi_choose">Escoller unha rede wifi</string>
+    <string name="settings_wifi_not_owner">A app non é Device Owner: a wifi xestiónase desde a Configuración de Android.</string>
+
+    <string name="home_item_go_home">Volver á casa</string>
+    <string name="go_home_not_set">O coidador aínda non marcou a casa.</string>
+    <string name="settings_house_title">Volver á casa</string>
+    <string name="settings_house_hint">Activa o botón \"Volver á casa\" en Pantalla principal e marca aquí a casa. O botón amosa o enderezo en grande, para ensinarllo á policía ou a alguén da rúa, e unha frecha que comeza a ruta a pé de Google Maps con voz. Preme unha vez \"Probar a ruta\" e acepta as primeiras pantallas de Google Maps, para que a persoa non as vexa.</string>
+    <string name="settings_house_saved">Casa marcada: %1$s</string>
+    <string name="settings_house_none">A casa aínda non está marcada.</string>
+    <string name="settings_house_use_location">Usar a miña localización actual (estou na casa)</string>
+    <string name="settings_house_searching">Buscando…</string>
+    <string name="settings_house_no_location">Non se puido obter a localización. Sae fóra ou achégate a unha ventá e volve probar.</string>
+    <string name="settings_house_no_address">Localización gardada, pero non se atopou o enderezo: escríbeo a man.</string>
+    <string name="settings_house_address">Enderezo</string>
+    <string name="settings_house_address_hint">Amósase en letra grande. Engade o andar e a porta se fai falta.</string>
+    <string name="settings_house_search">Buscar este enderezo no mapa</string>
+    <string name="settings_house_not_found">Non se atopou ese enderezo. Revísao ou usa a localización actual.</string>
+    <string name="settings_house_test_route">Probar a ruta</string>
+    <string name="settings_house_view_map">Ver en Google Maps</string>
+
+    <string name="notification_go_home">Volvendo á casa</string>
+    <string name="go_home_sms">VOLVER Á CASA: premeuse o botón para volver á casa. Localización: %1$s</string>
+    <string name="go_home_sms_no_location">VOLVER Á CASA: premeuse o botón para volver á casa. Non se puido obter a localización.</string>
+    <string name="settings_house_alert">Avisar por SMS ao premer o botón</string>
+    <string name="settings_house_alert_hint">Envíase ao contacto do SOS, coa localización e a batería. Cando a persoa chega preto da casa seguindo a ruta, amósase a foto do portal cun botón para volver á pantalla principal.</string>
+    <string name="settings_house_photo">Foto do portal</string>
+    <string name="settings_house_photo_failed">Non se puido gardar a foto. Volve probar.</string>
+    <string name="settings_house_photo_camera">Facer unha foto do portal</string>
+    <string name="settings_house_photo_gallery">Escoller unha foto da galería</string>
+    <string name="settings_house_photo_remove">Quitar a foto</string>
+
+    <string name="settings_house_updates">Enviar a localización cada 10 minutos durante a ruta</string>
+    <string name="settings_house_updates_hint">Desde que a persoa empeza a ruta (frecha verde) ata que chega á casa, o contacto do SOS recibe un SMS coa localización cada 10 minutos, e un último ao chegar. Párase só, como moito, ás 2 horas.</string>
+    <string name="go_home_update">VOLVER Á CASA: de camiño, a %2$d m da casa. Localización: %1$s</string>
+    <string name="go_home_update_no_location">VOLVER Á CASA: de camiño. Non se puido obter a localización.</string>
+    <string name="go_home_arrived">VOLVER Á CASA: chegou á casa.</string>
+    <string name="sms_cost_title">Esta función envía SMS</string>
+    <string name="sms_cost_text">Segundo o contrato da liña telefónica, o envío de SMS podería cobrarse e aumentar a factura. Comproba co operador que a tarifa inclúe SMS antes de activala.</string>
+    <string name="sms_cost_accept">Activar</string>
+    <string name="sms_cost_note">Envía SMS: segundo a tarifa da liña, poderían cobrarse.</string>
+
+    <string name="settings_google_title">Contactos desde unha conta de Google</string>
+    <string name="settings_google_hint">Ademais de coa app Contactos, os contactos pódense xestionar desde calquera móbil ou ordenador: entra en contacts.google.com coa conta de Google deste móbil, crea o contacto con nome, foto e teléfono, e márcao coa estrela (★). Chega nuns minutos (precisa datos móbiles ou wifi). Despois marca aquí \"Teñen WhatsApp\" se fai falta. Consello: usa unha conta só para este móbil; coa túa, tamén sairían os teus contactos favoritos.</string>
+    <string name="settings_google_none">Non hai ningunha conta de Google no móbil.</string>
+    <string name="settings_google_favorites">Favoritos (★): %1$d</string>
+    <string name="settings_google_autosync">Sincronizar os contactos automaticamente</string>
+    <string name="settings_google_master_off">A sincronización automática do móbil está desactivada: os cambios non chegarán sós.</string>
+    <string name="settings_google_master_on">Activar a sincronización automática</string>
+    <string name="settings_google_sync_now">Sincronizar agora</string>
+    <string name="settings_google_syncing">Sincronizando… os cambios aparecen nuns minutos.</string>
+    <string name="settings_google_add">Engadir unha conta de Google</string>
+
     <string-array name="default_keywords">
         <item>LOCALIZACION</item>
         <item>ONDE ESTAS</item>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- LlamaditApp (AGPLv3): dibujo propio para el botón SOS. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M24,3L46.5,43H1.5Z M21.75,16h4.5v14h-4.5z M21.75,34h4.5v4.5h-4.5z" />
+</vector>

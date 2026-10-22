@@ -19,6 +19,9 @@ Esta guía explica, con capturas de cada pantalla, cómo dejar un móvil Android
 7. [Crear el PIN del cuidador](#7-crear-el-pin-del-cuidador)
 8. [Añadir los contactos con su foto](#8-añadir-los-contactos-con-su-foto)
 9. [Configurar el panel del cuidador](#9-configurar-el-panel-del-cuidador)
+   - [9.1. Adaptar la pantalla principal](#91-adaptar-la-pantalla-principal)
+   - [9.2. Volver a casa (opcional)](#92-volver-a-casa-opcional)
+   - [9.3. Wi-Fi (opcional)](#93-wi-fi-opcional)
 10. [WhatsApp (opcional)](#10-whatsapp-opcional)
 11. [Ajuste de batería recomendado](#11-ajuste-de-batería-recomendado)
 12. [Comprobar que todo funciona y entregar el móvil](#12-comprobar-que-todo-funciona-y-entregar-el-móvil)
@@ -226,7 +229,12 @@ El **panel del cuidador** es donde se configura todo. Está escondido para que l
 
 ## 8. Añadir los contactos con su foto
 
-La persona verá **solo las fotos** de los contactos marcados con una **estrella** (favoritos).
+La persona verá **solo las fotos** de los contactos marcados con una **estrella** (favoritos). Hay dos formas de añadirlos, y se pueden combinar:
+
+- **A. En el propio móvil**, con la app Contactos (abajo, paso a paso).
+- **B. Desde cualquier ordenador o móvil**, con una **cuenta de Google** ([ver más abajo](#opción-b-desde-una-cuenta-de-google)). Es la más cómoda si el cuidador no vive con la persona: los cambios llegan solos al móvil.
+
+### Opción A: en la app Contactos del móvil
 
 1. En el panel del cuidador, baja hasta **Otras apps** y pulsa **Abrir Contactos (favoritos y fotos)**.
 2. Pulsa el botón **+** (abajo a la derecha) para crear un contacto.
@@ -267,6 +275,25 @@ La persona verá **solo las fotos** de los contactos marcados con una **estrella
 7. Repite para cada persona (lo ideal son entre 4 y 6).
 8. Cuando termines, pulsa el botón **Atrás** del móvil hasta volver a LlamaditApp. El modo quiosco se vuelve a activar solo.
 
+### Opción B: desde una cuenta de Google
+
+<table><tr>
+<td><img src="img/capturas/26-panel-cuenta-google.jpg" width="230" alt="Sección Contactos desde una cuenta de Google"></td>
+</tr><tr>
+<td align="center">Panel → <b>Contactos desde una cuenta de Google</b></td>
+</tr></table>
+
+1. **Crea una cuenta de Google solo para este móvil** (por ejemplo, una dirección del tipo *nombre.llamadita@gmail.com*) desde tu ordenador en [accounts.google.com](https://accounts.google.com). Si usas tu cuenta personal, también aparecerán en el móvil tus propios contactos favoritos.
+2. En el panel del cuidador, sección **Contactos desde una cuenta de Google**, pulsa **Añadir una cuenta de Google** e inicia sesión con esa cuenta. Como el móvil lo gestiona LlamaditApp, Google lo llama "cuenta de trabajo": es normal, escribe el correo igualmente.
+3. Vuelve a LlamaditApp. La cuenta aparece en el panel con el número de **favoritos (★)** que trae. Deja activado **Sincronizar los contactos automáticamente**.
+4. Desde **cualquier ordenador o móvil**, entra en [contacts.google.com](https://contacts.google.com) con esa cuenta y **crea el contacto**: nombre, teléfono y **foto** (de cerca de la cara).
+5. **Márcalo con la estrella ☆** (favorito). Sin la estrella no aparecerá en LlamaditApp.
+6. En unos minutos llega al móvil (necesita datos móviles o Wi-Fi). Para no esperar, pulsa **Sincronizar ahora** en el panel.
+
+> 💡 Si el panel avisa de que **la sincronización automática del móvil está desactivada**, pulsa **Activar la sincronización automática**: sin ella, los cambios no llegan solos.
+
+> La casilla **Tienen WhatsApp** (paso 10) se marca siempre en el panel del móvil: no viene de Google.
+
 ---
 
 ## 9. Configurar el panel del cuidador
@@ -285,6 +312,68 @@ De vuelta en el panel ya aparecen los contactos. Configura:
 <td align="center">Panel del cuidador</td><td align="center">Lo que verá la persona en <b>Llamar</b></td>
 </tr></table>
 
+### 9.1. Adaptar la pantalla principal
+
+En la parte de arriba del panel, **Pantalla principal**, se ve una **vista previa** de lo que verá la persona. Para cada botón:
+
+- **↑ ↓** para cambiarlo de sitio (también el reloj y la batería).
+- **Pequeño**, **Mediano** o **Grande**: los pequeños y medianos ocupan media fila; los grandes, la fila entera.
+- El **interruptor** lo muestra u oculta. Oculta lo que la persona no vaya a usar: cuantos menos botones, más fácil.
+
+El **reloj** siempre se ve (es la entrada a este panel), pero se puede mover. **Volver al diseño original** lo deja todo como venía.
+
+En **Dibujo del botón SOS** elige lo que mejor reconozca la persona: las letras **SOS**, una **ambulancia**, una **cruz**, una **sirena**, un **corazón** o una **señal de peligro**.
+
+<table><tr>
+<td><img src="img/capturas/20-panel-pantalla.jpg" width="230" alt="Vista previa de la pantalla principal"></td>
+<td><img src="img/capturas/21-panel-botones.jpg" width="230" alt="Flechas, tamaño e interruptor de cada botón"></td>
+<td><img src="img/capturas/22-panel-dibujo-sos.jpg" width="230" alt="Dibujos del botón SOS"></td>
+<td><img src="img/capturas/17-inicio-personalizado.jpg" width="230" alt="Pantalla principal personalizada"></td>
+</tr><tr>
+<td align="center">① Vista previa</td><td align="center">② Mover, tamaño, ocultar</td><td align="center">③ Dibujo del SOS</td><td align="center">④ Resultado</td>
+</tr></table>
+
+### 9.2. Volver a casa (opcional)
+
+Un botón para cuando la persona se desoriente en la calle: enseña la **dirección de casa en grande** (para la policía o un vecino) y una **flecha** que abre la **ruta a pie de Google Maps con voz**. Al llegar, muestra la **foto del portal**.
+
+<table><tr>
+<td><img src="img/capturas/23-panel-volver-casa.jpg" width="230" alt="Marcar la casa"></td>
+<td><img src="img/capturas/24-panel-portal-avisos.jpg" width="230" alt="Foto del portal y avisos"></td>
+<td><img src="img/capturas/18-volver-a-casa.jpg" width="230" alt="Lo que ve la persona"></td>
+<td><img src="img/capturas/19-llegada-portal.jpg" width="230" alt="Al llegar a casa"></td>
+</tr><tr>
+<td align="center">① Marcar la casa</td><td align="center">② Foto y avisos</td><td align="center">③ Dirección y flecha</td><td align="center">④ Al llegar</td>
+</tr></table>
+
+1. **Marca la casa.** Estando en ella, pulsa **Usar mi ubicación actual (estoy en la casa)**: la dirección se rellena sola. Si no estás allí, escribe la dirección y pulsa **Buscar esta dirección en el mapa**.
+2. **Revisa la dirección** y añade el piso y la puerta (por ejemplo, *Calle Mayor 12, 3º B, Sevilla*). Es lo que se enseñará en grande.
+3. **Foto del portal:** pulsa **Hacer una foto del portal** y hazla desde la acera, de día, como lo vería la persona al llegar (también se puede elegir de la galería).
+4. **Avisos por SMS** al contacto del SOS:
+   - **Avisar por SMS al pulsar el botón** (activado por defecto): avisa de que quiere volver a casa, con su ubicación.
+   - **Enviar la ubicación cada 10 minutos durante la ruta** (desactivado por defecto): mientras va de camino, y un último SMS al llegar.
+
+   Al activarlos, el panel avisa de que **los SMS podrían cobrarse** según la tarifa de la línea. Compruébalo con el operador.
+5. Pulsa **Probar la ruta** y acepta las pantallas de bienvenida de **Google Maps** (solo la primera vez), para que la persona no se las encuentre.
+6. **Descarga el mapa de la ciudad** para que la ruta funcione sin datos: activa un momento el Wi-Fi (paso 9.3), pulsa **Probar la ruta**, cierra la navegación con la **X**, toca la **foto de perfil** (arriba a la derecha) → **Mapas sin conexión** → **Selecciona tu propio mapa**, encuadra la ciudad y pulsa **Descargar**.
+7. Sube a **Pantalla principal** y activa el interruptor de **Volver a casa**.
+
+<table><tr>
+<td><img src="img/capturas/25-aviso-sms.jpg" width="230" alt="Aviso del coste de los SMS"></td>
+</tr><tr>
+<td align="center">Aviso al activar un SMS</td>
+</tr></table>
+
+### 9.3. Wi-Fi (opcional)
+
+Por defecto el móvil va **solo con la SIM**: el Wi-Fi está apagado y nadie lo puede encender. Si en casa hay Wi-Fi, en el panel, sección **Wi-Fi**, activa **Usar el Wi-Fi** y pulsa **Elegir una red Wi-Fi** para conectarte. Al apagarlo se vuelve a bloquear; la red queda guardada para la próxima vez.
+
+<table><tr>
+<td><img src="img/capturas/27-panel-wifi.jpg" width="230" alt="Wi-Fi encendido"></td>
+</tr><tr>
+<td align="center">Wi-Fi encendido</td>
+</tr></table>
+
 Pulsa la **casa** de arriba para volver a la pantalla principal.
 
 ---
@@ -294,7 +383,7 @@ Pulsa la **casa** de arriba para volver a la pantalla principal.
 Solo si la persona va a hacer **videollamadas de WhatsApp**.
 
 1. En el panel del cuidador pulsa **Pausar el modo quiosco**. El móvil se podrá usar con normalidad mientras tanto.
-2. Pulsa **Abrir Ajustes de Android** y añade una **cuenta de Google**: **Cuentas y copia de seguridad → Administrar cuentas → Añadir cuenta → Google**.
+2. Si no añadiste ya una **cuenta de Google** (paso 8, opción B), pulsa **Abrir Ajustes de Android** y añádela: **Cuentas y copia de seguridad → Administrar cuentas → Añadir cuenta → Google**.
 3. Abre **Play Store**: en Ajustes ve a **Aplicaciones → Google Play Store → Abrir**. Busca e instala **WhatsApp**, ábrelo y regístralo con el número de la SIM (llegará un SMS con un código).
 4. En Play Store, toca tu foto de perfil → **Ajustes → Preferencias de red → Actualizar aplicaciones automáticamente → Usando cualquier red**.
 5. **Que WhatsApp no se duerma** (imprescindible): si no, las videollamadas pueden no sonar. **Samsung:** **Ajustes → Batería → Límites de uso en segundo plano → Aplicaciones sin autoinactivación → +**, marca **WhatsApp** y pulsa **Añadir** (capturas en el [apartado 11](#11-ajuste-de-batería-recomendado)). **Otros móviles:** **Ajustes → Aplicaciones → WhatsApp → Batería → Sin restricciones**.
@@ -333,6 +422,8 @@ Prueba cada cosa antes de entregarlo:
 - [ ] **SOS** (avisa antes a la persona de confianza): mantén pulsado el botón rojo 2 segundos. Debe llamar y enviarle un SMS con la ubicación.
 - [ ] **Ubicación:** desde el móvil de un familiar, envía un SMS con la palabra **UBICACION**. Debe llegar la respuesta con un enlace de Google Maps.
 - [ ] **Volumen:** pulsa los botones de volumen; debe aparecer un panel grande.
+- [ ] **Volver a casa** (si se usa): lejos de casa, pulsa el botón marrón (debe salir la dirección y, si está activado, llegar el SMS) y luego la flecha; al llegar debe salir la foto del portal.
+- [ ] **Contactos de Google** (si se usan): crea un contacto con estrella en contacts.google.com y comprueba que aparece en **Llamar**.
 - [ ] **WhatsApp** (si se usa): haz una videollamada desde la foto y recibe otra. Comprueba que WhatsApp está en **Aplicaciones sin autoinactivación**.
 - [ ] **Reinicio:** apaga y enciende el móvil. Debe arrancar directamente en LlamaditApp.
 - [ ] **Bloqueo:** intenta salir con los botones de inicio y de aplicaciones recientes. No debe dejar.

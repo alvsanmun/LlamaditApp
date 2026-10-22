@@ -63,6 +63,79 @@
     <string name="remove_owner_dialog_text">Der Kioskmodus wird endgültig deaktiviert. Um ihn wieder zu aktivieren, braucht man einen Computer (adb) und muss vorher alle Konten vom Telefon entfernen (Google, WhatsApp…). Wenn du nur etwas installieren oder einrichten willst, nutze „Kioskmodus pausieren\".</string>
     <string name="remove_owner_confirm">Entfernen</string>
     <string name="cancel">Abbrechen</string>
+    <string name="settings_home_title">Startbildschirm</string>
+    <string name="settings_home_hint">Ändern Sie Reihenfolge und Größe der Tasten oder blenden Sie ungenutzte aus. Kleine und mittlere Tasten nehmen eine halbe Zeile ein, große die ganze Zeile. Die Uhr ist immer sichtbar: Langes Drücken darauf öffnet dieses Menü.</string>
+    <string name="settings_home_reset">Ursprüngliches Layout wiederherstellen</string>
+    <string name="settings_home_always_visible">Immer sichtbar</string>
+    <string name="home_item_clock">Uhr und Datum</string>
+    <string name="home_item_battery">Akku</string>
+    <string name="home_item_call">Anrufen</string>
+    <string name="home_item_whatsapp">WhatsApp-Videoanruf</string>
+    <string name="home_item_dialpad">Tastenfeld</string>
+    <string name="home_item_sos">SOS</string>
+    <string name="home_item_messages">Nachrichten</string>
+    <string name="home_item_missed">Verpasste Anrufe</string>
+    <string name="size_small">Klein</string>
+    <string name="size_medium">Mittel</string>
+    <string name="size_large">Groß</string>
+    <string name="settings_sos_icon_title">Bild der SOS-Taste</string>
+    <string name="settings_sos_icon_hint">Wählen Sie das, was die Person am besten erkennt. Egal welches Bild: Die Taste muss 2 Sekunden gedrückt werden.</string>
+    <string name="settings_wifi_title">WLAN</string>
+    <string name="settings_wifi_switch">WLAN verwenden</string>
+    <string name="settings_wifi_off_hint">Aus: Das Handy nutzt nur das Mobilfunknetz der SIM. Niemand kann es einschalten, außer hier.</string>
+    <string name="settings_wifi_on_hint">An: Das Handy verbindet sich mit den gespeicherten WLAN-Netzen. Netze wählen oder hinzufügen in den Android-Einstellungen.</string>
+    <string name="settings_wifi_choose">WLAN-Netz wählen</string>
+    <string name="settings_wifi_not_owner">Die App ist nicht Device Owner: WLAN wird in den Android-Einstellungen verwaltet.</string>
+
+    <string name="home_item_go_home">Nach Hause</string>
+    <string name="go_home_not_set">Die Betreuungsperson hat das Zuhause noch nicht markiert.</string>
+    <string name="settings_house_title">Nach Hause</string>
+    <string name="settings_house_hint">Aktivieren Sie die Taste „Nach Hause\" unter Startbildschirm und markieren Sie hier das Zuhause. Die Taste zeigt die Adresse groß an, um sie der Polizei oder Passanten zu zeigen, und einen Pfeil, der die Fußgängernavigation von Google Maps mit Sprachansage startet. Tippen Sie einmal auf „Route testen\" und bestätigen Sie die ersten Bildschirme von Google Maps, damit die Person sie nie sieht.</string>
+    <string name="settings_house_saved">Zuhause markiert: %1$s</string>
+    <string name="settings_house_none">Das Zuhause ist noch nicht markiert.</string>
+    <string name="settings_house_use_location">Meinen aktuellen Standort verwenden (ich bin dort)</string>
+    <string name="settings_house_searching">Suche…</string>
+    <string name="settings_house_no_location">Der Standort konnte nicht ermittelt werden. Gehen Sie nach draußen oder an ein Fenster und versuchen Sie es erneut.</string>
+    <string name="settings_house_no_address">Standort gespeichert, aber die Adresse wurde nicht gefunden: bitte von Hand eingeben.</string>
+    <string name="settings_house_address">Adresse</string>
+    <string name="settings_house_address_hint">Wird groß angezeigt. Stockwerk und Tür bei Bedarf ergänzen.</string>
+    <string name="settings_house_search">Diese Adresse auf der Karte suchen</string>
+    <string name="settings_house_not_found">Adresse nicht gefunden. Prüfen Sie sie oder verwenden Sie den aktuellen Standort.</string>
+    <string name="settings_house_test_route">Route testen</string>
+    <string name="settings_house_view_map">In Google Maps ansehen</string>
+
+    <string name="notification_go_home">Auf dem Heimweg</string>
+    <string name="go_home_sms">NACH HAUSE: Die Taste für den Heimweg wurde gedrückt. Standort: %1$s</string>
+    <string name="go_home_sms_no_location">NACH HAUSE: Die Taste für den Heimweg wurde gedrückt. Der Standort konnte nicht ermittelt werden.</string>
+    <string name="settings_house_alert">Beim Drücken der Taste per SMS benachrichtigen</string>
+    <string name="settings_house_alert_hint">Geht an den SOS-Kontakt, mit Standort und Akkustand. Wenn die Person der Route folgend in die Nähe des Zuhauses kommt, erscheint das Foto der Haustür mit einer Taste zurück zum Startbildschirm.</string>
+    <string name="settings_house_photo">Foto der Haustür</string>
+    <string name="settings_house_photo_failed">Das Foto konnte nicht gespeichert werden. Bitte erneut versuchen.</string>
+    <string name="settings_house_photo_camera">Foto der Haustür aufnehmen</string>
+    <string name="settings_house_photo_gallery">Foto aus der Galerie wählen</string>
+    <string name="settings_house_photo_remove">Foto entfernen</string>
+
+    <string name="settings_house_updates">Standort während der Route alle 10 Minuten senden</string>
+    <string name="settings_house_updates_hint">Ab dem Start der Route (grüner Pfeil) bis zur Ankunft zu Hause erhält der SOS-Kontakt alle 10 Minuten eine SMS mit dem Standort und eine letzte bei der Ankunft. Endet spätestens nach 2 Stunden von selbst.</string>
+    <string name="go_home_update">NACH HAUSE: unterwegs, %2$d m von zu Hause. Standort: %1$s</string>
+    <string name="go_home_update_no_location">NACH HAUSE: unterwegs. Der Standort konnte nicht ermittelt werden.</string>
+    <string name="go_home_arrived">NACH HAUSE: ist zu Hause angekommen.</string>
+    <string name="sms_cost_title">Diese Funktion sendet SMS</string>
+    <string name="sms_cost_text">Je nach Vertrag der Telefonleitung kann der SMS-Versand kostenpflichtig sein und die Rechnung erhöhen. Prüfen Sie vor dem Einschalten beim Anbieter, ob der Tarif SMS enthält.</string>
+    <string name="sms_cost_accept">Einschalten</string>
+    <string name="sms_cost_note">Sendet SMS: je nach Tarif der Leitung können Kosten entstehen.</string>
+
+    <string name="settings_google_title">Kontakte aus einem Google-Konto</string>
+    <string name="settings_google_hint">Außer mit der Kontakte-App lassen sich die Kontakte von jedem Handy oder Computer aus verwalten: Öffnen Sie contacts.google.com mit dem Google-Konto dieses Handys, legen Sie den Kontakt mit Name, Foto und Nummer an und markieren Sie ihn mit dem Stern (★). Er kommt in wenigen Minuten an (mobile Daten oder WLAN nötig). Haken Sie danach hier bei Bedarf „Haben WhatsApp\" an. Tipp: Verwenden Sie ein Konto nur für dieses Handy; mit Ihrem eigenen würden auch Ihre Favoriten erscheinen.</string>
+    <string name="settings_google_none">Auf dem Handy gibt es kein Google-Konto.</string>
+    <string name="settings_google_favorites">Favoriten (★): %1$d</string>
+    <string name="settings_google_autosync">Kontakte automatisch synchronisieren</string>
+    <string name="settings_google_master_off">Die automatische Synchronisierung des Handys ist aus: Änderungen kommen nicht von selbst an.</string>
+    <string name="settings_google_master_on">Automatische Synchronisierung einschalten</string>
+    <string name="settings_google_sync_now">Jetzt synchronisieren</string>
+    <string name="settings_google_syncing">Wird synchronisiert… Änderungen erscheinen in wenigen Minuten.</string>
+    <string name="settings_google_add">Google-Konto hinzufügen</string>
+
     <string-array name="default_keywords">
         <item>STANDORT</item>
         <item>WO BIST DU</item>

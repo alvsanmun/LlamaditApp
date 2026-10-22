@@ -65,6 +65,13 @@ import com.launcherfacil.app.sos.SosService
 import com.launcherfacil.app.ui.ContactsScreen
 import com.launcherfacil.app.ui.DialpadScreen
 import com.launcherfacil.app.ui.HomeScreen
+import com.launcherfacil.app.contacts.GOOGLE_ACCOUNT_TYPE
+import com.launcherfacil.app.ui.GoHomeScreen
+import com.launcherfacil.app.gohome.housePinIntent
+import com.launcherfacil.app.gohome.GoHomeService
+import com.launcherfacil.app.ui.ArrivedScreen
+import com.launcherfacil.app.gohome.startWalkingRoute
+import com.launcherfacil.app.ui.hideNavigationBar
 import com.launcherfacil.app.ui.MessagesScreen
 import com.launcherfacil.app.ui.MissedCallsScreen
 import com.launcherfacil.app.ui.PinScreen
@@ -75,6 +82,11 @@ import com.launcherfacil.app.volume.WithVolumeOverlay
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+    companion object {
+        /** La ruta a casa ha llegado: enseñar la foto del portal (lo envía GoHomeService). */
+        const val ACTION_ARRIVED_HOME = "com.launcherfacil.app.ARRIVED_HOME"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         // Fondo oscuro: iconos claros en las barras del sistema.
         enableEdgeToEdge(
@@ -87,10 +99,10 @@ class MainActivity : ComponentActivity() {
         Kiosk.configure(this)
         // Solo para pruebas: `am start ... --ei debug_interval_seconds 15` acorta el
         // intervalo del SOS (el servicio lo ignora si la app no es depurable).
-        val debugSosInterval = intent.getIntExtra(SosService.EXTRA_DEBUG_INTERVAL_SECONDS, 0)
+        debugSosInterval = intent.getIntExtra(SosService.EXTRA_DEBUG_INTERVAL_SECONDS, 0)
         handleDial(intent)
-        VolumeController.applySoundPolicy(this)
-        setContent { WithVolumeOverlay { LauncherApp(debugSosInterval, homeRequests, dialRequest) } }
+        if (intent.action == ACTION_ARRIVED_HOME) arrivedRequests++
+        setContent { WithVolumeOverlay { LauncherApp(debugSosInterval, homeRequests, dialRequest, arrivedRequests) } }
     }
 
     // Botones de volumen: solo el volumen del teléfono, con el panel grande.
@@ -100,10 +112,26 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         Kiosk.enterLockTask(this)
+        hideNavigationBar()
+        // Vídeos y música a cero también al volver de la ruta de Google Maps (que sube
+        // el volumen de multimedia para que se oiga la voz).
+        VolumeController.applySoundPolicy(this)
+    }
+
+    // Sin la barra de navegación de abajo (solo quedaba Atrás, que confundía).
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) hideNavigationBar()
     }
 
     // Pulsar Inicio (fuera del quiosco) con la app abierta: volver a la pantalla principal.
     private var homeRequests by mutableIntStateOf(0)
+
+    // Solo para pruebas: intervalo corto del SOS y de la ruta a casa, en segundos.
+    private var debugSosInterval by mutableIntStateOf(0)
+
+    // Ha llegado a casa siguiendo la ruta: pantalla con la foto del portal.
+    private var arrivedRequests by mutableIntStateOf(0)
 
     // Otra app (o el SOS sin contactos, con el 112) pide "marcar": abrir el teclado con
     // el número escrito. Se usa un objeto nuevo cada vez para que Compose lo note.
@@ -118,6 +146,11 @@ class MainActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         if (intent.hasCategory(Intent.CATEGORY_HOME)) homeRequests++
+        // Con la app ya abierta (Device Owner: no se puede cerrar para volver a abrirla).
+        if (intent.hasExtra(SosService.EXTRA_DEBUG_INTERVAL_SECONDS)) {
+            debugSosInterval = intent.getIntExtra(SosService.EXTRA_DEBUG_INTERVAL_SECONDS, 0)
+        }
+        if (intent.action == ACTION_ARRIVED_HOME) arrivedRequests++
         handleDial(intent)
         // Por si la app acaba de ser nombrada Device Owner estando ya abierta.
         Kiosk.enterLockTask(this)
@@ -126,7 +159,7 @@ class MainActivity : ComponentActivity() {
 
 private class DialRequest(val number: String)
 
-private enum class Screen { Home, Contacts, WhatsApp, Dialpad, Messages, MissedCalls, Pin, NewPin, Settings }
+private enum class Screen { Home, Contacts, WhatsApp, Dialpad, Messages, MissedCalls, GoHome, Arrived, Pin, NewPin, Settings }
 
 private val PERMISSIONS = APP_PERMISSIONS.toTypedArray()
 
@@ -134,7 +167,8 @@ private val PERMISSIONS = APP_PERMISSIONS.toTypedArray()
 private fun LauncherApp(
     debugSosInterval: Int = 0,
     homeRequests: Int = 0,
-    dialRequest: DialRequest? = null
+    dialRequest: DialRequest? = null,
+    arrivedRequests: Int = 0
 ) {
     val context = LocalContext.current
     fun granted(p: String) =
@@ -182,6 +216,7 @@ private fun LauncherApp(
     BackHandler(enabled = screen != Screen.Home) { screen = Screen.Home }
     LaunchedEffect(homeRequests) { screen = Screen.Home }
     LaunchedEffect(dialRequest) { if (dialRequest != null) screen = Screen.Dialpad }
+    LaunchedEffect(arrivedRequests) { if (arrivedRequests > 0) screen = Screen.Arrived }
 
     // Configuración del cuidador: se cierra al apagar la pantalla.
     val settings = remember { CaregiverSettings(context) }
@@ -212,10 +247,35 @@ private fun LauncherApp(
             onCaregiver = { screen = if (settings.hasPin) Screen.Pin else Screen.NewPin },
             onMessages = { screen = Screen.Messages },
             onMissedCalls = { screen = Screen.MissedCalls },
+            onGoHome = {
+                // Aviso al cuidador: quiere volver a casa (con su ubicación, por SMS).
+                if (settings.goHomeAlert) GoHomeService.alert(context)
+                screen = Screen.GoHome
+            },
             newSms = newSms,
-            newMissedCalls = newMissedCalls
+            newMissedCalls = newMissedCalls,
+            // Se leen al volver a esta pantalla: así se ven los cambios del cuidador.
+            layout = remember { settings.homeLayout },
+            sosIcon = remember { settings.sosIcon }
         )
+        Screen.Arrived -> ArrivedScreen(onHome = { screen = Screen.Home })
         Screen.Messages -> MessagesScreen(onHome = { screen = Screen.Home })
+        Screen.GoHome -> {
+            val house = remember { settings.housePosition }
+            GoHomeScreen(
+                address = remember { settings.houseAddress },
+                hasHouse = house != null,
+                onStartRoute = {
+                    if (house == null || !activity.startWalkingRoute(house.first, house.second)) {
+                        openFailed(context)
+                    } else {
+                        // Maps no avisa al terminar: la app mira el GPS para saber cuándo llega.
+                        GoHomeService.watch(context, house.first, house.second, debugSosInterval)
+                    }
+                },
+                onHome = { screen = Screen.Home }
+            )
+        }
         Screen.MissedCalls -> MissedCallsScreen(
             onCallBack = ::call,
             onHome = { screen = Screen.Home }
@@ -257,6 +317,19 @@ private fun LauncherApp(
             onOpenContacts = {
                 val contacts = Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_CONTACTS)
                 if (!Kiosk.pauseAndOpen(activity, contacts)) openFailed(context)
+            },
+            onOpenHousePin = { lat, lng ->
+                if (!Kiosk.pauseAndOpen(activity, housePinIntent(lat, lng))) openFailed(context)
+            },
+            onTestRoute = { lat, lng -> if (!activity.startWalkingRoute(lat, lng)) openFailed(context) },
+            onOpenWifiSettings = {
+                if (!Kiosk.pauseAndOpen(activity, Intent(Settings.ACTION_WIFI_SETTINGS))) openFailed(context)
+            },
+            onAddGoogleAccount = {
+                // Contactos desde Google: se añade la cuenta en los Ajustes (fuera del quiosco).
+                val intent = Intent(Settings.ACTION_ADD_ACCOUNT)
+                    .putExtra(Settings.EXTRA_ACCOUNT_TYPES, arrayOf(GOOGLE_ACCOUNT_TYPE))
+                if (!Kiosk.pauseAndOpen(activity, intent)) openFailed(context)
             },
             onOpenAndroidSettings = {
                 if (!Kiosk.pauseAndOpen(activity, Intent(Settings.ACTION_SETTINGS))) openFailed(context)

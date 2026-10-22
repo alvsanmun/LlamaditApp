@@ -52,6 +52,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.launcherfacil.app.R
+import com.launcherfacil.app.config.ButtonSize
+import com.launcherfacil.app.config.DEFAULT_HOME_LAYOUT
+import com.launcherfacil.app.config.HomeEntry
+import com.launcherfacil.app.config.HomeItem
+import com.launcherfacil.app.config.SosIcon
+import com.launcherfacil.app.config.toRows
 
 @Composable
 fun HomeScreen(
@@ -62,60 +68,64 @@ fun HomeScreen(
     onCaregiver: () -> Unit = {},
     onMessages: () -> Unit = {},
     onMissedCalls: () -> Unit = {},
+    onGoHome: () -> Unit = {},
     newSms: Int = 0,
-    newMissedCalls: Int = 0
+    newMissedCalls: Int = 0,
+    layout: List<HomeEntry> = DEFAULT_HOME_LAYOUT,
+    sosIcon: SosIcon = SosIcon.TEXT
 ) {
+    val rows = layout.toRows()
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Fondo)
             .safeDrawingPadding()
             .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Spacer(Modifier.height(8.dp))
-        // Acceso oculto del cuidador: mantener pulsado el reloj 5 segundos.
-        BigClock(Modifier.holdFor(CAREGIVER_HOLD_MS, onCaregiver))
-        Spacer(Modifier.height(16.dp))
-        BigBattery()
-        Spacer(Modifier.height(24.dp))
-
-        Column(
-            modifier = Modifier.fillMaxWidth().weight(1f),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth().weight(1f),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                BigTile(VerdeLlamar, onCall, Modifier.weight(1f).fillMaxHeight()) {
-                    TileIcon(R.drawable.ic_call)
-                }
-                BigTile(VerdeWhatsApp, onWhatsApp, Modifier.weight(1f).fillMaxHeight()) {
-                    TileIcon(R.drawable.ic_whatsapp_video)
+        rows.forEach { row ->
+            when (row.entries.first().item) {
+                // Acceso oculto del cuidador: mantener pulsado el reloj 5 segundos. Por
+                // eso el reloj siempre se ve (el cuidador solo puede moverlo).
+                HomeItem.CLOCK -> BigClock(Modifier.holdFor(CAREGIVER_HOLD_MS, onCaregiver))
+                HomeItem.BATTERY -> BigBattery()
+                else -> Row(
+                    // Los botones medianos y grandes se reparten el alto libre; los
+                    // pequeños son bajos, para dejar más sitio a los demás.
+                    modifier = Modifier.fillMaxWidth()
+                        .then(if (row.stretches) Modifier.weight(1f) else Modifier.height(SMALL_ROW_HEIGHT)),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    row.entries.forEach { entry ->
+                        val modifier = Modifier.weight(1f).fillMaxHeight()
+                        val fraction = if (entry.size == ButtonSize.SMALL) 0.65f else 0.55f
+                        when (entry.item) {
+                            HomeItem.CALL -> BigTile(VerdeLlamar, onCall, modifier) {
+                                TileIcon(R.drawable.ic_call, fraction)
+                            }
+                            HomeItem.WHATSAPP -> BigTile(VerdeWhatsApp, onWhatsApp, modifier) {
+                                TileIcon(R.drawable.ic_whatsapp_video, fraction)
+                            }
+                            HomeItem.DIALPAD -> BigTile(AzulTeclado, onDialpad, modifier) {
+                                TileIcon(R.drawable.ic_dialpad, fraction)
+                            }
+                            HomeItem.SOS -> SosButton(onSos, modifier, sosIcon)
+                            HomeItem.MESSAGES ->
+                                SmallTileWithBadge(NaranjaMensajes, R.drawable.ic_sms, newSms, onMessages, modifier, fraction)
+                            HomeItem.MISSED_CALLS ->
+                                SmallTileWithBadge(MoradoPerdidas, R.drawable.ic_phone_missed, newMissedCalls, onMissedCalls, modifier, fraction)
+                            HomeItem.GO_HOME -> BigTile(MarronCasa, onGoHome, modifier) {
+                                TileIcon(R.drawable.ic_go_home, fraction)
+                            }
+                            else -> Unit
+                        }
+                    }
                 }
             }
-            Row(
-                modifier = Modifier.fillMaxWidth().weight(1f),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                BigTile(AzulTeclado, onDialpad, Modifier.weight(1f).fillMaxHeight()) {
-                    TileIcon(R.drawable.ic_dialpad)
-                }
-                SosButton(onSos, Modifier.weight(1f).fillMaxHeight())
-            }
         }
-
-        // Fila de botones más pequeños: mensajes y llamadas perdidas, con el número
-        // de nuevos en la esquina. Bajos, para dejar más sitio a los cuatro grandes.
-        Spacer(Modifier.height(12.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth().height(SMALL_ROW_HEIGHT),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            SmallTileWithBadge(NaranjaMensajes, R.drawable.ic_sms, newSms, onMessages, Modifier.weight(1f))
-            SmallTileWithBadge(MoradoPerdidas, R.drawable.ic_phone_missed, newMissedCalls, onMissedCalls, Modifier.weight(1f))
-        }
+        // Sin botones que se estiren, lo que sobra queda abajo.
+        if (rows.none { it.stretches }) Spacer(Modifier.weight(1f))
     }
 }
 
@@ -128,10 +138,11 @@ private fun SmallTileWithBadge(
     icon: Int,
     count: Int,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    fraction: Float = 0.65f
 ) {
     Box(modifier.fillMaxHeight()) {
-        BigTile(color, onClick, Modifier.fillMaxSize()) { TileIcon(icon, 0.65f) }
+        BigTile(color, onClick, Modifier.fillMaxSize()) { TileIcon(icon, fraction) }
         if (count > 0) {
             Box(
                 modifier = Modifier

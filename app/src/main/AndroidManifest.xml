@@ -7,6 +7,10 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <!-- Escribir la fila de videollamada de WhatsApp en los favoritos marcados. -->
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <!-- Contactos desde una cuenta de Google: ver las cuentas y su sincronización. -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <!-- En Android reciente, enviar SMS consulta datos de la SIM y exige este permiso. -->
@@ -140,6 +144,22 @@
 
         <service
             android:name=".locate.LocateService"
+            android:exported="false"
+            android:foregroundServiceType="location" />
+
+        <!-- Para que la cámara guarde la foto del portal (configuración del cuidador). -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.files"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <service
+            android:name=".gohome.GoHomeService"
             android:exported="false"
             android:foregroundServiceType="location" />
 

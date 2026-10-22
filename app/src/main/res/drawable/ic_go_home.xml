@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- LlamaditApp (AGPLv3): dibujo propio. Chincheta de mapa con una casa: "volver a casa". -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M24,2C15.2,2 8,9.2 8,18c0,11.8 16,28 16,28s16,-16.2 16,-28C40,9.2 32.8,2 24,2z M24,9L14.5,17.5H17.5V26.5H22V21.5H26V26.5H30.5V17.5H33.5Z" />
+</vector>

@@ -63,6 +63,79 @@
     <string name="remove_owner_dialog_text">Es desactiva el mode quiosc per sempre. Per tornar-lo a activar cal un ordinador (adb) i treure abans tots els comptes del telèfon (Google, WhatsApp...). Si només vols instal·lar o configurar alguna cosa, fes servir \"Posar en pausa el mode quiosc\".</string>
     <string name="remove_owner_confirm">Treure</string>
     <string name="cancel">Cancel·lar</string>
+    <string name="settings_home_title">Pantalla principal</string>
+    <string name="settings_home_hint">Canvia l\'ordre i la mida dels botons, o amaga els que no es facin servir. Els botons petits i mitjans ocupen mitja fila; els grans, la fila sencera. El rellotge sempre es veu: mantenir-lo premut és l\'entrada a aquest tauler.</string>
+    <string name="settings_home_reset">Tornar al disseny original</string>
+    <string name="settings_home_always_visible">Sempre visible</string>
+    <string name="home_item_clock">Rellotge i data</string>
+    <string name="home_item_battery">Bateria</string>
+    <string name="home_item_call">Trucar</string>
+    <string name="home_item_whatsapp">Videotrucada de WhatsApp</string>
+    <string name="home_item_dialpad">Teclat</string>
+    <string name="home_item_sos">SOS</string>
+    <string name="home_item_messages">Missatges</string>
+    <string name="home_item_missed">Trucades perdudes</string>
+    <string name="size_small">Petit</string>
+    <string name="size_medium">Mitjà</string>
+    <string name="size_large">Gran</string>
+    <string name="settings_sos_icon_title">Dibuix del botó SOS</string>
+    <string name="settings_sos_icon_hint">Tria el que la persona reconegui millor. Sigui quin sigui el dibuix, s\'ha de mantenir premut 2 segons.</string>
+    <string name="settings_wifi_title">Wi-Fi</string>
+    <string name="settings_wifi_switch">Fer servir el Wi-Fi</string>
+    <string name="settings_wifi_off_hint">Apagat: el mòbil només fa servir la xarxa mòbil de la SIM. Ningú no el pot encendre si no és des d\'aquí.</string>
+    <string name="settings_wifi_on_hint">Encès: el mòbil es connecta a les xarxes Wi-Fi desades. Tria o afegeix xarxes a la Configuració d\'Android.</string>
+    <string name="settings_wifi_choose">Triar una xarxa Wi-Fi</string>
+    <string name="settings_wifi_not_owner">L\'app no és Device Owner: el Wi-Fi es gestiona des de la Configuració d\'Android.</string>
+
+    <string name="home_item_go_home">Tornar a casa</string>
+    <string name="go_home_not_set">El cuidador encara no ha marcat la casa.</string>
+    <string name="settings_house_title">Tornar a casa</string>
+    <string name="settings_house_hint">Activa el botó \"Tornar a casa\" a Pantalla principal i marca aquí la casa. El botó mostra l\'adreça en gran, per ensenyar-la a la policia o a algú del carrer, i una fletxa que comença la ruta a peu de Google Maps amb veu. Prem una vegada \"Provar la ruta\" i accepta les primeres pantalles de Google Maps, perquè la persona no les vegi.</string>
+    <string name="settings_house_saved">Casa marcada: %1$s</string>
+    <string name="settings_house_none">La casa encara no està marcada.</string>
+    <string name="settings_house_use_location">Fer servir la meva ubicació actual (sóc a la casa)</string>
+    <string name="settings_house_searching">Cercant…</string>
+    <string name="settings_house_no_location">No s\'ha pogut obtenir la ubicació. Surt a fora o acosta\'t a una finestra i torna-ho a provar.</string>
+    <string name="settings_house_no_address">Ubicació desada, però no s\'ha trobat l\'adreça: escriu-la a mà.</string>
+    <string name="settings_house_address">Adreça</string>
+    <string name="settings_house_address_hint">Es mostra en lletra grossa. Afegeix-hi el pis i la porta si cal.</string>
+    <string name="settings_house_search">Cercar aquesta adreça al mapa</string>
+    <string name="settings_house_not_found">No s\'ha trobat aquesta adreça. Revisa-la o fes servir la ubicació actual.</string>
+    <string name="settings_house_test_route">Provar la ruta</string>
+    <string name="settings_house_view_map">Veure a Google Maps</string>
+
+    <string name="notification_go_home">Tornant a casa</string>
+    <string name="go_home_sms">TORNAR A CASA: s\'ha premut el botó per tornar a casa. Ubicació: %1$s</string>
+    <string name="go_home_sms_no_location">TORNAR A CASA: s\'ha premut el botó per tornar a casa. No s\'ha pogut obtenir la ubicació.</string>
+    <string name="settings_house_alert">Avisar per SMS en prémer el botó</string>
+    <string name="settings_house_alert_hint">S\'envia al contacte del SOS, amb la ubicació i la bateria. Quan la persona arriba a prop de casa seguint la ruta, es mostra la foto del portal amb un botó per tornar a la pantalla principal.</string>
+    <string name="settings_house_photo">Foto del portal</string>
+    <string name="settings_house_photo_failed">No s\'ha pogut desar la foto. Torna-ho a provar.</string>
+    <string name="settings_house_photo_camera">Fer una foto del portal</string>
+    <string name="settings_house_photo_gallery">Triar una foto de la galeria</string>
+    <string name="settings_house_photo_remove">Treure la foto</string>
+
+    <string name="settings_house_updates">Enviar la ubicació cada 10 minuts durant la ruta</string>
+    <string name="settings_house_updates_hint">Des que la persona comença la ruta (fletxa verda) fins que arriba a casa, el contacte del SOS rep un SMS amb la ubicació cada 10 minuts, i un últim en arribar. S\'atura sol, com a màxim, a les 2 hores.</string>
+    <string name="go_home_update">TORNAR A CASA: de camí, a %2$d m de casa. Ubicació: %1$s</string>
+    <string name="go_home_update_no_location">TORNAR A CASA: de camí. No s\'ha pogut obtenir la ubicació.</string>
+    <string name="go_home_arrived">TORNAR A CASA: ha arribat a casa.</string>
+    <string name="sms_cost_title">Aquesta funció envia SMS</string>
+    <string name="sms_cost_text">Segons el contracte de la línia telefònica, l\'enviament d\'SMS es podria cobrar i augmentar la factura. Comprova amb l\'operador que la tarifa inclou SMS abans d\'activar-la.</string>
+    <string name="sms_cost_accept">Activar</string>
+    <string name="sms_cost_note">Envia SMS: segons la tarifa de la línia, es podrien cobrar.</string>
+
+    <string name="settings_google_title">Contactes des d\'un compte de Google</string>
+    <string name="settings_google_hint">A més de amb l\'app Contactes, els contactes es poden gestionar des de qualsevol mòbil o ordinador: entra a contacts.google.com amb el compte de Google d\'aquest mòbil, crea el contacte amb nom, foto i telèfon, i marca\'l amb l\'estrella (★). Arriba en uns minuts (necessita dades mòbils o Wi-Fi). Després marca aquí \"Tenen WhatsApp\" si cal. Consell: fes servir un compte només per a aquest mòbil; amb el teu, també sortirien els teus contactes preferits.</string>
+    <string name="settings_google_none">No hi ha cap compte de Google al mòbil.</string>
+    <string name="settings_google_favorites">Preferits (★): %1$d</string>
+    <string name="settings_google_autosync">Sincronitzar els contactes automàticament</string>
+    <string name="settings_google_master_off">La sincronització automàtica del mòbil està desactivada: els canvis no arribaran sols.</string>
+    <string name="settings_google_master_on">Activar la sincronització automàtica</string>
+    <string name="settings_google_sync_now">Sincronitzar ara</string>
+    <string name="settings_google_syncing">Sincronitzant… els canvis apareixen en uns minuts.</string>
+    <string name="settings_google_add">Afegir un compte de Google</string>
+
     <string-array name="default_keywords">
         <item>UBICACIO</item>
         <item>ON ETS</item>

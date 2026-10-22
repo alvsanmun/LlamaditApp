@@ -48,6 +48,7 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.darkColorScheme
@@ -74,6 +75,7 @@ import com.launcherfacil.app.contacts.contactsWithWhatsApp
 import com.launcherfacil.app.contacts.loadFavoriteContacts
 import com.launcherfacil.app.contacts.setHasWhatsApp
 import com.launcherfacil.app.inbox.rememberContentVersion
+import com.launcherfacil.app.kiosk.Kiosk
 import kotlinx.coroutines.launch
 
 /** Configuración del cuidador. Aquí sí hay texto: no la usa la persona. */
@@ -83,6 +85,10 @@ fun SettingsScreen(
     onChangePin: () -> Unit,
     onOpenContacts: () -> Unit,
     onOpenAndroidSettings: () -> Unit,
+    onAddGoogleAccount: () -> Unit,
+    onOpenWifiSettings: () -> Unit,
+    onOpenHousePin: (Double, Double) -> Unit,
+    onTestRoute: (Double, Double) -> Unit,
     whatsAppAccess: Boolean,
     onOpenNotificationAccess: () -> Unit,
     kioskPaused: Boolean,
@@ -110,6 +116,9 @@ fun SettingsScreen(
     var sosId by remember { mutableStateOf(settings.sosContactId) }
     var locateIds by remember { mutableStateOf(settings.locateContactIds) }
     var keywords by remember { mutableStateOf(settings.keywords.joinToString(", ")) }
+    var homeLayout by remember { mutableStateOf(settings.homeLayout) }
+    var sosIcon by remember { mutableStateOf(settings.sosIcon) }
+    var wifiEnabled by remember { mutableStateOf(settings.wifiEnabled) }
     var confirmDisable by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     var whatsAppIds by remember { mutableStateOf(emptySet<Long>()) }
@@ -128,6 +137,25 @@ fun SettingsScreen(
                 modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
+                Section(stringResource(R.string.settings_home_title))
+                Hint(stringResource(R.string.settings_home_hint))
+                HomeLayoutEditor(homeLayout, sosIcon) {
+                    homeLayout = it
+                    settings.homeLayout = it
+                    Kiosk.applyMaps(context)
+                }
+
+                Section(stringResource(R.string.settings_house_title))
+                Hint(stringResource(R.string.settings_house_hint))
+                HouseEditor(onOpenHousePin, onTestRoute)
+
+                Section(stringResource(R.string.settings_sos_icon_title))
+                Hint(stringResource(R.string.settings_sos_icon_hint))
+                SosIconPicker(sosIcon) {
+                    sosIcon = it
+                    settings.sosIcon = it
+                }
+
                 Section(stringResource(R.string.settings_order_title))
                 Hint(stringResource(R.string.settings_order_hint))
                 favorites.forEachIndexed { index, contact ->
@@ -141,6 +169,10 @@ fun SettingsScreen(
                     )
                 }
 
+                Section(stringResource(R.string.settings_google_title))
+                Hint(stringResource(R.string.settings_google_hint))
+                GoogleAccountsSection(onAddGoogleAccount)
+
                 Section(stringResource(R.string.settings_sos_title))
                 if (favorites.isEmpty()) Hint(stringResource(R.string.settings_no_favorites))
                 // Si no se ha elegido, se usa el primer favorito.
@@ -153,6 +185,8 @@ fun SettingsScreen(
                         RadioButton(selected = contact == effectiveSos, onClick = null)
                     }
                 }
+                // El SOS envía la ubicación por SMS (y la respuesta a la ubicación, también).
+                SmsCostNote()
 
                 Section(stringResource(R.string.settings_locate_title))
                 favorites.forEach { contact ->
@@ -166,6 +200,7 @@ fun SettingsScreen(
                         Checkbox(checked = checked, onCheckedChange = null)
                     }
                 }
+                SmsCostNote()
 
                 Section(stringResource(R.string.settings_whatsapp_title))
                 Hint(stringResource(R.string.settings_whatsapp_hint))
@@ -202,6 +237,23 @@ fun SettingsScreen(
 
                 Section(stringResource(R.string.settings_security_title))
                 ActionButton(stringResource(R.string.settings_change_pin), onChangePin)
+
+                Section(stringResource(R.string.settings_wifi_title))
+                if (isDeviceOwner) {
+                    SwitchRow(stringResource(R.string.settings_wifi_switch), wifiEnabled) {
+                        wifiEnabled = it
+                        settings.wifiEnabled = it
+                        Kiosk.applyWifi(context)
+                    }
+                    Hint(
+                        if (wifiEnabled) stringResource(R.string.settings_wifi_on_hint)
+                        else stringResource(R.string.settings_wifi_off_hint)
+                    )
+                    if (wifiEnabled) ActionButton(stringResource(R.string.settings_wifi_choose), onOpenWifiSettings)
+                } else {
+                    Hint(stringResource(R.string.settings_wifi_not_owner))
+                    ActionButton(stringResource(R.string.settings_wifi_choose), onOpenWifiSettings)
+                }
 
                 Section(stringResource(R.string.settings_other_apps_title))
                 Hint(
@@ -291,6 +343,17 @@ private fun OptionRow(
 }
 
 @Composable
+internal fun SwitchRow(title: String, checked: Boolean, onChange: (Boolean) -> Unit) {
+    Row(
+        modifier = Modifier.fillMaxWidth().clickable { onChange(!checked) }.padding(vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(title, color = TextoClaro, fontSize = 18.sp, modifier = Modifier.weight(1f))
+        Switch(checked = checked, onCheckedChange = null)
+    }
+}
+
+@Composable
 private fun OrderRow(
     title: String,
     subtitle: String,
@@ -314,7 +377,7 @@ private fun OrderRow(
 }
 
 @Composable
-private fun MoveButton(@DrawableRes icon: Int, enabled: Boolean, onClick: () -> Unit) {
+internal fun MoveButton(@DrawableRes icon: Int, enabled: Boolean, onClick: () -> Unit) {
     FilledIconButton(
         onClick = onClick,
         enabled = enabled,
@@ -329,7 +392,7 @@ private fun MoveButton(@DrawableRes icon: Int, enabled: Boolean, onClick: () -> 
 }
 
 @Composable
-private fun ActionButton(text: String, onClick: () -> Unit, color: Color = GrisBoton) {
+internal fun ActionButton(text: String, onClick: () -> Unit, color: Color = GrisBoton) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(

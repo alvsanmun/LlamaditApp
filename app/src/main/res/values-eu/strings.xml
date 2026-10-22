@@ -63,6 +63,79 @@
     <string name="remove_owner_dialog_text">Kiosko modua betiko desaktibatuko da. Berriro aktibatzeko ordenagailu bat (adb) behar da, eta lehenago telefonoko kontu guztiak kendu (Google, WhatsApp...). Zerbait instalatu edo konfiguratu nahi baduzu soilik, erabili \"Pausatu kiosko modua\".</string>
     <string name="remove_owner_confirm">Kendu</string>
     <string name="cancel">Utzi</string>
+    <string name="settings_home_title">Pantaila nagusia</string>
+    <string name="settings_home_hint">Aldatu botoien ordena eta tamaina, edo ezkutatu erabiltzen ez direnak. Botoi txikiek eta ertainek errenkada erdia hartzen dute; handiek, errenkada osoa. Erlojua beti ikusten da: sakatuta edukitzea da panel honetarako sarrera.</string>
+    <string name="settings_home_reset">Itzuli jatorrizko diseinura</string>
+    <string name="settings_home_always_visible">Beti ikusgai</string>
+    <string name="home_item_clock">Erlojua eta data</string>
+    <string name="home_item_battery">Bateria</string>
+    <string name="home_item_call">Deitu</string>
+    <string name="home_item_whatsapp">WhatsApp bideo-deia</string>
+    <string name="home_item_dialpad">Teklatua</string>
+    <string name="home_item_sos">SOS</string>
+    <string name="home_item_messages">Mezuak</string>
+    <string name="home_item_missed">Dei galduak</string>
+    <string name="size_small">Txikia</string>
+    <string name="size_medium">Ertaina</string>
+    <string name="size_large">Handia</string>
+    <string name="settings_sos_icon_title">SOS botoiaren marrazkia</string>
+    <string name="settings_sos_icon_hint">Aukeratu pertsonak hobekien ezagutzen duena. Marrazkia edozein dela ere, 2 segundoz sakatuta eduki behar da.</string>
+    <string name="settings_wifi_title">Wifia</string>
+    <string name="settings_wifi_switch">Erabili wifia</string>
+    <string name="settings_wifi_off_hint">Itzalita: mugikorrak SIMaren sare mugikorra soilik erabiltzen du. Inork ezin du piztu hemendik ez bada.</string>
+    <string name="settings_wifi_on_hint">Piztuta: mugikorra gordetako wifi-sareetara konektatzen da. Aukeratu edo gehitu sareak Androiden ezarpenetan.</string>
+    <string name="settings_wifi_choose">Aukeratu wifi-sare bat</string>
+    <string name="settings_wifi_not_owner">Aplikazioa ez da Device Owner: wifia Androiden ezarpenetatik kudeatzen da.</string>
+
+    <string name="home_item_go_home">Etxera itzuli</string>
+    <string name="go_home_not_set">Zaintzaileak oraindik ez du etxea markatu.</string>
+    <string name="settings_house_title">Etxera itzuli</string>
+    <string name="settings_house_hint">Aktibatu \"Etxera itzuli\" botoia Pantaila nagusian eta markatu etxea hemen. Botoiak helbidea letra handiz erakusten du, poliziari edo kaleko norbaiti erakusteko, eta Google Maps-en oinezko ibilbidea ahotsarekin hasten duen gezi bat. Sakatu behin \"Probatu ibilbidea\" eta onartu Google Maps-en lehen pantailak, pertsonak ikus ez ditzan.</string>
+    <string name="settings_house_saved">Etxea markatuta: %1$s</string>
+    <string name="settings_house_none">Etxea ez dago oraindik markatuta.</string>
+    <string name="settings_house_use_location">Erabili nire uneko kokapena (etxean nago)</string>
+    <string name="settings_house_searching">Bilatzen…</string>
+    <string name="settings_house_no_location">Ezin izan da kokapena lortu. Irten kanpora edo hurbildu leiho batera eta saiatu berriro.</string>
+    <string name="settings_house_no_address">Kokapena gorde da, baina ez da helbidea aurkitu: idatzi eskuz.</string>
+    <string name="settings_house_address">Helbidea</string>
+    <string name="settings_house_address_hint">Letra handiz erakusten da. Gehitu solairua eta atea behar bada.</string>
+    <string name="settings_house_search">Bilatu helbide hau mapan</string>
+    <string name="settings_house_not_found">Ez da helbide hori aurkitu. Berrikusi edo erabili uneko kokapena.</string>
+    <string name="settings_house_test_route">Probatu ibilbidea</string>
+    <string name="settings_house_view_map">Ikusi Google Maps-en</string>
+
+    <string name="notification_go_home">Etxera itzultzen</string>
+    <string name="go_home_sms">ETXERA ITZULI: etxera itzultzeko botoia sakatu da. Kokapena: %1$s</string>
+    <string name="go_home_sms_no_location">ETXERA ITZULI: etxera itzultzeko botoia sakatu da. Ezin izan da kokapena lortu.</string>
+    <string name="settings_house_alert">Abisatu SMS bidez botoia sakatzean</string>
+    <string name="settings_house_alert_hint">SOS kontaktuari bidaltzen zaio, kokapenarekin eta bateriarekin. Pertsona ibilbidea jarraituz etxetik gertu iristen denean, atariaren argazkia erakusten da pantaila nagusira itzultzeko botoi batekin.</string>
+    <string name="settings_house_photo">Atariaren argazkia</string>
+    <string name="settings_house_photo_failed">Ezin izan da argazkia gorde. Saiatu berriro.</string>
+    <string name="settings_house_photo_camera">Atera atariaren argazki bat</string>
+    <string name="settings_house_photo_gallery">Aukeratu argazki bat galeriatik</string>
+    <string name="settings_house_photo_remove">Kendu argazkia</string>
+
+    <string name="settings_house_updates">Bidali kokapena 10 minuturo ibilbidean</string>
+    <string name="settings_house_updates_hint">Pertsonak ibilbidea hasten duenetik (gezi berdea) etxera iritsi arte, SOS kontaktuak SMS bat jasotzen du kokapenarekin 10 minuturo, eta azken bat iristean. Bere kabuz gelditzen da, gehienez, 2 orduren buruan.</string>
+    <string name="go_home_update">ETXERA ITZULI: bidean, etxetik %2$d m-ra. Kokapena: %1$s</string>
+    <string name="go_home_update_no_location">ETXERA ITZULI: bidean. Ezin izan da kokapena lortu.</string>
+    <string name="go_home_arrived">ETXERA ITZULI: etxera iritsi da.</string>
+    <string name="sms_cost_title">Funtzio honek SMSak bidaltzen ditu</string>
+    <string name="sms_cost_text">Telefono-linearen kontratuaren arabera, SMSak bidaltzea kobra liteke eta faktura igo. Egiaztatu operadorearekin tarifak SMSak barne hartzen dituela aktibatu aurretik.</string>
+    <string name="sms_cost_accept">Aktibatu</string>
+    <string name="sms_cost_note">SMSak bidaltzen ditu: linearen tarifaren arabera, kobra litezke.</string>
+
+    <string name="settings_google_title">Kontaktuak Google kontu batetik</string>
+    <string name="settings_google_hint">Kontaktuak aplikazioaz gain, kontaktuak edozein mugikor edo ordenagailutatik kudea daitezke: sartu contacts.google.com helbidean mugikor honen Google kontuarekin, sortu kontaktua izenarekin, argazkiarekin eta telefonoarekin, eta markatu izarrarekin (★). Minutu gutxitan iristen da (datu mugikorrak edo wifia behar ditu). Ondoren, markatu hemen \"WhatsApp dute\" behar bada. Aholkua: erabili mugikor honetarako soilik den kontu bat; zurearekin, zure kontaktu gogokoak ere agertuko lirateke.</string>
+    <string name="settings_google_none">Ez dago Google konturik mugikorrean.</string>
+    <string name="settings_google_favorites">Gogokoak (★): %1$d</string>
+    <string name="settings_google_autosync">Sinkronizatu kontaktuak automatikoki</string>
+    <string name="settings_google_master_off">Mugikorraren sinkronizazio automatikoa desaktibatuta dago: aldaketak ez dira bere kabuz iritsiko.</string>
+    <string name="settings_google_master_on">Aktibatu sinkronizazio automatikoa</string>
+    <string name="settings_google_sync_now">Sinkronizatu orain</string>
+    <string name="settings_google_syncing">Sinkronizatzen… aldaketak minutu gutxitan agertzen dira.</string>
+    <string name="settings_google_add">Gehitu Google kontu bat</string>
+
     <string-array name="default_keywords">
         <item>KOKAPENA</item>
         <item>NON ZAUDE</item>

@@ -63,6 +63,79 @@
     <string name="remove_owner_dialog_text">Le mode kiosque sera désactivé définitivement. Pour le réactiver, il faut un ordinateur (adb) et retirer d\'abord tous les comptes du téléphone (Google, WhatsApp…). Si vous voulez seulement installer ou configurer quelque chose, utilisez « Mettre le mode kiosque en pause ».</string>
     <string name="remove_owner_confirm">Retirer</string>
     <string name="cancel">Annuler</string>
+    <string name="settings_home_title">Écran d\'accueil</string>
+    <string name="settings_home_hint">Changez l\'ordre et la taille des boutons, ou masquez ceux qui ne servent pas. Les petits et moyens boutons occupent une demi-ligne ; les grands, la ligne entière. L\'horloge est toujours visible : un appui long dessus ouvre ce panneau.</string>
+    <string name="settings_home_reset">Revenir à la disposition d\'origine</string>
+    <string name="settings_home_always_visible">Toujours visible</string>
+    <string name="home_item_clock">Horloge et date</string>
+    <string name="home_item_battery">Batterie</string>
+    <string name="home_item_call">Appeler</string>
+    <string name="home_item_whatsapp">Appel vidéo WhatsApp</string>
+    <string name="home_item_dialpad">Clavier</string>
+    <string name="home_item_sos">SOS</string>
+    <string name="home_item_messages">Messages</string>
+    <string name="home_item_missed">Appels manqués</string>
+    <string name="size_small">Petit</string>
+    <string name="size_medium">Moyen</string>
+    <string name="size_large">Grand</string>
+    <string name="settings_sos_icon_title">Dessin du bouton SOS</string>
+    <string name="settings_sos_icon_hint">Choisissez celui que la personne reconnaît le mieux. Quel que soit le dessin, il faut appuyer 2 secondes.</string>
+    <string name="settings_wifi_title">Wi-Fi</string>
+    <string name="settings_wifi_switch">Utiliser le Wi-Fi</string>
+    <string name="settings_wifi_off_hint">Désactivé : le téléphone utilise seulement le réseau mobile de la SIM. Personne ne peut l\'activer, sauf d\'ici.</string>
+    <string name="settings_wifi_on_hint">Activé : le téléphone se connecte aux réseaux Wi-Fi enregistrés. Choisissez ou ajoutez des réseaux dans les Paramètres Android.</string>
+    <string name="settings_wifi_choose">Choisir un réseau Wi-Fi</string>
+    <string name="settings_wifi_not_owner">L\'application n\'est pas Device Owner : le Wi-Fi se gère dans les Paramètres Android.</string>
+
+    <string name="home_item_go_home">Rentrer à la maison</string>
+    <string name="go_home_not_set">L\'aidant n\'a pas encore indiqué la maison.</string>
+    <string name="settings_house_title">Rentrer à la maison</string>
+    <string name="settings_house_hint">Activez le bouton « Rentrer à la maison » dans Écran d\'accueil et indiquez la maison ici. Le bouton affiche l\'adresse en grand, pour la montrer à la police ou à un passant, et une flèche qui lance l\'itinéraire à pied de Google Maps avec la voix. Appuyez une fois sur « Essayer l\'itinéraire » et acceptez les premiers écrans de Google Maps, pour que la personne ne les voie pas.</string>
+    <string name="settings_house_saved">Maison indiquée : %1$s</string>
+    <string name="settings_house_none">La maison n\'est pas encore indiquée.</string>
+    <string name="settings_house_use_location">Utiliser ma position actuelle (je suis à la maison)</string>
+    <string name="settings_house_searching">Recherche…</string>
+    <string name="settings_house_no_location">Impossible d\'obtenir la position. Sortez ou approchez-vous d\'une fenêtre et réessayez.</string>
+    <string name="settings_house_no_address">Position enregistrée, mais l\'adresse est introuvable : écrivez-la à la main.</string>
+    <string name="settings_house_address">Adresse</string>
+    <string name="settings_house_address_hint">Elle s\'affiche en grand. Ajoutez l\'étage et la porte si besoin.</string>
+    <string name="settings_house_search">Chercher cette adresse sur la carte</string>
+    <string name="settings_house_not_found">Adresse introuvable. Vérifiez-la ou utilisez la position actuelle.</string>
+    <string name="settings_house_test_route">Essayer l\'itinéraire</string>
+    <string name="settings_house_view_map">Voir dans Google Maps</string>
+
+    <string name="notification_go_home">Retour à la maison</string>
+    <string name="go_home_sms">RENTRER À LA MAISON : le bouton pour rentrer a été appuyé. Position : %1$s</string>
+    <string name="go_home_sms_no_location">RENTRER À LA MAISON : le bouton pour rentrer a été appuyé. Impossible d\'obtenir la position.</string>
+    <string name="settings_house_alert">Prévenir par SMS lors de l\'appui sur le bouton</string>
+    <string name="settings_house_alert_hint">Envoyé au contact SOS, avec la position et la batterie. Quand la personne arrive près de la maison en suivant l\'itinéraire, la photo de la porte s\'affiche avec un bouton pour revenir à l\'écran d\'accueil.</string>
+    <string name="settings_house_photo">Photo de la porte d\'entrée</string>
+    <string name="settings_house_photo_failed">Impossible d\'enregistrer la photo. Réessayez.</string>
+    <string name="settings_house_photo_camera">Prendre une photo de la porte</string>
+    <string name="settings_house_photo_gallery">Choisir une photo dans la galerie</string>
+    <string name="settings_house_photo_remove">Supprimer la photo</string>
+
+    <string name="settings_house_updates">Envoyer la position toutes les 10 minutes pendant l\'itinéraire</string>
+    <string name="settings_house_updates_hint">Dès que la personne lance l\'itinéraire (flèche verte) et jusqu\'à son arrivée, le contact SOS reçoit un SMS avec la position toutes les 10 minutes, et un dernier à l\'arrivée. Cela s\'arrête tout seul au bout de 2 heures maximum.</string>
+    <string name="go_home_update">RENTRER À LA MAISON : en chemin, à %2$d m de la maison. Position : %1$s</string>
+    <string name="go_home_update_no_location">RENTRER À LA MAISON : en chemin. Impossible d\'obtenir la position.</string>
+    <string name="go_home_arrived">RENTRER À LA MAISON : est arrivé(e) à la maison.</string>
+    <string name="sms_cost_title">Cette fonction envoie des SMS</string>
+    <string name="sms_cost_text">Selon le contrat de la ligne téléphonique, l\'envoi de SMS peut être facturé et augmenter la facture. Vérifiez auprès de l\'opérateur que le forfait inclut les SMS avant de l\'activer.</string>
+    <string name="sms_cost_accept">Activer</string>
+    <string name="sms_cost_note">Envoie des SMS : selon le forfait de la ligne, ils peuvent être facturés.</string>
+
+    <string name="settings_google_title">Contacts depuis un compte Google</string>
+    <string name="settings_google_hint">En plus de l\'app Contacts, les contacts peuvent être gérés depuis n\'importe quel téléphone ou ordinateur : allez sur contacts.google.com avec le compte Google de ce téléphone, créez le contact avec nom, photo et numéro, et marquez-le d\'une étoile (★). Il arrive en quelques minutes (données mobiles ou Wi-Fi nécessaires). Cochez ensuite ici « Ont WhatsApp » si besoin. Conseil : utilisez un compte réservé à ce téléphone ; avec le vôtre, vos propres favoris apparaîtraient aussi.</string>
+    <string name="settings_google_none">Aucun compte Google sur le téléphone.</string>
+    <string name="settings_google_favorites">Favoris (★) : %1$d</string>
+    <string name="settings_google_autosync">Synchroniser les contacts automatiquement</string>
+    <string name="settings_google_master_off">La synchronisation automatique du téléphone est désactivée : les modifications n\'arriveront pas toutes seules.</string>
+    <string name="settings_google_master_on">Activer la synchronisation automatique</string>
+    <string name="settings_google_sync_now">Synchroniser maintenant</string>
+    <string name="settings_google_syncing">Synchronisation… les modifications apparaissent en quelques minutes.</string>
+    <string name="settings_google_add">Ajouter un compte Google</string>
+
     <string-array name="default_keywords">
         <item>POSITION</item>
         <item>OU ES TU</item>

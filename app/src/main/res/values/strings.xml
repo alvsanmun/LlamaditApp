@@ -86,6 +86,81 @@
     <string name="remove_owner_confirm">Remove</string>
     <string name="cancel">Cancel</string>
     <!-- Default keywords to request the location by SMS (without accents). -->
+    <!-- Pantalla principal configurable, dibujo del SOS y Wi-Fi (v1.3) -->
+    <string name="settings_home_title">Home screen</string>
+    <string name="settings_home_hint">Change the order and size of the buttons, or hide the ones that are not used. Small and medium buttons take half a row; large ones, the whole row. The clock is always shown: holding it down is the way into this panel.</string>
+    <string name="settings_home_reset">Restore the original layout</string>
+    <string name="settings_home_always_visible">Always shown</string>
+    <string name="home_item_clock">Clock and date</string>
+    <string name="home_item_battery">Battery</string>
+    <string name="home_item_call">Call</string>
+    <string name="home_item_whatsapp">WhatsApp video call</string>
+    <string name="home_item_dialpad">Keypad</string>
+    <string name="home_item_sos">SOS</string>
+    <string name="home_item_messages">Messages</string>
+    <string name="home_item_missed">Missed calls</string>
+    <string name="size_small">Small</string>
+    <string name="size_medium">Medium</string>
+    <string name="size_large">Large</string>
+    <string name="settings_sos_icon_title">Picture of the SOS button</string>
+    <string name="settings_sos_icon_hint">Choose the one the person recognizes best. Whatever the picture, it has to be held down for 2 seconds.</string>
+    <string name="settings_wifi_title">Wi-Fi</string>
+    <string name="settings_wifi_switch">Use Wi-Fi</string>
+    <string name="settings_wifi_off_hint">Off: the phone only uses the mobile network of the SIM. Nobody can turn it on except from here.</string>
+    <string name="settings_wifi_on_hint">On: the phone connects to the saved Wi-Fi networks. Choose or add networks in the Android settings.</string>
+    <string name="settings_wifi_choose">Choose a Wi-Fi network</string>
+    <string name="settings_wifi_not_owner">The app is not Device Owner: Wi-Fi is managed from the Android settings.</string>
+
+    <!-- Botón "Volver a casa" -->
+    <string name="home_item_go_home">Go home</string>
+    <string name="go_home_not_set">The caregiver has not marked the house yet.</string>
+    <string name="settings_house_title">Go home</string>
+    <string name="settings_house_hint">Turn on the \"Go home\" button in Home screen and mark the house here. The button shows the address in large letters, so the person can show it to the police or to someone in the street, and an arrow that starts the walking route of Google Maps with voice. Tap \"Try the route\" once and accept the first screens of Google Maps, so the person never sees them.</string>
+    <string name="settings_house_saved">House marked: %1$s</string>
+    <string name="settings_house_none">The house is not marked yet.</string>
+    <string name="settings_house_use_location">Use my current location (I am at the house)</string>
+    <string name="settings_house_searching">Searching…</string>
+    <string name="settings_house_no_location">The location could not be obtained. Go outside or near a window and try again.</string>
+    <string name="settings_house_no_address">Location saved, but the address could not be found: write it by hand.</string>
+    <string name="settings_house_address">Address</string>
+    <string name="settings_house_address_hint">It is shown in large letters. Add the floor and door if needed.</string>
+    <string name="settings_house_search">Find this address on the map</string>
+    <string name="settings_house_not_found">That address was not found. Check it or use the current location.</string>
+    <string name="settings_house_test_route">Try the route</string>
+    <string name="settings_house_view_map">See on Google Maps</string>
+
+    <string name="notification_go_home">Going home</string>
+    <string name="go_home_sms">GO HOME: the button to go home has been pressed. Location: %1$s</string>
+    <string name="go_home_sms_no_location">GO HOME: the button to go home has been pressed. The location could not be obtained.</string>
+    <string name="settings_house_alert">Warn by SMS when the button is pressed</string>
+    <string name="settings_house_alert_hint">It is sent to the SOS contact, with the location and the battery. When the person arrives near the house following the route, the photo of the door is shown with a button to go back to the home screen.</string>
+    <string name="settings_house_photo">Photo of the front door</string>
+    <string name="settings_house_photo_failed">The photo could not be saved. Try again.</string>
+    <string name="settings_house_photo_camera">Take a photo of the door</string>
+    <string name="settings_house_photo_gallery">Choose a photo from the gallery</string>
+    <string name="settings_house_photo_remove">Remove the photo</string>
+
+    <string name="settings_house_updates">Send the location every 10 minutes during the route</string>
+    <string name="settings_house_updates_hint">From the moment the person starts the route (green arrow) until arriving home, the SOS contact receives an SMS with the location every 10 minutes, and a last one on arrival. It stops by itself after 2 hours at most.</string>
+    <string name="go_home_update">GO HOME: on the way, %2$d m from home. Location: %1$s</string>
+    <string name="go_home_update_no_location">GO HOME: on the way. The location could not be obtained.</string>
+    <string name="go_home_arrived">GO HOME: has arrived home.</string>
+    <string name="sms_cost_title">This function sends SMS</string>
+    <string name="sms_cost_text">Depending on the contract of the phone line, sending SMS may be charged and increase the bill. Check with the operator that the plan includes SMS before turning it on.</string>
+    <string name="sms_cost_accept">Turn on</string>
+    <string name="sms_cost_note">Sends SMS: depending on the phone plan, they may be charged.</string>
+
+    <string name="settings_google_title">Contacts from a Google account</string>
+    <string name="settings_google_hint">Besides the Contacts app, contacts can be managed from any phone or computer: go to contacts.google.com with the Google account of this phone, create the contact with name, photo and phone number, and mark it with the star (★). It arrives in a few minutes (it needs mobile data or Wi-Fi). Then tick \"Have WhatsApp\" here if needed. Tip: use an account only for this phone; with yours, your own favorite contacts would also appear.</string>
+    <string name="settings_google_none">There is no Google account on the phone.</string>
+    <string name="settings_google_favorites">Favorites (★): %1$d</string>
+    <string name="settings_google_autosync">Sync the contacts automatically</string>
+    <string name="settings_google_master_off">Automatic sync of the phone is off: changes will not arrive by themselves.</string>
+    <string name="settings_google_master_on">Turn on automatic sync</string>
+    <string name="settings_google_sync_now">Sync now</string>
+    <string name="settings_google_syncing">Syncing… changes appear in a few minutes.</string>
+    <string name="settings_google_add">Add a Google account</string>
+
     <string-array name="default_keywords">
         <item>LOCATION</item>
         <item>WHERE ARE YOU</item>
