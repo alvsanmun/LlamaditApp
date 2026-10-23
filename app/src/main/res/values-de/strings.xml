@@ -148,6 +148,55 @@
     <string name="settings_wa_app_overlay_off">Die Zurück-Taste über WhatsApp braucht die Berechtigung „Über anderen Apps einblenden\". Ohne sie öffnet sich WhatsApp trotzdem, und man muss es mit dem Zurück-Pfeil verlassen.</string>
     <string name="settings_wa_app_overlay_allow">Zurück-Taste erlauben</string>
 
+    <string name="home_item_exercises">Übungen</string>
+    <string name="settings_exercises_title">Übungen</string>
+    <string name="settings_exercises_hint">Aktivieren Sie die Taste „Übungen\" unter Startbildschirm und wählen Sie, welche Übungen die Person machen kann. Jede beginnt auf der gewählten Stufe (1 = sehr leicht): Nach 5 gut gelösten Runden in Folge steigt sie eine Stufe, nach 3 mit Fehlern sinkt sie. Die Übungen ändern sich jedes Mal. „Wer ist das?\" nutzt die Fotos der Favoriten, das Puzzle auch. Die Übungen sind stumm außer „Wer ist das?\", das spricht: Die Medienlautstärke wird beim Spielen erhöht.</string>
+    <string name="settings_exercises_level">Stufe</string>
+    <string name="settings_exercises_stats">%1$d gespielt · %2$d gut gelöst</string>
+    <string name="exercise_math">Einfaches Rechnen</string>
+    <string name="exercise_pairs">Kartenpaare</string>
+    <string name="exercise_paint">Malen nach Zahlen</string>
+    <string name="exercise_words">Buchstabensalat</string>
+    <string name="exercise_faces">Wer ist das? (Familie)</string>
+    <string name="exercise_sequence">Reihenfolge wiederholen</string>
+    <string name="exercise_money">Geld zählen</string>
+    <string name="exercise_puzzle">Fotopuzzle</string>
+    <string name="exercise_faces_where">Wo ist %1$s?</string>
+    <string name="exercise_faces_none">Für „Wer ist das?\" brauchen mindestens 2 Favoriten ein Foto.</string>
+    <string name="exercises_none">Die Betreuungsperson hat noch keine Übung ausgewählt.</string>
+    <string-array name="exercise_words">
+        <item>SONNE</item>
+        <item>MOND</item>
+        <item>HAUS</item>
+        <item>KATZE</item>
+        <item>HUND</item>
+        <item>BLUME</item>
+        <item>BROT</item>
+        <item>FISCH</item>
+        <item>APFEL</item>
+        <item>STERN</item>
+        <item>AUTO</item>
+        <item>BAUM</item>
+        <item>MILCH</item>
+        <item>KAFFEE</item>
+        <item>MEER</item>
+        <item>TRAUBEN</item>
+        <item>SCHLÜSSEL</item>
+        <item>BETT</item>
+        <item>AUGE</item>
+        <item>HAND</item>
+        <item>KUH</item>
+        <item>VOGEL</item>
+        <item>ROSE</item>
+        <item>KÄSE</item>
+        <item>EI</item>
+        <item>ZUG</item>
+        <item>BOOT</item>
+        <item>WOLKE</item>
+        <item>ENTE</item>
+        <item>BÄR</item>
+    </string-array>
+
     <string-array name="default_keywords">
         <item>STANDORT</item>
         <item>WO BIST DU</item>

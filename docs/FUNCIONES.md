@@ -181,7 +181,47 @@ Google Maps no avisa a otras apps de que la ruta ha terminado, así que Llamadit
 
 La ruta necesita datos móviles, salvo que se haya descargado el mapa de la ciudad (ver [Consejos](#consejos)).
 
-## 12. Modo quiosco
+## 12. Ejercicios
+
+<p align="center">
+  <img src="img/capturas/33-boton-ejercicios.jpg" alt="Pantalla principal con el botón rosa de Ejercicios" width="230">
+  <img src="img/capturas/34-ejercicios-menu.jpg" alt="Menú con los ocho ejercicios y las estrellas del nivel" width="230">
+</p>
+
+Un botón opcional (rosa, con una pieza de puzle) con ejercicios para mantener la memoria, la atención y el cálculo, pensados para personas mayores o con dificultades cognitivas o de memoria. Al pulsarlo sale un menú con un dibujo grande por ejercicio y unas **estrellas** que indican su nivel (de 1 a 5).
+
+- Los ejercicios **cambian en cada partida**.
+- El **nivel sube solo** tras **5 partidas seguidas bien hechas** y **baja** tras 3 con fallos. El cuidador elige en el panel por qué nivel empieza cada uno.
+- Al terminar una partida siempre sale un **✓ verde** grande, aunque haya habido fallos, para animar. Los fallos se notan con una **sacudida** y una vibración, sin texto.
+- **No hacen ruido**, salvo *¿Quién es?*, que habla.
+
+| Ejercicio | Cómo se juega | Del nivel 1 al 5 |
+|---|---|---|
+| 🔢 **Cálculos sencillos** | Sale la operación en grande y se escribe el resultado en un teclado de calculadora. Al tercer fallo enseña la respuesta. | De sumas hasta 10, con puntos para contar, a multiplicaciones y divisiones sencillas |
+| 🃏 **Parejas de cartas** | Cartas boca abajo: se levantan de dos en dos hasta encontrar todas las parejas. | De 3 × 3 a 5 × 6 cartas |
+| 🎨 **Pintar por números** | Como un cuaderno de colorear: se elige un color de abajo y se toca una zona con su número; se pinta entera. El dibujo se amplía con dos dedos o con **+** y **−**. | De 3 zonas grandes (una manzana) a dibujos con muchas zonas (un gato, una casa con árbol). En los primeros niveles se marcan las zonas del color elegido. |
+| 🔤 **Sopa de letras** | Palabras sencillas, solo en horizontal y vertical, cada una con su dibujo. Se marca tocando la primera letra y la última. | De 5 × 5 con 3 palabras a 9 × 9 con 7 |
+| 👪 **¿Quién es?** | La voz del móvil pregunta "¿Dónde está María?" y hay que tocar su foto. Usa las fotos de los contactos favoritos. | De 2 fotos a 6 |
+| 🎵 **Repetir la secuencia** | Se encienden unos botones de colores (cada uno con una forma) y hay que tocarlos en el mismo orden. Los ojos indican que hay que mirar; la mano, que toca repetir. | De 2 pasos con 4 botones a 5 pasos con 6 |
+| 💶 **Contar dinero** | Sale una cosa de la compra con su precio y hay que poner las monedas y billetes justos. | De monedas de 1 € y 2 € a todo, hasta 50 € |
+| 🧩 **Puzle con fotos** | Una foto de la familia (o la del portal) partida en piezas: se toca una pieza y luego otra para cambiarlas de sitio. | De 2 × 2 a 5 × 5 piezas |
+
+<p align="center">
+  <img src="img/capturas/35-ejercicio-calculo.jpg" alt="Cálculo: 9 + 3 y el teclado" width="180">
+  <img src="img/capturas/36-ejercicio-parejas.jpg" alt="Parejas: dos regalos encontrados" width="180">
+  <img src="img/capturas/37-ejercicio-pintar.jpg" alt="Pintar por números: una seta a medio pintar" width="180">
+  <img src="img/capturas/38-ejercicio-sopa.jpg" alt="Sopa de letras con MANO encontrada" width="180">
+</p>
+<p align="center">
+  <img src="img/capturas/39-ejercicio-quien-es.jpg" alt="¿Quién es?: cuatro fotos y el nombre que dice la voz" width="180">
+  <img src="img/capturas/40-ejercicio-secuencia.jpg" alt="Repetir la secuencia: el botón azul encendido" width="180">
+  <img src="img/capturas/41-ejercicio-dinero.jpg" alt="Contar dinero: 2,50 € con una moneda de 2 € y otra de 50 céntimos" width="180">
+  <img src="img/capturas/42-ejercicio-puzle.jpg" alt="Puzle con la foto de un familiar" width="180">
+</p>
+
+Atrás (o la flecha de abajo) vuelve al menú de ejercicios; la casa de arriba, a la pantalla principal.
+
+## 13. Modo quiosco
 
 - La persona **no puede salir** de LlamaditApp: no hay botón de inicio, ni de apps recientes, ni panel de notificaciones.
 - Solo se pueden abrir LlamaditApp, WhatsApp (para las videollamadas) y las pantallas de llamada del sistema.
@@ -221,6 +261,12 @@ La ruta necesita datos móviles, salvo que se haya descargado el mapa de la ciud
   <img src="img/capturas/32-panel-whatsapp-completo.jpg" alt="Sección WhatsApp completo del panel" width="230">
 </p>
 
+**Ejercicios:**
+
+<p align="center">
+  <img src="img/capturas/43-panel-ejercicios.jpg" alt="Sección Ejercicios del panel: interruptor, nivel y partidas de cada ejercicio" width="230">
+</p>
+
 **Volver a casa, contactos de Google y Wi-Fi:**
 
 <p align="center">
@@ -238,6 +284,7 @@ La ruta necesita datos móviles, salvo que se haya descargado el mapa de la ciud
 | Sección | Para qué sirve |
 |---|---|
 | **Pantalla principal** | Vista previa en pequeño y, por cada elemento, flechas ↑ y ↓ para moverlo, su tamaño (**pequeño** y **mediano** ocupan media fila, **grande** la fila entera) y un interruptor para ocultarlo. El reloj no se puede ocultar. "Volver al diseño original" lo deja como venía. |
+| **Ejercicios** | Un interruptor por ejercicio, su **nivel** (el actual; tocar otro número lo cambia) y cuántas partidas lleva y cuántas bien hechas. El botón se activa en *Pantalla principal*. |
 | **Volver a casa** | Marcar la casa con **"Usar mi ubicación actual"** (estando en ella) o escribiendo la dirección y **"Buscar esta dirección en el mapa"**. La dirección se puede corregir (piso, puerta). **"Probar la ruta"** abre la navegación una vez para aceptar las pantallas iniciales de Google Maps. El botón se activa en *Pantalla principal*. **Foto del portal** (hacerla con la cámara o elegirla de la galería) y **"Avisar por SMS al pulsar el botón"** (al contacto del SOS, activado por defecto) y **"Enviar la ubicación cada 10 minutos durante la ruta"** (desactivado por defecto). Al activar una función que envía SMS, el panel avisa de que, según la tarifa de la línea, los SMS podrían cobrarse. |
 | **Dibujo del botón SOS** | Las letras **SOS** (por defecto), una **ambulancia**, una **cruz**, una **sirena**, un **corazón** o una **señal de peligro**: el que mejor reconozca la persona. |
 | **Botón para volver** | Cómo se sale de cada pantalla: la **casa grande de arriba** (por defecto), que vuelve a la pantalla principal, o una **flecha fija abajo a la izquierda**, como el botón Atrás de Android pero más grande (en un mensaje abierto vuelve a la lista). El cambio se ve al momento. |
@@ -277,4 +324,4 @@ La ruta necesita datos móviles, salvo que se haya descargado el mapa de la ciud
 
 ---
 
-<sub>Capturas hechas en el emulador de Android con contactos inventados; la dirección de ejemplo es la Plaza de España de Sevilla y el portal es un dibujo. La lista de chats es de una app de prueba, no del WhatsApp real. Fotos de los contactos: [Daniel Lara](https://unsplash.com/es/fotos/t9tDSXN2U2E), [Vitaly Gariev](https://unsplash.com/es/fotos/4HNK1yce-Vg), [Igor Rodrigues](https://unsplash.com/es/fotos/6IGd3-F3Cao), [Sergey Mikheev](https://unsplash.com/es/fotos/H982yXJ7vOk) y [Vitaly Gariev](https://unsplash.com/es/fotos/IihDS3WZGlY) en Unsplash (licencia de Unsplash).</sub>
+<sub>Capturas hechas en el emulador de Android con contactos inventados (los dibujos de los ejercicios son propios); la dirección de ejemplo es la Plaza de España de Sevilla y el portal es un dibujo. La lista de chats es de una app de prueba, no del WhatsApp real. Fotos de los contactos: [Daniel Lara](https://unsplash.com/es/fotos/t9tDSXN2U2E), [Vitaly Gariev](https://unsplash.com/es/fotos/4HNK1yce-Vg), [Igor Rodrigues](https://unsplash.com/es/fotos/6IGd3-F3Cao), [Sergey Mikheev](https://unsplash.com/es/fotos/H982yXJ7vOk) y [Vitaly Gariev](https://unsplash.com/es/fotos/IihDS3WZGlY) en Unsplash (licencia de Unsplash).</sub>

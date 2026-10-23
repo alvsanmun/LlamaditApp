@@ -148,6 +148,55 @@
     <string name="settings_wa_app_overlay_off">WhatsApp-en gaineko itzultzeko botoiak \"Bistaratu beste aplikazioen gainean\" baimena behar du. Hori gabe, WhatsApp ireki egiten da, baina atzera geziarekin irten behar da.</string>
     <string name="settings_wa_app_overlay_allow">Baimendu itzultzeko botoia</string>
 
+    <string name="home_item_exercises">Ariketak</string>
+    <string name="settings_exercises_title">Ariketak</string>
+    <string name="settings_exercises_hint">Aktibatu \"Ariketak\" botoia Pantaila nagusian eta aukeratu pertsonak zer ariketa egin ditzakeen. Bakoitza zuk aukeratutako mailan hasten da (1 = oso erraza): ondo egindako 5 partida jarraian egin ondoren maila igotzen da, eta akatsekin 3 egin ondoren jaitsi. Ariketak aldiro aldatzen dira. \"Nor da?\" ariketak kontaktu gogokoenen argazkiak erabiltzen ditu, eta puzzleak ere bai. Ariketek ez dute soinurik, \"Nor da?\" izan ezik, hitz egiten baitu: multimedia-bolumena igo egiten da jolasten duen bitartean.</string>
+    <string name="settings_exercises_level">Maila</string>
+    <string name="settings_exercises_stats">%1$d partida · %2$d ondo eginda</string>
+    <string name="exercise_math">Kalkulu errazak</string>
+    <string name="exercise_pairs">Karta bikoteak</string>
+    <string name="exercise_paint">Zenbakien arabera margotu</string>
+    <string name="exercise_words">Letra-zopa</string>
+    <string name="exercise_faces">Nor da? (familia)</string>
+    <string name="exercise_sequence">Sekuentzia errepikatu</string>
+    <string name="exercise_money">Dirua zenbatu</string>
+    <string name="exercise_puzzle">Argazki-puzzlea</string>
+    <string name="exercise_faces_where">Non dago %1$s?</string>
+    <string name="exercise_faces_none">\"Nor da?\" jokatzeko, gutxienez 2 kontaktu gogokok argazkia izan behar dute.</string>
+    <string name="exercises_none">Zaintzaileak ez du ariketarik aukeratu oraindik.</string>
+    <string-array name="exercise_words">
+        <item>EGUZKI</item>
+        <item>ILARGI</item>
+        <item>ETXE</item>
+        <item>KATU</item>
+        <item>TXAKUR</item>
+        <item>LORE</item>
+        <item>OGI</item>
+        <item>ARRAIN</item>
+        <item>SAGAR</item>
+        <item>IZAR</item>
+        <item>AUTO</item>
+        <item>ZUHAITZ</item>
+        <item>ESNE</item>
+        <item>KAFE</item>
+        <item>ITSASO</item>
+        <item>MAHATS</item>
+        <item>GILTZA</item>
+        <item>OHE</item>
+        <item>BEGI</item>
+        <item>ESKU</item>
+        <item>BEHI</item>
+        <item>TXORI</item>
+        <item>ARROSA</item>
+        <item>GAZTA</item>
+        <item>ARRAUTZA</item>
+        <item>TREN</item>
+        <item>ONTZI</item>
+        <item>HODEI</item>
+        <item>AHATE</item>
+        <item>HARTZ</item>
+    </string-array>
+
     <string-array name="default_keywords">
         <item>KOKAPENA</item>
         <item>NON ZAUDE</item>

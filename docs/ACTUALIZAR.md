@@ -127,6 +127,7 @@ Lo nuevo de las últimas versiones, todo desde el panel del cuidador:
 
 | Novedad | Dónde se explica |
 |---|---|
+| **Ejercicios** (1.5): ocho ejercicios para la memoria, la atención y el cálculo, con niveles que suben solos | [Guía, paso 9.5](GUIA-INSTALACION.md#95-ejercicios-opcional) |
 | **WhatsApp completo** (1.4): un botón aparte para usar los chats, audios, fotos y vídeos, con una pestaña con una casa para volver | [Guía, paso 9.4](GUIA-INSTALACION.md#94-whatsapp-completo-opcional) |
 | **Botón para volver** (1.4): la casa grande de arriba o una flecha abajo a la izquierda | [Guía, paso 9.1](GUIA-INSTALACION.md#91-adaptar-la-pantalla-principal) |
 | **Pantalla principal a medida** (1.3): mover, agrandar u ocultar botones, y otro dibujo para el SOS (ambulancia, cruz, corazón…) | [Guía, paso 9.1](GUIA-INSTALACION.md#91-adaptar-la-pantalla-principal) |

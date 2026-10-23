@@ -150,6 +150,10 @@ fun SettingsScreen(
                     Kiosk.applyMaps(context)
                 }
 
+                Section(stringResource(R.string.settings_exercises_title))
+                Hint(stringResource(R.string.settings_exercises_hint))
+                ExercisesSection()
+
                 Section(stringResource(R.string.settings_house_title))
                 Hint(stringResource(R.string.settings_house_hint))
                 HouseEditor(onOpenHousePin, onTestRoute)

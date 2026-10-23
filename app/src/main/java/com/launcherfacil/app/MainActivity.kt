@@ -80,6 +80,7 @@ import com.launcherfacil.app.ui.ContactsScreen
 import com.launcherfacil.app.ui.DialpadScreen
 import com.launcherfacil.app.ui.HomeScreen
 import com.launcherfacil.app.whatsapp.WhatsAppApp
+import com.launcherfacil.app.exercises.ExercisesScreen
 import com.launcherfacil.app.contacts.GOOGLE_ACCOUNT_TYPE
 import com.launcherfacil.app.ui.GoHomeScreen
 import com.launcherfacil.app.gohome.housePinIntent
@@ -176,7 +177,7 @@ class MainActivity : ComponentActivity() {
 
 private class DialRequest(val number: String)
 
-private enum class Screen { Home, Contacts, WhatsApp, Dialpad, Messages, MissedCalls, GoHome, Arrived, Pin, NewPin, Settings }
+private enum class Screen { Home, Contacts, WhatsApp, Dialpad, Messages, MissedCalls, GoHome, Arrived, Exercises, Pin, NewPin, Settings }
 
 private val PERMISSIONS = APP_PERMISSIONS.toTypedArray()
 
@@ -271,6 +272,7 @@ private fun LauncherApp(
                         onCaregiver = { screen = if (settings.hasPin) Screen.Pin else Screen.NewPin },
                         onMessages = { screen = Screen.Messages },
                         onMissedCalls = { screen = Screen.MissedCalls },
+                        onExercises = { screen = Screen.Exercises },
                         onWhatsAppApp = { if (!WhatsAppApp.open(activity)) whatsAppFailed(context) },
                         whatsAppUnread = whatsAppUnread,
                         onGoHome = {
@@ -285,6 +287,7 @@ private fun LauncherApp(
                         sosIcon = remember { settings.sosIcon }
                     )
                     Screen.Arrived -> ArrivedScreen(onHome = { screen = Screen.Home })
+                    Screen.Exercises -> ExercisesScreen(onHome = { screen = Screen.Home })
                     Screen.Messages -> MessagesScreen(onHome = { screen = Screen.Home })
                     Screen.GoHome -> {
                         val house = remember { settings.housePosition }

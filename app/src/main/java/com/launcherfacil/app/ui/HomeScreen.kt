@@ -70,6 +70,7 @@ fun HomeScreen(
     onMissedCalls: () -> Unit = {},
     onGoHome: () -> Unit = {},
     onWhatsAppApp: () -> Unit = {},
+    onExercises: () -> Unit = {},
     whatsAppUnread: Int = 0,
     newSms: Int = 0,
     newMissedCalls: Int = 0,
@@ -119,6 +120,9 @@ fun HomeScreen(
                                 SmallTileWithBadge(MoradoPerdidas, R.drawable.ic_phone_missed, newMissedCalls, onMissedCalls, modifier, fraction)
                             HomeItem.WHATSAPP_APP ->
                                 SmallTileWithBadge(CianWhatsApp, R.drawable.ic_chat, whatsAppUnread, onWhatsAppApp, modifier, fraction)
+                            HomeItem.EXERCISES -> BigTile(RosaEjercicios, onExercises, modifier) {
+                                TileIcon(R.drawable.ic_extension, fraction)
+                            }
                             HomeItem.GO_HOME -> BigTile(MarronCasa, onGoHome, modifier) {
                                 TileIcon(R.drawable.ic_go_home, fraction)
                             }

@@ -25,6 +25,7 @@ Esta guía explica, con capturas de cada pantalla, cómo dejar un móvil Android
    - [9.2. Volver a casa (opcional)](#92-volver-a-casa-opcional)
    - [9.3. Wi-Fi (opcional)](#93-wi-fi-opcional)
    - [9.4. WhatsApp completo (opcional)](#94-whatsapp-completo-opcional)
+   - [9.5. Ejercicios (opcional)](#95-ejercicios-opcional)
 10. [WhatsApp (opcional)](#10-whatsapp-opcional)
 11. [Ajuste de batería recomendado](#11-ajuste-de-batería-recomendado)
 12. [Comprobar que todo funciona y entregar el móvil](#12-comprobar-que-todo-funciona-y-entregar-el-móvil)
@@ -404,6 +405,23 @@ Además de las videollamadas, la persona puede usar **WhatsApp entero** (chats, 
 
 > Dentro del modo quiosco, WhatsApp no puede abrir otras apps: los enlaces a páginas web o "compartir con…" no funcionan. Los chats, los audios, la cámara y las llamadas, sí.
 
+### 9.5. Ejercicios (opcional)
+
+Ocho ejercicios para mantener la memoria, la atención y el cálculo: cálculos sencillos, parejas de cartas, pintar por números, sopa de letras, ¿quién es? (con las fotos de la familia), repetir una secuencia, contar dinero y puzle con fotos. Están explicados uno a uno en las [funciones](FUNCIONES.md#12-ejercicios).
+
+1. En **Pantalla principal**, activa el interruptor de **Ejercicios** y colócalo donde quieras.
+2. En la sección **Ejercicios**, apaga los que no le vayan a servir a la persona (por ejemplo, la sopa de letras si no lee).
+3. Elige el **nivel de inicio** de cada uno: **1** es muy fácil. Después sube solo tras 5 partidas seguidas bien hechas y baja tras 3 con fallos; aquí verás cuántas partidas lleva.
+4. Para **¿Quién es?** hacen falta al menos **2 favoritos con foto**. Es el único ejercicio con sonido (la voz del móvil dice el nombre), así que comprueba que se oye.
+
+<table><tr>
+<td><img src="img/capturas/43-panel-ejercicios.jpg" width="230" alt="Sección Ejercicios del panel"></td>
+<td><img src="img/capturas/34-ejercicios-menu.jpg" width="230" alt="Menú de ejercicios"></td>
+<td><img src="img/capturas/37-ejercicio-pintar.jpg" width="230" alt="Pintar por números"></td>
+</tr><tr>
+<td align="center">① Activar y elegir el nivel</td><td align="center">② El menú que verá la persona</td><td align="center">③ Un ejercicio</td>
+</tr></table>
+
 Pulsa la **casa** de arriba (o la flecha de abajo) para volver a la pantalla principal.
 
 ---
@@ -454,6 +472,7 @@ Prueba cada cosa antes de entregarlo:
 - [ ] **Volumen:** pulsa los botones de volumen; debe aparecer un panel grande.
 - [ ] **Volver a casa** (si se usa): lejos de casa, pulsa el botón marrón (debe salir la dirección y, si está activado, llegar el SMS) y luego la flecha; al llegar debe salir la foto del portal.
 - [ ] **WhatsApp completo** (si se usa): abre WhatsApp con el botón verde claro, envía una nota de voz y vuelve con la pestaña de la casa.
+- [ ] **Ejercicios** (si se usan): abre cada ejercicio activado y termina una partida. En **¿Quién es?** debe oírse el nombre.
 - [ ] **Contactos de Google** (si se usan): crea un contacto con estrella en contacts.google.com y comprueba que aparece en **Llamar**.
 - [ ] **WhatsApp** (si se usa): haz una videollamada desde la foto y recibe otra. Comprueba que WhatsApp está en **Aplicaciones sin autoinactivación**.
 - [ ] **Reinicio:** apaga y enciende el móvil. Debe arrancar directamente en LlamaditApp.

@@ -20,6 +20,7 @@
 | 📵 **Llamadas perdidas** | Un número rojo avisa de que alguien ha llamado; tocar la llamada la devuelve. |
 | 🕐 **Reloj y batería** | Siempre en grande en la pantalla principal. |
 | 🏠 **Volver a casa** | Botón opcional: la dirección de casa en grande (para enseñarla a la policía o a un vecino) y una flecha que abre la ruta a pie de Google Maps con voz. Al llegar, la foto del portal. El cuidador puede recibir un SMS con la ubicación al pulsarlo y cada 10 minutos de camino. |
+| 🧠 **Ejercicios** | Opcional: cálculos sencillos, parejas de cartas, pintar por números, sopa de letras, ¿quién es? (con las fotos de la familia), repetir una secuencia, contar dinero y puzle. Cambian cada vez y el nivel sube solo. |
 | 🧩 **Diseño a medida** | El cuidador mueve, agranda u oculta los botones y elige el dibujo del SOS (letras, ambulancia, cruz…). |
 | 👥 **Contactos desde Google** | Opcional: el cuidador gestiona los contactos (nombre, foto y teléfono) desde cualquier ordenador en contacts.google.com, y llegan solos al móvil. |
 | 🔊 **Volumen** | Los botones solo cambian el volumen del teléfono, con un panel enorme que se entiende sin leer. El móvil siempre vibra al recibir una llamada. |
@@ -56,6 +57,11 @@ Más detalles en **[docs/FUNCIONES.md](docs/FUNCIONES.md)**.
 |:---:|:---:|:---:|
 | <img src="docs/img/capturas/30-whatsapp-boton.jpg" width="220" alt="Botón de WhatsApp con mensajes nuevos"> | <img src="docs/img/capturas/31-whatsapp-casa.jpg" width="220" alt="Pestaña de la casa encima de los chats"> | <img src="docs/img/capturas/29-flecha-abajo.jpg" width="220" alt="Flecha abajo a la izquierda"> |
 | Con el número de mensajes nuevos | Una pestaña pequeña con una casa vuelve a LlamaditApp | Casa arriba o flecha abajo, a elegir |
+
+| Ejercicios | Pintar por números | ¿Quién es? |
+|:---:|:---:|:---:|
+| <img src="docs/img/capturas/34-ejercicios-menu.jpg" width="220" alt="Menú de ejercicios"> | <img src="docs/img/capturas/37-ejercicio-pintar.jpg" width="220" alt="Pintar por números"> | <img src="docs/img/capturas/39-ejercicio-quien-es.jpg" width="220" alt="¿Quién es?"> |
+| Ocho ejercicios, cada uno con su nivel en estrellas | Como un cuaderno de colorear | La voz dice un nombre y hay que tocar su foto |
 
 Todas las pantallas, explicadas una a una, en **[docs/FUNCIONES.md](docs/FUNCIONES.md)**.
 

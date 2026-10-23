@@ -148,6 +148,55 @@
     <string name="settings_wa_app_overlay_off">El botó per tornar damunt de WhatsApp necessita el permís \"Mostrar sobre altres aplicacions\". Sense, WhatsApp s\'obre igualment i cal sortir-ne amb la fletxa enrere.</string>
     <string name="settings_wa_app_overlay_allow">Permetre el botó per tornar</string>
 
+    <string name="home_item_exercises">Exercicis</string>
+    <string name="settings_exercises_title">Exercicis</string>
+    <string name="settings_exercises_hint">Activa el botó \"Exercicis\" a Pantalla principal i tria quins exercicis pot fer la persona. Cadascun comença al nivell que triïs (1 = molt fàcil): després de 5 partides seguides ben fetes puja de nivell i després de 3 amb errors baixa. Els exercicis canvien cada vegada. \"Qui és?\" fa servir les fotos dels contactes preferits, i el trencaclosques també. Els exercicis no tenen so excepte \"Qui és?\", que parla: el volum multimèdia puja mentre juga.</string>
+    <string name="settings_exercises_level">Nivell</string>
+    <string name="settings_exercises_stats">%1$d partides · %2$d ben fetes</string>
+    <string name="exercise_math">Càlculs senzills</string>
+    <string name="exercise_pairs">Parelles de cartes</string>
+    <string name="exercise_paint">Pintar per números</string>
+    <string name="exercise_words">Sopa de lletres</string>
+    <string name="exercise_faces">Qui és? (família)</string>
+    <string name="exercise_sequence">Repetir la seqüència</string>
+    <string name="exercise_money">Comptar diners</string>
+    <string name="exercise_puzzle">Trencaclosques amb fotos</string>
+    <string name="exercise_faces_where">On és %1$s?</string>
+    <string name="exercise_faces_none">Per jugar a \"Qui és?\" cal que almenys 2 contactes preferits tinguin foto.</string>
+    <string name="exercises_none">El cuidador encara no ha triat cap exercici.</string>
+    <string-array name="exercise_words">
+        <item>SOL</item>
+        <item>LLUNA</item>
+        <item>CASA</item>
+        <item>GAT</item>
+        <item>GOS</item>
+        <item>FLOR</item>
+        <item>PA</item>
+        <item>PEIX</item>
+        <item>POMA</item>
+        <item>ESTEL</item>
+        <item>COTXE</item>
+        <item>ARBRE</item>
+        <item>LLET</item>
+        <item>CAFÈ</item>
+        <item>MAR</item>
+        <item>RAÏM</item>
+        <item>CLAU</item>
+        <item>LLIT</item>
+        <item>ULL</item>
+        <item>MÀ</item>
+        <item>VACA</item>
+        <item>OCELL</item>
+        <item>ROSA</item>
+        <item>FORMATGE</item>
+        <item>OU</item>
+        <item>TREN</item>
+        <item>VAIXELL</item>
+        <item>NÚVOL</item>
+        <item>ÀNEC</item>
+        <item>ÓS</item>
+    </string-array>
+
     <string-array name="default_keywords">
         <item>UBICACIO</item>
         <item>ON ETS</item>

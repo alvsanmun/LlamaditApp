@@ -173,6 +173,56 @@
     <string name="settings_wa_app_overlay_off">The button to go back over WhatsApp needs the permission \"Display over other apps\". Without it, WhatsApp opens anyway and the person must leave it with the back arrow.</string>
     <string name="settings_wa_app_overlay_allow">Allow the button to go back</string>
 
+    <string name="home_item_exercises">Exercises</string>
+    <string name="settings_exercises_title">Exercises</string>
+    <string name="settings_exercises_hint">Turn on the \"Exercises\" button in Home screen and choose which exercises the person can do. Each one starts at the level you choose (1 = very easy): after 5 rounds in a row done well it goes up a level, and after 3 with mistakes it goes down. The exercises change every time. \"Who is it?\" uses the photos of the favourite contacts, and the puzzle too. The exercises are silent except \"Who is it?\", which speaks: the media volume goes up while the person plays.</string>
+    <string name="settings_exercises_level">Level</string>
+    <string name="settings_exercises_stats">%1$d played · %2$d done well</string>
+    <string name="exercise_math">Simple maths</string>
+    <string name="exercise_pairs">Pairs of cards</string>
+    <string name="exercise_paint">Paint by numbers</string>
+    <string name="exercise_words">Word search</string>
+    <string name="exercise_faces">Who is it? (family)</string>
+    <string name="exercise_sequence">Repeat the sequence</string>
+    <string name="exercise_money">Counting money</string>
+    <string name="exercise_puzzle">Photo puzzle</string>
+    <string name="exercise_faces_where">Where is %1$s?</string>
+    <string name="exercise_faces_none">To play \"Who is it?\", at least 2 favourite contacts need a photo.</string>
+    <string name="exercises_none">The caregiver has not chosen any exercise yet.</string>
+    <!-- Word search: one common word per picture, in this exact order (sun, moon, house, cat, dog, flower, bread, fish, apple, star, car, tree, milk, coffee, sea, grapes, key, bed, eye, hand, cow, bird, rose, cheese, egg, train, boat, cloud, duck, bear). Words of 1-2 letters or longer than 9 are skipped. -->
+    <string-array name="exercise_words">
+        <item>SUN</item>
+        <item>MOON</item>
+        <item>HOUSE</item>
+        <item>CAT</item>
+        <item>DOG</item>
+        <item>FLOWER</item>
+        <item>BREAD</item>
+        <item>FISH</item>
+        <item>APPLE</item>
+        <item>STAR</item>
+        <item>CAR</item>
+        <item>TREE</item>
+        <item>MILK</item>
+        <item>COFFEE</item>
+        <item>SEA</item>
+        <item>GRAPES</item>
+        <item>KEY</item>
+        <item>BED</item>
+        <item>EYE</item>
+        <item>HAND</item>
+        <item>COW</item>
+        <item>BIRD</item>
+        <item>ROSE</item>
+        <item>CHEESE</item>
+        <item>EGG</item>
+        <item>TRAIN</item>
+        <item>BOAT</item>
+        <item>CLOUD</item>
+        <item>DUCK</item>
+        <item>BEAR</item>
+    </string-array>
+
     <string-array name="default_keywords">
         <item>LOCATION</item>
         <item>WHERE ARE YOU</item>

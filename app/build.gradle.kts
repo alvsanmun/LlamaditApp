@@ -14,8 +14,8 @@ android {
         applicationId = "com.launcherfacil.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 6
-        versionName = "1.4"
+        versionCode = 7
+        versionName = "1.5"
     }
 
     // Firma de la versión final: datos en keystore.properties (fuera de git).

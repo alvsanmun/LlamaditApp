@@ -148,6 +148,55 @@
     <string name="settings_wa_app_overlay_off">Il pulsante per tornare sopra WhatsApp richiede l\'autorizzazione \"Mostra sopra altre app\". Senza, WhatsApp si apre comunque e bisogna uscire con la freccia indietro.</string>
     <string name="settings_wa_app_overlay_allow">Consenti il pulsante per tornare</string>
 
+    <string name="home_item_exercises">Esercizi</string>
+    <string name="settings_exercises_title">Esercizi</string>
+    <string name="settings_exercises_hint">Attiva il pulsante \"Esercizi\" in Schermata principale e scegli quali esercizi può fare la persona. Ognuno parte dal livello che scegli (1 = molto facile): dopo 5 partite di fila fatte bene sale di livello e dopo 3 con errori scende. Gli esercizi cambiano ogni volta. \"Chi è?\" usa le foto dei contatti preferiti, e anche il puzzle. Gli esercizi sono senza suoni tranne \"Chi è?\", che parla: il volume multimediale si alza mentre gioca.</string>
+    <string name="settings_exercises_level">Livello</string>
+    <string name="settings_exercises_stats">%1$d partite · %2$d fatte bene</string>
+    <string name="exercise_math">Calcoli semplici</string>
+    <string name="exercise_pairs">Coppie di carte</string>
+    <string name="exercise_paint">Colora con i numeri</string>
+    <string name="exercise_words">Crucipuzzle</string>
+    <string name="exercise_faces">Chi è? (famiglia)</string>
+    <string name="exercise_sequence">Ripeti la sequenza</string>
+    <string name="exercise_money">Contare i soldi</string>
+    <string name="exercise_puzzle">Puzzle con foto</string>
+    <string name="exercise_faces_where">Dov\'è %1$s?</string>
+    <string name="exercise_faces_none">Per giocare a \"Chi è?\" servono almeno 2 contatti preferiti con la foto.</string>
+    <string name="exercises_none">Chi assiste non ha ancora scelto nessun esercizio.</string>
+    <string-array name="exercise_words">
+        <item>SOLE</item>
+        <item>LUNA</item>
+        <item>CASA</item>
+        <item>GATTO</item>
+        <item>CANE</item>
+        <item>FIORE</item>
+        <item>PANE</item>
+        <item>PESCE</item>
+        <item>MELA</item>
+        <item>STELLA</item>
+        <item>AUTO</item>
+        <item>ALBERO</item>
+        <item>LATTE</item>
+        <item>CAFFÈ</item>
+        <item>MARE</item>
+        <item>UVA</item>
+        <item>CHIAVE</item>
+        <item>LETTO</item>
+        <item>OCCHIO</item>
+        <item>MANO</item>
+        <item>MUCCA</item>
+        <item>UCCELLO</item>
+        <item>ROSA</item>
+        <item>FORMAGGIO</item>
+        <item>UOVO</item>
+        <item>TRENO</item>
+        <item>BARCA</item>
+        <item>NUVOLA</item>
+        <item>ANATRA</item>
+        <item>ORSO</item>
+    </string-array>
+
     <string-array name="default_keywords">
         <item>POSIZIONE</item>
         <item>DOVE SEI</item>
