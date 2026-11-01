@@ -201,6 +201,7 @@ private fun ItemBadge(item: HomeItem, sosIcon: SosIcon) {
         HomeItem.GO_HOME -> MarronCasa to R.drawable.ic_go_home
         HomeItem.WHATSAPP_APP -> CianWhatsApp to R.drawable.ic_chat
         HomeItem.EXERCISES -> RosaEjercicios to R.drawable.ic_extension
+        HomeItem.RADIO -> AnilRadio to R.drawable.ic_radio
     }
     Box(
         Modifier.size(48.dp).clip(RoundedCornerShape(12.dp)).background(color),
@@ -267,6 +268,7 @@ private fun HomeItem.label(): Int = when (this) {
     HomeItem.GO_HOME -> R.string.home_item_go_home
     HomeItem.WHATSAPP_APP -> R.string.home_item_whatsapp_app
     HomeItem.EXERCISES -> R.string.home_item_exercises
+    HomeItem.RADIO -> R.string.home_item_radio
 }
 
 @StringRes

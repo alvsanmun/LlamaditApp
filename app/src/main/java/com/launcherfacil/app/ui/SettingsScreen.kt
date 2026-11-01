@@ -73,6 +73,7 @@ import com.launcherfacil.app.config.BackButton
 import com.launcherfacil.app.config.CaregiverSettings
 import com.launcherfacil.app.contacts.Contact
 import com.launcherfacil.app.contacts.contactsWithWhatsApp
+import com.launcherfacil.app.contacts.isWhatsAppInstalled
 import com.launcherfacil.app.contacts.loadFavoriteContacts
 import com.launcherfacil.app.contacts.setHasWhatsApp
 import com.launcherfacil.app.inbox.rememberContentVersion
@@ -100,6 +101,8 @@ fun SettingsScreen(
     backButton: BackButton,
     onBackButtonChange: (BackButton) -> Unit,
     onDisableKiosk: () -> Unit,
+    onInstallWhatsApp: () -> Unit,
+    onEndCaregiverSession: () -> Unit,
     onHome: () -> Unit
 ) {
     val context = LocalContext.current
@@ -138,6 +141,16 @@ fun SettingsScreen(
                 .padding(16.dp)
         ) {
             HomeBar(onHome)
+            // Al volver de Play Store, de los Ajustes…: el quiosco sigue en pausa hasta salir.
+            val inSession = rememberOnResume {
+                Kiosk.touchCaregiverSession(context)
+                Kiosk.inCaregiverSession(context)
+            }
+            if (inSession) {
+                Spacer(Modifier.height(8.dp))
+                Text("⚠ " + stringResource(R.string.settings_session_banner), color = BateriaMedia, fontSize = 15.sp)
+                ActionButton(stringResource(R.string.settings_session_end), onEndCaregiverSession, color = VerdeLlamar)
+            }
             Column(
                 modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -153,6 +166,10 @@ fun SettingsScreen(
                 Section(stringResource(R.string.settings_exercises_title))
                 Hint(stringResource(R.string.settings_exercises_hint))
                 ExercisesSection()
+
+                Section(stringResource(R.string.settings_radio_title))
+                Hint(stringResource(R.string.settings_radio_hint))
+                RadioSection()
 
                 Section(stringResource(R.string.settings_house_title))
                 Hint(stringResource(R.string.settings_house_hint))
@@ -217,6 +234,11 @@ fun SettingsScreen(
 
                 Section(stringResource(R.string.settings_whatsapp_title))
                 Hint(stringResource(R.string.settings_whatsapp_hint))
+                val whatsAppInstalled = rememberOnResume { context.isWhatsAppInstalled() }
+                if (!whatsAppInstalled) {
+                    Hint(stringResource(R.string.settings_install_whatsapp_hint))
+                    ActionButton(stringResource(R.string.settings_install_whatsapp), onInstallWhatsApp)
+                }
                 favorites.forEach { contact ->
                     val checked = contact.id in whatsAppIds
                     OptionRow(contact.name, contact.phone, onClick = {

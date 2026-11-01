@@ -223,8 +223,34 @@
         <item>BEAR</item>
     </string-array>
 
+    <string name="settings_session_banner">Kiosk mode is paused while you set things up outside the app (Google account, Play Store, Settings…). It comes back when you leave this panel with the house, when you tap the button below, or after 30 minutes without coming back to the panel.</string>
+    <string name="settings_session_end">Finish and turn kiosk mode back on</string>
+    <string name="settings_install_whatsapp_hint">WhatsApp is not installed. The button opens Play Store with WhatsApp (it needs a Google account on the phone). Kiosk mode stays paused until you come back here: install it, open it, register it with the SIM number and come back.</string>
+    <string name="settings_install_whatsapp">Install WhatsApp</string>
+
     <string-array name="default_keywords">
         <item>LOCATION</item>
         <item>WHERE ARE YOU</item>
     </string-array>
+
+    <!-- Internet radio (home screen button and caregiver panel section). -->
+    <string name="home_item_radio">Radio</string>
+    <string name="notification_channel_radio">Radio</string>
+    <string name="radio_stop">Stop</string>
+    <string name="radio_none">The caregiver has not chosen any radio station yet.</string>
+    <string name="settings_radio_title">Radio</string>
+    <string name="settings_radio_hint">Internet radio: the person taps the logo of a station and it keeps playing in the background, also with the screen off, until they tap the red button or the automatic switch-off arrives. During a phone call it goes quiet and comes back when hanging up. Remember to turn on the Radio button in \"Home screen\".</string>
+    <string name="radio_data_note">The radio uses the internet (mobile data): about 30 to 60 MB per hour of listening, 1 to 2 GB a month listening one hour a day. It is the only part of LlamaditApp that connects to the internet; nothing else is sent anywhere.</string>
+    <string name="radio_no_stations">No stations yet. Add them below.</string>
+    <string name="radio_stations_hint">Order of the stations on the radio screen. Tap a logo to choose another picture from the gallery (some stations have no logo).</string>
+    <string name="radio_sleep_title">Switch off automatically after</string>
+    <string name="radio_sleep_never">Never</string>
+    <string name="radio_sleep_minutes">%1$d min</string>
+    <string name="radio_sleep_hours">%1$d h</string>
+    <string name="radio_add_title">Add stations</string>
+    <string name="radio_top">Most listened to in this country</string>
+    <string name="radio_search_hint">Station name</string>
+    <string name="radio_search">Search</string>
+    <string name="radio_no_connection">Could not connect to the station directory (radio-browser.info). Is mobile data or Wi-Fi on?</string>
+    <string name="radio_no_results">No station found with that name.</string>
 </resources>

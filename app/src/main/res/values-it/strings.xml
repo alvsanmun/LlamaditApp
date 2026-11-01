@@ -197,8 +197,33 @@
         <item>ORSO</item>
     </string-array>
 
+    <string name="settings_session_banner">La modalità chiosco è in pausa mentre configuri cose fuori dall\'app (account Google, Play Store, Impostazioni…). Torna quando esci da questo pannello con la casa, quando tocchi il pulsante qui sotto o dopo 30 minuti senza tornare al pannello.</string>
+    <string name="settings_session_end">Termina e riattiva la modalità chiosco</string>
+    <string name="settings_install_whatsapp_hint">WhatsApp non è installato. Il pulsante apre il Play Store su WhatsApp (serve un account Google sul telefono). La modalità chiosco resta in pausa finché non torni qui: installalo, aprilo, registralo con il numero della SIM e torna.</string>
+    <string name="settings_install_whatsapp">Installa WhatsApp</string>
+
     <string-array name="default_keywords">
         <item>POSIZIONE</item>
         <item>DOVE SEI</item>
     </string-array>
+
+    <string name="home_item_radio">Radio</string>
+    <string name="notification_channel_radio">Radio</string>
+    <string name="radio_stop">Ferma</string>
+    <string name="radio_none">Chi si prende cura non ha ancora scelto nessuna stazione.</string>
+    <string name="settings_radio_title">Radio</string>
+    <string name="settings_radio_hint">Radio via internet: la persona tocca il logo di una stazione e continua a suonare in sottofondo, anche a schermo spento, finché non tocca il pulsante rosso o arriva lo spegnimento automatico. Durante una chiamata tace e riprende dopo aver riattaccato. Ricorda di attivare il pulsante Radio in \"Schermata principale\".</string>
+    <string name="radio_data_note">La radio usa internet (dati mobili): circa 30-60 MB per ora di ascolto, 1-2 GB al mese ascoltando un\'ora al giorno. È l\'unica parte di LlamaditApp che si collega a internet; nient\'altro viene inviato da nessuna parte.</string>
+    <string name="radio_no_stations">Ancora nessuna stazione. Aggiungile qui sotto.</string>
+    <string name="radio_stations_hint">Ordine delle stazioni nella schermata della radio. Tocca un logo per scegliere un\'altra immagine dalla galleria (alcune stazioni non hanno il logo).</string>
+    <string name="radio_sleep_title">Spegnersi da sola dopo</string>
+    <string name="radio_sleep_never">Mai</string>
+    <string name="radio_sleep_minutes">%1$d min</string>
+    <string name="radio_sleep_hours">%1$d h</string>
+    <string name="radio_add_title">Aggiungi stazioni</string>
+    <string name="radio_top">Le più ascoltate del paese</string>
+    <string name="radio_search_hint">Nome della stazione</string>
+    <string name="radio_search">Cerca</string>
+    <string name="radio_no_connection">Impossibile collegarsi all\'elenco delle stazioni (radio-browser.info). I dati mobili o il Wi-Fi sono attivi?</string>
+    <string name="radio_no_results">Nessuna stazione con questo nome.</string>
 </resources>

@@ -19,6 +19,13 @@
 package com.launcherfacil.app.ui
 
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.ui.composed
+import androidx.compose.ui.draw.scale
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -149,4 +156,17 @@ fun <T> rememberOnResume(read: () -> T): T {
         onDispose { owner.lifecycle.removeObserver(observer) }
     }
     return value
+}
+
+/** Hace "latir" un botón (crece y encoge sin parar) mientras [on] sea cierto. */
+fun Modifier.pulsing(on: Boolean): Modifier = composed {
+    if (!on) return@composed this
+    val transition = rememberInfiniteTransition(label = "latido")
+    val scale by transition.animateFloat(
+        initialValue = 0.92f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(tween(700), RepeatMode.Reverse),
+        label = "escala"
+    )
+    scale(scale)
 }

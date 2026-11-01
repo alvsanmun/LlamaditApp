@@ -197,8 +197,33 @@
         <item>BÄR</item>
     </string-array>
 
+    <string name="settings_session_banner">Der Kioskmodus ist pausiert, während Sie außerhalb der App etwas einrichten (Google-Konto, Play Store, Einstellungen…). Er kehrt zurück, wenn Sie diesen Bereich mit dem Haus verlassen, auf die Taste unten tippen oder nach 30 Minuten, ohne zum Bereich zurückzukehren.</string>
+    <string name="settings_session_end">Beenden und Kioskmodus aktivieren</string>
+    <string name="settings_install_whatsapp_hint">WhatsApp ist nicht installiert. Die Taste öffnet den Play Store bei WhatsApp (dafür braucht das Handy ein Google-Konto). Der Kioskmodus bleibt pausiert, bis Sie hierher zurückkehren: installieren, öffnen, mit der Nummer der SIM registrieren und zurückkommen.</string>
+    <string name="settings_install_whatsapp">WhatsApp installieren</string>
+
     <string-array name="default_keywords">
         <item>STANDORT</item>
         <item>WO BIST DU</item>
     </string-array>
+
+    <string name="home_item_radio">Radio</string>
+    <string name="notification_channel_radio">Radio</string>
+    <string name="radio_stop">Stopp</string>
+    <string name="radio_none">Die Betreuungsperson hat noch keinen Sender ausgewählt.</string>
+    <string name="settings_radio_title">Radio</string>
+    <string name="settings_radio_hint">Internetradio: Die Person tippt auf das Logo eines Senders, und er spielt im Hintergrund weiter, auch bei ausgeschaltetem Bildschirm, bis sie auf den roten Knopf tippt oder die automatische Abschaltung kommt. Bei einem Anruf verstummt es und spielt nach dem Auflegen weiter. Denken Sie daran, den Radio-Knopf unter „Startbildschirm“ einzuschalten.</string>
+    <string name="radio_data_note">Das Radio nutzt das Internet (mobile Daten): etwa 30 bis 60 MB pro Stunde, 1 bis 2 GB im Monat bei einer Stunde täglich. Es ist der einzige Teil von LlamaditApp, der sich mit dem Internet verbindet; sonst wird nichts irgendwohin gesendet.</string>
+    <string name="radio_no_stations">Noch keine Sender. Fügen Sie sie unten hinzu.</string>
+    <string name="radio_stations_hint">Reihenfolge der Sender auf dem Radiobildschirm. Tippen Sie auf ein Logo, um ein anderes Bild aus der Galerie zu wählen (manche Sender haben kein Logo).</string>
+    <string name="radio_sleep_title">Automatisch ausschalten nach</string>
+    <string name="radio_sleep_never">Nie</string>
+    <string name="radio_sleep_minutes">%1$d Min.</string>
+    <string name="radio_sleep_hours">%1$d Std.</string>
+    <string name="radio_add_title">Sender hinzufügen</string>
+    <string name="radio_top">Die meistgehörten im Land</string>
+    <string name="radio_search_hint">Name des Senders</string>
+    <string name="radio_search">Suchen</string>
+    <string name="radio_no_connection">Keine Verbindung zum Senderverzeichnis (radio-browser.info). Sind mobile Daten oder WLAN eingeschaltet?</string>
+    <string name="radio_no_results">Kein Sender mit diesem Namen gefunden.</string>
 </resources>

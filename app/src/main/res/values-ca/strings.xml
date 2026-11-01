@@ -197,8 +197,33 @@
         <item>ÓS</item>
     </string-array>
 
+    <string name="settings_session_banner">El mode quiosc està en pausa mentre configures coses fora de l\'app (compte de Google, Play Store, Configuració…). Torna en sortir d\'aquest tauler amb la casa, en prémer el botó de sota o als 30 minuts sense tornar al tauler.</string>
+    <string name="settings_session_end">Acabar i activar el mode quiosc</string>
+    <string name="settings_install_whatsapp_hint">WhatsApp no està instal·lat. El botó obre Play Store a WhatsApp (cal un compte de Google al mòbil). El mode quiosc queda en pausa fins que tornis aquí: instal·la\'l, obre\'l, registra\'l amb el número de la SIM i torna.</string>
+    <string name="settings_install_whatsapp">Instal·lar WhatsApp</string>
+
     <string-array name="default_keywords">
         <item>UBICACIO</item>
         <item>ON ETS</item>
     </string-array>
+
+    <string name="home_item_radio">Ràdio</string>
+    <string name="notification_channel_radio">Ràdio</string>
+    <string name="radio_stop">Atura</string>
+    <string name="radio_none">El cuidador encara no ha triat cap emissora.</string>
+    <string name="settings_radio_title">Ràdio</string>
+    <string name="settings_radio_hint">Ràdio per internet: la persona toca el logotip d\'una emissora i continua sonant de fons, també amb la pantalla apagada, fins que toca el botó vermell o arriba l\'apagada automàtica. Durant una trucada calla i torna en penjar. Recorda activar el botó Ràdio a \"Pantalla principal\".</string>
+    <string name="radio_data_note">La ràdio fa servir internet (dades mòbils): uns 30 a 60 MB per hora d\'escolta, d\'1 a 2 GB al mes escoltant una hora al dia. És l\'únic de LlamaditApp que es connecta a internet; no s\'envia res més enlloc.</string>
+    <string name="radio_no_stations">Encara no hi ha emissores. Afegeix-les a sota.</string>
+    <string name="radio_stations_hint">Ordre de les emissores a la pantalla de la ràdio. Toca un logotip per triar un altre dibuix de la galeria (algunes emissores no en tenen).</string>
+    <string name="radio_sleep_title">Apagar-se sola després de</string>
+    <string name="radio_sleep_never">Mai</string>
+    <string name="radio_sleep_minutes">%1$d min</string>
+    <string name="radio_sleep_hours">%1$d h</string>
+    <string name="radio_add_title">Afegir emissores</string>
+    <string name="radio_top">Les més escoltades del país</string>
+    <string name="radio_search_hint">Nom de l\'emissora</string>
+    <string name="radio_search">Cerca</string>
+    <string name="radio_no_connection">No s\'ha pogut connectar amb el directori d\'emissores (radio-browser.info). Estan activades les dades mòbils o el Wi-Fi?</string>
+    <string name="radio_no_results">No hi ha cap emissora amb aquest nom.</string>
 </resources>

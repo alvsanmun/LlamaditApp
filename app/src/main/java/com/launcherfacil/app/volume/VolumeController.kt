@@ -23,6 +23,8 @@ import android.media.AudioManager
 import android.media.ToneGenerator
 import android.util.Log
 import android.view.KeyEvent
+import com.launcherfacil.app.radio.Radio
+import com.launcherfacil.app.radio.RadioStations
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -61,21 +63,29 @@ object VolumeController {
         val am = context.getSystemService(AudioManager::class.java) ?: return
         val inCall = am.mode == AudioManager.MODE_IN_CALL ||
             am.mode == AudioManager.MODE_IN_COMMUNICATION
-        val stream = if (inCall) AudioManager.STREAM_VOICE_CALL else AudioManager.STREAM_RING
+        val ringing = am.mode == AudioManager.MODE_RINGTONE
+        // Con la radio puesta, los botones son los de la radio (multimedia).
+        val radio = !inCall && !ringing && Radio.isActive
+        val stream = when {
+            inCall -> AudioManager.STREAM_VOICE_CALL
+            radio -> AudioManager.STREAM_MUSIC
+            else -> AudioManager.STREAM_RING
+        }
         val max = am.getStreamMaxVolume(stream)
-        // Durante una llamada no se deja a 0: no se oiría a la otra persona.
-        val min = if (inCall) 1 else 0
+        // Durante una llamada no se deja a 0: no se oiría a la otra persona. La radio
+        // tampoco: para que calle está el botón rojo.
+        val min = if (inCall || radio) 1 else 0
         val level = (am.getStreamVolume(stream) + if (up) 1 else -1).coerceIn(min, max)
         try {
             am.setStreamVolume(stream, level, 0) // 0 = sin el panel del sistema
-            if (!inCall) setRingerModeFor(am, level)
+            if (stream == AudioManager.STREAM_RING) setRingerModeFor(am, level)
+            if (radio) RadioStations(context).saveVolume(level)
         } catch (e: SecurityException) {
             Log.w(TAG, "No se pudo cambiar el volumen (¿No molestar?)", e)
         }
         // Un pitido corto al nuevo volumen para oír cómo sonará (no en llamada, ni mientras
-        // suena una llamada, ni en silencio).
-        val ringing = am.mode == AudioManager.MODE_RINGTONE
-        if (!inCall && !ringing && level > 0) beep()
+        // suena una llamada o la radio, ni en silencio).
+        if (stream == AudioManager.STREAM_RING && !ringing && level > 0) beep()
         _change.value = VolumeChange(level, max, up, System.nanoTime())
     }
 
@@ -105,6 +115,8 @@ object VolumeController {
      * con [applySoundPolicy] al regresar al launcher.
      */
     fun raiseMediaVolume(context: Context, fraction: Float = 0.8f) {
+        // Con la radio puesta se deja su volumen (el que ha elegido la persona).
+        if (Radio.isActive) return
         val am = context.getSystemService(AudioManager::class.java) ?: return
         val max = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
         try {
@@ -118,7 +130,8 @@ object VolumeController {
         val am = context.getSystemService(AudioManager::class.java) ?: return
         try {
             setRingerModeFor(am, am.getStreamVolume(AudioManager.STREAM_RING))
-            am.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0)
+            // La radio sigue sonando de fondo: su volumen no se toca.
+            if (!Radio.isActive) am.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0)
         } catch (e: SecurityException) {
             Log.w(TAG, "No se pudo aplicar la política de sonido", e)
         }

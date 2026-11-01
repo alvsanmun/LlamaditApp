@@ -18,7 +18,6 @@
 
 package com.launcherfacil.app.exercises
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -55,7 +54,8 @@ import com.launcherfacil.app.volume.VolumeController
 /**
  * Botón "Ejercicios": menú con los ejercicios que ha activado el cuidador, cada uno
  * con su dibujo y las estrellas de su nivel. Si solo hay uno, se abre directamente.
- * Atrás (o la flecha) vuelve al menú; la casa, a la pantalla principal.
+ * Atrás (o la flecha) y la casa vuelven a la pantalla principal: antes Atrás volvía
+ * al menú y había que pulsar la flecha dos veces, y parecía que no funcionaba.
  */
 @Composable
 fun ExercisesScreen(onHome: () -> Unit) {
@@ -89,7 +89,6 @@ fun ExercisesScreen(onHome: () -> Unit) {
             CaregiverMessage(stringResource(R.string.exercises_none))
         }
         current != null -> {
-            BackHandler(enabled = enabled.size > 1) { selected = null }
             ExerciseHost(current, progress, onHome) { level, onDone ->
                 when (current) {
                     Exercise.MATH -> MathExercise(level, onDone)

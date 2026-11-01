@@ -29,6 +29,10 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+    <!-- Radio: es lo único que usa internet (las emisoras y su directorio, radio-browser.info).
+         Sigue sonando con la pantalla apagada (servicio en primer plano de tipo multimedia). -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Las llamadas entrantes siempre vibran. -->
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -54,7 +58,8 @@
         android:label="@string/app_name"
         android:localeConfig="@xml/locales_config"
         android:supportsRtl="true"
-        android:theme="@style/Theme.LlamaditApp">
+        android:theme="@style/Theme.LlamaditApp"
+        android:usesCleartextTraffic="true">
 
         <activity
             android:name=".MainActivity"
@@ -164,6 +169,12 @@
             android:name=".gohome.GoHomeService"
             android:exported="false"
             android:foregroundServiceType="location" />
+
+        <!-- Radio en segundo plano. -->
+        <service
+            android:name=".radio.RadioService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
 
         <!-- Petición de ubicación por SMS. Solo el sistema puede enviar este broadcast. -->
         <receiver

@@ -197,8 +197,33 @@
         <item>HARTZ</item>
     </string-array>
 
+    <string name="settings_session_banner">Kiosko modua pausatuta dago aplikaziotik kanpo gauzak konfiguratzen dituzun bitartean (Google kontua, Play Store, Ezarpenak…). Itzuli egiten da panel honetatik etxearekin irtetean, beheko botoia sakatzean edo panelera itzuli gabe 30 minutu igarotakoan.</string>
+    <string name="settings_session_end">Amaitu eta aktibatu kiosko modua</string>
+    <string name="settings_install_whatsapp_hint">WhatsApp ez dago instalatuta. Botoiak Play Store irekitzen du WhatsApp-en (Google kontu bat behar da mugikorrean). Kiosko modua pausatuta geratzen da hona itzuli arte: instalatu, ireki, erregistratu SIMaren zenbakiarekin eta itzuli.</string>
+    <string name="settings_install_whatsapp">Instalatu WhatsApp</string>
+
     <string-array name="default_keywords">
         <item>KOKAPENA</item>
         <item>NON ZAUDE</item>
     </string-array>
+
+    <string name="home_item_radio">Irratia</string>
+    <string name="notification_channel_radio">Irratia</string>
+    <string name="radio_stop">Gelditu</string>
+    <string name="radio_none">Zaintzaileak ez du irratirik aukeratu oraindik.</string>
+    <string name="settings_radio_title">Irratia</string>
+    <string name="settings_radio_hint">Interneteko irratia: pertsonak irrati baten logotipoa ukitzen du eta atzealdean entzuten jarraitzen du, baita pantaila itzalita ere, botoi gorria ukitu arte edo itzaltze automatikoa iritsi arte. Dei batean isildu egiten da eta eskegitzean itzultzen da. Gogoratu Irratia botoia aktibatzea \"Pantaila nagusia\" atalean.</string>
+    <string name="radio_data_note">Irratiak internet erabiltzen du (datu mugikorrak): 30 eta 60 MB inguru entzuteko orduko, 1 eta 2 GB artean hilean egunean ordubete entzunda. LlamaditApp-en internetera konektatzen den gauza bakarra da; ez da beste ezer inora bidaltzen.</string>
+    <string name="radio_no_stations">Oraindik ez dago irratirik. Gehitu behean.</string>
+    <string name="radio_stations_hint">Irratien ordena irratiaren pantailan. Ukitu logotipo bat galeriako beste irudi bat aukeratzeko (irrati batzuek ez dute logotiporik).</string>
+    <string name="radio_sleep_title">Itzali bakarrik hau igarotakoan:</string>
+    <string name="radio_sleep_never">Inoiz ez</string>
+    <string name="radio_sleep_minutes">%1$d min</string>
+    <string name="radio_sleep_hours">%1$d h</string>
+    <string name="radio_add_title">Gehitu irratiak</string>
+    <string name="radio_top">Herrialdean gehien entzunak</string>
+    <string name="radio_search_hint">Irratiaren izena</string>
+    <string name="radio_search">Bilatu</string>
+    <string name="radio_no_connection">Ezin izan da irratien direktoriora konektatu (radio-browser.info). Datu mugikorrak edo wifia aktibatuta daude?</string>
+    <string name="radio_no_results">Ez dago izen hori duen irratirik.</string>
 </resources>

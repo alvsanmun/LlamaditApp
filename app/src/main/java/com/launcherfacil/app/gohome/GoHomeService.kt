@@ -71,6 +71,13 @@ class GoHomeService : Service() {
 
         /** Distancia a la que se da por llegado (el GPS en la calle falla unos 10-20 m). */
         const val ARRIVAL_METERS = 40f
+
+        /**
+         * Para contar la llegada, antes tiene que haber estado a más de esta distancia.
+         * Si no, al empezar la ruta cerca de casa (o al probarla en casa) salía la
+         * pantalla de llegada al momento, encima de Google Maps.
+         */
+        const val AWAY_METERS = 70f
         private const val WATCH_LIMIT_MS = 2 * 60 * 60 * 1000L
         private const val UPDATE_MS = 5_000L
         /** Cada cuánto se envía la ubicación durante la ruta (si el cuidador lo activa). */
@@ -173,11 +180,13 @@ class GoHomeService : Service() {
         val lm = getSystemService(LocationManager::class.java) ?: return
         val target = Location("house").apply { latitude = lat; longitude = lng }
         house = target
+        var wasAway = false
         val newListener = LocationListener { location ->
             lastLocation = location
             val meters = location.distanceTo(target)
             Log.d(TAG, "A $meters m de casa (±${location.accuracy} m)")
-            if (meters <= ARRIVAL_METERS) arrived()
+            if (meters > AWAY_METERS) wasAway = true
+            if (wasAway && meters <= ARRIVAL_METERS) arrived()
         }
         try {
             for (provider in listOf(LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER)) {

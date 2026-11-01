@@ -21,6 +21,7 @@
 | 🕐 **Reloj y batería** | Siempre en grande en la pantalla principal. |
 | 🏠 **Volver a casa** | Botón opcional: la dirección de casa en grande (para enseñarla a la policía o a un vecino) y una flecha que abre la ruta a pie de Google Maps con voz. Al llegar, la foto del portal. El cuidador puede recibir un SMS con la ubicación al pulsarlo y cada 10 minutos de camino. |
 | 🧠 **Ejercicios** | Opcional: cálculos sencillos, parejas de cartas, pintar por números, sopa de letras, ¿quién es? (con las fotos de la familia), repetir una secuencia, contar dinero y puzle. Cambian cada vez y el nivel sube solo. |
+| 📻 **Radio** | Opcional: los logotipos de las emisoras que elige el cuidador. Toca uno y suena, también con la pantalla apagada, hasta tocar el botón rojo o hasta el apagado automático. Calla durante las llamadas. |
 | 🧩 **Diseño a medida** | El cuidador mueve, agranda u oculta los botones y elige el dibujo del SOS (letras, ambulancia, cruz…). |
 | 👥 **Contactos desde Google** | Opcional: el cuidador gestiona los contactos (nombre, foto y teléfono) desde cualquier ordenador en contacts.google.com, y llegan solos al móvil. |
 | 🔊 **Volumen** | Los botones solo cambian el volumen del teléfono, con un panel enorme que se entiende sin leer. El móvil siempre vibra al recibir una llamada. |
@@ -114,6 +115,8 @@ La persona que usa LlamaditApp no necesita leer, pero el panel del cuidador y lo
 ## Privacidad
 
 LlamaditApp **no tiene servidor ni envía datos a ningún sitio**. La ubicación solo sale del móvil por SMS, cuando la pide un contacto autorizado o cuando se pulsa SOS, y va directamente al teléfono de ese familiar. No hay cuentas, ni publicidad, ni analítica.
+
+**Permiso de internet:** desde la versión 1.6 la app tiene permiso para usar internet, **solo para la radio** (opcional): reproducir las emisoras y, desde el panel del cuidador, buscarlas en el directorio libre [radio-browser.info](https://www.radio-browser.info), que también cuenta las escuchas de cada emisora (sin saber quién escucha). Si el botón Radio no se activa, la app no se conecta a internet. La radio gasta datos móviles: unos 30 a 60 MB por hora.
 
 ## Tecnología
 

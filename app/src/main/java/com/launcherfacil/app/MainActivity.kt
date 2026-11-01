@@ -81,7 +81,10 @@ import com.launcherfacil.app.ui.DialpadScreen
 import com.launcherfacil.app.ui.HomeScreen
 import com.launcherfacil.app.whatsapp.WhatsAppApp
 import com.launcherfacil.app.exercises.ExercisesScreen
+import com.launcherfacil.app.radio.Radio
+import com.launcherfacil.app.ui.RadioScreen
 import com.launcherfacil.app.contacts.GOOGLE_ACCOUNT_TYPE
+import com.launcherfacil.app.contacts.WHATSAPP_PACKAGE
 import com.launcherfacil.app.ui.GoHomeScreen
 import com.launcherfacil.app.gohome.housePinIntent
 import com.launcherfacil.app.gohome.GoHomeService
@@ -177,7 +180,7 @@ class MainActivity : ComponentActivity() {
 
 private class DialRequest(val number: String)
 
-private enum class Screen { Home, Contacts, WhatsApp, Dialpad, Messages, MissedCalls, GoHome, Arrived, Exercises, Pin, NewPin, Settings }
+private enum class Screen { Home, Contacts, WhatsApp, Dialpad, Messages, MissedCalls, GoHome, Arrived, Exercises, Radio, Pin, NewPin, Settings }
 
 private val PERMISSIONS = APP_PERMISSIONS.toTypedArray()
 
@@ -235,12 +238,17 @@ private fun LauncherApp(
     LaunchedEffect(homeRequests) { screen = Screen.Home }
     LaunchedEffect(dialRequest) { if (dialRequest != null) screen = Screen.Dialpad }
     LaunchedEffect(arrivedRequests) { if (arrivedRequests > 0) screen = Screen.Arrived }
+    // Salir del panel (con la casa, la flecha o Atrás) acaba la pausa de la configuración.
+    LaunchedEffect(screen) { if (screen != Screen.Settings) Kiosk.endCaregiverSession(context as Activity) }
 
     // Configuración del cuidador: se cierra al apagar la pantalla.
     val settings = remember { CaregiverSettings(context) }
     DisposableEffect(Unit) {
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(c: Context, i: Intent) {
+                // Mientras el cuidador configura (Play Store, cuenta de Google…) el panel no se
+                // cierra: si la pantalla se apaga esperando una descarga, al volver sigue ahí.
+                if (Kiosk.inCaregiverSession(context)) return
                 if (screen in setOf(Screen.Pin, Screen.NewPin, Screen.Settings)) screen = Screen.Home
             }
         }
@@ -256,6 +264,7 @@ private fun LauncherApp(
     val newSms by produceState(0, inboxVersion, screen) { value = countNewSms(context) }
     val newMissedCalls by produceState(0, inboxVersion, screen) { value = countNewMissedCalls(context) }
     val whatsAppUnread by WhatsAppApp.unread.collectAsState()
+    val radioState by Radio.state.collectAsState()
 
     // Botón para volver que ha elegido el cuidador: la casa de arriba o la flecha de abajo.
     var backButton by remember { mutableStateOf(settings.backButton) }
@@ -273,6 +282,8 @@ private fun LauncherApp(
                         onMessages = { screen = Screen.Messages },
                         onMissedCalls = { screen = Screen.MissedCalls },
                         onExercises = { screen = Screen.Exercises },
+                        onRadio = { screen = Screen.Radio },
+                        radioOn = radioState.playing != null,
                         onWhatsAppApp = { if (!WhatsAppApp.open(activity)) whatsAppFailed(context) },
                         whatsAppUnread = whatsAppUnread,
                         onGoHome = {
@@ -288,6 +299,7 @@ private fun LauncherApp(
                     )
                     Screen.Arrived -> ArrivedScreen(onHome = { screen = Screen.Home })
                     Screen.Exercises -> ExercisesScreen(onHome = { screen = Screen.Home })
+                    Screen.Radio -> RadioScreen(onHome = { screen = Screen.Home })
                     Screen.Messages -> MessagesScreen(onHome = { screen = Screen.Home })
                     Screen.GoHome -> {
                         val house = remember { settings.housePosition }
@@ -396,7 +408,21 @@ private fun LauncherApp(
                             Kiosk.disable(context)
                             screen = Screen.Home
                         },
-                        onHome = { screen = Screen.Home }
+                        onInstallWhatsApp = {
+                            // Play Store directamente en la ficha de WhatsApp.
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$WHATSAPP_PACKAGE"))
+                                .setPackage("com.android.vending")
+                            if (!Kiosk.pauseAndOpen(activity, intent)) openFailed(context)
+                        },
+                        onEndCaregiverSession = {
+                            Kiosk.endCaregiverSession(activity)
+                            screen = Screen.Home
+                        },
+                        onHome = {
+                            // Al salir del panel se acaba la pausa de la configuración.
+                            Kiosk.endCaregiverSession(activity)
+                            screen = Screen.Home
+                        }
                     )
                 }
             }

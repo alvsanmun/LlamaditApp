@@ -25,6 +25,7 @@ import android.telecom.InCallService
 import android.telecom.VideoProfile
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import com.launcherfacil.app.radio.Radio
 
 /** Lo que muestra la pantalla de llamada. */
 data class CallInfo(
@@ -85,6 +86,8 @@ object CallManager {
             CallRinger.update(svc, ringing)
             RingVibrator.update(svc, ringing)
         }
+        // La radio calla mientras haya una llamada (sonando o en curso).
+        Radio.onCallsChanged(calls.isNotEmpty())
         _call.value = current()?.let {
             CallInfo(
                 state = it.stateCompat(),

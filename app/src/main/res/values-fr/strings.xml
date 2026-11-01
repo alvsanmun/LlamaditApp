@@ -197,8 +197,33 @@
         <item>OURS</item>
     </string-array>
 
+    <string name="settings_session_banner">Le mode kiosque est en pause pendant que vous configurez des choses hors de l\'appli (compte Google, Play Store, Paramètres…). Il revient quand vous quittez ce panneau avec la maison, quand vous touchez le bouton ci-dessous ou après 30 minutes sans revenir au panneau.</string>
+    <string name="settings_session_end">Terminer et réactiver le mode kiosque</string>
+    <string name="settings_install_whatsapp_hint">WhatsApp n\'est pas installé. Le bouton ouvre le Play Store sur WhatsApp (il faut un compte Google sur le téléphone). Le mode kiosque reste en pause jusqu\'à votre retour ici : installez-le, ouvrez-le, enregistrez-le avec le numéro de la SIM et revenez.</string>
+    <string name="settings_install_whatsapp">Installer WhatsApp</string>
+
     <string-array name="default_keywords">
         <item>POSITION</item>
         <item>OU ES TU</item>
     </string-array>
+
+    <string name="home_item_radio">Radio</string>
+    <string name="notification_channel_radio">Radio</string>
+    <string name="radio_stop">Arrêter</string>
+    <string name="radio_none">Le proche aidant n\'a encore choisi aucune station.</string>
+    <string name="settings_radio_title">Radio</string>
+    <string name="settings_radio_hint">Radio par internet : la personne touche le logo d\'une station et elle continue en arrière-plan, même écran éteint, jusqu\'à ce qu\'elle touche le bouton rouge ou que l\'arrêt automatique arrive. Pendant un appel, elle se tait et revient après avoir raccroché. Pensez à activer le bouton Radio dans « Écran d\'accueil ».</string>
+    <string name="radio_data_note">La radio utilise internet (données mobiles) : environ 30 à 60 Mo par heure d\'écoute, 1 à 2 Go par mois à raison d\'une heure par jour. C\'est la seule partie de LlamaditApp qui se connecte à internet ; rien d\'autre n\'est envoyé nulle part.</string>
+    <string name="radio_no_stations">Aucune station pour l\'instant. Ajoutez-les ci-dessous.</string>
+    <string name="radio_stations_hint">Ordre des stations sur l\'écran de la radio. Touchez un logo pour choisir une autre image dans la galerie (certaines stations n\'ont pas de logo).</string>
+    <string name="radio_sleep_title">S\'éteindre seule après</string>
+    <string name="radio_sleep_never">Jamais</string>
+    <string name="radio_sleep_minutes">%1$d min</string>
+    <string name="radio_sleep_hours">%1$d h</string>
+    <string name="radio_add_title">Ajouter des stations</string>
+    <string name="radio_top">Les plus écoutées du pays</string>
+    <string name="radio_search_hint">Nom de la station</string>
+    <string name="radio_search">Rechercher</string>
+    <string name="radio_no_connection">Impossible de se connecter à l\'annuaire des stations (radio-browser.info). Les données mobiles ou le Wi-Fi sont-ils activés ?</string>
+    <string name="radio_no_results">Aucune station ne porte ce nom.</string>
 </resources>

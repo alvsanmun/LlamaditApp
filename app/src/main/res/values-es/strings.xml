@@ -197,8 +197,33 @@
         <item>OSO</item>
     </string-array>
 
+    <string name="settings_session_banner">El modo quiosco está en pausa mientras configuras cosas fuera de la app (cuenta de Google, Play Store, Ajustes…). Vuelve al salir de este panel con la casa, al pulsar el botón de abajo o a los 30 minutos sin volver al panel.</string>
+    <string name="settings_session_end">Terminar y activar el modo quiosco</string>
+    <string name="settings_install_whatsapp_hint">WhatsApp no está instalado. El botón abre Play Store en WhatsApp (hace falta una cuenta de Google en el móvil). El modo quiosco queda en pausa hasta que vuelvas aquí: instálalo, ábrelo, regístralo con el número de la SIM y vuelve.</string>
+    <string name="settings_install_whatsapp">Instalar WhatsApp</string>
+
     <string-array name="default_keywords">
         <item>UBICACION</item>
         <item>DONDE ESTAS</item>
     </string-array>
+
+    <string name="home_item_radio">Radio</string>
+    <string name="notification_channel_radio">Radio</string>
+    <string name="radio_stop">Parar</string>
+    <string name="radio_none">El cuidador aún no ha elegido ninguna emisora.</string>
+    <string name="settings_radio_title">Radio</string>
+    <string name="settings_radio_hint">Radio por internet: la persona toca el logotipo de una emisora y sigue sonando de fondo, también con la pantalla apagada, hasta que toca el botón rojo o llega el apagado automático. Durante una llamada se calla y vuelve al colgar. Recuerda activar el botón Radio en \"Pantalla principal\".</string>
+    <string name="radio_data_note">La radio usa internet (datos móviles): unos 30 a 60 MB por hora de escucha, de 1 a 2 GB al mes escuchando una hora al día. Es lo único de LlamaditApp que se conecta a internet; no se envía nada más a ningún sitio.</string>
+    <string name="radio_no_stations">Aún no hay emisoras. Añádelas abajo.</string>
+    <string name="radio_stations_hint">Orden de las emisoras en la pantalla de la radio. Toca un logotipo para elegir otro dibujo de la galería (algunas emisoras no tienen logotipo).</string>
+    <string name="radio_sleep_title">Apagar sola después de</string>
+    <string name="radio_sleep_never">Nunca</string>
+    <string name="radio_sleep_minutes">%1$d min</string>
+    <string name="radio_sleep_hours">%1$d h</string>
+    <string name="radio_add_title">Añadir emisoras</string>
+    <string name="radio_top">Las más escuchadas del país</string>
+    <string name="radio_search_hint">Nombre de la emisora</string>
+    <string name="radio_search">Buscar</string>
+    <string name="radio_no_connection">No se ha podido conectar con el directorio de emisoras (radio-browser.info). ¿Están activados los datos móviles o el Wi-Fi?</string>
+    <string name="radio_no_results">No hay ninguna emisora con ese nombre.</string>
 </resources>

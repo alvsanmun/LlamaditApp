@@ -36,4 +36,6 @@ val BateriaBaja = Color(0xFFE53935)
 val CianWhatsApp = Color(0xFF7CB342)
 /** Ejercicios: rosa oscuro, distinto del rojo del SOS. */
 val RosaEjercicios = Color(0xFFAD1457)
+/** Radio: añil, distinto del azul del teclado y del morado de las perdidas. */
+val AnilRadio = Color(0xFF3949AB)
 val GrisBoton = Color(0xFF455A64)

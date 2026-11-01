@@ -14,8 +14,8 @@ android {
         applicationId = "com.launcherfacil.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 7
-        versionName = "1.5"
+        versionCode = 8
+        versionName = "1.6"
     }
 
     // Firma de la versión final: datos en keystore.properties (fuera de git).
@@ -66,5 +66,8 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    // Radio por internet (Media3 / ExoPlayer, Apache 2.0). HLS: algunas emisoras (Onda Cero…) emiten así.
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.exoplayer.hls)
     debugImplementation(libs.androidx.ui.tooling)
 }

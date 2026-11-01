@@ -219,9 +219,21 @@ Un botón opcional (rosa, con una pieza de puzle) con ejercicios para mantener l
   <img src="img/capturas/42-ejercicio-puzle.jpg" alt="Puzle con la foto de un familiar" width="180">
 </p>
 
-Atrás (o la flecha de abajo) vuelve al menú de ejercicios; la casa de arriba, a la pantalla principal.
+La casa de arriba (o la flecha de abajo) vuelve a la pantalla principal.
 
-## 13. Modo quiosco
+## 13. Radio
+
+Un botón opcional (añil, con una radio) para escuchar la radio por internet. Al pulsarlo salen, en grande, los **logotipos de las emisoras** que ha elegido el cuidador (o su nombre sobre un color, si la emisora no tiene logotipo; el cuidador puede ponerle cualquier dibujo de la galería).
+
+- **Tocar un logotipo** pone esa emisora: le sale un marco verde y un altavoz, y "late". Tocar otro cambia de emisora.
+- **Sigue sonando de fondo**: al volver a la pantalla principal (el botón de la radio sigue latiendo para recordar que está puesta) y con la pantalla apagada.
+- El **botón rojo** de abajo la apaga. También se apaga sola tras el tiempo que elige el cuidador (por defecto, 1 hora desde que se eligió la emisora).
+- Mientras suena, los **botones de volumen** cambian el volumen de la radio (con el mismo panel grande). Nunca baja a cero: para callarla está el botón rojo.
+- **Calla durante las llamadas** (también mientras suena el teléfono) y vuelve sola al colgar.
+- Si se corta (por ejemplo, sin cobertura), lo vuelve a intentar unas veces. Si no lo consigue, la emisora queda con un marco rojo y un aspa.
+- Gasta **datos móviles**: unos 30 a 60 MB por hora de escucha. Es lo único de LlamaditApp que usa internet.
+
+## 14. Modo quiosco
 
 - La persona **no puede salir** de LlamaditApp: no hay botón de inicio, ni de apps recientes, ni panel de notificaciones.
 - Solo se pueden abrir LlamaditApp, WhatsApp (para las videollamadas) y las pantallas de llamada del sistema.
@@ -285,6 +297,7 @@ Atrás (o la flecha de abajo) vuelve al menú de ejercicios; la casa de arriba, 
 |---|---|
 | **Pantalla principal** | Vista previa en pequeño y, por cada elemento, flechas ↑ y ↓ para moverlo, su tamaño (**pequeño** y **mediano** ocupan media fila, **grande** la fila entera) y un interruptor para ocultarlo. El reloj no se puede ocultar. "Volver al diseño original" lo deja como venía. |
 | **Ejercicios** | Un interruptor por ejercicio, su **nivel** (el actual; tocar otro número lo cambia) y cuántas partidas lleva y cuántas bien hechas. El botón se activa en *Pantalla principal*. |
+| **Radio** | Aviso del consumo de datos. Las **emisoras elegidas**, con flechas ↑ y ↓ para el orden, una ✕ para quitarlas y, tocando el logotipo, otro dibujo de la galería. **"Apagar sola después de"**: 30 min, 1 h (por defecto), 2 h, 3 h o nunca. **Añadir emisoras**: "Las más escuchadas del país" (el de la SIM) o buscando por nombre, y el botón **+** de cada una. Las emisoras salen del directorio libre [radio-browser.info](https://www.radio-browser.info). El botón se activa en *Pantalla principal*. |
 | **Volver a casa** | Marcar la casa con **"Usar mi ubicación actual"** (estando en ella) o escribiendo la dirección y **"Buscar esta dirección en el mapa"**. La dirección se puede corregir (piso, puerta). **"Probar la ruta"** abre la navegación una vez para aceptar las pantallas iniciales de Google Maps. El botón se activa en *Pantalla principal*. **Foto del portal** (hacerla con la cámara o elegirla de la galería) y **"Avisar por SMS al pulsar el botón"** (al contacto del SOS, activado por defecto) y **"Enviar la ubicación cada 10 minutos durante la ruta"** (desactivado por defecto). Al activar una función que envía SMS, el panel avisa de que, según la tarifa de la línea, los SMS podrían cobrarse. |
 | **Dibujo del botón SOS** | Las letras **SOS** (por defecto), una **ambulancia**, una **cruz**, una **sirena**, un **corazón** o una **señal de peligro**: el que mejor reconozca la persona. |
 | **Botón para volver** | Cómo se sale de cada pantalla: la **casa grande de arriba** (por defecto), que vuelve a la pantalla principal, o una **flecha fija abajo a la izquierda**, como el botón Atrás de Android pero más grande (en un mensaje abierto vuelve a la lista). El cambio se ve al momento. |
@@ -292,13 +305,13 @@ Atrás (o la flecha de abajo) vuelve al menú de ejercicios; la casa de arriba, 
 | **Contactos desde una cuenta de Google** | Las cuentas de Google del móvil, cuántos favoritos (★) trae cada una y si sus contactos se sincronizan solos; botones **"Sincronizar ahora"** y **"Añadir una cuenta de Google"**. Así los contactos (nombre, foto y teléfono) se pueden gestionar desde cualquier móvil u ordenador en [contacts.google.com](https://contacts.google.com), marcándolos con la estrella. Conviene una cuenta solo para este móvil. |
 | **Contacto para el SOS** | A quién llama y avisa el botón SOS. |
 | **Pueden pedir la ubicación por SMS** | Qué favoritos pueden pedir la ubicación. |
-| **Tienen WhatsApp (videollamada)** | Marcar quién usa WhatsApp: aparecerá en el botón de videollamada. |
+| **Tienen WhatsApp (videollamada)** | Marcar quién usa WhatsApp: aparecerá en el botón de videollamada. Si WhatsApp no está instalado, **Instalar WhatsApp** abre Play Store directamente en él. |
 | **Palabras clave** | Las palabras que deben enviar para pedir la ubicación, separadas por comas. Por defecto dependen del idioma del teléfono (`UBICACION` y `DONDE ESTAS` en español, `LOCATION` y `WHERE ARE YOU` en inglés…). |
 | **WhatsApp completo** | Explica el botón "WhatsApp (chats)" (se activa en *Pantalla principal*) y comprueba el permiso de la pestaña para volver, con un botón para darlo si falta. |
 | **Llamadas de WhatsApp** | Activar el "acceso a notificaciones", necesario para ver las videollamadas entrantes con la pantalla propia. |
 | **Seguridad** | Cambiar el PIN. |
 | **Wi-Fi** | Apagado y bloqueado por defecto (solo la SIM). Al encenderlo aparece **"Elegir una red Wi-Fi"**, que abre los Ajustes de Android para conectarse. Al apagarlo se vuelve a bloquear; las redes guardadas se recuerdan. |
-| **Otras apps** | Abrir **Contactos** (añadir personas, fotos y favoritos ★) o los **Ajustes de Android**. El quiosco se pausa mientras tanto y vuelve al regresar. |
+| **Otras apps** | Abrir **Contactos** (añadir personas, fotos y favoritos ★) o los **Ajustes de Android**. El quiosco queda en pausa mientras tanto (el panel lo avisa arriba) y vuelve al salir del panel con la casa, con **Terminar y activar el modo quiosco** o a los 30 minutos sin volver. |
 | **Modo quiosco** | **Pausar** (el móvil se usa con normalidad, por ejemplo para instalar algo) y **Activar** de nuevo, sin ordenador. |
 | **Quitar el Device Owner** | Solo para desinstalar LlamaditApp o entregar el móvil a otra persona. Volver a activar el quiosco exige un ordenador. |
 | **Acerca de** | Versión de la app, copyright, licencia (GNU AGPL v3) y dirección del código fuente. |
@@ -319,7 +332,7 @@ Atrás (o la flecha de abajo) vuelve al menú de ejercicios; la casa de arriba, 
 - **Usa una cuenta de Google solo para este móvil** si vas a gestionar los contactos desde contacts.google.com. Con tu cuenta personal también aparecerían tus propios contactos favoritos.
 - **Pulsa una vez "Probar la ruta"** después de marcar la casa y acepta las pantallas de bienvenida de Google Maps, para que la persona no se las encuentre.
 - **Haz la foto del portal de día y desde la acera**, como lo vería la persona al llegar: que se vea la puerta, el número y algo reconocible (una tienda, un árbol, el color de la fachada).
-- **Comprueba la tarifa** con el operador: que incluya SMS (para el SOS y los avisos) y algo de datos móviles (para WhatsApp, Google Maps y la sincronización de contactos).
+- **Comprueba la tarifa** con el operador: que incluya SMS (para el SOS y los avisos) y algo de datos móviles (para WhatsApp, Google Maps y la sincronización de contactos). Si se usa la radio, bastante más: 1 a 2 GB al mes escuchando una hora al día.
 - **Configura el número de este móvil en el teléfono del cuidador** para que sus llamadas y SMS suenen aunque esté en silencio (ver la [configuración recomendada](CONFIGURACION.md)).
 
 ---

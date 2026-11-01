@@ -26,6 +26,7 @@ Esta guía explica, con capturas de cada pantalla, cómo dejar un móvil Android
    - [9.3. Wi-Fi (opcional)](#93-wi-fi-opcional)
    - [9.4. WhatsApp completo (opcional)](#94-whatsapp-completo-opcional)
    - [9.5. Ejercicios (opcional)](#95-ejercicios-opcional)
+   - [9.6. Radio (opcional)](#96-radio-opcional)
 10. [WhatsApp (opcional)](#10-whatsapp-opcional)
 11. [Ajuste de batería recomendado](#11-ajuste-de-batería-recomendado)
 12. [Comprobar que todo funciona y entregar el móvil](#12-comprobar-que-todo-funciona-y-entregar-el-móvil)
@@ -289,7 +290,7 @@ La persona verá **solo las fotos** de los contactos marcados con una **estrella
 
 1. **Crea una cuenta de Google solo para este móvil** (por ejemplo, una dirección del tipo *nombre.llamadita@gmail.com*) desde tu ordenador en [accounts.google.com](https://accounts.google.com). Si usas tu cuenta personal, también aparecerán en el móvil tus propios contactos favoritos.
 2. En el panel del cuidador, sección **Contactos desde una cuenta de Google**, pulsa **Añadir una cuenta de Google** e inicia sesión con esa cuenta. Como el móvil lo gestiona LlamaditApp, Google lo llama "cuenta de trabajo": es normal, escribe el correo igualmente.
-3. Vuelve a LlamaditApp. La cuenta aparece en el panel con el número de **favoritos (★)** que trae. Deja activado **Sincronizar los contactos automáticamente**.
+3. Vuelve a LlamaditApp con la flecha de atrás: el panel sigue abierto y el modo quiosco en pausa hasta que salgas de él, así que el inicio de sesión no se corta. La cuenta aparece en el panel con el número de **favoritos (★)** que trae. Deja activado **Sincronizar los contactos automáticamente**.
 4. Desde **cualquier ordenador o móvil**, entra en [contacts.google.com](https://contacts.google.com) con esa cuenta y **crea el contacto**: nombre, teléfono y **foto** (de cerca de la cara).
 5. **Márcalo con la estrella ☆** (favorito). Sin la estrella no aparecerá en LlamaditApp.
 6. En unos minutos llega al móvil (necesita datos móviles o Wi-Fi). Para no esperar, pulsa **Sincronizar ahora** en el panel.
@@ -424,19 +425,31 @@ Ocho ejercicios para mantener la memoria, la atención y el cálculo: cálculos 
 
 Pulsa la **casa** de arriba (o la flecha de abajo) para volver a la pantalla principal.
 
+### 9.6. Radio (opcional)
+
+La persona puede escuchar la radio tocando el logotipo de una emisora. Usa **datos móviles** (unos 30 a 60 MB por hora), así que conviene una tarifa con datos suficientes.
+
+1. En la sección **Radio** del panel, pulsa **Las más escuchadas del país** o busca una emisora por su nombre, y pulsa el **+** de las que quieras (mejor pocas: 4 a 6).
+2. Ordénalas con las flechas ↑ ↓ y elige cuándo se **apaga sola** (por defecto, a la hora).
+3. En **Pantalla principal**, activa el interruptor de **Radio**.
+4. Pruébala: toca un logotipo y comprueba que suena y que los botones de volumen la suben y la bajan. El botón rojo la para.
+
+Todo está explicado en las [funciones](FUNCIONES.md#13-radio).
+
 ---
 
 ## 10. WhatsApp (opcional)
 
 Solo si la persona va a hacer **videollamadas de WhatsApp**.
 
-1. En el panel del cuidador pulsa **Pausar el modo quiosco**. El móvil se podrá usar con normalidad mientras tanto.
-2. Si no añadiste ya una **cuenta de Google** (paso 8, opción B), pulsa **Abrir Ajustes de Android** y añádela: **Cuentas y copia de seguridad → Administrar cuentas → Añadir cuenta → Google**.
-3. Abre **Play Store**: en Ajustes ve a **Aplicaciones → Google Play Store → Abrir**. Busca e instala **WhatsApp**, ábrelo y regístralo con el número de la SIM (llegará un SMS con un código).
-4. En Play Store, toca tu foto de perfil → **Ajustes → Preferencias de red → Actualizar aplicaciones automáticamente → Usando cualquier red**.
-5. **Que WhatsApp no se duerma** (imprescindible): si no, las videollamadas pueden no sonar. **Samsung:** **Ajustes → Batería → Límites de uso en segundo plano → Aplicaciones sin autoinactivación → +**, marca **WhatsApp** y pulsa **Añadir** (capturas en el [apartado 11](#11-ajuste-de-batería-recomendado)). **Otros móviles:** **Ajustes → Aplicaciones → WhatsApp → Batería → Sin restricciones**.
-6. Pulsa el botón de **inicio** del móvil para volver a LlamaditApp, entra en el panel (reloj 5 segundos y PIN) y pulsa **Activar el modo quiosco**.
-7. En **Tienen WhatsApp (videollamada)**, marca a las personas que usan WhatsApp.
+1. Si no añadiste ya una **cuenta de Google** (paso 8, opción B), añádela: Play Store la necesita.
+2. En el panel, sección **Tienen WhatsApp (videollamada)**, pulsa **Instalar WhatsApp**. Se abre Play Store directamente en WhatsApp: pulsa **Instalar**, luego **Abrir**, y regístralo con el número de la SIM (llegará un SMS con un código).
+3. En Play Store, toca tu foto de perfil → **Ajustes → Preferencias de red → Actualizar aplicaciones automáticamente → Usando cualquier red**.
+4. **Que WhatsApp no se duerma** (imprescindible): si no, las videollamadas pueden no sonar. Desde el panel, **Abrir Ajustes de Android** → **Samsung:** **Batería → Límites de uso en segundo plano → Aplicaciones sin autoinactivación → +**, marca **WhatsApp** y pulsa **Añadir** (capturas en el [apartado 11](#11-ajuste-de-batería-recomendado)). **Otros móviles:** **Aplicaciones → WhatsApp → Batería → Sin restricciones**.
+5. Vuelve a LlamaditApp con la flecha de atrás (o el botón de inicio del móvil): sigue abierto el panel. En **Tienen WhatsApp (videollamada)**, marca a las personas que usan WhatsApp.
+6. Sal del panel con la **casa** (o pulsa **Terminar y activar el modo quiosco**). Al salir, LlamaditApp le da a WhatsApp los permisos de cámara, micrófono y contactos.
+
+> 💡 Mientras configuras cosas fuera de LlamaditApp (Play Store, la cuenta de Google, los Ajustes…), **el modo quiosco queda en pausa** y el panel avisa arriba con un recuadro amarillo. Así el móvil no salta a la pantalla principal a mitad del proceso, aunque se apague la pantalla esperando una descarga. El quiosco vuelve al salir del panel, al pulsar **Terminar y activar el modo quiosco** o, si se te olvida, a los 30 minutos sin volver al panel.
 
 ---
 

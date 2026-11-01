@@ -71,6 +71,8 @@ fun HomeScreen(
     onGoHome: () -> Unit = {},
     onWhatsAppApp: () -> Unit = {},
     onExercises: () -> Unit = {},
+    onRadio: () -> Unit = {},
+    radioOn: Boolean = false,
     whatsAppUnread: Int = 0,
     newSms: Int = 0,
     newMissedCalls: Int = 0,
@@ -122,6 +124,11 @@ fun HomeScreen(
                                 SmallTileWithBadge(CianWhatsApp, R.drawable.ic_chat, whatsAppUnread, onWhatsAppApp, modifier, fraction)
                             HomeItem.EXERCISES -> BigTile(RosaEjercicios, onExercises, modifier) {
                                 TileIcon(R.drawable.ic_extension, fraction)
+                            }
+                            // Mientras suena la radio, su botón "late": así se sabe que está
+                            // puesta y dónde hay que tocar para apagarla.
+                            HomeItem.RADIO -> BigTile(AnilRadio, onRadio, modifier.pulsing(radioOn)) {
+                                TileIcon(R.drawable.ic_radio, fraction)
                             }
                             HomeItem.GO_HOME -> BigTile(MarronCasa, onGoHome, modifier) {
                                 TileIcon(R.drawable.ic_go_home, fraction)

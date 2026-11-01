@@ -48,6 +48,9 @@ import com.launcherfacil.app.gohome.MAPS_PACKAGE
  * la app se comporta como un launcher normal (útil para desarrollar).
  */
 object Kiosk {
+    /** Lo que dura la pausa del quiosco si el cuidador no vuelve al panel (se alarga al volver). */
+    private const val CAREGIVER_SESSION_MS = 30 * 60 * 1000L
+
     private const val TAG = "Kiosk"
 
     // Ventana de actualizaciones del sistema, en minutos desde medianoche.
@@ -331,7 +334,7 @@ object Kiosk {
      * Al volver al launcher, [enterLockTask] lo vuelve a bloquear.
      */
     fun pauseAndOpen(activity: Activity, intent: Intent): Boolean {
-        if (isLocked(activity)) activity.stopLockTask()
+        startCaregiverSession(activity)
         return try {
             activity.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             true
@@ -366,7 +369,51 @@ object Kiosk {
         Log.w(TAG, "Modo quiosco desactivado y Device Owner eliminado")
     }
 
-    fun isPaused(context: Context): Boolean = CaregiverSettings(context).kioskPaused
+    fun isPaused(context: Context): Boolean = CaregiverSettings(context).kioskPaused || inCaregiverSession(context)
+
+    /** El cuidador está configurando algo fuera de la app: el quiosco espera. */
+    fun inCaregiverSession(context: Context): Boolean =
+        CaregiverSettings(context).caregiverSessionUntil > System.currentTimeMillis()
+
+    /**
+     * Pausa el quiosco mientras el cuidador configura algo fuera de la app (añadir una
+     * cuenta de Google, instalar WhatsApp, elegir el Wi-Fi…). Antes solo se quitaba el
+     * bloqueo un momento y, en cuanto LlamaditApp asomaba entre dos pantallas, se volvía
+     * a bloquear y cortaba el proceso (y las apps ocultas, como Chrome, seguían ocultas).
+     * Ahora dura hasta que el cuidador vuelve a la pantalla principal o pulsa "Terminar"
+     * en el panel, o como mucho [CAREGIVER_SESSION_MS] sin volver al panel.
+     */
+    fun startCaregiverSession(activity: Activity) {
+        if (!isDeviceOwner(activity) || CaregiverSettings(activity).kioskPaused) return
+        val first = !inCaregiverSession(activity)
+        CaregiverSettings(activity).caregiverSessionUntil = System.currentTimeMillis() + CAREGIVER_SESSION_MS
+        if (isLocked(activity)) activity.stopLockTask()
+        if (first) {
+            setHidden(activity, false)
+            applyMaps(activity)
+            Log.i(TAG, "Configuración del cuidador: quiosco en pausa")
+        }
+    }
+
+    /** El cuidador sigue en el panel: la pausa se alarga. */
+    fun touchCaregiverSession(context: Context) {
+        if (inCaregiverSession(context)) {
+            CaregiverSettings(context).caregiverSessionUntil = System.currentTimeMillis() + CAREGIVER_SESSION_MS
+        }
+    }
+
+    /**
+     * Fin de la configuración: se vuelve a aplicar todo el quiosco (también concede los
+     * permisos a WhatsApp si se acaba de instalar) y se bloquea.
+     */
+    fun endCaregiverSession(activity: Activity) {
+        val settings = CaregiverSettings(activity)
+        if (settings.caregiverSessionUntil == 0L) return
+        settings.caregiverSessionUntil = 0L
+        configure(activity)
+        enterLockTask(activity)
+        Log.i(TAG, "Configuración del cuidador terminada: quiosco activo")
+    }
 
     /**
      * Pausa el quiosco SIN dejar de ser Device Owner: se quita el bloqueo y vuelven a
@@ -383,6 +430,7 @@ object Kiosk {
     /** Vuelve a activar el quiosco tras [pause]. */
     fun resume(activity: Activity) {
         CaregiverSettings(activity).kioskPaused = false
+        CaregiverSettings(activity).caregiverSessionUntil = 0L
         configure(activity)
         enterLockTask(activity)
         Log.i(TAG, "Modo quiosco activo de nuevo")
@@ -390,7 +438,13 @@ object Kiosk {
 
     /** Entra en Lock Task si es Device Owner, no está en pausa y aún no está dentro. */
     fun enterLockTask(activity: Activity) {
-        if (!isDeviceOwner(activity) || isPaused(activity)) return
+        if (!isDeviceOwner(activity)) return
+        // La pausa del cuidador ha caducado (se olvidó de terminar): quiosco de nuevo.
+        if (CaregiverSettings(activity).caregiverSessionUntil != 0L && !inCaregiverSession(activity)) {
+            endCaregiverSession(activity)
+            return
+        }
+        if (isPaused(activity)) return
         val am = activity.getSystemService(ActivityManager::class.java)
         if (am.lockTaskModeState != ActivityManager.LOCK_TASK_MODE_NONE) return
         // Recién nombrada Device Owner con la app ya abierta (en Samsung no se puede

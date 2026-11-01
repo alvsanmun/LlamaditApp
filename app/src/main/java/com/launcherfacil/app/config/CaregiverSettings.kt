@@ -49,6 +49,7 @@ class CaregiverSettings(context: Context) {
         private const val KEY_HOUSE_ADDRESS = "house_address"
         private const val KEY_GO_HOME_ALERT = "go_home_alert"
         private const val KEY_GO_HOME_UPDATES = "go_home_updates"
+        private const val KEY_CAREGIVER_SESSION = "caregiver_session_until"
     }
 
     private val appContext = context.applicationContext
@@ -109,6 +110,14 @@ class CaregiverSettings(context: Context) {
     var kioskPaused: Boolean
         get() = prefs.getBoolean(KEY_KIOSK_PAUSED, false)
         set(value) = prefs.edit { putBoolean(KEY_KIOSK_PAUSED, value) }
+
+    /**
+     * Hasta cuándo (hora en milisegundos) dura la pausa del quiosco mientras el cuidador
+     * configura algo fuera de la app (cuenta de Google, Play Store, Ajustes…). 0 = no hay.
+     */
+    var caregiverSessionUntil: Long
+        get() = prefs.getLong(KEY_CAREGIVER_SESSION, 0L)
+        set(value) = prefs.edit { putLong(KEY_CAREGIVER_SESSION, value) }
 
     // --- Orden de los favoritos (el mismo en Llamar y en Videollamada) ---
 

@@ -197,8 +197,33 @@
         <item>URSO</item>
     </string-array>
 
+    <string name="settings_session_banner">O modo quiosque está em pausa enquanto configuras coisas fora da app (conta Google, Play Store, Definições…). Volta ao sair deste painel com a casa, ao tocar no botão de baixo ou ao fim de 30 minutos sem voltar ao painel.</string>
+    <string name="settings_session_end">Terminar e ativar o modo quiosque</string>
+    <string name="settings_install_whatsapp_hint">O WhatsApp não está instalado. O botão abre a Play Store no WhatsApp (é preciso uma conta Google no telemóvel). O modo quiosque fica em pausa até voltares aqui: instala-o, abre-o, regista-o com o número do SIM e volta.</string>
+    <string name="settings_install_whatsapp">Instalar o WhatsApp</string>
+
     <string-array name="default_keywords">
         <item>LOCALIZACAO</item>
         <item>ONDE ESTAS</item>
     </string-array>
+
+    <string name="home_item_radio">Rádio</string>
+    <string name="notification_channel_radio">Rádio</string>
+    <string name="radio_stop">Parar</string>
+    <string name="radio_none">O cuidador ainda não escolheu nenhuma estação.</string>
+    <string name="settings_radio_title">Rádio</string>
+    <string name="settings_radio_hint">Rádio pela internet: a pessoa toca no logótipo de uma estação e continua a tocar em segundo plano, também com o ecrã desligado, até tocar no botão vermelho ou chegar o desligar automático. Durante uma chamada fica em silêncio e volta ao desligar. Lembre-se de ativar o botão Rádio em \"Ecrã principal\".</string>
+    <string name="radio_data_note">A rádio usa a internet (dados móveis): cerca de 30 a 60 MB por hora, 1 a 2 GB por mês a ouvir uma hora por dia. É a única parte da LlamaditApp que se liga à internet; nada mais é enviado para lado nenhum.</string>
+    <string name="radio_no_stations">Ainda não há estações. Adicione-as abaixo.</string>
+    <string name="radio_stations_hint">Ordem das estações no ecrã da rádio. Toque num logótipo para escolher outra imagem da galeria (algumas estações não têm logótipo).</string>
+    <string name="radio_sleep_title">Desligar sozinha depois de</string>
+    <string name="radio_sleep_never">Nunca</string>
+    <string name="radio_sleep_minutes">%1$d min</string>
+    <string name="radio_sleep_hours">%1$d h</string>
+    <string name="radio_add_title">Adicionar estações</string>
+    <string name="radio_top">As mais ouvidas do país</string>
+    <string name="radio_search_hint">Nome da estação</string>
+    <string name="radio_search">Procurar</string>
+    <string name="radio_no_connection">Não foi possível ligar ao diretório de estações (radio-browser.info). Os dados móveis ou o Wi-Fi estão ativos?</string>
+    <string name="radio_no_results">Não há nenhuma estação com esse nome.</string>
 </resources>
