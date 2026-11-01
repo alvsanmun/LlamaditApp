@@ -86,7 +86,8 @@ fun HomeLayoutEditor(layout: List<HomeEntry>, sosIcon: SosIcon, onChange: (List<
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(16.dp))
-                .background(Color.White.copy(alpha = 0.05f))
+                .background(CgCard)
+                .border(1.dp, CgBorder, RoundedCornerShape(16.dp))
                 .padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
@@ -94,7 +95,7 @@ fun HomeLayoutEditor(layout: List<HomeEntry>, sosIcon: SosIcon, onChange: (List<
                 ItemBadge(entry.item, sosIcon)
                 Text(
                     stringResource(entry.item.label()),
-                    color = if (entry.visible) TextoClaro else TextoSuave,
+                    color = if (entry.visible) CgInk else CgMuted,
                     fontSize = 18.sp,
                     modifier = Modifier.weight(1f).padding(start = 12.dp)
                 )
@@ -115,7 +116,7 @@ fun HomeLayoutEditor(layout: List<HomeEntry>, sosIcon: SosIcon, onChange: (List<
                     Spacer(Modifier.weight(1f))
                 }
                 if (entry.item == HomeItem.CLOCK) {
-                    Text(stringResource(R.string.settings_home_always_visible), color = TextoSuave, fontSize = 14.sp)
+                    Text(stringResource(R.string.settings_home_always_visible), color = CgMuted, fontSize = 14.sp)
                 } else {
                     Switch(checked = entry.visible, onCheckedChange = { update(index, entry.copy(visible = it)) })
                 }
@@ -175,7 +176,7 @@ fun SosIconPicker(selected: SosIcon, onSelect: (SosIcon) -> Unit) {
                         .clip(shape)
                         .background(RojoSos)
                         .then(
-                            if (icon == selected) Modifier.border(5.dp, TextoClaro, shape)
+                            if (icon == selected) Modifier.border(5.dp, CgInk, shape)
                             else Modifier
                         )
                         .clickable { onSelect(icon) }
@@ -227,14 +228,14 @@ private fun SizeChip(text: String, selected: Boolean, enabled: Boolean, onClick:
         Modifier
             .height(40.dp)
             .clip(RoundedCornerShape(20.dp))
-            .background(if (selected) Color(0xFF90CAF9) else GrisBoton)
+            .background(if (selected) CgAccent else CgNeutral)
             .clickable(enabled = enabled, onClick = onClick)
             .padding(horizontal = 12.dp),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text,
-            color = if (selected) Color.Black else if (enabled) TextoClaro else TextoSuave,
+            color = if (selected) Color.White else if (enabled) CgInk else CgChevron,
             fontSize = 15.sp
         )
     }
@@ -247,11 +248,11 @@ private fun TextButtonLike(text: String, onClick: () -> Unit) {
             .fillMaxWidth()
             .height(52.dp)
             .clip(RoundedCornerShape(26.dp))
-            .border(2.dp, GrisBoton, RoundedCornerShape(26.dp))
+            .border(2.dp, CgBorder, RoundedCornerShape(26.dp))
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
-        Text(text, color = TextoClaro, fontSize = 17.sp)
+        Text(text, color = CgInk, fontSize = 17.sp, fontWeight = FontWeight.Bold)
     }
 }
 
@@ -291,8 +292,9 @@ fun BackButtonPicker(selected: BackButton, onSelect: (BackButton) -> Unit) {
                 Modifier
                     .weight(1f)
                     .clip(shape)
-                    .background(Color.White.copy(alpha = 0.05f))
-                    .then(if (option == selected) Modifier.border(4.dp, TextoClaro, shape) else Modifier)
+                    .background(CgCard)
+                .border(1.dp, CgBorder, RoundedCornerShape(16.dp))
+                    .then(if (option == selected) Modifier.border(4.dp, CgAccent, shape) else Modifier)
                     .clickable { onSelect(option) }
                     .padding(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -334,7 +336,7 @@ fun BackButtonPicker(selected: BackButton, onSelect: (BackButton) -> Unit) {
                 }
                 Text(
                     stringResource(if (option == BackButton.HOUSE_TOP) R.string.settings_back_house else R.string.settings_back_arrow),
-                    color = if (option == selected) TextoClaro else TextoSuave,
+                    color = if (option == selected) CgInk else CgMuted,
                     fontSize = 15.sp,
                     textAlign = TextAlign.Center
                 )

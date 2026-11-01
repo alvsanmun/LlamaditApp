@@ -29,6 +29,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import com.launcherfacil.app.ui.LightStatusBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -89,7 +99,9 @@ fun ExercisesScreen(onHome: () -> Unit) {
             CaregiverMessage(stringResource(R.string.exercises_none))
         }
         current != null -> {
-            ExerciseHost(current, progress, onHome) { level, onDone ->
+            // Con un solo ejercicio no hay menú: "volver a los juegos" vuelve al inicio.
+            val onMenu = if (enabled.size > 1) ({ selected = null }) else onHome
+            ExerciseHost(current, progress, onHome, onMenu) { level, onDone ->
                 when (current) {
                     Exercise.MATH -> MathExercise(level, onDone)
                     Exercise.PAIRS -> PairsExercise(level, onDone)
@@ -102,27 +114,60 @@ fun ExercisesScreen(onHome: () -> Unit) {
                 }
             }
         }
-        else -> Column(
-            Modifier.fillMaxSize().background(Fondo).safeDrawingPadding().padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            HomeBar(onHome)
-            enabled.chunked(2).forEach { row ->
-                Row(Modifier.weight(1f).fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                    row.forEach { exercise ->
-                        BigTile(exercise.color, { selected = exercise }, Modifier.weight(1f).fillMaxHeight()) {
-                            Column(Modifier.fillMaxSize().padding(8.dp)) {
-                                FitText(exercise.emoji, Modifier.weight(1f).fillMaxWidth(), fraction = 0.7f)
-                                LevelStars(progress.level(exercise), size = 20.sp)
-                            }
-                        }
+        else -> GamesMenu(enabled, progress, onHome) { selected = it }
+    }
+}
+
+/**
+ * Menú de juegos (diseño "Juegos · Menú B"): arriba el botón marrón para volver y una
+ * cuadrícula de dos columnas con una tarjeta por juego ([GameCard]).
+ */
+@Composable
+private fun GamesMenu(enabled: List<Exercise>, progress: ExerciseProgress, onHome: () -> Unit, onOpen: (Exercise) -> Unit) {
+    LightStatusBar()
+    Column(
+        Modifier.fillMaxSize().background(GmBg).safeDrawingPadding().padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(14.dp)
+    ) {
+        GameNavButton(onHome, Modifier.fillMaxWidth().height(72.dp))
+        val rows = enabled.chunked(2)
+        rows.forEach { row ->
+            Row(Modifier.weight(1f).fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                row.forEach { exercise ->
+                    GameCard(exercise, progress.level(exercise), Modifier.weight(1f).fillMaxHeight()) {
+                        onOpen(exercise)
                     }
-                    if (row.size == 1) Spacer(Modifier.weight(1f))
+                }
+                if (row.size == 1) Spacer(Modifier.weight(1f))
+            }
+        }
+        // Con pocos juegos, las tarjetas no se estiran hasta abajo.
+        if (rows.size < 4) Spacer(Modifier.weight((4 - rows.size).toFloat()))
+    }
+}
+
+/**
+ * Tarjeta de un juego (diseño "Dibujos 3 · La mano hace la acción"): toda de su color,
+ * con una escena en la que una mano hace lo que se hace en el juego y, abajo, una franja
+ * oscura con cinco barras del nivel (blancas las alcanzadas).
+ */
+@Composable
+private fun GameCard(exercise: Exercise, level: Int, modifier: Modifier, onClick: () -> Unit) {
+    RaisedBox(exercise.color, exercise.dark, modifier, radius = 24.dp, depth = 5.dp, onClick = onClick) {
+        Column(Modifier.fillMaxSize()) {
+            GameArt(exercise, Modifier.weight(1f).fillMaxWidth().padding(horizontal = 6.dp, vertical = 6.dp))
+            Row(
+                Modifier.fillMaxWidth().height(26.dp).background(Color(0x2E000000)),
+                horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterHorizontally),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                repeat(MAX_LEVEL) { i ->
+                    Box(
+                        Modifier.size(width = 20.dp, height = 8.dp).clip(RoundedCornerShape(4.dp))
+                            .background(if (i < level) Color.White else Color.White.copy(alpha = 0.35f))
+                    )
                 }
             }
-            // Con pocos ejercicios, los botones no se estiran hasta abajo.
-            val rows = (enabled.size + 1) / 2
-            if (rows < 3) Box(Modifier.weight((3 - rows).toFloat()))
         }
     }
 }

@@ -19,6 +19,7 @@
 package com.launcherfacil.app.exercises
 
 import android.content.Context
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
 import androidx.core.content.edit
@@ -33,17 +34,20 @@ private const val STREAK_DOWN = 3
 
 /**
  * Ejercicios para mantener la memoria, la atención y el cálculo. Cada uno tiene un
- * dibujo (emoji) y un color para reconocerlo sin leer; el nombre es para el cuidador.
+ * dibujo y un color para reconocerlo sin leer (diseño "Dibujos 3 · La mano hace la
+ * acción"): el color de la tarjeta y uno más oscuro para el relieve. El icono se usa en
+ * el panel; en el menú de juegos va una escena dibujada ([GameArt]). El nombre es para
+ * el cuidador.
  */
-enum class Exercise(val emoji: String, val color: Color, @StringRes val label: Int) {
-    MATH("🔢", Color(0xFF1565C0), R.string.exercise_math),
-    PAIRS("🃏", Color(0xFF6A1B9A), R.string.exercise_pairs),
-    PAINT("🎨", Color(0xFFEF6C00), R.string.exercise_paint),
-    WORDS("🔤", Color(0xFF00838F), R.string.exercise_words),
-    FACES("👪", Color(0xFF2E7D32), R.string.exercise_faces),
-    SEQUENCE("🎵", Color(0xFFC62828), R.string.exercise_sequence),
-    MONEY("💶", Color(0xFF558B2F), R.string.exercise_money),
-    PUZZLE("🧩", Color(0xFF5D4037), R.string.exercise_puzzle),
+enum class Exercise(@DrawableRes val icon: Int, val color: Color, val dark: Color, @StringRes val label: Int) {
+    MATH(R.drawable.ic_game_math, Color(0xFF1565C0), Color(0xFF0D3C7A), R.string.exercise_math),
+    PAIRS(R.drawable.ic_game_pairs, Color(0xFF7B3FA0), Color(0xFF4E2468), R.string.exercise_pairs),
+    PAINT(R.drawable.ic_game_paint, Color(0xFFE65100), Color(0xFF9A3600), R.string.exercise_paint),
+    WORDS(R.drawable.ic_game_words, Color(0xFF00796B), Color(0xFF004D43), R.string.exercise_words),
+    FACES(R.drawable.ic_game_faces, Color(0xFF2E7D32), Color(0xFF1B4D1F), R.string.exercise_faces),
+    SEQUENCE(R.drawable.ic_game_sequence, Color(0xFFC62828), Color(0xFF8A1717), R.string.exercise_sequence),
+    MONEY(R.drawable.ic_game_money, Color(0xFF8D6E00), Color(0xFF5C4800), R.string.exercise_money),
+    PUZZLE(R.drawable.ic_game_puzzle, Color(0xFF5D4037), Color(0xFF3E2723), R.string.exercise_puzzle),
 }
 
 /**

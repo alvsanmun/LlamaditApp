@@ -44,8 +44,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
-import com.launcherfacil.app.ui.AzulTeclado
-import com.launcherfacil.app.ui.BateriaAlta
+import com.launcherfacil.app.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -129,15 +128,15 @@ private fun Card(picture: String, shown: Boolean, matched: Boolean, modifier: Mo
                 cameraDistance = 12 * density
             }
             .clip(shape)
-            .background(if (rotation > 90f) (if (matched) Color(0xFFE8F5E9) else Color.White) else AzulTeclado)
-            .then(if (matched) Modifier.border(4.dp, BateriaAlta, shape) else Modifier)
+            .background(if (rotation > 90f) (if (matched) Color(0xFFE8F5E9) else Color.White) else Exercise.PAIRS.color)
+            .then(if (matched) Modifier.border(5.dp, GmGreen, shape) else Modifier)
             .clickable(onClick = onClick)
     ) {
         if (rotation > 90f) {
             // La cara se dibuja girada para que no salga del revés.
             FitText(picture, Modifier.fillMaxSize().graphicsLayer { rotationY = 180f })
         } else {
-            FitText("?", Modifier.fillMaxSize(), fraction = 0.5f, color = Color(0x88FFFFFF))
+            FitIcon(R.drawable.ic_shape_star, Modifier.fillMaxSize(), fraction = 0.4f, tint = Color(0x99FFFFFF))
         }
     }
 }

@@ -60,8 +60,6 @@ import androidx.compose.ui.unit.dp
 import com.launcherfacil.app.contacts.loadContactPhoto
 import com.launcherfacil.app.contacts.loadFavoriteContacts
 import com.launcherfacil.app.gohome.loadPortalPhoto
-import com.launcherfacil.app.ui.BateriaAlta
-import com.launcherfacil.app.ui.BateriaMedia
 import kotlin.math.min
 
 /** Piezas por lado según el nivel. */
@@ -131,8 +129,8 @@ internal fun PuzzleExercise(level: Int, onDone: (Boolean) -> Unit) {
                         val i = r * n + c
                         val piece = slots[i]
                         val border = when {
-                            selected == i -> Modifier.border(5.dp, BateriaMedia)
-                            hints && piece == i -> Modifier.border(3.dp, BateriaAlta)
+                            selected == i -> Modifier.border(6.dp, Color(0xFFFBC02D))
+                            hints && piece == i -> Modifier.border(4.dp, GmGreen)
                             else -> Modifier.border(1.dp, Color(0x88FFFFFF))
                         }
                         Canvas(

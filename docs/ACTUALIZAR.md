@@ -38,6 +38,8 @@ Se puede saltar versiones: de la 1.1 se pasa directamente a la última.
 2. Baja hasta el final del panel. En **Acerca de** pone la versión instalada (en la captura, **LlamaditApp 1.1**). La última versión está siempre en la [página de descargas](https://github.com/alvsanmun/LlamaditApp/releases/latest).
 3. Un poco más arriba, en **Modo quiosco**, pulsa **Pausar el modo quiosco**. Así el móvil puede mostrar los avisos que hagan falta durante la actualización. Al terminar lo volverás a activar.
 
+> Si ya tienes la **versión 1.7 o posterior**, el panel es distinto: **Pausar** está en la tarjeta azul de arriba de la portada, y la versión, en el apartado **PIN y modo quiosco**, al final (**Acerca de**).
+
 <table><tr>
 <td><img src="img/actualizar/a01-version-y-pausar.jpg" width="260" alt="Panel del cuidador: botón Pausar el modo quiosco y versión 1.1 en Acerca de"></td>
 </tr><tr>
@@ -107,14 +109,14 @@ Fíjate en las líneas **"ya controla este móvil: solo se actualizará"** y **"
 
 <p align="center"><img src="img/actualizar/a04-aviso-pantalla-completa.jpg" width="300" alt="Aviso de Android: Visualización en pantalla completa"></p>
 
-2. Entra en el panel (reloj 5 segundos y **el mismo PIN de siempre**). Comprueba que siguen los contactos, el contacto del SOS y lo demás.
-3. Baja hasta **Modo quiosco** y pulsa **Activar el modo quiosco**. En **Acerca de** ya pone la versión nueva.
+2. Entra en el panel (reloj 5 segundos y **el mismo PIN de siempre**). Desde la versión 1.7 el panel es nuevo: claro y por apartados. Comprueba que siguen los contactos (**Personas**), el contacto del SOS (**Emergencia**) y lo demás.
+3. En la tarjeta azul de arriba de la portada, que dice **Modo quiosco en pausa**, pulsa **Activar**. La versión nueva sale en el apartado **PIN y modo quiosco**, al final (**Acerca de**).
 
 <table><tr>
-<td><img src="img/actualizar/a05-configuracion-conservada.jpg" width="230" alt="El contacto del SOS y el resto de la configuración se conservan"></td>
-<td><img src="img/actualizar/a06-activar-quiosco.jpg" width="230" alt="Activar el modo quiosco y versión 1.3"></td>
+<td><img src="img/actualizar/a05-configuracion-conservada.jpg" width="230" alt="El contacto del SOS se conserva"></td>
+<td><img src="img/actualizar/a06-activar-quiosco.jpg" width="230" alt="Portada del panel con el modo quiosco en pausa y el botón Activar"></td>
 </tr><tr>
-<td align="center">① La configuración sigue igual</td><td align="center">② <b>Activar el modo quiosco</b>.<br>Versión <b>1.3</b> en Acerca de.</td>
+<td align="center">① La configuración sigue igual</td><td align="center">② <b>Activar</b> en la tarjeta azul</td>
 </tr></table>
 
 ✅ **Listo.** La pantalla principal se queda igual que antes; las funciones nuevas vienen **desactivadas** hasta que el cuidador las active.
@@ -127,6 +129,8 @@ Lo nuevo de las últimas versiones, todo desde el panel del cuidador:
 
 | Novedad | Dónde se explica |
 |---|---|
+| **Panel del cuidador nuevo** (1.7): claro y por apartados, con el estado del modo quiosco y lo que falta por revisar; **Personas** con fotos y etiquetas, ordenar arrastrando y añadir personas sin poner la estrella | [Guía, paso 9](GUIA-INSTALACION.md#9-configurar-el-panel-del-cuidador) |
+| **Juegos con diseño nuevo** (1.7): menú con dibujos, tandas de 5 partidas con premio y cálculo con manzanas y tres respuestas | [Funciones, ejercicios](FUNCIONES.md#12-ejercicios) |
 | **Radio** (1.6): los logotipos de las emisoras que elige el cuidador; suena también con la pantalla apagada y calla durante las llamadas. Es lo único que usa internet | [Guía, paso 9.6](GUIA-INSTALACION.md#96-radio-opcional) |
 | **Configurar sin que se corte** (1.6): mientras el cuidador añade la cuenta de Google o instala WhatsApp, el modo quiosco queda en pausa hasta salir del panel; botón **Instalar WhatsApp** | [Guía, paso 10](GUIA-INSTALACION.md#10-whatsapp-opcional) |
 | **Ejercicios** (1.5): ocho ejercicios para la memoria, la atención y el cálculo, con niveles que suben solos | [Guía, paso 9.5](GUIA-INSTALACION.md#95-ejercicios-opcional) |

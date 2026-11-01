@@ -428,7 +428,8 @@ private fun LauncherApp(
             }
             // La flecha hace lo mismo que el botón Atrás de Android (en un mensaje abierto
             // vuelve a la lista). La pantalla principal y la de llegada a casa no la llevan.
-            if (backButton == BackButton.ARROW_BOTTOM && screen != Screen.Home && screen != Screen.Arrived) {
+            // El panel del cuidador y los juegos llevan su propio botón para volver arriba.
+            if (backButton == BackButton.ARROW_BOTTOM && screen !in setOf(Screen.Home, Screen.Arrived, Screen.Settings, Screen.Exercises)) {
                 BackBar(onBack = { backDispatcher?.onBackPressed() })
             }
         }

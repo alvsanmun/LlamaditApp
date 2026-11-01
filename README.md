@@ -47,7 +47,7 @@ Más detalles en **[docs/FUNCIONES.md](docs/FUNCIONES.md)**.
 | Teclado | Volumen | Panel del cuidador |
 |:---:|:---:|:---:|
 | <img src="docs/img/capturas/04-teclado.jpg" width="220" alt="Teclado"> | <img src="docs/img/capturas/12-volumen.jpg" width="220" alt="Volumen"> | <img src="docs/img/capturas/15-panel-1.jpg" width="220" alt="Panel del cuidador"> |
-| Números enormes | Un panel que se entiende sin leer | Oculto y con PIN, solo para el cuidador |
+| Números enormes | Un panel que se entiende sin leer | Oculto y con PIN, solo para el cuidador: por apartados y avisa de lo que falta |
 
 | Diseño a medida | Volver a casa | Al llegar |
 |:---:|:---:|:---:|
@@ -62,7 +62,7 @@ Más detalles en **[docs/FUNCIONES.md](docs/FUNCIONES.md)**.
 | Ejercicios | Pintar por números | ¿Quién es? |
 |:---:|:---:|:---:|
 | <img src="docs/img/capturas/34-ejercicios-menu.jpg" width="220" alt="Menú de ejercicios"> | <img src="docs/img/capturas/37-ejercicio-pintar.jpg" width="220" alt="Pintar por números"> | <img src="docs/img/capturas/39-ejercicio-quien-es.jpg" width="220" alt="¿Quién es?"> |
-| Ocho ejercicios, cada uno con su nivel en estrellas | Como un cuaderno de colorear | La voz dice un nombre y hay que tocar su foto |
+| Ocho juegos, cada uno con su dibujo y su nivel | Como un cuaderno de colorear | La voz dice un nombre y hay que tocar su foto |
 
 Todas las pantallas, explicadas una a una, en **[docs/FUNCIONES.md](docs/FUNCIONES.md)**.
 

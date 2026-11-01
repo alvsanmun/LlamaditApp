@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Asa para arrastrar (seis puntos), del diseño "Cuidador B". -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="20dp"
+    android:height="28dp"
+    android:viewportWidth="10"
+    android:viewportHeight="16">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M1.6,3a1.4,1.4 0,1 0,2.8 0a1.4,1.4 0,1 0,-2.8 0zM5.6,3a1.4,1.4 0,1 0,2.8 0a1.4,1.4 0,1 0,-2.8 0zM1.6,8a1.4,1.4 0,1 0,2.8 0a1.4,1.4 0,1 0,-2.8 0zM5.6,8a1.4,1.4 0,1 0,2.8 0a1.4,1.4 0,1 0,-2.8 0zM1.6,13a1.4,1.4 0,1 0,2.8 0a1.4,1.4 0,1 0,-2.8 0zM5.6,13a1.4,1.4 0,1 0,2.8 0a1.4,1.4 0,1 0,-2.8 0z" />
+</vector>

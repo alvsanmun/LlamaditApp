@@ -47,6 +47,9 @@ suspend fun loadPortalPhoto(context: Context): Bitmap? = withContext(Dispatchers
     if (file.exists()) BitmapFactory.decodeFile(file.path) else null
 }
 
+/** Si el cuidador ya ha puesto la foto del portal (el panel avisa si falta). */
+fun hasPortalPhoto(context: Context): Boolean = context.portalFile().exists()
+
 fun deletePortalPhoto(context: Context) {
     context.portalFile().delete()
 }

@@ -80,14 +80,14 @@ Cada ajuste está marcado como:
 
 ## 9. Cuenta de Google y Play Store
 
-Si se usa WhatsApp o si los contactos se gestionan desde una cuenta de Google (el modo quiosco debe activarse **antes** de añadir la cuenta; ver la [guía de instalación](INSTALACION.md)). Se añade desde el panel del cuidador → *Contactos desde una cuenta de Google* → **Añadir una cuenta de Google**.
+Si se usa WhatsApp o si los contactos se gestionan desde una cuenta de Google (el modo quiosco debe activarse **antes** de añadir la cuenta; ver la [guía de instalación](INSTALACION.md)). Se añade desde el panel del cuidador → *Personas* → abajo, *Contactos desde una cuenta de Google* → **Añadir una cuenta de Google**.
 
 | Ajuste | Dónde | Por qué |
 |---|---|---|
 | **Actualizar apps "Usando cualquier red"** · Imprescindible si se usa WhatsApp | *Play Store → foto de perfil → Ajustes → Preferencias de red → Actualizar apps automáticamente* | Sin Wi-Fi, WhatsApp no se actualizaría nunca, y las versiones antiguas dejan de funcionar al cabo de unos meses. |
 | **Descargar actualizaciones del sistema por datos móviles** (solo Samsung) · Recomendado | Desde el ordenador: `adb shell settings put global SOFTWARE_UPDATE_WIFI_ONLY2 0` | Samsung solo descarga las actualizaciones por Wi-Fi, que estará apagado. Una app no puede cambiar este ajuste. |
 | **Una cuenta de Google solo para este móvil** · Recomendado | En [accounts.google.com](https://accounts.google.com), desde el ordenador | Así los contactos se gestionan desde [contacts.google.com](https://contacts.google.com) sin mezclarse con los del cuidador: en el móvil aparecen los favoritos (★) de todas sus cuentas. |
-| **Sincronización automática de contactos** · Imprescindible si se usan contactos de Google | Panel del cuidador → *Contactos desde una cuenta de Google* | Sin ella, los contactos nuevos o cambiados en contacts.google.com no llegan solos al móvil. El panel avisa si está apagada. |
+| **Sincronización automática de contactos** · Imprescindible si se usan contactos de Google | Panel del cuidador → *Personas* → *Contactos desde una cuenta de Google* | Sin ella, los contactos nuevos o cambiados en contacts.google.com no llegan solos al móvil. El panel avisa si está apagada. |
 | **Copia de seguridad de Google** · Recomendado | *Ajustes → Cuentas y copia de seguridad → Copia de seguridad de Google Drive* | Guarda los contactos con sus fotos. Si el móvil se pierde o se rompe, se recuperan en el nuevo. |
 
 ## 10. WhatsApp
@@ -95,9 +95,9 @@ Si se usa WhatsApp o si los contactos se gestionan desde una cuenta de Google (e
 | Ajuste | Dónde | Por qué |
 |---|---|---|
 | **Notificaciones de llamadas activadas** · Imprescindible | *WhatsApp → Ajustes → Notificaciones → Llamadas*, y en *Ajustes de Android → Notificaciones → WhatsApp* | LlamaditApp detecta las videollamadas entrantes **por su notificación**. Si están silenciadas, no aparecerá la pantalla grande. |
-| **"Mostrar sobre otras aplicaciones" para LlamaditApp** · Imprescindible si se usa WhatsApp completo | Panel del cuidador → *WhatsApp completo* → "Permitir el botón para volver" (el instalador ya lo da) | Es la pestaña con la casa que se ve encima de WhatsApp para volver a LlamaditApp. |
+| **"Mostrar sobre otras aplicaciones" para LlamaditApp** · Imprescindible si se usa WhatsApp completo | Panel del cuidador → *WhatsApp* → *WhatsApp completo* → "Permitir el botón para volver" (el instalador ya lo da) | Es la pestaña con la casa que se ve encima de WhatsApp para volver a LlamaditApp. |
 | **Voz del móvil (texto a voz) en español** · Si se usa el ejercicio *¿Quién es?* | Ajustes → Administración general → **Texto a voz** (en otros móviles, Ajustes → Accesibilidad → Salida de texto a voz): motor de Samsung o de Google, idioma español | Es la voz que dice "¿Dónde está María?". Los móviles suelen traerla ya; pulsa *Escuchar un ejemplo* para comprobarlo. |
-| **Acceso a notificaciones para LlamaditApp** · Imprescindible | Panel del cuidador → "Activar acceso a notificaciones" | Lo mismo: sin este permiso, LlamaditApp no ve las llamadas de WhatsApp. |
+| **Acceso a notificaciones para LlamaditApp** · Imprescindible | Panel del cuidador → *WhatsApp* → "Activar acceso a notificaciones" | Lo mismo: sin este permiso, LlamaditApp no ve las llamadas de WhatsApp. |
 | **No descargar fotos ni vídeos automáticamente** · Recomendado | *WhatsApp → Ajustes → Almacenamiento y datos → Descarga automática → nada en "Datos móviles"* | La persona no usa los chats; así no gasta datos ni almacenamiento. |
 | **Silenciar los grupos** · Recomendado | En cada grupo → *Silenciar notificaciones → Siempre* | Evita que el móvil suene a todas horas con mensajes que la persona no va a leer. |
 | **Foto de perfil del cuidador** · Recomendado | En el WhatsApp de cada familiar | Si un contacto no tiene foto en la agenda, en las videollamadas entrantes se usa su foto de WhatsApp. |
@@ -109,7 +109,7 @@ Si se usa WhatsApp o si los contactos se gestionan desde una cuenta de Google (e
 | **Una foto clara de la cara de cada persona** · Imprescindible | *Contactos → contacto → Editar → icono de la cámara* | Es lo único que ve la persona para saber a quién llama. Mejor de cerca, con buena luz y fondo liso. |
 | **Marcar como favorito ★** · Imprescindible | *Contactos → contacto → estrella*, o la estrella en [contacts.google.com](https://contacts.google.com) | Solo los favoritos aparecen en LlamaditApp. |
 | **Números con prefijo internacional** · Recomendado para números extranjeros | Al guardar el contacto: `+33 …`, `+44 …` | Los números españoles de 9 cifras se completan solos con +34. Los de otros países necesitan el prefijo para la videollamada de WhatsApp. |
-| **Pocos favoritos** · Recomendado | — | Con 4 a 6 caras la pantalla se entiende de un vistazo. Pon arriba a quien más llama (panel del cuidador → Orden de los contactos). |
+| **Pocos favoritos** · Recomendado | — | Con 4 a 6 caras la pantalla se entiende de un vistazo. Pon arriba a quien más llama (panel del cuidador → Personas, arrastrando). |
 
 ## 12. En los móviles de los familiares
 

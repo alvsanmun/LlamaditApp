@@ -66,8 +66,6 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.launcherfacil.app.ui.GrisBoton
-import com.launcherfacil.app.ui.TextoClaro
 import kotlinx.coroutines.launch
 import kotlin.math.min
 
@@ -211,7 +209,7 @@ internal fun PaintExercise(level: Int, onDone: (Boolean) -> Unit) {
                         .size(if (isSelected) 76.dp else 60.dp)
                         .clip(CircleShape)
                         .background(color)
-                        .border(if (isSelected) 6.dp else 2.dp, if (isSelected) TextoClaro else GrisBoton, CircleShape)
+                        .border(if (isSelected) 6.dp else 2.dp, if (isSelected) GmInk else GmBeige, CircleShape)
                         .clickable { selected = number },
                     contentAlignment = Alignment.Center
                 ) {
@@ -236,9 +234,9 @@ private fun Color.compositeOverWhite() = Color(
 @Composable
 private fun ZoomButton(text: String, onClick: () -> Unit) {
     Box(
-        Modifier.size(56.dp).clip(CircleShape).background(Color(0xCC455A64)).clickable(onClick = onClick),
+        Modifier.size(56.dp).clip(CircleShape).background(GmBrown).clickable(onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
-        Text(text, color = TextoClaro, fontSize = 34.sp, fontWeight = FontWeight.Bold)
+        Text(text, color = Color.White, fontSize = 34.sp, fontWeight = FontWeight.Bold)
     }
 }

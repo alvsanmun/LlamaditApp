@@ -45,7 +45,7 @@ Comprueba que esa persona usa WhatsApp con ese mismo número, y que WhatsApp tie
 Falta el permiso para fijar la rotación: `adb shell appops set com.launcherfacil.app WRITE_SETTINGS allow`, y reinicia el móvil.
 
 ### Necesito instalar o configurar algo en el móvil
-Panel del cuidador → **"Pausar el modo quiosco"**. Al terminar, **"Activar el modo quiosco"**. No uses "Quitar el Device Owner": para deshacerlo hace falta un ordenador y quitar todas las cuentas del móvil.
+Panel del cuidador → **"Pausar"** en la tarjeta azul de arriba (o apartado **PIN y modo quiosco** → **"Pausar el modo quiosco"**). Al terminar, **"Activar"**. No uses "Quitar el Device Owner": para deshacerlo hace falta un ordenador y quitar todas las cuentas del móvil.
 
 ### `adb install` falla con `INSTALL_FAILED_UPDATE_INCOMPATIBLE`
 La versión instalada está firmada con otra clave. Como LlamaditApp es Device Owner, no se puede desinstalar directamente: quita antes el Device Owner desde el panel del cuidador, desinstala y vuelve a instalar desde el paso 4 de la guía.

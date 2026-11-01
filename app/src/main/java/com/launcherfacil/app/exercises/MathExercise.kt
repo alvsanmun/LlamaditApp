@@ -18,6 +18,7 @@
 
 package com.launcherfacil.app.exercises
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,12 +29,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -41,20 +43,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.launcherfacil.app.R
-import com.launcherfacil.app.ui.BateriaMedia
-import com.launcherfacil.app.ui.DigitKey
-import com.launcherfacil.app.ui.GrisBoton
-import com.launcherfacil.app.ui.KeyBox
-import com.launcherfacil.app.ui.KeyRow
-import com.launcherfacil.app.ui.TextoClaro
-import com.launcherfacil.app.ui.TileIcon
-import com.launcherfacil.app.ui.VerdeLlamar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.random.Random
@@ -111,112 +111,111 @@ internal fun mathProblem(level: Int, random: Random = Random.Default): MathProbl
     }
 }
 
-private const val MAX_TRIES = 3
+/** Con números pequeños se dibujan manzanas para poder contar (como mucho, estas). */
+private const val MAX_OBJECTS = 6
 
 /**
- * Cálculo: la operación en grande y un teclado como el de una calculadora. Si falla,
- * se sacude y puede volver a intentarlo; al tercer fallo se enseña el resultado.
+ * Cálculo con objetos (diseño "Cálculo con objetos"): la operación en una tarjeta
+ * blanca, con manzanas debajo de cada número si son pequeños, un hueco con "?" y tres
+ * respuestas grandes para elegir. Si falla, esa respuesta se apaga y puede probar otra.
+ * Bien hecho si acierta a la primera.
  */
 @Composable
 internal fun MathExercise(level: Int, onDone: (Boolean) -> Unit) {
     val problem = remember { mathProblem(level) }
-    var input by remember { mutableStateOf("") }
-    var mistakes by remember { mutableIntStateOf(0) }
-    var finished by remember { mutableStateOf(false) }
+    val options = remember { choicesFor(problem.answer) }
+    val wrong = remember { mutableStateListOf<Int>() }
+    var solved by remember { mutableStateOf(false) }
     val shake = rememberShake()
     val scope = rememberCoroutineScope()
     val haptics = LocalHapticFeedback.current
+    val objects = problem.op == '+' && problem.a <= MAX_OBJECTS && problem.b <= MAX_OBJECTS
 
-    fun check() {
-        if (input.isEmpty() || finished) return
-        if (input.toInt() == problem.answer) {
-            finished = true
-            onDone(mistakes == 0)
+    fun choose(value: Int) {
+        if (solved || value in wrong) return
+        if (value == problem.answer) {
+            solved = true
+            scope.launch {
+                delay(600)
+                onDone(wrong.isEmpty())
+            }
             return
         }
-        mistakes++
+        wrong += value
         haptics.performHapticFeedback(HapticFeedbackType.LongPress)
-        scope.launch {
-            shake.shake()
-            if (mistakes >= MAX_TRIES) {
-                finished = true
-                input = problem.answer.toString()
-                delay(2500)
-                onDone(false)
-            } else {
-                input = ""
-            }
-        }
+        scope.launch { shake.shake() }
     }
 
-    Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+    Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Column(
-            Modifier.weight(1f).fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
+            Modifier.weight(1f).fillMaxWidth().clip(RoundedCornerShape(30.dp)).background(GmCard).padding(horizontal = 16.dp, vertical = 22.dp),
+            verticalArrangement = Arrangement.spacedBy(22.dp, Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                "${problem.a} ${problem.op} ${problem.b}",
-                color = TextoClaro,
-                fontSize = 76.sp,
-                fontWeight = FontWeight.Bold,
-                maxLines = 1
-            )
-            // Nivel 1: puntos para poder contar con el dedo.
-            if (level == 1) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Dots(problem.a)
-                    Text("  +  ", color = TextoClaro, fontSize = 28.sp)
-                    Dots(problem.b)
-                }
+            Row(verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                Operand(problem.a, objects)
+                Text(problem.op.toString(), color = GmBlue, fontSize = 52.sp, fontWeight = FontWeight.Black)
+                Operand(problem.b, objects)
+            }
+            // Hueco de la respuesta: "?" en azul claro; al acertar, el número en verde.
+            Box(
+                Modifier
+                    .size(width = 150.dp, height = 96.dp)
+                    .shake(shake)
+                    .drawBehind {
+                        val w = 5.dp.toPx()
+                        drawRoundRect(
+                            color = if (solved) GmGreen else GmBlue,
+                            cornerRadius = CornerRadius(24.dp.toPx()),
+                            style = Stroke(w, pathEffect = if (solved) null else PathEffect.dashPathEffect(floatArrayOf(14.dp.toPx(), 9.dp.toPx())))
+                        )
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    if (solved) problem.answer.toString() else "?",
+                    color = if (solved) GmGreenDark else Color(0xFF90CAF9),
+                    fontSize = 60.sp,
+                    fontWeight = FontWeight.Black
+                )
             }
         }
-        Box(
-            Modifier
-                .fillMaxWidth()
-                .height(96.dp)
-                .shake(shake)
-                .clip(RoundedCornerShape(24.dp))
-                .background(if (finished) VerdeLlamar else GrisBoton),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                "= " + input.ifEmpty { "?" },
-                color = TextoClaro,
-                fontSize = 64.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
-        Column(Modifier.weight(2.2f).fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            fun type(digit: String) {
-                if (!finished && input.length < 3) input = (input + digit).trimStart('0').ifEmpty { "0" }
-            }
-            for (row in listOf(listOf("1", "2", "3"), listOf("4", "5", "6"), listOf("7", "8", "9"))) {
-                KeyRow { row.forEach { DigitKey(it, Modifier.weight(1f)) { type(it) } } }
-            }
-            KeyRow {
-                KeyBox(
-                    color = GrisBoton,
-                    onClick = { if (!finished) input = input.dropLast(1) },
-                    modifier = Modifier.weight(1f)
-                ) { TileIcon(R.drawable.ic_backspace, 0.5f) }
-                DigitKey("0", Modifier.weight(1f)) { type("0") }
-                KeyBox(color = VerdeLlamar, onClick = ::check, modifier = Modifier.weight(1f)) {
-                    TileIcon(R.drawable.ic_check, 0.6f)
+        Row(Modifier.fillMaxWidth().height(137.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            options.forEach { value ->
+                val off = value in wrong
+                RaisedBox(
+                    if (off) GmBeige else GmBlue,
+                    if (off) GmDashed else GmBlueDark,
+                    Modifier.weight(1f).fillMaxSize(),
+                    enabled = !off,
+                    onClick = { choose(value) }
+                ) {
+                    FitText(value.toString(), Modifier.fillMaxSize(), fraction = when { value >= 100 -> 0.36f; value >= 10 -> 0.5f; else -> 0.6f }, color = if (off) GmDashed else Color.White)
                 }
             }
         }
     }
 }
 
-/** Hasta 10 puntos, en filas de 5. */
+/** Un número grande y, si cabe, tantas manzanas como vale. */
 @Composable
-private fun Dots(count: Int) {
-    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        (0 until count).chunked(5).forEach { row ->
-            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                row.forEach { Box(Modifier.size(20.dp).background(BateriaMedia, CircleShape)) }
+private fun Operand(value: Int, objects: Boolean) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        if (objects) {
+            Column(Modifier.width(120.dp), verticalArrangement = Arrangement.spacedBy(6.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                (0 until value).chunked(2).forEach { row ->
+                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        row.forEach { Image(painterResource(R.drawable.ic_apple), null, modifier = Modifier.size(54.dp)) }
+                    }
+                }
             }
         }
+        Text(value.toString(), color = GmInk, fontSize = 52.sp, fontWeight = FontWeight.Black)
     }
+}
+
+/** La respuesta y dos parecidas (sin negativos), desordenadas. */
+private fun choicesFor(answer: Int, random: Random = Random.Default): List<Int> {
+    val near = (-3..3).map { answer + it }.filter { it >= 0 && it != answer }.shuffled(random).take(2)
+    return (near + answer).shuffled(random)
 }

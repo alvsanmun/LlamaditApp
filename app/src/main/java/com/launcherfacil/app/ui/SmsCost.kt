@@ -62,5 +62,5 @@ fun SmsSwitch(title: String, checked: Boolean, onChange: (Boolean) -> Unit) {
 /** Recordatorio fijo en las secciones que envían SMS (SOS, ubicación, volver a casa). */
 @Composable
 fun SmsCostNote() {
-    Text("⚠ " + stringResource(R.string.sms_cost_note), color = BateriaMedia, fontSize = 15.sp)
+    Text("⚠ " + stringResource(R.string.sms_cost_note), color = CgWarn, fontSize = 15.sp)
 }

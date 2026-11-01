@@ -80,7 +80,7 @@ fun GoogleAccountsSection(onAddAccount: () -> Unit) {
     var syncing by remember { mutableStateOf(false) }
 
     if (!masterSync) {
-        Text("⚠ " + stringResource(R.string.settings_google_master_off), color = BateriaMedia, fontSize = 15.sp)
+        Text("⚠ " + stringResource(R.string.settings_google_master_off), color = CgWarn, fontSize = 15.sp)
         ActionButton(stringResource(R.string.settings_google_master_on), {
             setMasterSync(true)
             masterSync = isMasterSyncOn()
@@ -88,7 +88,7 @@ fun GoogleAccountsSection(onAddAccount: () -> Unit) {
     }
 
     if (accounts.isEmpty()) {
-        Text(stringResource(R.string.settings_google_none), color = TextoSuave, fontSize = 16.sp)
+        Text(stringResource(R.string.settings_google_none), color = CgMuted, fontSize = 16.sp)
     }
     accounts.forEach { account ->
         Column(
@@ -99,8 +99,8 @@ fun GoogleAccountsSection(onAddAccount: () -> Unit) {
                 .padding(12.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            Text(account.name, color = TextoClaro, fontSize = 18.sp)
-            Text(stringResource(R.string.settings_google_favorites, account.favorites), color = TextoSuave, fontSize = 15.sp)
+            Text(account.name, color = CgInk, fontSize = 18.sp)
+            Text(stringResource(R.string.settings_google_favorites, account.favorites), color = CgMuted, fontSize = 15.sp)
             SwitchRow(stringResource(R.string.settings_google_autosync), account.autoSync) { on ->
                 setContactsAutoSync(account.name, on)
                 refresh++
@@ -113,7 +113,7 @@ fun GoogleAccountsSection(onAddAccount: () -> Unit) {
             accounts.forEach { syncContactsNow(it.name) }
             syncing = true
         })
-        if (syncing) Text(stringResource(R.string.settings_google_syncing), color = TextoSuave, fontSize = 15.sp)
+        if (syncing) Text(stringResource(R.string.settings_google_syncing), color = CgMuted, fontSize = 15.sp)
     }
     ActionButton(stringResource(R.string.settings_google_add), onAddAccount)
 }

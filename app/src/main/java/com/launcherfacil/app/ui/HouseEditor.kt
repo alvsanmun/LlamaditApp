@@ -86,10 +86,10 @@ fun HouseEditor(onOpenPin: (Double, Double) -> Unit, onTestRoute: (Double, Doubl
     Text(
         position?.let { stringResource(R.string.settings_house_saved, "%.5f, %.5f".format(Locale.ROOT, it.first, it.second)) }
             ?: stringResource(R.string.settings_house_none),
-        color = if (position != null) TextoClaro else TextoSuave,
+        color = if (position != null) CgInk else CgMuted,
         fontSize = 16.sp
     )
-    status?.let { Text(stringResource(it), color = BateriaMedia, fontSize = 16.sp) }
+    status?.let { Text(stringResource(it), color = CgWarn, fontSize = 16.sp) }
 
     ActionButton(stringResource(R.string.settings_house_use_location), {
         status = R.string.settings_house_searching
@@ -140,7 +140,7 @@ fun HouseEditor(onOpenPin: (Double, Double) -> Unit, onTestRoute: (Double, Doubl
         alert = it
         settings.goHomeAlert = it
     }
-    Text(stringResource(R.string.settings_house_alert_hint), color = TextoSuave, fontSize = 16.sp)
+    Text(stringResource(R.string.settings_house_alert_hint), color = CgMuted, fontSize = 16.sp)
 
     // Ubicación cada 10 minutos durante la ruta, hasta que llegue.
     var updates by remember { mutableStateOf(settings.goHomeUpdates) }
@@ -148,7 +148,7 @@ fun HouseEditor(onOpenPin: (Double, Double) -> Unit, onTestRoute: (Double, Doubl
         updates = it
         settings.goHomeUpdates = it
     }
-    Text(stringResource(R.string.settings_house_updates_hint), color = TextoSuave, fontSize = 16.sp)
+    Text(stringResource(R.string.settings_house_updates_hint), color = CgMuted, fontSize = 16.sp)
     SmsCostNote()
 
     position?.let { (lat, lng) ->
@@ -186,7 +186,7 @@ private fun PortalPhotoEditor() {
         if (Kiosk.isLocked(activity)) activity.stopLockTask()
     }
 
-    Text(stringResource(R.string.settings_house_photo), color = TextoClaro, fontSize = 18.sp)
+    Text(stringResource(R.string.settings_house_photo), color = CgInk, fontSize = 18.sp)
     photo?.let {
         Image(
             it.asImageBitmap(),
@@ -195,7 +195,7 @@ private fun PortalPhotoEditor() {
             modifier = Modifier.fillMaxWidth().height(200.dp).clip(RoundedCornerShape(16.dp))
         )
     }
-    if (failed) Text(stringResource(R.string.settings_house_photo_failed), color = BateriaMedia, fontSize = 16.sp)
+    if (failed) Text(stringResource(R.string.settings_house_photo_failed), color = CgWarn, fontSize = 16.sp)
     ActionButton(stringResource(R.string.settings_house_photo_camera), {
         leaveKiosk()
         try {

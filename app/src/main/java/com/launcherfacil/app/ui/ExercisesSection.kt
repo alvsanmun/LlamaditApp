@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -74,11 +76,11 @@ internal fun ExercisesSection() {
                     Modifier.size(48.dp).clip(RoundedCornerShape(12.dp)).background(exercise.color),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(exercise.emoji, fontSize = 26.sp)
+                    Icon(painterResource(exercise.icon), contentDescription = null, tint = Color.White, modifier = Modifier.size(28.dp))
                 }
                 Text(
                     stringResource(exercise.label),
-                    color = TextoClaro,
+                    color = CgInk,
                     fontSize = 18.sp,
                     modifier = Modifier.weight(1f).padding(start = 12.dp)
                 )
@@ -86,21 +88,21 @@ internal fun ExercisesSection() {
             }
             if (enabled) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(stringResource(R.string.settings_exercises_level), color = TextoSuave, fontSize = 15.sp)
+                    Text(stringResource(R.string.settings_exercises_level), color = CgMuted, fontSize = 15.sp)
                     (1..MAX_LEVEL).forEach { n ->
                         val selected = n == level
                         Box(
                             Modifier
                                 .size(40.dp)
                                 .clip(CircleShape)
-                                .background(if (selected) Color(0xFF90CAF9) else GrisBoton)
+                                .background(if (selected) CgAccent else CgNeutral)
                                 .clickable {
                                     progress.setLevel(exercise, n)
                                     version++
                                 },
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(n.toString(), color = if (selected) Color.Black else TextoClaro, fontSize = 17.sp)
+                            Text(n.toString(), color = if (selected) Color.White else CgInk, fontSize = 17.sp)
                         }
                     }
                 }
@@ -108,7 +110,7 @@ internal fun ExercisesSection() {
                 if (played > 0) {
                     Text(
                         stringResource(R.string.settings_exercises_stats, played, progress.wellDone(exercise)),
-                        color = TextoSuave,
+                        color = CgMuted,
                         fontSize = 14.sp
                     )
                 }

@@ -58,11 +58,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.launcherfacil.app.R
-import com.launcherfacil.app.ui.GrisBoton
-import com.launcherfacil.app.ui.KeyBox
-import com.launcherfacil.app.ui.TextoClaro
-import com.launcherfacil.app.ui.TileIcon
-import com.launcherfacil.app.ui.VerdeLlamar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
@@ -154,11 +149,11 @@ internal fun MoneyExercise(level: Int, onDone: (Boolean) -> Unit) {
                 .fillMaxWidth()
                 .shake(shake)
                 .clip(RoundedCornerShape(24.dp))
-                .background(if (finished) VerdeLlamar.copy(alpha = 0.5f) else Color(0xFF37474F))
+                .background(if (finished) Color(0xFFC8E6C9) else GmSand)
                 .padding(10.dp)
         ) {
             if (wallet.isEmpty()) {
-                FitText("👛", Modifier.fillMaxSize(), fraction = 0.4f, color = Color.White.copy(alpha = 0.3f))
+                FitText("👛", Modifier.fillMaxSize(), fraction = 0.4f, color = GmInk.copy(alpha = 0.25f))
             }
             FlowRow(
                 Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
@@ -185,11 +180,13 @@ internal fun MoneyExercise(level: Int, onDone: (Boolean) -> Unit) {
                 }
             }
         }
-        Row(Modifier.fillMaxWidth().height(88.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            KeyBox(GrisBoton, { if (!finished) wallet.clear() }, Modifier.weight(1f)) {
-                TileIcon(R.drawable.ic_backspace, 0.5f)
+        Row(Modifier.fillMaxWidth().height(100.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            RaisedBox(GmBrown, GmBrownDark, Modifier.weight(1f).fillMaxSize(), onClick = { if (!finished) wallet.clear() }) {
+                FitIcon(R.drawable.ic_backspace, Modifier.fillMaxSize(), fraction = 0.5f)
             }
-            KeyBox(VerdeLlamar, ::check, Modifier.weight(2f)) { TileIcon(R.drawable.ic_check, 0.6f) }
+            RaisedBox(GmGreenDark, GmGreenDeep, Modifier.weight(2f).fillMaxSize(), onClick = ::check) {
+                FitIcon(R.drawable.ic_game_check, Modifier.fillMaxSize(), fraction = 0.6f)
+            }
         }
     }
 }

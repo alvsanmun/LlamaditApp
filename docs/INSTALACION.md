@@ -128,7 +128,7 @@ Debe responder `Success`.
 
 ## Paso 7. Añadir los contactos
 
-En el panel del cuidador, toca **"Abrir Contactos (favoritos y fotos)"**. Para cada persona:
+En el panel del cuidador, toca **Personas** → **"Añadir persona"** (o **PIN y modo quiosco** → **"Abrir Contactos (favoritos y fotos)"**). Para cada persona:
 
 1. Crea el contacto con su **nombre y número**.
 2. Ponle una **foto grande y clara de su cara** (toca el icono de la cámara al editar el contacto). Es lo que verá la persona.
@@ -146,8 +146,8 @@ Solo si va a usar videollamadas de WhatsApp.
 4. En Play Store: *foto de perfil → Ajustes → Preferencias de red → Actualizar apps automáticamente → "Usando cualquier red"*. Así WhatsApp se mantendrá actualizado con los datos móviles.
 4b. **Que WhatsApp no se duerma** (imprescindible): *Ajustes → Batería → Límites de uso en segundo plano → Aplicaciones sin autoinactivación → + → WhatsApp* (otros móviles: *Ajustes → Aplicaciones → WhatsApp → Batería → Sin restricciones*). Si no, las videollamadas pueden no sonar.
 5. Pulsa el botón de inicio para volver a LlamaditApp, entra en el panel del cuidador y toca **"Activar el modo quiosco"**. Al activarlo, LlamaditApp concede a WhatsApp los permisos de cámara, micrófono y contactos (dentro del quiosco no se pueden mostrar los avisos de permisos).
-6. En la sección **"Tienen WhatsApp (videollamada)"**, marca las personas que usan WhatsApp. Aparecerán en el botón de videollamada.
-7. Si la sección **"Llamadas de WhatsApp"** dice *Desactivado*, toca **"Activar acceso a notificaciones"** y activa LlamaditApp en la lista.
+6. En el apartado **WhatsApp**, sección **"Tienen WhatsApp (videollamada)"**, marca las personas que usan WhatsApp. Aparecerán en el botón de videollamada.
+7. Si, en ese mismo apartado, **"Llamadas de WhatsApp"** dice *Desactivado*, toca **"Activar acceso a notificaciones"** y activa LlamaditApp en la lista.
 
 > Si en la primera videollamada WhatsApp pide algún permiso o no se ve la cámara, **reinicia el móvil** una vez.
 
@@ -171,7 +171,7 @@ Hay ajustes del teléfono que una app no puede cambiar y que conviene dejar bien
 - **Tiempo de espera de la pantalla** de 1 o 2 minutos.
 - Revisar el **SOS de emergencia de Samsung** (5 pulsaciones del botón lateral llaman al 112).
 
-Para cambiarlos: panel del cuidador → **"Abrir Ajustes de Android"**.
+Para cambiarlos: panel del cuidador → **PIN y modo quiosco** → **"Abrir Ajustes de Android"**.
 
 ## Paso 11. Comprobar que todo funciona
 
@@ -218,7 +218,7 @@ Se conservan el PIN, los ajustes, los contactos y el modo quiosco, y se pueden s
 
 ## Desinstalar LlamaditApp o entregar el móvil a otra persona
 
-1. Panel del cuidador → **"Quitar el Device Owner"** → confirmar. El modo quiosco se desactiva para siempre y las apps ocultas vuelven a aparecer.
+1. Panel del cuidador → **PIN y modo quiosco** → **"Quitar el Device Owner"** → confirmar. El modo quiosco se desactiva para siempre y las apps ocultas vuelven a aparecer.
 2. Desinstala LlamaditApp como cualquier otra app, o restablece el móvil de fábrica.
 
 > Para **volver a activar** el modo quiosco después de quitar el Device Owner hay que repetir el paso 5, y para eso el móvil no puede tener cuentas (Google, WhatsApp…). Si solo quieres instalar o cambiar algo, usa **"Pausar el modo quiosco"**, que no tiene ese problema.

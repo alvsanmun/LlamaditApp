@@ -241,8 +241,8 @@ La persona verá **solo las fotos** de los contactos marcados con una **estrella
 
 ### Opción A: en la app Contactos del móvil
 
-1. En el panel del cuidador, baja hasta **Otras apps** y pulsa **Abrir Contactos (favoritos y fotos)**.
-2. Pulsa el botón **+** (abajo a la derecha) para crear un contacto.
+1. En el panel del cuidador, toca el apartado **Personas** y pulsa **Añadir persona** (el botón de borde discontinuo). Se abre la app Contactos con un contacto nuevo.
+2. Si en vez del contacto nuevo se ve la lista de contactos, pulsa el botón **+** (abajo a la derecha).
 3. Escribe el **nombre** y el **teléfono**. Comprueba que la bandera es la de **España** (o la del país correspondiente).
 
 <table><tr>
@@ -251,7 +251,7 @@ La persona verá **solo las fotos** de los contactos marcados con una **estrella
 <td><img src="img/guia/e20-crear-contacto.jpg" width="230" alt="Crear contacto"></td>
 <td><img src="img/guia/e21-contacto-datos.jpg" width="230" alt="Nombre y teléfono escritos"></td>
 </tr><tr>
-<td align="center">① Abrir Contactos</td><td align="center">② Pulsa <b>+</b></td><td align="center">③ Formulario vacío</td><td align="center">④ Nombre y teléfono</td>
+<td align="center">① Personas → <b>Añadir persona</b></td><td align="center">② Si sale la lista, pulsa <b>+</b></td><td align="center">③ Formulario vacío</td><td align="center">④ Nombre y teléfono</td>
 </tr></table>
 
 4. **La foto:** pulsa el **+** de la silueta, elige **Galería** (o **Cámara** para hacerla en ese momento), toca la foto, pulsa **Hecho** y después **Elegir**.
@@ -268,7 +268,7 @@ La persona verá **solo las fotos** de los contactos marcados con una **estrella
 > 💡 Usa una foto **de cerca de la cara**, con buena luz y que se reconozca bien. Es lo único que verá la persona.
 
 5. Pulsa **Guardar**.
-6. **Muy importante:** pulsa la **estrella ☆** de arriba para marcarlo como **favorito ★**. Sin la estrella, no aparecerá en LlamaditApp.
+6. Al volver al panel, la persona ya sale en **Personas**: LlamaditApp le pone la **estrella ★** (favorito) sola. Si la creaste de otra forma (desde **Abrir Contactos**, por ejemplo), pulsa tú la **estrella ☆** de arriba: sin ella no aparecerá en LlamaditApp.
 
 <table><tr>
 <td><img src="img/guia/e27-contacto-guardado.jpg" width="230" alt="Contacto guardado sin estrella"></td>
@@ -278,18 +278,18 @@ La persona verá **solo las fotos** de los contactos marcados con una **estrella
 </tr></table>
 
 7. Repite para cada persona (lo ideal son entre 4 y 6).
-8. Cuando termines, pulsa el botón **Atrás** del móvil hasta volver a LlamaditApp. El modo quiosco se vuelve a activar solo.
+8. Cuando termines, pulsa el botón **Atrás** del móvil hasta volver al panel. El modo quiosco se vuelve a activar al salir del panel.
 
 ### Opción B: desde una cuenta de Google
 
 <table><tr>
 <td><img src="img/capturas/26-panel-cuenta-google.jpg" width="230" alt="Sección Contactos desde una cuenta de Google"></td>
 </tr><tr>
-<td align="center">Panel → <b>Contactos desde una cuenta de Google</b></td>
+<td align="center">Panel → <b>Personas</b> → abajo,<br><b>Contactos desde una cuenta de Google</b></td>
 </tr></table>
 
 1. **Crea una cuenta de Google solo para este móvil** (por ejemplo, una dirección del tipo *nombre.llamadita@gmail.com*) desde tu ordenador en [accounts.google.com](https://accounts.google.com). Si usas tu cuenta personal, también aparecerán en el móvil tus propios contactos favoritos.
-2. En el panel del cuidador, sección **Contactos desde una cuenta de Google**, pulsa **Añadir una cuenta de Google** e inicia sesión con esa cuenta. Como el móvil lo gestiona LlamaditApp, Google lo llama "cuenta de trabajo": es normal, escribe el correo igualmente.
+2. En el panel del cuidador, toca **Personas** y, abajo del todo, en **Contactos desde una cuenta de Google**, pulsa **Añadir una cuenta de Google** e inicia sesión con esa cuenta. Como el móvil lo gestiona LlamaditApp, Google lo llama "cuenta de trabajo": es normal, escribe el correo igualmente.
 3. Vuelve a LlamaditApp con la flecha de atrás: el panel sigue abierto y el modo quiosco en pausa hasta que salgas de él, así que el inicio de sesión no se corta. La cuenta aparece en el panel con el número de **favoritos (★)** que trae. Deja activado **Sincronizar los contactos automáticamente**.
 4. Desde **cualquier ordenador o móvil**, entra en [contacts.google.com](https://contacts.google.com) con esa cuenta y **crea el contacto**: nombre, teléfono y **foto** (de cerca de la cara).
 5. **Márcalo con la estrella ☆** (favorito). Sin la estrella no aparecerá en LlamaditApp.
@@ -297,29 +297,34 @@ La persona verá **solo las fotos** de los contactos marcados con una **estrella
 
 > 💡 Si el panel avisa de que **la sincronización automática del móvil está desactivada**, pulsa **Activar la sincronización automática**: sin ella, los cambios no llegan solos.
 
-> La casilla **Tienen WhatsApp** (paso 10) se marca siempre en el panel del móvil: no viene de Google.
+> Quién tiene WhatsApp (paso 10) se marca siempre en el panel del móvil: no viene de Google.
 
 ---
 
 ## 9. Configurar el panel del cuidador
 
-De vuelta en el panel ya aparecen los contactos. Configura:
+El panel empieza con una **portada**: arriba, una tarjeta azul oscuro dice si el **modo quiosco** está activo (con un botón para pausarlo) y cuántas cosas hay **por revisar**. Debajo están los **apartados**; cada uno resume cómo está y, si falta algo, lo dice en color ámbar (por ejemplo, "Falta la foto del portal"). Toca un apartado para abrirlo y la flecha de arriba para volver.
 
-- **Orden de los contactos:** con las flechas ↑ ↓, pon arriba a quien más va a llamar.
-- **Contacto para el SOS:** a quién llama y avisa el botón rojo de emergencia.
-- **Pueden pedir la ubicación por SMS:** qué familiares pueden saber dónde está el móvil enviando la palabra **UBICACION** por SMS.
-- **Tienen WhatsApp (videollamada):** marca a quien use WhatsApp (ver paso 10).
+Empieza por **Personas**:
+
+- **Orden:** arrastra los **seis puntos** de la izquierda de cada persona para subirla o bajarla. Pon arriba a quien más va a llamar; es el orden de **Llamar** y de **Videollamada**.
+- **Qué puede hacer cada una:** toca a una persona y elige con los interruptores si es el **contacto de emergencia (SOS)** (a quién llama y avisa el botón rojo), si **tiene WhatsApp** (para la videollamada, ver paso 10) y si **puede pedir la ubicación por SMS** enviando la palabra **UBICACION**.
+- Las etiquetas de colores lo resumen de un vistazo: **SOS**, **Vídeo**, **Ubicación** y, en naranja, **Sin foto**.
 
 <table><tr>
-<td><img src="img/guia/e31-panel-con-contacto.jpg" width="230" alt="Panel con contactos"></td>
+<td><img src="img/capturas/15-panel-1.jpg" width="230" alt="Portada del panel con el estado del modo quiosco y los apartados"></td>
+<td><img src="img/guia/e31-panel-con-contacto.jpg" width="230" alt="Personas: favoritos con foto y etiquetas"></td>
+<td><img src="img/capturas/44-panel-persona.jpg" width="230" alt="Ficha de una persona con sus interruptores"></td>
 <td><img src="img/guia/e32-llamar-con-contacto.jpg" width="230" alt="Pantalla Llamar con la foto"></td>
 </tr><tr>
-<td align="center">Panel del cuidador</td><td align="center">Lo que verá la persona en <b>Llamar</b></td>
+<td align="center">① La portada</td><td align="center">② Personas</td><td align="center">③ La ficha de una persona</td><td align="center">④ Lo que verá la persona<br>en <b>Llamar</b></td>
 </tr></table>
+
+En **Emergencia (SOS)** también se elige el contacto del SOS, y en **Ubicación por SMS**, quién puede pedirla y con qué palabras.
 
 ### 9.1. Adaptar la pantalla principal
 
-En la parte de arriba del panel, **Pantalla principal**, se ve una **vista previa** de lo que verá la persona. Para cada botón:
+En el apartado **Pantalla principal** se ve una **vista previa** de lo que verá la persona. Para cada botón:
 
 - **↑ ↓** para cambiarlo de sitio (también el reloj y la batería).
 - **Pequeño**, **Mediano** o **Grande**: los pequeños y medianos ocupan media fila; los grandes, la fila entera.
@@ -327,7 +332,7 @@ En la parte de arriba del panel, **Pantalla principal**, se ve una **vista previ
 
 El **reloj** siempre se ve (es la entrada a este panel), pero se puede mover. **Volver al diseño original** lo deja todo como venía.
 
-En **Botón para volver** elige cómo saldrá la persona de cada pantalla: la **casa grande de arriba** (como viene) o una **flecha abajo a la izquierda**, parecida al botón Atrás de los móviles. Si ya estaba acostumbrada a esa flecha, la segunda opción le resultará más familiar. El cambio se ve al momento.
+Más abajo, en **Botón para volver**, elige cómo saldrá la persona de cada pantalla: la **casa grande de arriba** (como viene) o una **flecha abajo a la izquierda**, parecida al botón Atrás de los móviles. Si ya estaba acostumbrada a esa flecha, la segunda opción le resultará más familiar. El cambio se ve al momento.
 
 <table><tr>
 <td><img src="img/capturas/28-panel-boton-volver.jpg" width="230" alt="Elegir el botón para volver"></td>
@@ -336,7 +341,7 @@ En **Botón para volver** elige cómo saldrá la persona de cada pantalla: la **
 <td align="center">① Elige casa o flecha</td><td align="center">② Así queda con la flecha</td>
 </tr></table>
 
-En **Dibujo del botón SOS** elige lo que mejor reconozca la persona: las letras **SOS**, una **ambulancia**, una **cruz**, una **sirena**, un **corazón** o una **señal de peligro**.
+En el apartado **Emergencia (SOS)**, abajo, en **Dibujo del botón SOS**, elige lo que mejor reconozca la persona: las letras **SOS**, una **ambulancia**, una **cruz**, una **sirena**, un **corazón** o una **señal de peligro**.
 
 <table><tr>
 <td><img src="img/capturas/20-panel-pantalla.jpg" width="230" alt="Vista previa de la pantalla principal"></td>
@@ -349,7 +354,7 @@ En **Dibujo del botón SOS** elige lo que mejor reconozca la persona: las letras
 
 ### 9.2. Volver a casa (opcional)
 
-Un botón para cuando la persona se desoriente en la calle: enseña la **dirección de casa en grande** (para la policía o un vecino) y una **flecha** que abre la **ruta a pie de Google Maps con voz**. Al llegar, muestra la **foto del portal**.
+Un botón para cuando la persona se desoriente en la calle: enseña la **dirección de casa en grande** (para la policía o un vecino) y una **flecha** que abre la **ruta a pie de Google Maps con voz**. Al llegar, muestra la **foto del portal**. Todo se configura en el apartado **Volver a casa**.
 
 <table><tr>
 <td><img src="img/capturas/23-panel-volver-casa.jpg" width="230" alt="Marcar la casa"></td>
@@ -380,7 +385,7 @@ Un botón para cuando la persona se desoriente en la calle: enseña la **direcci
 
 ### 9.3. Wi-Fi (opcional)
 
-Por defecto el móvil va **solo con la SIM**: el Wi-Fi está apagado y nadie lo puede encender. Si en casa hay Wi-Fi, en el panel, sección **Wi-Fi**, activa **Usar el Wi-Fi** y pulsa **Elegir una red Wi-Fi** para conectarte. Al apagarlo se vuelve a bloquear; la red queda guardada para la próxima vez.
+Por defecto el móvil va **solo con la SIM**: el Wi-Fi está apagado y nadie lo puede encender. Si en casa hay Wi-Fi, en el apartado **Conexión**, activa **Usar el Wi-Fi** y pulsa **Elegir una red Wi-Fi** para conectarte. Al apagarlo se vuelve a bloquear; la red queda guardada para la próxima vez.
 
 <table><tr>
 <td><img src="img/capturas/27-panel-wifi.jpg" width="230" alt="Wi-Fi encendido"></td>
@@ -392,8 +397,8 @@ Por defecto el móvil va **solo con la SIM**: el Wi-Fi está apagado y nadie lo 
 
 Además de las videollamadas, la persona puede usar **WhatsApp entero** (chats, notas de voz, fotos y vídeos) con un botón aparte. Necesita WhatsApp instalado (paso 10).
 
-1. En **Pantalla principal**, activa el interruptor de **WhatsApp (chats)** y colócalo donde quieras.
-2. En la sección **WhatsApp completo**, comprueba que pone **"El botón para volver encima de WhatsApp está permitido"**. Si no, pulsa **Permitir el botón para volver**, toca **LlamaditApp**, activa el interruptor y vuelve atrás.
+1. En el apartado **Pantalla principal**, activa el interruptor de **WhatsApp (chats)** y colócalo donde quieras.
+2. En el apartado **WhatsApp**, abajo, en **WhatsApp completo**, comprueba que pone **"El botón para volver encima de WhatsApp está permitido"**. Si no, pulsa **Permitir el botón para volver**, toca **LlamaditApp**, activa el interruptor y vuelve atrás.
 3. Pruébalo: el botón verde claro abre WhatsApp, y la **pestaña con la casa** del borde derecho vuelve a LlamaditApp.
 
 <table><tr>
@@ -410,17 +415,20 @@ Además de las videollamadas, la persona puede usar **WhatsApp entero** (chats, 
 
 Ocho ejercicios para mantener la memoria, la atención y el cálculo: cálculos sencillos, parejas de cartas, pintar por números, sopa de letras, ¿quién es? (con las fotos de la familia), repetir una secuencia, contar dinero y puzle con fotos. Están explicados uno a uno en las [funciones](FUNCIONES.md#12-ejercicios).
 
-1. En **Pantalla principal**, activa el interruptor de **Ejercicios** y colócalo donde quieras.
-2. En la sección **Ejercicios**, apaga los que no le vayan a servir a la persona (por ejemplo, la sopa de letras si no lee).
+1. En el apartado **Pantalla principal**, activa el interruptor de **Ejercicios** y colócalo donde quieras.
+2. En el apartado **Ejercicios**, apaga los que no le vayan a servir a la persona (por ejemplo, la sopa de letras si no lee).
 3. Elige el **nivel de inicio** de cada uno: **1** es muy fácil. Después sube solo tras 5 partidas seguidas bien hechas y baja tras 3 con fallos; aquí verás cuántas partidas lleva.
 4. Para **¿Quién es?** hacen falta al menos **2 favoritos con foto**. Es el único ejercicio con sonido (la voz del móvil dice el nombre), así que comprueba que se oye.
+
+La persona juega **tandas de 5 partidas**: los puntos de arriba marcan por cuál va y, al terminar, sale un **premio** con pegatinas y dos botones, para jugar otra vez o volver a los juegos.
 
 <table><tr>
 <td><img src="img/capturas/43-panel-ejercicios.jpg" width="230" alt="Sección Ejercicios del panel"></td>
 <td><img src="img/capturas/34-ejercicios-menu.jpg" width="230" alt="Menú de ejercicios"></td>
-<td><img src="img/capturas/37-ejercicio-pintar.jpg" width="230" alt="Pintar por números"></td>
+<td><img src="img/capturas/35-ejercicio-calculo.jpg" width="230" alt="Cálculo con manzanas y tres respuestas"></td>
+<td><img src="img/capturas/47-ejercicio-premio.jpg" width="230" alt="Premio al terminar la tanda"></td>
 </tr><tr>
-<td align="center">① Activar y elegir el nivel</td><td align="center">② El menú que verá la persona</td><td align="center">③ Un ejercicio</td>
+<td align="center">① Activar y elegir el nivel</td><td align="center">② El menú que verá la persona</td><td align="center">③ Un ejercicio</td><td align="center">④ El premio</td>
 </tr></table>
 
 Pulsa la **casa** de arriba (o la flecha de abajo) para volver a la pantalla principal.
@@ -429,10 +437,17 @@ Pulsa la **casa** de arriba (o la flecha de abajo) para volver a la pantalla pri
 
 La persona puede escuchar la radio tocando el logotipo de una emisora. Usa **datos móviles** (unos 30 a 60 MB por hora), así que conviene una tarifa con datos suficientes.
 
-1. En la sección **Radio** del panel, pulsa **Las más escuchadas del país** o busca una emisora por su nombre, y pulsa el **+** de las que quieras (mejor pocas: 4 a 6).
+1. En el apartado **Radio** del panel, pulsa **Las más escuchadas del país** o busca una emisora por su nombre, y pulsa el **+** de las que quieras (mejor pocas: 4 a 6).
 2. Ordénalas con las flechas ↑ ↓ y elige cuándo se **apaga sola** (por defecto, a la hora).
-3. En **Pantalla principal**, activa el interruptor de **Radio**.
+3. En el apartado **Pantalla principal**, activa el interruptor de **Radio**.
 4. Pruébala: toca un logotipo y comprueba que suena y que los botones de volumen la suben y la bajan. El botón rojo la para.
+
+<table><tr>
+<td><img src="img/capturas/45-panel-radio.jpg" width="230" alt="Apartado Radio: emisoras elegidas y apagado automático"></td>
+<td><img src="img/capturas/46-radio.jpg" width="230" alt="Pantalla de la radio con los logotipos de las emisoras"></td>
+</tr><tr>
+<td align="center">① Elegir las emisoras</td><td align="center">② Lo que verá la persona</td>
+</tr></table>
 
 Todo está explicado en las [funciones](FUNCIONES.md#13-radio).
 
@@ -443,13 +458,13 @@ Todo está explicado en las [funciones](FUNCIONES.md#13-radio).
 Solo si la persona va a hacer **videollamadas de WhatsApp**.
 
 1. Si no añadiste ya una **cuenta de Google** (paso 8, opción B), añádela: Play Store la necesita.
-2. En el panel, sección **Tienen WhatsApp (videollamada)**, pulsa **Instalar WhatsApp**. Se abre Play Store directamente en WhatsApp: pulsa **Instalar**, luego **Abrir**, y regístralo con el número de la SIM (llegará un SMS con un código).
+2. En el panel, apartado **WhatsApp**, pulsa **Instalar WhatsApp**. Se abre Play Store directamente en WhatsApp: pulsa **Instalar**, luego **Abrir**, y regístralo con el número de la SIM (llegará un SMS con un código).
 3. En Play Store, toca tu foto de perfil → **Ajustes → Preferencias de red → Actualizar aplicaciones automáticamente → Usando cualquier red**.
-4. **Que WhatsApp no se duerma** (imprescindible): si no, las videollamadas pueden no sonar. Desde el panel, **Abrir Ajustes de Android** → **Samsung:** **Batería → Límites de uso en segundo plano → Aplicaciones sin autoinactivación → +**, marca **WhatsApp** y pulsa **Añadir** (capturas en el [apartado 11](#11-ajuste-de-batería-recomendado)). **Otros móviles:** **Aplicaciones → WhatsApp → Batería → Sin restricciones**.
-5. Vuelve a LlamaditApp con la flecha de atrás (o el botón de inicio del móvil): sigue abierto el panel. En **Tienen WhatsApp (videollamada)**, marca a las personas que usan WhatsApp.
-6. Sal del panel con la **casa** (o pulsa **Terminar y activar el modo quiosco**). Al salir, LlamaditApp le da a WhatsApp los permisos de cámara, micrófono y contactos.
+4. **Que WhatsApp no se duerma** (imprescindible): si no, las videollamadas pueden no sonar. Desde el panel, apartado **PIN y modo quiosco** → **Abrir Ajustes de Android** → **Samsung:** **Batería → Límites de uso en segundo plano → Aplicaciones sin autoinactivación → +**, marca **WhatsApp** y pulsa **Añadir** (capturas en el [apartado 11](#11-ajuste-de-batería-recomendado)). **Otros móviles:** **Aplicaciones → WhatsApp → Batería → Sin restricciones**.
+5. Vuelve a LlamaditApp con la flecha de atrás (o el botón de inicio del móvil): sigue abierto el panel. En **Personas**, toca a cada persona que use WhatsApp y activa **Tiene WhatsApp (videollamada)** (también se puede marcar en el apartado **WhatsApp**).
+6. Sal del panel con la **casa** de la portada (o pulsa **Terminar** en la tarjeta azul de arriba). Al salir, LlamaditApp le da a WhatsApp los permisos de cámara, micrófono y contactos.
 
-> 💡 Mientras configuras cosas fuera de LlamaditApp (Play Store, la cuenta de Google, los Ajustes…), **el modo quiosco queda en pausa** y el panel avisa arriba con un recuadro amarillo. Así el móvil no salta a la pantalla principal a mitad del proceso, aunque se apague la pantalla esperando una descarga. El quiosco vuelve al salir del panel, al pulsar **Terminar y activar el modo quiosco** o, si se te olvida, a los 30 minutos sin volver al panel.
+> 💡 Mientras configuras cosas fuera de LlamaditApp (Play Store, la cuenta de Google, los Ajustes…), **el modo quiosco queda en pausa** y la tarjeta azul de la portada dice **"En pausa mientras configuras"**, con un botón **Terminar**. Así el móvil no salta a la pantalla principal a mitad del proceso, aunque se apague la pantalla esperando una descarga. El quiosco vuelve al salir del panel, al pulsar **Terminar** o, si se te olvida, a los 30 minutos sin volver al panel.
 
 ---
 
@@ -493,7 +508,7 @@ Prueba cada cosa antes de entregarlo:
 
 Antes de entregarlo:
 
-- En el panel del cuidador, comprueba que aparece el botón **Pausar el modo quiosco** (eso significa que el quiosco está **activo**).
+- En la portada del panel, comprueba que la tarjeta de arriba dice **Modo quiosco activo** y, a ser posible, **Todo listo** (sin cosas por revisar).
 - Configura los **móviles de los familiares** para que las llamadas y SMS del SOS suenen aunque estén en silencio: en **iPhone**, en el contacto → **Tono** → **Saltar silencio**; en **Android**, marca el contacto como favorito y permítelo en **No molestar**.
 
 🎉 **¡Listo!** El móvil ya está preparado.

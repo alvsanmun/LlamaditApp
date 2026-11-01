@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Icono de juego (diseño "Juegos · Menú B"), relleno par-impar. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:pathData="M12 2a10 10 0 1 0 0 20c1.5 0 2-1 2-2s-1-1.5-1-2.5S14 16 15 16h2a5 5 0 0 0 5-5c0-5-4.5-9-10-9zM7 8.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM11 5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM16 6.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"
+        android:fillColor="#FFFFFFFF"
+        android:fillType="evenOdd" />
+</vector>

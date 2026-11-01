@@ -93,3 +93,68 @@ suspend fun findContactByNumber(context: Context, number: String): Contact? =
 /** Busca un favorito por su nombre (WhatsApp muestra el nombre de la agenda). */
 suspend fun findFavoriteByName(context: Context, name: String): Contact? =
     loadFavoriteContacts(context).firstOrNull { it.name.equals(name.trim(), ignoreCase = true) }
+
+/** Favoritos sin foto, para avisar al cuidador en el panel. */
+suspend fun favoritesWithoutPhoto(context: Context): Set<Long> = withContext(Dispatchers.IO) {
+    val out = mutableSetOf<Long>()
+    try {
+        context.contentResolver.query(
+            ContactsContract.Contacts.CONTENT_URI,
+            arrayOf(ContactsContract.Contacts._ID, ContactsContract.Contacts.PHOTO_ID),
+            "${ContactsContract.Contacts.STARRED} = 1",
+            null,
+            null
+        )?.use { c ->
+            while (c.moveToNext()) if (c.isNull(1) || c.getLong(1) == 0L) out += c.getLong(0)
+        }
+    } catch (e: SecurityException) {
+        // Sin permiso de contactos: no se avisa de nada.
+    }
+    out
+}
+
+/** Pone o quita la estrella (favorito) a un contacto. */
+suspend fun setStarred(context: Context, contactId: Long, starred: Boolean): Boolean = withContext(Dispatchers.IO) {
+    try {
+        val values = android.content.ContentValues().apply { put(ContactsContract.Contacts.STARRED, if (starred) 1 else 0) }
+        val uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId)
+        context.contentResolver.update(uri, values, null, null) > 0
+    } catch (e: Exception) {
+        false
+    }
+}
+
+/** El contacto más nuevo de la agenda (los ids crecen): para encontrar los que se creen después. */
+suspend fun newestContactId(context: Context): Long = withContext(Dispatchers.IO) {
+    try {
+        context.contentResolver.query(
+            ContactsContract.Contacts.CONTENT_URI,
+            arrayOf(ContactsContract.Contacts._ID),
+            null,
+            null,
+            "${ContactsContract.Contacts._ID} DESC"
+        )?.use { c -> if (c.moveToFirst()) c.getLong(0) else 0L } ?: 0L
+    } catch (e: SecurityException) {
+        0L
+    }
+}
+
+/**
+ * "Añadir persona": el cuidador crea el contacto en la app Contactos y, al volver, se
+ * le pone la estrella para que salga en LlamaditApp sin más pasos. Devuelve cuántos.
+ */
+suspend fun starContactsNewerThan(context: Context, contactId: Long): Int = withContext(Dispatchers.IO) {
+    val ids = mutableListOf<Long>()
+    try {
+        context.contentResolver.query(
+            ContactsContract.Contacts.CONTENT_URI,
+            arrayOf(ContactsContract.Contacts._ID),
+            "${ContactsContract.Contacts._ID} > ? AND ${ContactsContract.Contacts.STARRED} = 0",
+            arrayOf(contactId.toString()),
+            null
+        )?.use { c -> while (c.moveToNext()) ids += c.getLong(0) }
+    } catch (e: SecurityException) {
+        return@withContext 0
+    }
+    ids.count { setStarred(context, it, true) }
+}

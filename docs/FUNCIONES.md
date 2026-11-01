@@ -185,43 +185,50 @@ La ruta necesita datos móviles, salvo que se haya descargado el mapa de la ciud
 
 <p align="center">
   <img src="img/capturas/33-boton-ejercicios.jpg" alt="Pantalla principal con el botón rosa de Ejercicios" width="230">
-  <img src="img/capturas/34-ejercicios-menu.jpg" alt="Menú con los ocho ejercicios y las estrellas del nivel" width="230">
+  <img src="img/capturas/34-ejercicios-menu.jpg" alt="Menú de juegos: una escena por juego en la que una mano hace la acción" width="230">
 </p>
 
-Un botón opcional (rosa, con una pieza de puzle) con ejercicios para mantener la memoria, la atención y el cálculo, pensados para personas mayores o con dificultades cognitivas o de memoria. Al pulsarlo sale un menú con un dibujo grande por ejercicio y unas **estrellas** que indican su nivel (de 1 a 5).
+Un botón opcional (rosa, con una pieza de puzle) con ejercicios para mantener la memoria, la atención y el cálculo, pensados para personas mayores o con dificultades cognitivas o de memoria. Al pulsarlo sale un menú con una tarjeta por ejercicio: un dibujo en el que **una mano hace lo que se hace en el juego** (tocar la respuesta, levantar una carta, pintar un pétalo…) y, debajo, cinco barras con su **nivel** (de 1 a 5).
 
 - Los ejercicios **cambian en cada partida**.
 - El **nivel sube solo** tras **5 partidas seguidas bien hechas** y **baja** tras 3 con fallos. El cuidador elige en el panel por qué nivel empieza cada uno.
-- Al terminar una partida siempre sale un **✓ verde** grande, aunque haya habido fallos, para animar. Los fallos se notan con una **sacudida** y una vibración, sin texto.
+- Se juega en **tandas de 5 partidas**: arriba, unos puntos marcan por cuál va (verdes las hechas, azul la de ahora). Al terminar cada partida sale un **✓ verde**, aunque haya habido fallos, para animar, y al terminar la tanda, un **premio** con confeti y una pegatina por cada partida bien hecha, con dos botones: jugar otra vez o volver a los juegos. Los fallos se notan con una **sacudida** y una vibración, sin texto.
 - **No hacen ruido**, salvo *¿Quién es?*, que habla.
 
 | Ejercicio | Cómo se juega | Del nivel 1 al 5 |
 |---|---|---|
-| 🔢 **Cálculos sencillos** | Sale la operación en grande y se escribe el resultado en un teclado de calculadora. Al tercer fallo enseña la respuesta. | De sumas hasta 10, con puntos para contar, a multiplicaciones y divisiones sencillas |
+| 🔢 **Cálculos sencillos** | Sale la operación en grande (con manzanas para contar si los números son pequeños) y se toca la respuesta buena entre tres. Si falla, esa respuesta se apaga y puede probar otra. | De sumas hasta 10 a multiplicaciones y divisiones sencillas |
 | 🃏 **Parejas de cartas** | Cartas boca abajo: se levantan de dos en dos hasta encontrar todas las parejas. | De 3 × 3 a 5 × 6 cartas |
 | 🎨 **Pintar por números** | Como un cuaderno de colorear: se elige un color de abajo y se toca una zona con su número; se pinta entera. El dibujo se amplía con dos dedos o con **+** y **−**. | De 3 zonas grandes (una manzana) a dibujos con muchas zonas (un gato, una casa con árbol). En los primeros niveles se marcan las zonas del color elegido. |
 | 🔤 **Sopa de letras** | Palabras sencillas, solo en horizontal y vertical, cada una con su dibujo. Se marca tocando la primera letra y la última. | De 5 × 5 con 3 palabras a 9 × 9 con 7 |
 | 👪 **¿Quién es?** | La voz del móvil pregunta "¿Dónde está María?" y hay que tocar su foto. Usa las fotos de los contactos favoritos. | De 2 fotos a 6 |
-| 🎵 **Repetir la secuencia** | Se encienden unos botones de colores (cada uno con una forma) y hay que tocarlos en el mismo orden. Los ojos indican que hay que mirar; la mano, que toca repetir. | De 2 pasos con 4 botones a 5 pasos con 6 |
+| 🎵 **Repetir la secuencia** | Se encienden unos botones de colores (cada uno con una forma) y hay que tocarlos en el mismo orden. Arriba, el ojo se enciende cuando hay que mirar y la mano cuando toca repetir; debajo se va completando la secuencia. | De 2 pasos con 4 botones a 5 pasos con 6 |
 | 💶 **Contar dinero** | Sale una cosa de la compra con su precio y hay que poner las monedas y billetes justos. | De monedas de 1 € y 2 € a todo, hasta 50 € |
 | 🧩 **Puzle con fotos** | Una foto de la familia (o la del portal) partida en piezas: se toca una pieza y luego otra para cambiarlas de sitio. | De 2 × 2 a 5 × 5 piezas |
 
 <p align="center">
-  <img src="img/capturas/35-ejercicio-calculo.jpg" alt="Cálculo: 9 + 3 y el teclado" width="180">
-  <img src="img/capturas/36-ejercicio-parejas.jpg" alt="Parejas: dos regalos encontrados" width="180">
-  <img src="img/capturas/37-ejercicio-pintar.jpg" alt="Pintar por números: una seta a medio pintar" width="180">
-  <img src="img/capturas/38-ejercicio-sopa.jpg" alt="Sopa de letras con MANO encontrada" width="180">
+  <img src="img/capturas/35-ejercicio-calculo.jpg" alt="Cálculo: 3 + 1 con manzanas y tres respuestas" width="180">
+  <img src="img/capturas/36-ejercicio-parejas.jpg" alt="Parejas: dos cartas levantadas" width="180">
+  <img src="img/capturas/37-ejercicio-pintar.jpg" alt="Pintar por números: una seta" width="180">
+  <img src="img/capturas/38-ejercicio-sopa.jpg" alt="Sopa de letras con sus palabras y dibujos" width="180">
 </p>
 <p align="center">
   <img src="img/capturas/39-ejercicio-quien-es.jpg" alt="¿Quién es?: cuatro fotos y el nombre que dice la voz" width="180">
-  <img src="img/capturas/40-ejercicio-secuencia.jpg" alt="Repetir la secuencia: el botón azul encendido" width="180">
-  <img src="img/capturas/41-ejercicio-dinero.jpg" alt="Contar dinero: 2,50 € con una moneda de 2 € y otra de 50 céntimos" width="180">
+  <img src="img/capturas/40-ejercicio-secuencia.jpg" alt="Repetir la secuencia: el ojo encendido mientras se enseña" width="180">
+  <img src="img/capturas/41-ejercicio-dinero.jpg" alt="Contar dinero: 1,50 € con una moneda de 1 € y otra de 50 céntimos" width="180">
   <img src="img/capturas/42-ejercicio-puzle.jpg" alt="Puzle con la foto de un familiar" width="180">
+</p>
+<p align="center">
+  <img src="img/capturas/47-ejercicio-premio.jpg" alt="Premio al terminar la tanda: visto bueno, puntos y pegatinas" width="180">
 </p>
 
 La casa de arriba (o la flecha de abajo) vuelve a la pantalla principal.
 
 ## 13. Radio
+
+<p align="center">
+  <img src="img/capturas/46-radio.jpg" alt="Pantalla de la radio con los logotipos de las emisoras" width="230">
+</p>
 
 Un botón opcional (añil, con una radio) para escuchar la radio por internet. Al pulsarlo salen, en grande, los **logotipos de las emisoras** que ha elegido el cuidador (o su nombre sobre un color, si la emisora no tiene logotipo; el cuidador puede ponerle cualquier dibujo de la galería).
 
@@ -249,72 +256,62 @@ Un botón opcional (añil, con una radio) para escuchar la radio por internet. A
 ## Panel del cuidador
 
 <p align="center">
-  <img src="img/capturas/14-pin.jpg" alt="PIN del cuidador" width="230">
-  <img src="img/capturas/15-panel-1.jpg" alt="Orden de contactos y SOS" width="230">
-  <img src="img/capturas/15-panel-2.jpg" alt="Ubicación y WhatsApp" width="230">
-  <img src="img/capturas/15-panel-3.jpg" alt="Seguridad y modo quiosco" width="230">
-  <img src="img/capturas/16-acerca-de.jpg" alt="Acerca de: versión, copyright y licencia" width="230">
+  <img src="img/capturas/14-pin.jpg" alt="PIN del cuidador" width="200">
+  <img src="img/capturas/15-panel-1.jpg" alt="Portada del panel: estado del modo quiosco y apartados con su resumen" width="200">
+  <img src="img/capturas/15-panel-2.jpg" alt="Personas: favoritos con su foto y sus etiquetas" width="200">
+  <img src="img/capturas/44-panel-persona.jpg" alt="Ficha de una persona con sus interruptores" width="200">
 </p>
 
-**Cómo entrar:** mantener pulsado el **reloj 5 segundos** (el teléfono vibra) e introducir el PIN de 4 cifras. La primera vez se crea el PIN (dos veces). El panel se cierra solo al apagar la pantalla.
+**Cómo entrar:** mantener pulsado el **reloj 5 segundos** (el teléfono vibra) e introducir el PIN de 4 cifras. La primera vez se crea el PIN (dos veces). El panel se cierra solo al apagar la pantalla, salvo mientras el cuidador configura algo fuera de la app.
 
-**Diseño de la pantalla y dibujo del SOS:**
+**La portada** tiene arriba una tarjeta azul oscuro con el estado del **modo quiosco** (activo, en pausa o en pausa mientras se configura algo) y un botón para **pausarlo, activarlo o terminar**; si falta algo, dice cuántas cosas hay **por revisar**. Debajo están los **apartados**, cada uno con un resumen de cómo está (en ámbar lo que falta, por ejemplo "Falta la foto del portal"). Cada apartado se abre en su página; la flecha de arriba vuelve a la portada y la casa de la portada, a la pantalla principal.
+
+**Personas:** los favoritos con su foto y unas etiquetas de colores que dicen qué puede hacer cada uno (**SOS**, **Vídeo**, **Ubicación**) y si le falta la foto. Se **ordenan arrastrando** los seis puntos de la izquierda. Al tocar a una persona se abre su **ficha**, con interruptores para hacerla contacto del SOS, marcar que tiene WhatsApp o dejarle pedir la ubicación; desde ahí también se cambia su foto, su nombre o su teléfono, o se quita de la lista. **"Añadir persona"** abre Contactos y, al volver, la persona ya sale en la lista (se le pone la estrella sola).
+
+**Pantalla principal, Emergencia y Ejercicios:**
 
 <p align="center">
-  <img src="img/capturas/20-panel-pantalla.jpg" alt="Vista previa de la pantalla principal en el panel" width="230">
-  <img src="img/capturas/21-panel-botones.jpg" alt="Flechas, tamaño e interruptor de cada botón" width="230">
-  <img src="img/capturas/22-panel-dibujo-sos.jpg" alt="Seis dibujos para el botón SOS" width="230">
-</p>
-
-**Botón para volver y WhatsApp completo:**
-
-<p align="center">
-  <img src="img/capturas/28-panel-boton-volver.jpg" alt="Elegir entre la casa grande arriba y la flecha abajo" width="230">
-  <img src="img/capturas/32-panel-whatsapp-completo.jpg" alt="Sección WhatsApp completo del panel" width="230">
-</p>
-
-**Ejercicios:**
-
-<p align="center">
-  <img src="img/capturas/43-panel-ejercicios.jpg" alt="Sección Ejercicios del panel: interruptor, nivel y partidas de cada ejercicio" width="230">
-</p>
-
-**Volver a casa, contactos de Google y Wi-Fi:**
-
-<p align="center">
-  <img src="img/capturas/23-panel-volver-casa.jpg" alt="Marcar la casa y su dirección" width="230">
-  <img src="img/capturas/24-panel-portal-avisos.jpg" alt="Foto del portal y avisos por SMS" width="230">
-  <img src="img/capturas/25-aviso-sms.jpg" alt="Aviso del coste de los SMS al activar una función" width="230">
+  <img src="img/capturas/20-panel-pantalla.jpg" alt="Vista previa de la pantalla principal en el panel" width="200">
+  <img src="img/capturas/21-panel-botones.jpg" alt="Flechas, tamaño e interruptor de cada botón" width="200">
+  <img src="img/capturas/28-panel-boton-volver.jpg" alt="Elegir entre la casa grande arriba y la flecha abajo" width="200">
+  <img src="img/capturas/22-panel-dibujo-sos.jpg" alt="Contacto del SOS y seis dibujos para el botón" width="200">
 </p>
 <p align="center">
-  <img src="img/capturas/26-panel-cuenta-google.jpg" alt="Contactos desde una cuenta de Google" width="230">
-  <img src="img/capturas/27-panel-wifi.jpg" alt="Wi-Fi encendido y botón para elegir red" width="230">
+  <img src="img/capturas/43-panel-ejercicios.jpg" alt="Apartado Ejercicios: interruptor, nivel y partidas de cada ejercicio" width="200">
+  <img src="img/capturas/45-panel-radio.jpg" alt="Apartado Radio: emisoras y apagado automático" width="200">
+  <img src="img/capturas/32-panel-whatsapp-completo.jpg" alt="Apartado WhatsApp: llamadas y WhatsApp completo" width="200">
+  <img src="img/capturas/27-panel-wifi.jpg" alt="Apartado Conexión con el Wi-Fi encendido" width="200">
 </p>
 
-**El resto del panel:**
+**Volver a casa, contactos de Google y PIN:**
 
-| Sección | Para qué sirve |
+<p align="center">
+  <img src="img/capturas/23-panel-volver-casa.jpg" alt="Marcar la casa y su dirección" width="200">
+  <img src="img/capturas/24-panel-portal-avisos.jpg" alt="Foto del portal y avisos por SMS" width="200">
+  <img src="img/capturas/25-aviso-sms.jpg" alt="Aviso del coste de los SMS al activar una función" width="200">
+  <img src="img/capturas/26-panel-cuenta-google.jpg" alt="Contactos desde una cuenta de Google, al final de Personas" width="200">
+</p>
+<p align="center">
+  <img src="img/capturas/15-panel-3.jpg" alt="Apartado PIN y modo quiosco" width="200">
+  <img src="img/capturas/16-acerca-de.jpg" alt="Acerca de: versión, copyright y licencia" width="200">
+</p>
+
+**Los apartados:**
+
+| Apartado | Para qué sirve |
 |---|---|
-| **Pantalla principal** | Vista previa en pequeño y, por cada elemento, flechas ↑ y ↓ para moverlo, su tamaño (**pequeño** y **mediano** ocupan media fila, **grande** la fila entera) y un interruptor para ocultarlo. El reloj no se puede ocultar. "Volver al diseño original" lo deja como venía. |
-| **Ejercicios** | Un interruptor por ejercicio, su **nivel** (el actual; tocar otro número lo cambia) y cuántas partidas lleva y cuántas bien hechas. El botón se activa en *Pantalla principal*. |
-| **Radio** | Aviso del consumo de datos. Las **emisoras elegidas**, con flechas ↑ y ↓ para el orden, una ✕ para quitarlas y, tocando el logotipo, otro dibujo de la galería. **"Apagar sola después de"**: 30 min, 1 h (por defecto), 2 h, 3 h o nunca. **Añadir emisoras**: "Las más escuchadas del país" (el de la SIM) o buscando por nombre, y el botón **+** de cada una. Las emisoras salen del directorio libre [radio-browser.info](https://www.radio-browser.info). El botón se activa en *Pantalla principal*. |
-| **Volver a casa** | Marcar la casa con **"Usar mi ubicación actual"** (estando en ella) o escribiendo la dirección y **"Buscar esta dirección en el mapa"**. La dirección se puede corregir (piso, puerta). **"Probar la ruta"** abre la navegación una vez para aceptar las pantallas iniciales de Google Maps. El botón se activa en *Pantalla principal*. **Foto del portal** (hacerla con la cámara o elegirla de la galería) y **"Avisar por SMS al pulsar el botón"** (al contacto del SOS, activado por defecto) y **"Enviar la ubicación cada 10 minutos durante la ruta"** (desactivado por defecto). Al activar una función que envía SMS, el panel avisa de que, según la tarifa de la línea, los SMS podrían cobrarse. |
-| **Dibujo del botón SOS** | Las letras **SOS** (por defecto), una **ambulancia**, una **cruz**, una **sirena**, un **corazón** o una **señal de peligro**: el que mejor reconozca la persona. |
-| **Botón para volver** | Cómo se sale de cada pantalla: la **casa grande de arriba** (por defecto), que vuelve a la pantalla principal, o una **flecha fija abajo a la izquierda**, como el botón Atrás de Android pero más grande (en un mensaje abierto vuelve a la lista). El cambio se ve al momento. |
-| **Orden de los contactos** | Flechas ↑ y ↓ para elegir el orden. Es el mismo en Llamar y en Videollamada. Los favoritos nuevos salen al final. |
-| **Contactos desde una cuenta de Google** | Las cuentas de Google del móvil, cuántos favoritos (★) trae cada una y si sus contactos se sincronizan solos; botones **"Sincronizar ahora"** y **"Añadir una cuenta de Google"**. Así los contactos (nombre, foto y teléfono) se pueden gestionar desde cualquier móvil u ordenador en [contacts.google.com](https://contacts.google.com), marcándolos con la estrella. Conviene una cuenta solo para este móvil. |
-| **Contacto para el SOS** | A quién llama y avisa el botón SOS. |
-| **Pueden pedir la ubicación por SMS** | Qué favoritos pueden pedir la ubicación. |
-| **Tienen WhatsApp (videollamada)** | Marcar quién usa WhatsApp: aparecerá en el botón de videollamada. Si WhatsApp no está instalado, **Instalar WhatsApp** abre Play Store directamente en él. |
-| **Palabras clave** | Las palabras que deben enviar para pedir la ubicación, separadas por comas. Por defecto dependen del idioma del teléfono (`UBICACION` y `DONDE ESTAS` en español, `LOCATION` y `WHERE ARE YOU` en inglés…). |
-| **WhatsApp completo** | Explica el botón "WhatsApp (chats)" (se activa en *Pantalla principal*) y comprueba el permiso de la pestaña para volver, con un botón para darlo si falta. |
-| **Llamadas de WhatsApp** | Activar el "acceso a notificaciones", necesario para ver las videollamadas entrantes con la pantalla propia. |
-| **Seguridad** | Cambiar el PIN. |
-| **Wi-Fi** | Apagado y bloqueado por defecto (solo la SIM). Al encenderlo aparece **"Elegir una red Wi-Fi"**, que abre los Ajustes de Android para conectarse. Al apagarlo se vuelve a bloquear; las redes guardadas se recuerdan. |
-| **Otras apps** | Abrir **Contactos** (añadir personas, fotos y favoritos ★) o los **Ajustes de Android**. El quiosco queda en pausa mientras tanto (el panel lo avisa arriba) y vuelve al salir del panel con la casa, con **Terminar y activar el modo quiosco** o a los 30 minutos sin volver. |
-| **Modo quiosco** | **Pausar** (el móvil se usa con normalidad, por ejemplo para instalar algo) y **Activar** de nuevo, sin ordenador. |
-| **Quitar el Device Owner** | Solo para desinstalar LlamaditApp o entregar el móvil a otra persona. Volver a activar el quiosco exige un ordenador. |
-| **Acerca de** | Versión de la app, copyright, licencia (GNU AGPL v3) y dirección del código fuente. |
+| **Personas** | Orden (arrastrando), ficha de cada persona (SOS, WhatsApp, ubicación, cambiar foto o teléfono, quitar de la lista) y **Añadir persona**. Abajo, **Contactos desde una cuenta de Google**: las cuentas del móvil, cuántos favoritos (★) trae cada una, si se sincronizan solas, **"Sincronizar ahora"** y **"Añadir una cuenta de Google"**. Así los contactos (nombre, foto y teléfono) se pueden gestionar desde cualquier móvil u ordenador en [contacts.google.com](https://contacts.google.com), marcándolos con la estrella. Conviene una cuenta solo para este móvil. |
+| **Emergencia (SOS)** | A quién llama y avisa el botón SOS, y su dibujo: las letras **SOS** (por defecto), una **ambulancia**, una **cruz**, una **sirena**, un **corazón** o una **señal de peligro**. |
+| **Pantalla principal** | Vista previa en pequeño y, por cada elemento, flechas ↑ y ↓ para moverlo, su tamaño (**pequeño** y **mediano** ocupan media fila, **grande** la fila entera) y un interruptor para ocultarlo. El reloj no se puede ocultar. "Volver al diseño original" lo deja como venía. Debajo, el **botón para volver**: la **casa grande de arriba** (por defecto) o una **flecha fija abajo a la izquierda**, como el botón Atrás de Android pero más grande. |
+| **Ubicación por SMS** | Qué favoritos pueden pedir la ubicación y las **palabras clave** que deben enviar, separadas por comas. Por defecto dependen del idioma del teléfono (`UBICACION` y `DONDE ESTAS` en español, `LOCATION` y `WHERE ARE YOU` en inglés…). |
+| **Volver a casa** | Marcar la casa con **"Usar mi ubicación actual"** (estando en ella) o escribiendo la dirección y **"Buscar esta dirección en el mapa"**. La dirección se puede corregir (piso, puerta). **"Probar la ruta"** abre la navegación una vez para aceptar las pantallas iniciales de Google Maps. **Foto del portal** (con la cámara o de la galería), **"Avisar por SMS al pulsar el botón"** (al contacto del SOS, activado por defecto) y **"Enviar la ubicación cada 10 minutos durante la ruta"** (desactivado por defecto). Al activar una función que envía SMS, el panel avisa de que podrían cobrarse. |
+| **Ejercicios** | Un interruptor por ejercicio, su **nivel** (el actual; tocar otro número lo cambia) y cuántas partidas lleva y cuántas bien hechas. |
+| **Radio** | Aviso del consumo de datos. Las **emisoras elegidas**, con flechas ↑ y ↓ para el orden, una ✕ para quitarlas y, tocando el logotipo, otro dibujo de la galería. **"Apagar sola después de"**: 30 min, 1 h (por defecto), 2 h, 3 h o nunca. **Añadir emisoras**: "Las más escuchadas del país" (el de la SIM) o buscando por nombre, y el botón **+** de cada una. Las emisoras salen del directorio libre [radio-browser.info](https://www.radio-browser.info). |
+| **WhatsApp** | **Instalar WhatsApp** (si falta: abre Play Store en su ficha), quién **tiene WhatsApp** para la videollamada, el "acceso a notificaciones" para ver las **videollamadas entrantes** con la pantalla propia y el permiso de la pestaña de **WhatsApp completo**. |
+| **Conexión** | Wi-Fi apagado y bloqueado por defecto (solo la SIM). Al encenderlo aparece **"Elegir una red Wi-Fi"**, que abre los Ajustes de Android para conectarse. Al apagarlo se vuelve a bloquear; las redes guardadas se recuerdan. |
+| **PIN y modo quiosco** | Cambiar el PIN; **pausar** el modo quiosco (el móvil se usa con normalidad) y **activarlo** de nuevo, sin ordenador; abrir **Contactos** o los **Ajustes de Android**; **quitar el Device Owner** (solo para desinstalar LlamaditApp o entregar el móvil: volver a activar el quiosco exige un ordenador) y **Acerca de** (versión, copyright, licencia GNU AGPL v3 y código fuente). |
+
+Los botones de la pantalla principal (Volver a casa, Ejercicios, Radio, WhatsApp completo…) se activan en **Pantalla principal**. Mientras el cuidador configura algo fuera de la app (Contactos, la cuenta de Google, Play Store, los Ajustes…), el modo quiosco queda en pausa y la portada lo dice; vuelve al salir del panel, al pulsar **Terminar** o a los 30 minutos sin volver al panel.
 
 > ⚠️ **Apunta el PIN en un sitio seguro.** En la versión final no hay otra forma de entrar al panel: si se olvida, solo queda restablecer el teléfono de fábrica.
 

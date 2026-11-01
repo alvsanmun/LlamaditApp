@@ -94,7 +94,7 @@ internal fun RadioSection() {
     val stations = remember(version) { store.stations }
     var sleep by remember { mutableIntStateOf(store.sleepMinutes) }
 
-    Text("⚠ " + stringResource(R.string.radio_data_note), color = BateriaMedia, fontSize = 15.sp)
+    Text("⚠ " + stringResource(R.string.radio_data_note), color = CgWarn, fontSize = 15.sp)
 
     // Cambiar el dibujo de una emisora (muchas no tienen logotipo en el directorio).
     var pickingFor by remember { mutableStateOf<String?>(null) }
@@ -104,9 +104,9 @@ internal fun RadioSection() {
     }
 
     if (stations.isEmpty()) {
-        Text(stringResource(R.string.radio_no_stations), color = TextoSuave, fontSize = 16.sp)
+        Text(stringResource(R.string.radio_no_stations), color = CgMuted, fontSize = 16.sp)
     } else {
-        Text(stringResource(R.string.radio_stations_hint), color = TextoSuave, fontSize = 16.sp)
+        Text(stringResource(R.string.radio_stations_hint), color = CgMuted, fontSize = 16.sp)
     }
     stations.forEachIndexed { index, station ->
         val logo by produceState<Bitmap?>(null, station.uuid, version) { value = loadLogo(context, station.uuid) }
@@ -118,7 +118,7 @@ internal fun RadioSection() {
             })
             Text(
                 station.name,
-                color = TextoClaro,
+                color = CgInk,
                 fontSize = 17.sp,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
@@ -133,7 +133,7 @@ internal fun RadioSection() {
     }
 
     Spacer(Modifier.height(4.dp))
-    Text(stringResource(R.string.radio_sleep_title), color = TextoClaro, fontSize = 18.sp)
+    Text(stringResource(R.string.radio_sleep_title), color = CgInk, fontSize = 18.sp)
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         SLEEP_OPTIONS.forEach { minutes ->
             Chip(sleepLabel(minutes), selected = minutes == sleep) {
@@ -144,7 +144,7 @@ internal fun RadioSection() {
     }
 
     Spacer(Modifier.height(4.dp))
-    Text(stringResource(R.string.radio_add_title), color = TextoClaro, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+    Text(stringResource(R.string.radio_add_title), color = CgInk, fontSize = 18.sp, fontWeight = FontWeight.Bold)
     var query by remember { mutableStateOf("") }
     var results by remember { mutableStateOf<List<Station>?>(null) }
     var loading by remember { mutableStateOf(false) }
@@ -173,8 +173,8 @@ internal fun RadioSection() {
 
     when {
         loading -> CircularProgressIndicator(Modifier.padding(8.dp))
-        failed -> Text("⚠ " + stringResource(R.string.radio_no_connection), color = BateriaMedia, fontSize = 15.sp)
-        results?.isEmpty() == true -> Text(stringResource(R.string.radio_no_results), color = TextoSuave, fontSize = 16.sp)
+        failed -> Text("⚠ " + stringResource(R.string.radio_no_connection), color = CgWarn, fontSize = 15.sp)
+        results?.isEmpty() == true -> Text(stringResource(R.string.radio_no_results), color = CgMuted, fontSize = 16.sp)
     }
     results?.forEach { station ->
         val added = stations.any { it.uuid == station.uuid }
@@ -185,7 +185,7 @@ internal fun RadioSection() {
             StationThumb(station.name, logo)
             Text(
                 station.name,
-                color = TextoClaro,
+                color = CgInk,
                 fontSize = 17.sp,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
@@ -229,7 +229,7 @@ private fun StationThumb(name: String, logo: Bitmap?, modifier: Modifier = Modif
         if (logo != null) {
             Image(logo.asImageBitmap(), contentDescription = null, contentScale = ContentScale.Fit, modifier = Modifier.fillMaxSize().padding(4.dp))
         } else {
-            Text(name.take(1).uppercase(), color = TextoClaro, fontSize = 24.sp, fontWeight = FontWeight.Bold)
+            Text(name.take(1).uppercase(), color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold)
         }
     }
 }
@@ -240,11 +240,11 @@ private fun Chip(text: String, selected: Boolean, onClick: () -> Unit) {
         Modifier
             .height(40.dp)
             .clip(RoundedCornerShape(20.dp))
-            .background(if (selected) Color(0xFF90CAF9) else GrisBoton)
+            .background(if (selected) CgAccent else CgNeutral)
             .clickable(onClick = onClick)
             .padding(horizontal = 12.dp),
         contentAlignment = Alignment.Center
     ) {
-        Text(text, color = if (selected) Color.Black else TextoClaro, fontSize = 15.sp)
+        Text(text, color = if (selected) Color.White else CgInk, fontSize = 15.sp)
     }
 }

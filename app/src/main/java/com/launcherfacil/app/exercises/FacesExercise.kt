@@ -57,6 +57,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -64,13 +65,6 @@ import com.launcherfacil.app.R
 import com.launcherfacil.app.contacts.Contact
 import com.launcherfacil.app.contacts.loadContactPhoto
 import com.launcherfacil.app.contacts.loadFavoriteContacts
-import com.launcherfacil.app.ui.AzulTeclado
-import com.launcherfacil.app.ui.BateriaAlta
-import com.launcherfacil.app.ui.BateriaBaja
-import com.launcherfacil.app.ui.BigTile
-import com.launcherfacil.app.ui.CaregiverMessage
-import com.launcherfacil.app.ui.TextoClaro
-import com.launcherfacil.app.ui.TileIcon
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -96,7 +90,10 @@ internal fun FacesExercise(level: Int, onDone: (Boolean) -> Unit) {
     }
     val all = faces ?: return
     if (all.size < 2) {
-        CaregiverMessage(stringResource(R.string.exercise_faces_none))
+        // Mensaje para el cuidador, sobre el fondo crema de los juegos.
+        Box(Modifier.fillMaxSize().padding(16.dp), contentAlignment = Alignment.Center) {
+            Text(stringResource(R.string.exercise_faces_none), color = GmInk, fontSize = 22.sp, textAlign = TextAlign.Center)
+        }
         return
     }
     val options = remember { all.shuffled().take(FACE_OPTIONS[level - 1].coerceAtMost(all.size)) }
@@ -124,12 +121,12 @@ internal fun FacesExercise(level: Int, onDone: (Boolean) -> Unit) {
     }
 
     Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        BigTile(AzulTeclado, { ExerciseVoice.speak(question) }, Modifier.fillMaxWidth().height(96.dp)) {
+        RaisedBox(GmBlue, GmBlueDark, Modifier.fillMaxWidth().height(104.dp), radius = 24.dp, onClick = { ExerciseVoice.speak(question) }) {
             Row(Modifier.padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-                Box(Modifier.size(64.dp)) { TileIcon(R.drawable.ic_volume_up, 1f) }
+                Icon(painterResource(R.drawable.ic_volume_up), null, tint = Color.White, modifier = Modifier.size(60.dp))
                 Text(
                     "  " + target.first.name,
-                    color = TextoClaro,
+                    color = Color.White,
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
@@ -167,8 +164,8 @@ private fun Face(photo: ImageBitmap, state: Boolean?, modifier: Modifier, onClic
             .background(Color.Black)
             .then(
                 when (state) {
-                    true -> Modifier.border(8.dp, BateriaAlta, shape)
-                    false -> Modifier.border(4.dp, BateriaBaja, shape)
+                    true -> Modifier.border(8.dp, GmGreen, shape)
+                    false -> Modifier.border(4.dp, Color(0xFFE53935), shape)
                     null -> Modifier
                 }
             )
@@ -182,7 +179,7 @@ private fun Face(photo: ImageBitmap, state: Boolean?, modifier: Modifier, onClic
             modifier = Modifier.fillMaxSize().alpha(if (state == false) 0.35f else 1f)
         )
         if (state == false) {
-            Icon(painterResource(R.drawable.ic_close), null, tint = BateriaBaja, modifier = Modifier.size(96.dp))
+            Icon(painterResource(R.drawable.ic_close), null, tint = Color(0xFFE53935), modifier = Modifier.size(96.dp))
         }
     }
 }

@@ -55,8 +55,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.launcherfacil.app.R
-import com.launcherfacil.app.ui.GrisBoton
-import com.launcherfacil.app.ui.TextoClaro
 import kotlinx.coroutines.launch
 import java.text.Normalizer
 import java.util.Locale
@@ -188,14 +186,14 @@ internal fun WordsExercise(level: Int, onDone: (Boolean) -> Unit) {
                 Row(
                     Modifier
                         .clip(RoundedCornerShape(14.dp))
-                        .background(if (index >= 0) FOUND_COLORS[index % FOUND_COLORS.size] else GrisBoton)
+                        .background(if (index >= 0) FOUND_COLORS[index % FOUND_COLORS.size] else GmCard)
                         .padding(horizontal = 10.dp, vertical = 4.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(word.picture, fontSize = 26.sp)
                     Text(
                         " " + word.word,
-                        color = if (index >= 0) Color.Black else TextoClaro,
+                        color = GmInk,
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold,
                         textDecoration = if (index >= 0) TextDecoration.LineThrough else null
