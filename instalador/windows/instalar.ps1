@@ -78,7 +78,8 @@ Bien 'Herramientas listas.'
 
 # --- 2. El APK de LlamaditApp ---
 Titulo 'Paso 2 de 6: LlamaditApp'
-$apk = Get-ChildItem -Path $Aqui -Filter '*.apk' -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+# (Nunca la app del cuidador, LlamaditApp-Cuidador-*.apk, que va en la misma página de versiones.)
+$apk = Get-ChildItem -Path $Aqui -Filter '*.apk' -ErrorAction SilentlyContinue | Where-Object { $_.Name -notlike '*Cuidador*' } | Sort-Object LastWriteTime -Descending | Select-Object -First 1
 if ($apk) {
     $apk = $apk.FullName
     Bien "Uso el archivo $(Split-Path -Leaf $apk) que está junto al instalador."
@@ -86,7 +87,7 @@ if ($apk) {
     Aviso 'Buscando la última versión en GitHub...'
     try {
         $version = Invoke-RestMethod -UseBasicParsing "https://api.github.com/repos/$Repo/releases/latest"
-        $recurso = $version.assets | Where-Object { $_.name -like '*.apk' } | Select-Object -First 1
+        $recurso = $version.assets | Where-Object { $_.name -like '*.apk' -and $_.name -notlike '*Cuidador*' } | Select-Object -First 1
         $apk = Join-Path $Carpeta $recurso.name
         if (-not (Test-Path $apk)) {
             Aviso "Descargando $($recurso.name)..."

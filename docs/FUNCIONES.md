@@ -253,6 +253,33 @@ Un botón opcional (añil, con una radio) para escuchar la radio por internet. A
 
 ---
 
+## 15. Gestión a distancia
+
+Opcional, para el cuidador. Desde su **móvil Android**, con la **app del cuidador**, o desde **el ordenador**, con la web del cuidador, puede hacer casi todo lo del panel sin tener delante el móvil de la persona:
+
+- **¿Dónde está?**: la posición en un mapa al momento (sin SMS), con la precisión y la batería.
+- **Hacer sonar** el móvil 30 segundos, aunque esté en silencio, para encontrarlo en casa.
+- **Personas**: añadir, cambiar la foto (con la cámara del cuidador), el nombre o el teléfono, ordenar y quitar; quién es el contacto del SOS, quién tiene WhatsApp y quién puede pedir la ubicación por SMS.
+- **Pantalla principal**, dibujo del SOS, botón para volver, **Volver a casa** (dirección y avisos), **ejercicios** y su nivel, **radio** (apagado automático) y **Wi-Fi**.
+- La **batería** y cuándo se conectó por última vez, y la **actividad**: si ha pulsado el SOS o Volver a casa, si ha llegado a casa o si tiene la batería baja.
+
+<p align="center">
+  <img src="img/capturas/51-cuidador-movil.jpg" alt="App del cuidador: estado del móvil, ¿Dónde está?, Hacer sonar, actividad y apartados" width="200">
+  <img src="img/capturas/52-cuidador-qr.jpg" alt="App del cuidador: código QR para vincular el móvil de la persona" width="200">
+  <img src="img/capturas/49-panel-gestion-distancia.jpg" alt="Panel del móvil: gestión a distancia conectada" width="200">
+  <img src="img/capturas/50-panel-gestion-cuidadores.jpg" alt="Panel del móvil: cuidadores vinculados y vincular otro" width="200">
+</p>
+
+**Sin servidores de LlamaditApp:** cada familia crea **su propio proyecto de Firebase** (un servicio de Google, gratuito para este uso) con su cuenta de Google. Los datos se quedan ahí y solo los ven los cuidadores que la familia vincula. La guía [GESTION-A-DISTANCIA.md](GESTION-A-DISTANCIA.md) lo explica paso a paso (unos 15 minutos, una sola vez).
+
+**Cómo se vincula:** el cuidador pega los datos del proyecto en la app o la web, pulsa **Vincular un móvil** y le sale un **código QR** (vale 15 minutos). En el panel del móvil de la persona, **Gestión a distancia → Hacer una foto al código QR**. Si no está delante, puede mandar una captura del código y usar **Elegir una foto del código QR**. Los demás cuidadores reciben una **invitación** (Vinculación → Invitar a otro cuidador) y vinculan el móvil con su propio código.
+
+**Necesita internet** en el móvil de la persona (datos móviles, muy poco). Conviene pulsar **Permitir que funcione en segundo plano** si el panel lo pide, para que las peticiones lleguen con la pantalla apagada.
+
+**La app del cuidador** (`LlamaditApp-Cuidador-1.0.apk`, en la [página de versiones](https://github.com/alvsanmun/LlamaditApp/releases)) es para Android. **La web del cuidador** para el ordenador está en el mismo sitio (`Web-Cuidador-LlamaditApp.zip`): en Windows, doble clic en *Abrir la web del cuidador.bat*.
+
+---
+
 ## Panel del cuidador
 
 <p align="center">
@@ -260,13 +287,14 @@ Un botón opcional (añil, con una radio) para escuchar la radio por internet. A
   <img src="img/capturas/15-panel-1.jpg" alt="Portada del panel: estado del modo quiosco y apartados con su resumen" width="200">
   <img src="img/capturas/15-panel-2.jpg" alt="Personas: favoritos con su foto y sus etiquetas" width="200">
   <img src="img/capturas/44-panel-persona.jpg" alt="Ficha de una persona con sus interruptores" width="200">
+  <img src="img/capturas/48-panel-persona-nueva.jpg" alt="Formulario para añadir una persona: foto, nombre, teléfono y WhatsApp" width="200">
 </p>
 
 **Cómo entrar:** mantener pulsado el **reloj 5 segundos** (el teléfono vibra) e introducir el PIN de 4 cifras. La primera vez se crea el PIN (dos veces). El panel se cierra solo al apagar la pantalla, salvo mientras el cuidador configura algo fuera de la app.
 
 **La portada** tiene arriba una tarjeta azul oscuro con el estado del **modo quiosco** (activo, en pausa o en pausa mientras se configura algo) y un botón para **pausarlo, activarlo o terminar**; si falta algo, dice cuántas cosas hay **por revisar**. Debajo están los **apartados**, cada uno con un resumen de cómo está (en ámbar lo que falta, por ejemplo "Falta la foto del portal"). Cada apartado se abre en su página; la flecha de arriba vuelve a la portada y la casa de la portada, a la pantalla principal.
 
-**Personas:** los favoritos con su foto y unas etiquetas de colores que dicen qué puede hacer cada uno (**SOS**, **Vídeo**, **Ubicación**) y si le falta la foto. Se **ordenan arrastrando** los seis puntos de la izquierda. Al tocar a una persona se abre su **ficha**, con interruptores para hacerla contacto del SOS, marcar que tiene WhatsApp o dejarle pedir la ubicación; desde ahí también se cambia su foto, su nombre o su teléfono, o se quita de la lista. **"Añadir persona"** abre Contactos y, al volver, la persona ya sale en la lista (se le pone la estrella sola).
+**Personas:** los favoritos con su foto y unas etiquetas de colores que dicen qué puede hacer cada uno (**SOS**, **Vídeo**, **Ubicación**) y si le falta la foto. Se **ordenan arrastrando** los seis puntos de la izquierda. Al tocar a una persona se abre su **ficha**, con interruptores para hacerla contacto del SOS, marcar que tiene WhatsApp o dejarle pedir la ubicación; desde ahí también se cambia su foto, su nombre o su teléfono, o se quita de la lista. **"Añadir persona"** abre un formulario dentro del panel, sin salir de LlamaditApp: la **foto** (con la cámara o de la galería, recortada en cuadrado), el **nombre**, el **teléfono**, si **tiene WhatsApp** y dónde se guarda (en la cuenta de Google del móvil, si la hay, o solo en el móvil). La persona se crea ya como favorita y sale al momento. Si el teléfono ya está en la agenda, avisa y ofrece añadir a esa persona en vez de repetirla; **"Elegir de la agenda"** busca entre los contactos que ya hay. **"Cambiar foto, nombre o teléfono"** usa el mismo formulario.
 
 **Pantalla principal, Emergencia y Ejercicios:**
 
@@ -309,6 +337,7 @@ Un botón opcional (añil, con una radio) para escuchar la radio por internet. A
 | **Radio** | Aviso del consumo de datos. Las **emisoras elegidas**, con flechas ↑ y ↓ para el orden, una ✕ para quitarlas y, tocando el logotipo, otro dibujo de la galería. **"Apagar sola después de"**: 30 min, 1 h (por defecto), 2 h, 3 h o nunca. **Añadir emisoras**: "Las más escuchadas del país" (el de la SIM) o buscando por nombre, y el botón **+** de cada una. Las emisoras salen del directorio libre [radio-browser.info](https://www.radio-browser.info). |
 | **WhatsApp** | **Instalar WhatsApp** (si falta: abre Play Store en su ficha), quién **tiene WhatsApp** para la videollamada, el "acceso a notificaciones" para ver las **videollamadas entrantes** con la pantalla propia y el permiso de la pestaña de **WhatsApp completo**. |
 | **Conexión** | Wi-Fi apagado y bloqueado por defecto (solo la SIM). Al encenderlo aparece **"Elegir una red Wi-Fi"**, que abre los Ajustes de Android para conectarse. Al apagarlo se vuelve a bloquear; las redes guardadas se recuerdan. |
+| **Gestión a distancia** | Conectar el móvil al proyecto de Firebase de la familia con una **foto al código QR** que enseña la app o la web del cuidador, el **nombre** con el que sale la persona, los **cuidadores vinculados** (con **Quitar**), **vincular otro cuidador** y **Desconectar del proyecto**. Avisa si Android puede cortar la conexión en reposo. Ver [la sección 15](#15-gestión-a-distancia). |
 | **PIN y modo quiosco** | Cambiar el PIN; **pausar** el modo quiosco (el móvil se usa con normalidad) y **activarlo** de nuevo, sin ordenador; abrir **Contactos** o los **Ajustes de Android**; **quitar el Device Owner** (solo para desinstalar LlamaditApp o entregar el móvil: volver a activar el quiosco exige un ordenador) y **Acerca de** (versión, copyright, licencia GNU AGPL v3 y código fuente). |
 
 Los botones de la pantalla principal (Volver a casa, Ejercicios, Radio, WhatsApp completo…) se activan en **Pantalla principal**. Mientras el cuidador configura algo fuera de la app (Contactos, la cuenta de Google, Play Store, los Ajustes…), el modo quiosco queda en pausa y la portada lo dice; vuelve al salir del panel, al pulsar **Terminar** o a los 30 minutos sin volver al panel.

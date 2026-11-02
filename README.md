@@ -26,6 +26,7 @@
 | 👥 **Contactos desde Google** | Opcional: el cuidador gestiona los contactos (nombre, foto y teléfono) desde cualquier ordenador en contacts.google.com, y llegan solos al móvil. |
 | 🔊 **Volumen** | Los botones solo cambian el volumen del teléfono, con un panel enorme que se entiende sin leer. El móvil siempre vibra al recibir una llamada. |
 | 📍 **¿Dónde está?** | Un familiar autorizado envía un SMS con la palabra `UBICACION` y recibe la posición en Google Maps y el nivel de batería. Solo cuando se pide: no hay seguimiento continuo. |
+| 📱 **Gestión a distancia** | Opcional, para el cuidador: desde su móvil Android (con la **app del cuidador**) o desde el ordenador ve dónde está el móvil, lo hace sonar y cambia las personas, sus fotos, el SOS y la pantalla, sin tenerlo delante. Cada familia usa **su propio proyecto de Firebase** (gratuito): LlamaditApp no guarda datos de nadie. |
 | 🔒 **Modo quiosco** | La persona no puede salir del launcher, ni desconfigurar el móvil, ni abrir otras apps. Tras reiniciar, arranca directamente en LlamaditApp. |
 
 Y por debajo, sin que la persona haga nada: Wi-Fi (salvo que el cuidador lo active) y Bluetooth apagados, pantalla siempre en vertical, apps innecesarias ocultas, sin pantalla de bloqueo y actualizaciones del sistema de madrugada.
@@ -100,6 +101,7 @@ Después: mantener pulsado el **reloj 5 segundos** → crear el PIN del cuidador
 - [Funciones en detalle](docs/FUNCIONES.md): qué ve la persona y qué puede ajustar el cuidador.
 - [Guía de instalación paso a paso, con capturas](docs/GUIA-INSTALACION.md): para quien no sabe de informática.
 - [Actualizar a la última versión](docs/ACTUALIZAR.md): sin restablecer el móvil ni perder nada.
+- [Gestión a distancia](docs/GESTION-A-DISTANCIA.md): crear el proyecto de Firebase de la familia y vincular el móvil con la app o la web del cuidador.
 - [Instalación técnica con adb](docs/INSTALACION.md).
 - [Configuración recomendada de Android](docs/CONFIGURACION.md): ajustes del teléfono, la SIM, WhatsApp y los móviles de los familiares para que todo funcione bien.
 - [Solución de problemas](docs/PROBLEMAS.md).
@@ -114,9 +116,11 @@ La persona que usa LlamaditApp no necesita leer, pero el panel del cuidador y lo
 
 ## Privacidad
 
-LlamaditApp **no tiene servidor ni envía datos a ningún sitio**. La ubicación solo sale del móvil por SMS, cuando la pide un contacto autorizado o cuando se pulsa SOS, y va directamente al teléfono de ese familiar. No hay cuentas, ni publicidad, ni analítica.
+LlamaditApp **no tiene servidor: sus autores no reciben ni guardan datos de nadie**. La ubicación solo sale del móvil por SMS, cuando la pide un contacto autorizado o cuando se pulsa SOS, y va directamente al teléfono de ese familiar. No hay cuentas, ni publicidad, ni analítica.
 
-**Permiso de internet:** desde la versión 1.6 la app tiene permiso para usar internet, **solo para la radio** (opcional): reproducir las emisoras y, desde el panel del cuidador, buscarlas en el directorio libre [radio-browser.info](https://www.radio-browser.info), que también cuenta las escuchas de cada emisora (sin saber quién escucha). Si el botón Radio no se activa, la app no se conecta a internet. La radio gasta datos móviles: unos 30 a 60 MB por hora.
+**Gestión a distancia (opcional, desde la 1.8):** si el cuidador la activa, el móvil se conecta por internet al proyecto de Firebase **de la propia familia** (creado con su cuenta de Google) y guarda allí una copia de la configuración, los nombres, teléfonos y fotos pequeñas de las personas, la batería y las ubicaciones que se piden desde la app o la web del cuidador. Solo lo ven los cuidadores que la familia vincula. Si no se activa, no se conecta.
+
+**Permiso de internet:** desde la versión 1.6 la app tiene permiso para usar internet, para la radio (opcional) y, desde la 1.8, para la gestión a distancia (opcional). La radio: reproducir las emisoras y, desde el panel del cuidador, buscarlas en el directorio libre [radio-browser.info](https://www.radio-browser.info), que también cuenta las escuchas de cada emisora (sin saber quién escucha). Si el botón Radio no se activa, la app no se conecta a internet. La radio gasta datos móviles: unos 30 a 60 MB por hora.
 
 ## Tecnología
 

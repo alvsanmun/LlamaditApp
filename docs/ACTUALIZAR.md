@@ -129,6 +129,8 @@ Lo nuevo de las últimas versiones, todo desde el panel del cuidador:
 
 | Novedad | Dónde se explica |
 |---|---|
+| **Añadir personas sin salir de LlamaditApp** (1.8): formulario propio con foto, nombre, teléfono y WhatsApp; ya no se abre la app Contactos | [Guía, paso 8](GUIA-INSTALACION.md#8-añadir-los-contactos-con-su-foto) |
+| **Gestión a distancia** (1.8, opcional): el cuidador ve dónde está el móvil, lo hace sonar y cambia la configuración desde la **app del cuidador** (Android) o desde el ordenador, con el proyecto de Firebase de su familia | [Gestión a distancia](GESTION-A-DISTANCIA.md) |
 | **Panel del cuidador nuevo** (1.7): claro y por apartados, con el estado del modo quiosco y lo que falta por revisar; **Personas** con fotos y etiquetas, ordenar arrastrando y añadir personas sin poner la estrella | [Guía, paso 9](GUIA-INSTALACION.md#9-configurar-el-panel-del-cuidador) |
 | **Juegos con diseño nuevo** (1.7): menú con dibujos, tandas de 5 partidas con premio y cálculo con manzanas y tres respuestas | [Funciones, ejercicios](FUNCIONES.md#12-ejercicios) |
 | **Radio** (1.6): los logotipos de las emisoras que elige el cuidador; suena también con la pantalla apagada y calla durante las llamadas. Es lo único que usa internet | [Guía, paso 9.6](GUIA-INSTALACION.md#96-radio-opcional) |

@@ -1,0 +1,63 @@
+rules_version = '2';
+
+// Reglas de la gestión a distancia de LlamaditApp (ver app/.../remote/Remote.kt).
+// Cada familia las pega en su propio proyecto de Firebase (docs/GESTION-A-DISTANCIA.md).
+// Cada móvil de una persona y cada cuidador entran con un usuario anónimo de Firebase.
+// - Un móvil (devices/{uid}) solo lo escribe él mismo.
+// - Lo leen él y los cuidadores que ha aceptado (campo "caregivers").
+// - Los cuidadores solo pueden dejar órdenes pendientes; el móvil las ejecuta.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isCaregiverOf(deviceId) {
+      return signedIn() &&
+        request.auth.uid in get(/databases/$(database)/documents/devices/$(deviceId)).data.get('caregivers', []);
+    }
+
+    // Invitación de un cuidador: la crea su web y va dentro del QR que fotografía el móvil
+    // de la persona (15 minutos, un uso). Se lee sabiendo el código, nunca se puede listar.
+    match /invites/{token} {
+      allow get: if signedIn();
+      allow create: if signedIn() && token.size() >= 20 &&
+        request.resource.data.caregiver == request.auth.uid &&
+        request.resource.data.expires is timestamp &&
+        request.resource.data.get('name', '') is string && request.resource.data.get('name', '').size() <= 40;
+      allow delete: if signedIn();
+    }
+
+    match /devices/{deviceId} {
+      // (Así, sin get(), para que la web pueda listar sus móviles con array-contains.)
+      allow read: if signedIn() &&
+        (request.auth.uid == deviceId || request.auth.uid in resource.data.caregivers);
+      allow create, update, delete: if signedIn() && request.auth.uid == deviceId;
+      // Un cuidador puede desvincularse él mismo (y nada más).
+      allow update: if signedIn() &&
+        request.auth.uid in resource.data.get('caregivers', []) &&
+        !(request.auth.uid in request.resource.data.get('caregivers', [])) &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['caregivers', 'caregiverNames']);
+
+      match /commands/{commandId} {
+        allow read: if signedIn() && (request.auth.uid == deviceId || isCaregiverOf(deviceId));
+        allow create: if isCaregiverOf(deviceId) &&
+          request.resource.data.by == request.auth.uid &&
+          request.resource.data.status == 'pending' &&
+          request.resource.data.type is string;
+        allow update, delete: if signedIn() && request.auth.uid == deviceId;
+      }
+
+      match /photos/{photoId} {
+        allow read: if signedIn() && (request.auth.uid == deviceId || isCaregiverOf(deviceId));
+        allow write: if signedIn() && request.auth.uid == deviceId;
+      }
+
+      match /events/{eventId} {
+        allow read: if signedIn() && (request.auth.uid == deviceId || isCaregiverOf(deviceId));
+        allow write: if signedIn() && request.auth.uid == deviceId;
+      }
+    }
+  }
+}

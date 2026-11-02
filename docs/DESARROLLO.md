@@ -64,6 +64,17 @@ Con `keystore.properties`, **la versión debug también se firma con esa clave**
 | `inbox/` | SMS recibidos y llamadas perdidas. |
 | `volume/` | Botones de volumen y panel grande. |
 | `config/` | Ajustes del cuidador (PIN con hash y sal, contactos, palabras clave). |
+| `remote/` | Gestión a distancia con Firebase (Firestore + acceso anónimo): conexión al proyecto de la familia leída de un QR, copia del estado, órdenes de los cuidadores, hacer sonar. |
+
+Otras carpetas del repositorio:
+
+| Carpeta | Contenido |
+|---|---|
+| `cuidador/` | Web del cuidador (HTML + JavaScript sin compilar, librerías en `vendor/`). `Abrir la web del cuidador.bat` + `servidor.ps1` la sirven en `http://localhost:8766` en Windows. |
+| `caregiver-app/` | App del cuidador para Android (`com.launcherfacil.cuidador`): un WebView con la web de `cuidador/`, que se copia a los assets al compilar. |
+| `firebase/firestore.rules` | Reglas de seguridad que cada familia pega en su proyecto de Firebase. |
+
+La app no lleva ningún proyecto de Firebase dentro: lo recibe del QR de la web del cuidador (ver [GESTION-A-DISTANCIA.md](GESTION-A-DISTANCIA.md)). App del cuidador: `gradlew :caregiver-app:assembleRelease`.
 
 ## Herramientas de depuración (solo en la versión debug)
 

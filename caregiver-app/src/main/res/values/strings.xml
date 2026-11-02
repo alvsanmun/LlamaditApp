@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">LlamaditApp Cuidador</string>
+    <string name="choose_photo">Choose a photo</string>
+    <string name="share">Share</string>
+</resources>

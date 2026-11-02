@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Mismo fondo que la web del cuidador (variable bg). -->
+    <color name="background">#F3F5F8</color>
+</resources>
+

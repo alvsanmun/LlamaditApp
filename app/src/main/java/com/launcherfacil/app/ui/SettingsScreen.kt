@@ -103,6 +103,7 @@ internal enum class CgSection(val color: Color, @DrawableRes val icon: Int) {
     EXERCISES(Color(0xFFAD1457), R.drawable.ic_cg_puzzle),
     RADIO(Color(0xFF3949AB), R.drawable.ic_radio),
     WHATSAPP(Color(0xFF43A047), R.drawable.ic_cg_chat),
+    REMOTE(Color(0xFF6A1B9A), R.drawable.ic_cg_remote),
     CONNECTION(Color(0xFF455A64), R.drawable.ic_cg_wifi),
     SECURITY(Color(0xFF37474F), R.drawable.ic_cg_lock),
 }
@@ -248,6 +249,7 @@ fun SettingsScreen(
                         favorites, whatsAppIds, { whatsAppIds = it },
                         onInstallWhatsApp, onAllowOverlay, onOpenNotificationAccess, back
                     )
+                    CgSection.REMOTE -> RemotePage(back)
                     CgSection.CONNECTION -> ConnectionPage(isDeviceOwner, onOpenWifiSettings, back)
                     CgSection.SECURITY -> SecurityPage(
                         isDeviceOwner, kioskPaused, onChangePin, onOpenContacts, onOpenAndroidSettings,
@@ -295,6 +297,7 @@ private fun SettingsHome(
     val exercises = remember(resumed) { ExerciseProgress(context).enabled().size }
     val stations = remember(resumed) { RadioStations(context).stations.size }
     val missingPhotos = favorites.count { it.id in noPhoto }
+    val (remoteText, remoteWarn) = remoteSummary(context)
 
     val rows: List<Triple<CgSection, String, Boolean>> = listOf(
         Triple(
@@ -358,6 +361,7 @@ private fun SettingsHome(
             (visible(HomeItem.WHATSAPP) || visible(HomeItem.WHATSAPP_APP)) &&
                 (!whatsAppInstalled || !notificationAccess || (visible(HomeItem.WHATSAPP_APP) && !overlayAllowed))
         ),
+        Triple(CgSection.REMOTE, remoteText, remoteWarn),
         Triple(
             CgSection.CONNECTION,
             stringResource(if (settings.wifiEnabled) R.string.cg_conn_wifi else R.string.cg_conn_mobile),
@@ -452,6 +456,7 @@ private fun CgSection.title(): Int = when (this) {
     CgSection.EXERCISES -> R.string.settings_exercises_title
     CgSection.RADIO -> R.string.settings_radio_title
     CgSection.WHATSAPP -> R.string.cg_whatsapp
+    CgSection.REMOTE -> R.string.cg_remote
     CgSection.CONNECTION -> R.string.cg_connection
     CgSection.SECURITY -> R.string.cg_security
 }

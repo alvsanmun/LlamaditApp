@@ -1,0 +1,34 @@
+LlamaditApp · web del cuidador
+==============================
+
+Con esta web se gestiona a distancia el móvil con LlamaditApp de la persona que cuidas:
+ver dónde está, hacerlo sonar, cambiar las personas, el SOS, la pantalla principal...
+Es la misma que lleva dentro la app del cuidador para Android.
+
+Antes hace falta el proyecto de Firebase de tu familia (gratuito). Guía paso a paso:
+https://github.com/alvsanmun/LlamaditApp/blob/main/docs/GESTION-A-DISTANCIA.md
+
+En Windows
+----------
+1. Haz doble clic en "Abrir la web del cuidador.bat".
+2. Se abre una ventana negra y el navegador con la web. No cierres la ventana negra
+   mientras uses la web.
+3. La primera vez, pega los datos del proyecto (o el enlace de invitación de otro
+   cuidador) y pulsa Guardar. Se guardan en ese navegador: la próxima vez ya no los pide.
+
+Si Windows avisa de que el archivo viene de internet, pulsa "Más información" y
+"Ejecutar de todas formas".
+
+En Mac o Linux
+--------------
+Abre una terminal en esta carpeta y escribe:
+
+    python3 -m http.server 8766
+
+Después abre http://localhost:8766 en el navegador.
+
+Usa siempre la misma dirección (http://localhost:8766): el navegador guarda los datos del
+proyecto para esa dirección exacta.
+
+Licencia: GNU AGPL v3 o posterior. Copyright (C) 2026 alvsanmun.
+Librerías incluidas en vendor/ (Firebase, Apache 2.0; qrcode-generator, MIT): ver vendor/LEEME.txt.

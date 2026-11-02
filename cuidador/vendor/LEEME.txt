@@ -1,0 +1,9 @@
+Librerías de terceros incluidas tal cual, para que la web del cuidador (y la app del
+cuidador, que la lleva dentro) funcione sin descargar nada de otros servidores:
+
+- firebase-app.js, firebase-auth.js, firebase-firestore.js: Firebase JS SDK 10.14.1
+  (https://www.gstatic.com/firebasejs/10.14.1/), Google LLC, licencia Apache 2.0.
+  Solo se ha cambiado la ruta de firebase-app.js en los "import" de auth y firestore
+  (de la dirección de gstatic a "./firebase-app.js").
+- qrcode.js: qrcode-generator 1.4.4 (https://github.com/kazuhikoarase/qrcode-generator),
+  Kazuhiko Arase, licencia MIT.

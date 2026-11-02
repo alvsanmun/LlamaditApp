@@ -25,6 +25,7 @@ import android.os.IBinder
 import android.util.Log
 import androidx.core.app.ServiceCompat
 import com.launcherfacil.app.R
+import com.launcherfacil.app.remote.RemoteCommands
 import com.launcherfacil.app.sos.currentLocation
 import com.launcherfacil.app.sos.sendSms
 import com.launcherfacil.app.sos.startLocationForeground
@@ -37,17 +38,23 @@ import kotlinx.coroutines.launch
 
 /**
  * Responde a una petición de ubicación: una posición puntual y un SMS al
- * remitente. Nada de seguimiento: termina en cuanto envía la respuesta.
+ * remitente, o, si la pide el cuidador desde su web, la respuesta a esa orden.
+ * Nada de seguimiento: termina en cuanto envía la respuesta.
  */
 class LocateService : Service() {
 
     companion object {
         private const val TAG = "LocateService"
         private const val EXTRA_REPLY_TO = "reply_to"
+        private const val EXTRA_COMMAND = "command"
         private const val NOTIFICATION_ID = 2
 
         fun intent(context: Context, replyTo: String) =
             Intent(context, LocateService::class.java).putExtra(EXTRA_REPLY_TO, replyTo)
+
+        /** Petición de la web del cuidador ([command] = ruta de la orden en Firestore). */
+        fun remoteIntent(context: Context, command: String) =
+            Intent(context, LocateService::class.java).putExtra(EXTRA_COMMAND, command)
     }
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
@@ -62,6 +69,17 @@ class LocateService : Service() {
         val foreground = startLocationForeground(NOTIFICATION_ID, getString(R.string.notification_locate))
         val gpsTimeoutMs = if (foreground) 20_000L else 4_000L
         val replyTo = intent?.getStringExtra(EXTRA_REPLY_TO)
+        val command = intent?.getStringExtra(EXTRA_COMMAND)
+        if (command != null) {
+            pending++
+            scope.launch {
+                val location = currentLocation(this@LocateService, gpsTimeoutMs)
+                RemoteCommands.finish(command, result = RemoteCommands.locationResult(this@LocateService, location))
+                pending--
+                stopIfIdle()
+            }
+            return START_NOT_STICKY
+        }
         if (replyTo == null) {
             stopIfIdle()
             return START_NOT_STICKY

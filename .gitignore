@@ -22,3 +22,6 @@ CLAUDE.md
 web/
 .gitlab-ci.yml
 whatsapp-stub/
+
+# Configuración de Firebase de la app (se genera desde la consola; sin ella no hay gestión a distancia)
+app/google-services.json

@@ -236,49 +236,29 @@ El **panel del cuidador** es donde se configura todo. Está escondido para que l
 
 La persona verá **solo las fotos** de los contactos marcados con una **estrella** (favoritos). Hay dos formas de añadirlos, y se pueden combinar:
 
-- **A. En el propio móvil**, con la app Contactos (abajo, paso a paso).
+- **A. En el propio móvil**, desde el panel del cuidador (abajo, paso a paso).
 - **B. Desde cualquier ordenador o móvil**, con una **cuenta de Google** ([ver más abajo](#opción-b-desde-una-cuenta-de-google)). Es la más cómoda si el cuidador no vive con la persona: los cambios llegan solos al móvil.
 
-### Opción A: en la app Contactos del móvil
+### Opción A: en el propio móvil, desde el panel
 
-1. En el panel del cuidador, toca el apartado **Personas** y pulsa **Añadir persona** (el botón de borde discontinuo). Se abre la app Contactos con un contacto nuevo.
-2. Si en vez del contacto nuevo se ve la lista de contactos, pulsa el botón **+** (abajo a la derecha).
-3. Escribe el **nombre** y el **teléfono**. Comprueba que la bandera es la de **España** (o la del país correspondiente).
+1. En el panel del cuidador, toca el apartado **Personas** y pulsa **Añadir persona** (el botón de borde discontinuo). Se abre el formulario **Nueva persona**, sin salir de LlamaditApp.
+2. **La foto:** pulsa **Hacer una foto** (para hacerla en ese momento) o **Elegir de la galería**. Se recorta sola en cuadrado.
+3. Escribe el **nombre** y el **teléfono** (con el prefijo si es de otro país, por ejemplo +351).
+4. Si la persona usa WhatsApp, activa **Tiene WhatsApp (videollamada)**.
+5. Si el móvil tiene una cuenta de Google, elige si se guarda en ella (recomendado: así no se pierde si se rompe el móvil) o **Solo en este móvil**.
+6. Pulsa **Guardar**. La persona ya sale en **Personas** y en la pantalla de llamar, con la **estrella ★** (favorito) puesta.
 
-<table><tr>
-<td><img src="img/guia/e18-panel-otras-apps.jpg" width="230" alt="Botón Abrir Contactos en el panel"></td>
-<td><img src="img/guia/e19-contactos-vacio.jpg" width="230" alt="App Contactos con el botón +"></td>
-<td><img src="img/guia/e20-crear-contacto.jpg" width="230" alt="Crear contacto"></td>
-<td><img src="img/guia/e21-contacto-datos.jpg" width="230" alt="Nombre y teléfono escritos"></td>
-</tr><tr>
-<td align="center">① Personas → <b>Añadir persona</b></td><td align="center">② Si sale la lista, pulsa <b>+</b></td><td align="center">③ Formulario vacío</td><td align="center">④ Nombre y teléfono</td>
-</tr></table>
-
-4. **La foto:** pulsa el **+** de la silueta, elige **Galería** (o **Cámara** para hacerla en ese momento), toca la foto, pulsa **Hecho** y después **Elegir**.
-
-<table><tr>
-<td><img src="img/guia/e22-elegir-foto.jpg" width="230" alt="Elegir Cámara o Galería"></td>
-<td><img src="img/guia/e24-foto-elegida.jpg" width="230" alt="Foto seleccionada"></td>
-<td><img src="img/guia/e25-recortar.jpg" width="230" alt="Recortar la foto"></td>
-<td><img src="img/guia/e26-con-foto.jpg" width="230" alt="Contacto con foto"></td>
-</tr><tr>
-<td align="center">① Galería o Cámara</td><td align="center">② Toca la foto → <b>Hecho</b></td><td align="center">③ <b>Elegir</b></td><td align="center">④ Ya tiene foto</td>
-</tr></table>
+<p align="center">
+  <img src="img/capturas/48-panel-persona-nueva.jpg" width="230" alt="Formulario Nueva persona: foto, nombre, teléfono y WhatsApp">
+</p>
 
 > 💡 Usa una foto **de cerca de la cara**, con buena luz y que se reconozca bien. Es lo único que verá la persona.
 
-5. Pulsa **Guardar**.
-6. Al volver al panel, la persona ya sale en **Personas**: LlamaditApp le pone la **estrella ★** (favorito) sola. Si la creaste de otra forma (desde **Abrir Contactos**, por ejemplo), pulsa tú la **estrella ☆** de arriba: sin ella no aparecerá en LlamaditApp.
+- Si el teléfono **ya está en la agenda**, el formulario lo dice y ofrece **Añadir a … a la lista** en lugar de crear otra persona.
+- **Elegir de la agenda** busca entre los contactos que ya tiene el móvil y añade el elegido.
+- Para cambiar la foto, el nombre o el teléfono más tarde: toca a la persona en **Personas** → **Cambiar foto, nombre o teléfono**.
 
-<table><tr>
-<td><img src="img/guia/e27-contacto-guardado.jpg" width="230" alt="Contacto guardado sin estrella"></td>
-<td><img src="img/guia/e28-favorito.jpg" width="230" alt="Contacto marcado como favorito"></td>
-</tr><tr>
-<td align="center">① Guardado: pulsa la estrella ☆</td><td align="center">② Estrella rellena ★ = favorito</td>
-</tr></table>
-
-7. Repite para cada persona (lo ideal son entre 4 y 6).
-8. Cuando termines, pulsa el botón **Atrás** del móvil hasta volver al panel. El modo quiosco se vuelve a activar al salir del panel.
+Repite para cada persona (lo ideal son entre 4 y 6).
 
 ### Opción B: desde una cuenta de Google
 
@@ -452,6 +432,8 @@ La persona puede escuchar la radio tocando el logotipo de una emisora. Usa **dat
 Todo está explicado en las [funciones](FUNCIONES.md#13-radio).
 
 ---
+
+> 📱 **Gestión a distancia (opcional):** si el cuidador no vive con la persona, puede gestionar el móvil desde su propio móvil Android o desde el ordenador. Se prepara aparte, con la guía [Gestión a distancia](GESTION-A-DISTANCIA.md).
 
 ## 10. WhatsApp (opcional)
 

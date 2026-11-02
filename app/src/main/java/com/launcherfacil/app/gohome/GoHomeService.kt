@@ -218,6 +218,7 @@ class GoHomeService : Service() {
     /** Ha llegado: la pantalla del portal, encima de Google Maps. */
     private fun arrived() {
         Log.i(TAG, "Ha llegado a casa")
+        com.launcherfacil.app.remote.Remote.addEvent(this, "arrived")
         // Con las actualizaciones activadas, un último SMS: ya no llegarán más.
         val notify = updates != null
         stopWatching()

@@ -75,6 +75,8 @@ import com.launcherfacil.app.inbox.countNewMissedCalls
 import com.launcherfacil.app.inbox.countNewSms
 import com.launcherfacil.app.inbox.rememberContentVersion
 import com.launcherfacil.app.kiosk.Kiosk
+import com.launcherfacil.app.remote.Remote
+import com.launcherfacil.app.remote.RemoteCommands
 import com.launcherfacil.app.sos.SosService
 import com.launcherfacil.app.ui.ContactsScreen
 import com.launcherfacil.app.ui.DialpadScreen
@@ -116,6 +118,8 @@ class MainActivity : ComponentActivity() {
         // Si es Device Owner: pantalla de inicio fija, apps permitidas y permisos.
         // Va antes de la interfaz para que los permisos ya estén concedidos.
         Kiosk.configure(this)
+        // Gestión a distancia (si el cuidador la ha activado).
+        Remote.start(this)
         // Solo para pruebas: `am start ... --ei debug_interval_seconds 15` acorta el
         // intervalo del SOS (el servicio lo ignora si la app no es depurable).
         debugSosInterval = intent.getIntExtra(SosService.EXTRA_DEBUG_INTERVAL_SECONDS, 0)
@@ -239,7 +243,15 @@ private fun LauncherApp(
     LaunchedEffect(dialRequest) { if (dialRequest != null) screen = Screen.Dialpad }
     LaunchedEffect(arrivedRequests) { if (arrivedRequests > 0) screen = Screen.Arrived }
     // Salir del panel (con la casa, la flecha o Atrás) acaba la pausa de la configuración.
-    LaunchedEffect(screen) { if (screen != Screen.Settings) Kiosk.endCaregiverSession(context as Activity) }
+    LaunchedEffect(screen) {
+        if (screen != Screen.Settings) {
+            Kiosk.endCaregiverSession(context as Activity)
+            // Lo cambiado en el panel se copia a la web del cuidador.
+            Remote.publishSoon(context)
+        }
+    }
+    // Cambios hechos desde la web del cuidador: las pantallas releen la configuración.
+    val remoteVersion by RemoteCommands.settingsVersion.collectAsState()
 
     // Configuración del cuidador: se cierra al apagar la pantalla.
     val settings = remember { CaregiverSettings(context) }
@@ -268,6 +280,7 @@ private fun LauncherApp(
 
     // Botón para volver que ha elegido el cuidador: la casa de arriba o la flecha de abajo.
     var backButton by remember { mutableStateOf(settings.backButton) }
+    LaunchedEffect(remoteVersion) { backButton = settings.backButton }
     val backDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     CompositionLocalProvider(LocalBackButton provides backButton) {
         Column(Modifier.fillMaxSize().background(Fondo)) {
@@ -289,13 +302,14 @@ private fun LauncherApp(
                         onGoHome = {
                             // Aviso al cuidador: quiere volver a casa (con su ubicación, por SMS).
                             if (settings.goHomeAlert) GoHomeService.alert(context)
+                            Remote.addEvent(context, "goHome")
                             screen = Screen.GoHome
                         },
                         newSms = newSms,
                         newMissedCalls = newMissedCalls,
                         // Se leen al volver a esta pantalla: así se ven los cambios del cuidador.
-                        layout = remember { settings.homeLayout },
-                        sosIcon = remember { settings.sosIcon }
+                        layout = remember(remoteVersion) { settings.homeLayout },
+                        sosIcon = remember(remoteVersion) { settings.sosIcon }
                     )
                     Screen.Arrived -> ArrivedScreen(onHome = { screen = Screen.Home })
                     Screen.Exercises -> ExercisesScreen(onHome = { screen = Screen.Home })

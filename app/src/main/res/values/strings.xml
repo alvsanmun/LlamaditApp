@@ -343,4 +343,38 @@
     <string name="cg_pick_existing_hint">People already in the phone book but not in the list. Tap one to add them.</string>
     <string name="cg_pick_search">Search</string>
     <string name="cg_pick_none">There are no more contacts with a phone number in the phone book.</string>
+    <string name="cg_remote">Remote management</string>
+    <string name="cg_remote_sub_on">Linked caregivers: %1$d</string>
+    <string name="cg_remote_sub_none">Connected · no caregiver linked yet</string>
+    <string name="cg_remote_hint">From the caregiver\'s Android phone (with the caregiver app) or from a computer you can change everything in this panel, see where the person is and make the phone ring, without having it in front of you.</string>
+    <string name="cg_remote_data_note">Uses mobile data (very little). The data is stored in the family\'s own Firebase project, not in LlamaditApp: nobody else can see it.</string>
+    <string name="cg_remote_status_connecting">Connecting…</string>
+    <string name="cg_remote_status_online">Connected</string>
+    <string name="cg_remote_status_error">No connection. It will try again by itself.</string>
+    <string name="cg_remote_name">Name of the person</string>
+    <string name="cg_remote_name_hint">This is how it appears on the caregiver\'s phone.</string>
+    <string name="cg_remote_link">Link another caregiver</string>
+    <string name="cg_remote_linked_ok">Linked: %1$s</string>
+    <string name="cg_remote_linked_title">Linked caregivers</string>
+    <string name="cg_remote_linked_none">No caregiver has been linked yet.</string>
+    <string name="cg_remote_unlink">Remove</string>
+    <string name="cg_remote_unlink_confirm">Remove %1$s? They will no longer be able to manage this phone.</string>
+    <string name="cg_remote_battery_warn">Android may cut the connection while the phone is idle: requests would take a while to arrive.</string>
+    <string name="cg_remote_battery_button">Allow it to work in the background</string>
+    <string name="cg_remote_noname">No name</string>
+    <!-- Guía para crear el proyecto de Firebase de la familia (no se traduce). -->
+    <string name="remote_guide_url" translatable="false">https://github.com/alvsanmun/LlamaditApp/blob/main/docs/GESTION-A-DISTANCIA.md</string>
+    <string name="cg_remote_setup_hint">Each family uses its own Firebase project, free and with its own Google account. Steps: 1) create the project with the guide; 2) open the caregiver app or website and paste the project details; 3) take a photo here of the QR code it shows you.</string>
+    <string name="cg_remote_guide">Guide: %1$s</string>
+    <string name="cg_remote_scan_camera">Take a photo of the QR code</string>
+    <string name="cg_remote_scan_gallery">Choose a photo of the QR code</string>
+    <string name="cg_remote_scan_invalid">No LlamaditApp code was found in the photo. Try again, closer and without reflections.</string>
+    <string name="cg_remote_scan_expired">That code is no longer valid. Ask for a new one in the caregiver app or website.</string>
+    <string name="cg_remote_scan_failed">Could not connect. Check the mobile data and that the Firebase project is set up as the guide says.</string>
+    <string name="cg_remote_project">Firebase project: %1$s</string>
+    <string name="cg_remote_link_hint">The other caregiver opens the caregiver app or website with the project invitation (“Linking → Invite another caregiver”) and shows you their QR code.</string>
+    <string name="cg_remote_disconnect">Disconnect from the project</string>
+    <string name="cg_remote_disconnect_confirm">The caregivers will no longer see this phone. To connect it again you will need to take a photo of a new QR code.</string>
+    <string name="cg_remote_other_project">This code belongs to another Firebase project (%1$s). If you switch, the current caregivers will no longer see this phone.</string>
+    <string name="cg_remote_change">Switch project</string>
 </resources>

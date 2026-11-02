@@ -128,13 +128,7 @@ Debe responder `Success`.
 
 ## Paso 7. Añadir los contactos
 
-En el panel del cuidador, toca **Personas** → **"Añadir persona"** (o **PIN y modo quiosco** → **"Abrir Contactos (favoritos y fotos)"**). Para cada persona:
-
-1. Crea el contacto con su **nombre y número**.
-2. Ponle una **foto grande y clara de su cara** (toca el icono de la cámara al editar el contacto). Es lo que verá la persona.
-3. Márcalo como **favorito ★**. **Solo los favoritos aparecen** en LlamaditApp.
-
-Cuando termines, vuelve atrás hasta LlamaditApp: el modo quiosco vuelve a activarse solo.
+En el panel del cuidador, toca **Personas** → **"Añadir persona"**: un formulario con la **foto** (cámara o galería), el **nombre**, el **teléfono** y **Tiene WhatsApp**. Al guardar, el contacto se crea ya como **favorito ★** (solo los favoritos aparecen en LlamaditApp). **"Elegir de la agenda"** añade un contacto que ya existe. También se pueden gestionar en la app Contactos (**PIN y modo quiosco** → **"Abrir Contactos"**) marcándolos con la estrella.
 
 ## Paso 8. Cuenta de Google y WhatsApp (opcional)
 

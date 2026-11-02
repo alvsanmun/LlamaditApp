@@ -16,6 +16,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "LlamaditApp"
 include(":app")
+// App del cuidador: lleva dentro la web de cuidador/ (gestión a distancia).
+include(":caregiver-app")
 // WhatsApp falso para el emulador. Solo se incluye si se pide expresamente, para que
 // `gradlew installDebug` no lo instale nunca en el móvil real:
 //   gradlew -PwithWhatsAppStub :whatsapp-stub:installDebug

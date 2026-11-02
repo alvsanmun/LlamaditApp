@@ -32,6 +32,8 @@
     <!-- Radio: es lo único que usa internet (las emisoras y su directorio, radio-browser.info).
          Sigue sonando con la pantalla apagada (servicio en primer plano de tipo multimedia). -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Gestión a distancia: pedir que Android no corte la conexión en reposo. -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Las llamadas entrantes siempre vibran. -->
@@ -153,6 +155,12 @@
             android:name=".locate.LocateService"
             android:exported="false"
             android:foregroundServiceType="location" />
+
+        <!-- Firebase no se inicia solo: cada familia conecta su propio proyecto (remote/Remote.kt). -->
+        <provider
+            android:name="com.google.firebase.provider.FirebaseInitProvider"
+            android:authorities="${applicationId}.firebaseinitprovider"
+            tools:node="remove" />
 
         <!-- Para que la cámara guarde la foto del portal (configuración del cuidador). -->
         <provider
