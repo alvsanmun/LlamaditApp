@@ -276,7 +276,7 @@ Opcional, para el cuidador. Desde su **móvil Android**, con la **app del cuidad
 
 **Necesita internet** en el móvil de la persona (datos móviles, muy poco). Conviene pulsar **Permitir que funcione en segundo plano** si el panel lo pide, para que las peticiones lleguen con la pantalla apagada.
 
-**La app del cuidador** (`LlamaditApp-Cuidador-1.0.apk`, en la [página de versiones](https://github.com/alvsanmun/LlamaditApp/releases)) es para Android. **La web del cuidador** para el ordenador está en el mismo sitio (`Web-Cuidador-LlamaditApp.zip`): en Windows, doble clic en *Abrir la web del cuidador.bat*.
+**La app del cuidador** (`LlamaditApp-Cuidador-….apk` (los números son la versión), en la [página de versiones](https://github.com/alvsanmun/LlamaditApp/releases)) es para Android. **La web del cuidador** para el ordenador está en el mismo sitio (`Web-Cuidador-LlamaditApp.zip`): en Windows, doble clic en *Abrir la web del cuidador.bat*.
 
 ---
 

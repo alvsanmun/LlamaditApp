@@ -130,7 +130,7 @@ Hay dos formas, iguales por dentro. Se pueden usar las dos a la vez (por ejemplo
 | | App del cuidador | Web del cuidador |
 |---|---|---|
 | **Dónde** | Tu móvil **Android** | Un **ordenador** con Windows, Mac o Linux |
-| **Se descarga** | `LlamaditApp-Cuidador-1.0.apk` | `Web-Cuidador-LlamaditApp.zip` |
+| **Se descarga** | `LlamaditApp-Cuidador-….apk` (los números son la versión) | `Web-Cuidador-LlamaditApp.zip` |
 | **Fotos de las personas** | Con la cámara del móvil o de la galería | De los archivos del ordenador |
 | **Cómo se abre** | Como cualquier app | Doble clic en *Abrir la web del cuidador.bat* (Windows) |
 
@@ -147,7 +147,7 @@ Esta app se instala en **tu** móvil (el del cuidador), **no** en el de la perso
 **Solo en Samsung:** si tu móvil tiene el **Bloqueador automático** activado, no deja instalar apps descargadas. Desactívalo un momento en **Ajustes → Seguridad y privacidad → Bloqueador automático**, instala la app y vuelve a activarlo.
 
 1. En tu móvil, abre **Chrome** y entra en **<https://github.com/alvsanmun/LlamaditApp/releases/latest>**.
-2. Baja hasta **Assets** y toca **LlamaditApp-Cuidador-1.0.apk**. Si Chrome avisa de que el archivo puede ser dañino, toca **Descargar de todas formas**.
+2. Baja hasta **Assets** y toca **LlamaditApp-Cuidador-….apk** (los números son la versión). Si Chrome avisa de que el archivo puede ser dañino, toca **Descargar de todas formas**.
 3. Cuando termine, toca **Abrir** en el aviso de la descarga (o abre la app **Archivos** → **Descargas** y toca el archivo).
 4. La primera vez, Android dice que por seguridad no puede instalar apps de esta fuente: toca **Ajustes**, activa **Permitir de esta fuente** y vuelve atrás. Puede salir también un aviso de que las apps desconocidas pueden ser dañinas: toca **Continuar**.
 5. Toca **Instalar**. Si sale un aviso de **Play Protect** porque la app es nueva y aún no la conoce, toca **Más detalles → Instalar de todas formas** (o **Instalar sin analizar**).
