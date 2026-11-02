@@ -18,10 +18,6 @@
 
 package com.launcherfacil.app.ui
 
-import android.app.Activity
-import android.content.ContentUris
-import android.content.Intent
-import android.provider.ContactsContract
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -44,7 +40,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableFloatStateOf
@@ -53,7 +48,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -84,11 +78,8 @@ import com.launcherfacil.app.R
 import com.launcherfacil.app.config.CaregiverSettings
 import com.launcherfacil.app.contacts.Contact
 import com.launcherfacil.app.contacts.loadContactPhoto
-import com.launcherfacil.app.contacts.newestContactId
 import com.launcherfacil.app.contacts.setHasWhatsApp
 import com.launcherfacil.app.contacts.setStarred
-import com.launcherfacil.app.contacts.starContactsNewerThan
-import com.launcherfacil.app.kiosk.Kiosk
 import kotlinx.coroutines.launch
 
 private val TagSos = Color(0xFFC62828)
@@ -107,8 +98,8 @@ private val SilhouetteColors = listOf(
 /**
  * Personas (diseño "Cuidador B"): los favoritos con su foto y lo que puede hacer cada
  * uno (SOS, videollamada, pedir la ubicación). Se ordenan arrastrando por el asa de la
- * izquierda; tocar a una persona abre su ficha. "Añadir persona" abre Contactos y, al
- * volver, la nueva persona ya sale aquí (se le pone la estrella sola).
+ * izquierda; tocar a una persona abre su ficha. "Añadir persona" abre un formulario
+ * propio que la guarda en la agenda ya con la estrella.
  */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -118,25 +109,15 @@ internal fun PeoplePage(
     whatsAppIds: Set<Long>,
     onReorder: (List<Contact>) -> Unit,
     onOpenPerson: (Contact) -> Unit,
+    onAddPerson: () -> Unit,
     onOpenContacts: () -> Unit,
     onAddGoogleAccount: () -> Unit,
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
-    val activity = context as Activity
     val settings = remember { CaregiverSettings(context) }
-    val scope = rememberCoroutineScope()
     val effectiveSos = (favorites.firstOrNull { it.id == settings.sosContactId } ?: favorites.firstOrNull())?.id
     val locateIds = settings.locateContactIds
-
-    // "Añadir persona": al volver de Contactos, los contactos nuevos se marcan como favoritos.
-    var addingSince by rememberSaveable { mutableStateOf<Long?>(null) }
-    val resumed = rememberOnResume { System.nanoTime() }
-    LaunchedEffect(resumed) {
-        val since = addingSince ?: return@LaunchedEffect
-        addingSince = null
-        starContactsNewerThan(context, since)
-    }
 
     // Arrastrar para ordenar: el elegido sigue al dedo y se cambia de sitio con el vecino
     // al pasar la mitad de su altura.
@@ -214,17 +195,7 @@ internal fun PeoplePage(
                 .height(60.dp)
                 .clip(RoundedCornerShape(18.dp))
                 .dashedBorder(CgChevron, 18.dp)
-                .clickable {
-                    scope.launch {
-                        addingSince = newestContactId(context)
-                        val intent = Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
-                            .putExtra("finishActivityOnSaveCompleted", true)
-                        if (!Kiosk.pauseAndOpen(activity, intent)) {
-                            addingSince = null
-                            onOpenContacts()
-                        }
-                    }
-                },
+                .clickable(onClick = onAddPerson),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -352,10 +323,10 @@ internal fun PersonPage(
     favoriteIds: List<Long>,
     whatsAppIds: Set<Long>,
     onWhatsAppIds: (Set<Long>) -> Unit,
+    onEdit: () -> Unit,
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
-    val activity = context as Activity
     val settings = remember { CaregiverSettings(context) }
     val scope = rememberCoroutineScope()
     var sosId by remember { mutableStateOf(settings.sosContactId) }
@@ -375,11 +346,7 @@ internal fun PersonPage(
                     }
                 }
             }
-            ActionButton(stringResource(R.string.cg_person_edit), {
-                val uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, person.id)
-                val intent = Intent(Intent.ACTION_EDIT, uri).putExtra("finishActivityOnSaveCompleted", true)
-                Kiosk.pauseAndOpen(activity, intent)
-            })
+            ActionButton(stringResource(R.string.cg_person_edit), onEdit)
         }
 
         CgLabel(stringResource(R.string.cg_person_can))

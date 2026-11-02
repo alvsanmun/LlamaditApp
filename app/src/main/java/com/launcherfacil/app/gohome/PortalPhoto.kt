@@ -37,8 +37,8 @@ private const val MAX_SIDE = 1600
 private fun Context.portalFile() = File(filesDir, FILE_NAME)
 
 /** Archivo temporal para la cámara, compartido con ella mediante el FileProvider. */
-fun cameraUri(context: Context): Uri {
-    val file = File(context.cacheDir, "camera/portal.jpg").apply { parentFile?.mkdirs() }
+fun cameraUri(context: Context, name: String = "portal.jpg"): Uri {
+    val file = File(context.cacheDir, "camera/$name").apply { parentFile?.mkdirs() }
     return FileProvider.getUriForFile(context, "${context.packageName}.files", file)
 }
 
@@ -57,7 +57,7 @@ fun deletePortalPhoto(context: Context) {
 /** Guarda la foto elegida reducida (como mucho [MAX_SIDE] px) y bien girada. */
 suspend fun savePortalPhoto(context: Context, uri: Uri): Boolean = withContext(Dispatchers.IO) {
     try {
-        val bitmap = decodeScaled(context, uri) ?: return@withContext false
+        val bitmap = decodeScaled(context, uri, MAX_SIDE) ?: return@withContext false
         context.portalFile().outputStream().use { bitmap.compress(Bitmap.CompressFormat.JPEG, 85, it) }
         true
     } catch (e: Exception) {
@@ -68,13 +68,14 @@ suspend fun savePortalPhoto(context: Context, uri: Uri): Boolean = withContext(D
     }
 }
 
-private fun decodeScaled(context: Context, uri: Uri): Bitmap? =
+/** Abre una foto reducida (como mucho [maxSide] px de lado) y bien girada. */
+fun decodeScaled(context: Context, uri: Uri, maxSide: Int): Bitmap? =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
         // ImageDecoder ya gira la foto según cómo se hizo (EXIF).
         ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, uri)) { decoder, info, _ ->
             val side = maxOf(info.size.width, info.size.height)
-            if (side > MAX_SIDE) {
-                val scale = MAX_SIDE.toFloat() / side
+            if (side > maxSide) {
+                val scale = maxSide.toFloat() / side
                 decoder.setTargetSize((info.size.width * scale).toInt(), (info.size.height * scale).toInt())
             }
             decoder.allocator = ImageDecoder.ALLOCATOR_SOFTWARE
@@ -83,7 +84,7 @@ private fun decodeScaled(context: Context, uri: Uri): Bitmap? =
         val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
         context.contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, bounds) }
         var sample = 1
-        while (maxOf(bounds.outWidth, bounds.outHeight) / (sample * 2) >= MAX_SIDE) sample *= 2
+        while (maxOf(bounds.outWidth, bounds.outHeight) / (sample * 2) >= maxSide) sample *= 2
         context.contentResolver.openInputStream(uri)?.use {
             BitmapFactory.decodeStream(it, null, BitmapFactory.Options().apply { inSampleSize = sample })
         }

@@ -90,6 +90,9 @@ import com.launcherfacil.app.whatsapp.WhatsAppHomeButton
 import androidx.core.app.NotificationManagerCompat
 import kotlinx.coroutines.launch
 
+/** [formId] del formulario para añadir una persona (los ids de contacto empiezan en 1). */
+private const val NEW_PERSON = -1L
+
 /** Apartados del panel, en el orden de la portada. */
 internal enum class CgSection(val color: Color, @DrawableRes val icon: Int) {
     PEOPLE(Color(0xFF2E7D32), R.drawable.ic_cg_people),
@@ -137,8 +140,16 @@ fun SettingsScreen(
     val settings = remember { CaregiverSettings(context) }
     var section by rememberSaveable { mutableStateOf<CgSection?>(null) }
     var personId by rememberSaveable { mutableStateOf<Long?>(null) }
+    // Formulario de persona: NEW_PERSON para añadir, o el id de la persona que se cambia.
+    var formId by rememberSaveable { mutableStateOf<Long?>(null) }
+    var pickingExisting by rememberSaveable { mutableStateOf(false) }
     BackHandler(enabled = section != null) {
-        if (personId != null) personId = null else section = null
+        when {
+            pickingExisting -> pickingExisting = false
+            formId != null -> formId = null
+            personId != null -> personId = null
+            else -> section = null
+        }
     }
 
     // Favoritos y lo que depende de ellos: se recargan al cambiar la agenda (por ejemplo,
@@ -147,7 +158,7 @@ fun SettingsScreen(
     var favorites by remember { mutableStateOf(emptyList<Contact>()) }
     var noPhoto by remember { mutableStateOf(emptySet<Long>()) }
     var whatsAppIds by remember { mutableStateOf(emptySet<Long>()) }
-    LaunchedEffect(contactsVersion, section, personId) {
+    LaunchedEffect(contactsVersion, section, personId, formId) {
         favorites = loadFavoriteContacts(context)
         noPhoto = favoritesWithoutPhoto(context)
         whatsAppIds = contactsWithWhatsApp(context)
@@ -155,13 +166,35 @@ fun SettingsScreen(
 
     CaregiverTheme {
         val person = favorites.firstOrNull { it.id == personId }
+        // Al guardar, se abre la ficha de la persona (para elegir SOS, ubicación…).
+        val onSaved = { id: Long ->
+            pickingExisting = false
+            formId = null
+            personId = id
+        }
         when {
+            pickingExisting -> PickExistingPage(onPicked = onSaved, onBack = { pickingExisting = false })
+            formId == NEW_PERSON -> PersonFormPage(
+                person = null,
+                hasWhatsApp = false,
+                onPickExisting = { pickingExisting = true },
+                onSaved = onSaved,
+                onBack = { formId = null }
+            )
+            formId != null && person != null -> PersonFormPage(
+                person = person,
+                hasWhatsApp = person.id in whatsAppIds,
+                onPickExisting = {},
+                onSaved = onSaved,
+                onBack = { formId = null }
+            )
             personId != null && person != null -> PersonPage(
                 person = person,
                 hasPhoto = person.id !in noPhoto,
                 favoriteIds = favorites.map { it.id },
                 whatsAppIds = whatsAppIds,
                 onWhatsAppIds = { whatsAppIds = it },
+                onEdit = { formId = person.id },
                 onBack = { personId = null }
             )
             section == null -> SettingsHome(
@@ -185,6 +218,7 @@ fun SettingsScreen(
                         whatsAppIds = whatsAppIds,
                         onReorder = { favorites = it },
                         onOpenPerson = { personId = it.id },
+                        onAddPerson = { formId = NEW_PERSON },
                         onOpenContacts = onOpenContacts,
                         onAddGoogleAccount = onAddGoogleAccount,
                         onBack = back
