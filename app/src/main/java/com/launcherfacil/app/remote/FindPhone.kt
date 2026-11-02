@@ -30,18 +30,31 @@ import android.util.Log
 /**
  * "Hacer sonar el móvil" desde la web del cuidador, para encontrarlo en casa: suena el
  * tono de llamada a todo volumen durante [SECONDS] s, aunque esté en silencio (usa el
- * canal de alarma). Tocar la pantalla no lo para: es corto a propósito.
+ * canal de alarma). El cuidador lo puede parar antes ([stop], orden "stopRing").
+ * Tocar la pantalla no lo para: es corto a propósito.
  */
 internal object FindPhone {
     private const val SECONDS = 30
+    private val handler = Handler(Looper.getMainLooper())
     private var player: MediaPlayer? = null
+    private var appContext: Context? = null
+    /** Volumen de alarma de antes de sonar, para dejarlo como estaba (null = no suena). */
+    private var previousVolume: Int? = null
+    private val timeout = Runnable { appContext?.let { stop(it) } }
+
+    /** Si está sonando ahora (se publica en el estado para la web del cuidador). */
+    val isRinging: Boolean get() = player != null
 
     fun ring(context: Context) {
-        stop(context)
-        val am = context.getSystemService(AudioManager::class.java)
-        val previous = am.getStreamVolume(AudioManager.STREAM_ALARM)
+        val app = context.applicationContext
+        appContext = app
+        // Si ya sonaba, vuelve a empezar la cuenta (sin perder el volumen de antes).
+        handler.removeCallbacks(timeout)
+        releasePlayer()
+        val am = app.getSystemService(AudioManager::class.java)
+        if (previousVolume == null) previousVolume = am.getStreamVolume(AudioManager.STREAM_ALARM)
         am.setStreamVolume(AudioManager.STREAM_ALARM, am.getStreamMaxVolume(AudioManager.STREAM_ALARM), 0)
-        val uri = RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_RINGTONE)
+        val uri = RingtoneManager.getActualDefaultRingtoneUri(app, RingtoneManager.TYPE_RINGTONE)
             ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
         try {
             player = MediaPlayer().apply {
@@ -51,21 +64,33 @@ internal object FindPhone {
                         .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                         .build()
                 )
-                setDataSource(context, uri)
+                setDataSource(app, uri)
                 isLooping = true
                 prepare()
                 start()
             }
         } catch (e: Exception) {
             Log.w("FindPhone", "No se pudo hacer sonar", e)
+            stop(app)
+            throw e
         }
-        Handler(Looper.getMainLooper()).postDelayed({
-            stop(context)
-            am.setStreamVolume(AudioManager.STREAM_ALARM, previous, 0)
-        }, SECONDS * 1000L)
+        handler.postDelayed(timeout, SECONDS * 1000L)
     }
 
-    private fun stop(context: Context) {
+    /** Deja de sonar (antes de tiempo o al acabar) y devuelve el volumen de alarma. */
+    fun stop(context: Context) {
+        handler.removeCallbacks(timeout)
+        val wasRinging = player != null
+        releasePlayer()
+        previousVolume?.let {
+            context.getSystemService(AudioManager::class.java).setStreamVolume(AudioManager.STREAM_ALARM, it, 0)
+        }
+        previousVolume = null
+        // Al acabar solo, la web tiene que enterarse de que ya no suena.
+        if (wasRinging) Remote.publishSoon(context)
+    }
+
+    private fun releasePlayer() {
         player?.runCatching { stop(); release() }
         player = null
     }

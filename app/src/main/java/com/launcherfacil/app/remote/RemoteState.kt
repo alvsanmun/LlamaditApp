@@ -98,6 +98,7 @@ internal object RemoteState {
             "sosIcon" to settings.sosIcon.name,
             "keywords" to settings.keywords,
             "wifi" to settings.wifiEnabled,
+            "ringing" to FindPhone.isRinging,
             "goHome" to mapOf(
                 "address" to settings.houseAddress,
                 "hasHouse" to (settings.housePosition != null),

@@ -56,6 +56,7 @@ const ICON = {
   wifi: '<path d="M2 9a15 15 0 0 1 20 0"/><path d="M5.5 12.5a10 10 0 0 1 13 0"/><path d="M9 16a5 5 0 0 1 6 0"/><path d="M12 19.5h.01"/>',
   link: '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
   bell: '<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>',
+  bellOff: '<path d="M8.5 6.1A6 6 0 0 1 18 11v4"/><path d="M6 11v5l-2 2h12"/><path d="M10 21h4"/><path d="M3 3l18 18"/>',
   person: '<circle cx="12" cy="9" r="4" fill="currentColor" stroke="none"/><path d="M4 21a8 8 0 0 1 16 0z" fill="currentColor" stroke="none"/>',
   plus: '<path d="M12 5v14M5 12h14"/>'
 };
@@ -174,6 +175,7 @@ const S = {
   events: [],
   view: { name: 'home' },
   lastLocate: null,
+  ringWanted: null,     // true/false: sonar o parar pedido y aún sin confirmar
   unsub: []
 };
 
@@ -262,7 +264,11 @@ function openDevice(id) {
   localStorage.setItem('device', id);
   S.view = { name: 'device' };
   const ref = doc(db, 'devices', id);
-  S.unsub.push(onSnapshot(ref, snap => { S.device = snap.data() || null; render(); },
+  S.unsub.push(onSnapshot(ref, snap => {
+    S.device = snap.data() || null;
+    if (S.ringWanted !== null && S.device?.state?.ringing === S.ringWanted) S.ringWanted = null;
+    render();
+  },
     () => { closeDevice(); render(); }));
   S.unsub.push(onSnapshot(collection(ref, 'photos'), snap => {
     snap.docChanges().forEach(c => {
@@ -497,6 +503,8 @@ function viewDevice() {
   const b = s.battery;
   const seen = s.lastSeen?.toDate?.();
   const online = seen && Date.now() - seen.getTime() < 45 * 60000;
+  // Lo que se acaba de pedir manda hasta que el móvil lo confirma.
+  const ringing = S.ringWanted ?? !!s.ringing;
   const kiosk = { locked: 'Modo quiosco activo', paused: 'Modo quiosco en pausa', session: 'El cuidador está configurando', off: 'Sin modo quiosco' }[s.kiosk] || '';
   const people = s.people || [];
   const sosPerson = people.find(p => p.sos);
@@ -527,7 +535,9 @@ function viewDevice() {
     </div>
     <div class="big-actions">
       <button class="big locate" id="where">${svg('pin')}¿Dónde está?</button>
-      <button class="big ring" id="ring">${svg('bell')}Hacer sonar</button>
+      ${ringing
+        ? `<button class="big ring stop" id="ring">${svg('bellOff')}Dejar de sonar</button>`
+        : `<button class="big ring" id="ring">${svg('bell')}Hacer sonar</button>`}
     </div>
     ${events ? `<div class="label">Actividad</div><div class="card">${events}</div>` : ''}
     <div class="label">Apartados</div>
@@ -539,7 +549,16 @@ function viewDevice() {
   bind();
   if (S.devices.length > 1) app.querySelector('.top [data-go]').onclick = () => { closeDevice(); go({ name: 'home' }); };
   $('#where').onclick = () => go({ name: 'where' });
-  $('#ring').onclick = () => send('ring').catch(() => {});
+  $('#ring').onclick = () => {
+    // Se cambia el botón al momento; el móvil confirma con su estado (ringing).
+    const want = !ringing;
+    S.ringWanted = want;
+    clearTimeout(S.ringTimer);
+    S.ringTimer = setTimeout(() => { S.ringWanted = null; render(); }, 15000);
+    render();
+    send(want ? 'ring' : 'stopRing').then(() => toast(want ? 'Sonando 30 segundos' : 'Ya no suena'))
+      .catch(() => { S.ringWanted = null; render(); });
+  };
 }
 
 function viewWhere() {
@@ -745,7 +764,7 @@ function viewScreen() {
     <p class="hint" style="margin:0 4px 10px">Qué botones se ven, su tamaño y su orden (de arriba abajo). El reloj siempre se ve: es la entrada al panel.</p>
     <div class="card">
       ${layout.map((e, i) => `<div class="home-item">
-        <span class="switch"><input type="checkbox" data-vis="${i}" ${e.visible ? 'checked' : ''} ${e.item === 'CLOCK' ? 'disabled' : ''}><i></i></span>
+        <label class="switch"><input type="checkbox" data-vis="${i}" ${e.visible ? 'checked' : ''} ${e.item === 'CLOCK' ? 'disabled' : ''} aria-label="${esc(HOME_ITEMS[e.item] || e.item)}"><i></i></label>
         <span class="nm">${esc(HOME_ITEMS[e.item] || e.item)}</span>
         ${/^(CLOCK|BATTERY)$/.test(e.item) ? '' : `<select data-size="${i}">${Object.entries(SIZES).map(([k, t]) => `<option value="${k}" ${e.size === k ? 'selected' : ''}>${t}</option>`).join('')}</select>`}
         <button class="mini" data-mv="${i}" data-dir="-1" ${i === 0 ? 'disabled' : ''} aria-label="Subir">${svg('up')}</button>

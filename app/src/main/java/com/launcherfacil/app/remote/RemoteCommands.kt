@@ -142,6 +142,7 @@ internal object RemoteCommands {
         val settings = CaregiverSettings(context)
         when (type) {
             "ring" -> FindPhone.ring(context)
+            "stopRing" -> FindPhone.stop(context)
 
             // --- Personas ---
             "addPerson" -> {

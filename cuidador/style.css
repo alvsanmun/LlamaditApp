@@ -87,6 +87,7 @@ button { font: inherit; }
 .big svg { width: 34px; height: 34px; }
 .big.locate { background: var(--teal); }
 .big.ring { background: #6A1B9A; }
+.big.ring.stop { background: var(--red); }
 
 /* Filas de apartados. */
 .section-row {
