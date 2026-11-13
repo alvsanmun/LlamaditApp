@@ -67,7 +67,7 @@ Más detalles en **[docs/FUNCIONES.md](docs/FUNCIONES.md)**.
 
 Todas las pantallas, explicadas una a una, en **[docs/FUNCIONES.md](docs/FUNCIONES.md)**.
 
-<sub>Capturas del emulador con contactos inventados; fotos de Unsplash (créditos en [FUNCIONES.md](docs/FUNCIONES.md)).</sub>
+<sub>Capturas del emulador con contactos inventados; fotos de Unsplash y Wikimedia Commons (créditos en [FUNCIONES.md](docs/FUNCIONES.md)).</sub>
 
 ## Requisitos
 
@@ -134,5 +134,5 @@ LlamaditApp es **software libre**: puedes usarlo, estudiarlo, modificarlo y redi
 
 - Si distribuyes una versión modificada, debes publicar también su código fuente bajo la misma licencia.
 - Te pedimos, además, que uses **otro nombre y otro `applicationId`** para tu versión, para que no se confunda con esta ni choque con ella al instalarse.
-- Las fotos de personas de `docs/img/capturas/` son de [Unsplash](https://unsplash.com) y tienen su propia licencia (créditos en [FUNCIONES.md](docs/FUNCIONES.md)); **no están cubiertas por la AGPLv3**.
+- Las fotos de personas de `docs/img/capturas/` son de [Unsplash](https://unsplash.com) y de Wikimedia Commons (una en dominio público, CC0) y tienen su propia licencia (créditos en [FUNCIONES.md](docs/FUNCIONES.md)); **no están cubiertas por la AGPLv3**.
 - Las librerías de Android (AndroidX, Jetpack Compose) y los iconos de Material Design se usan bajo la licencia Apache 2.0, compatible con la AGPLv3.
