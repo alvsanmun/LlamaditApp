@@ -222,7 +222,7 @@ fun MissedCallsScreen(onCallBack: (String) -> Unit, onHome: () -> Unit) {
 
 /** Confirmación sin texto: papelera grande arriba, y abajo ✗ (no) y ✓ (sí, borrar). */
 @Composable
-private fun ConfirmDelete(onConfirm: () -> Unit, onCancel: () -> Unit) {
+internal fun ConfirmDelete(onConfirm: () -> Unit, onCancel: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -254,7 +254,7 @@ private fun ConfirmDelete(onConfirm: () -> Unit, onCancel: () -> Unit) {
 // --- Piezas comunes ---
 
 @Composable
-private fun ListScaffold(onHome: () -> Unit, content: @Composable () -> Unit) {
+internal fun ListScaffold(onHome: () -> Unit, content: @Composable () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -326,7 +326,7 @@ private fun PersonRow(
 
 /** Lista vacía: el icono grande, sin texto. */
 @Composable
-private fun EmptyIcon(icon: Int, color: Color) {
+internal fun EmptyIcon(icon: Int, color: Color) {
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Icon(
             painterResource(icon), null,

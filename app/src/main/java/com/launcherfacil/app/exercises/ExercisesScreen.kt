@@ -79,13 +79,15 @@ fun ExercisesScreen(onHome: () -> Unit) {
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     DisposableEffect(lifecycle) {
         VolumeController.raiseMediaVolume(context, 0.6f)
+        VolumeController.mediaScreenOpened()
         ExerciseVoice.start(context)
         val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) VolumeController.raiseMediaVolume(context, 0.6f)
+            if (event == Lifecycle.Event.ON_RESUME) VolumeController.raiseMediaVolume(context, 0.6f, onlyIfSilent = true)
         }
         lifecycle.addObserver(observer)
         onDispose {
             lifecycle.removeObserver(observer)
+            VolumeController.mediaScreenClosed()
             ExerciseVoice.stop()
             clearFaceCache()
             VolumeController.applySoundPolicy(context)

@@ -156,7 +156,7 @@ internal fun PersonFormPage(
     }
     // La cámara y la galería son otras apps: se sale un momento del quiosco.
     fun leaveKiosk() {
-        if (Kiosk.isLocked(activity)) activity.stopLockTask()
+        Kiosk.unlock(activity)
     }
 
     val nameError = showErrors && name.isBlank()

@@ -46,6 +46,10 @@ import com.launcherfacil.app.exercises.ExerciseProgress
 import com.launcherfacil.app.exercises.MAX_LEVEL
 import com.launcherfacil.app.gohome.positionOf
 import com.launcherfacil.app.kiosk.Kiosk
+import com.launcherfacil.app.news.PAPERS
+import com.launcherfacil.app.pills.PILL_COUNTS
+import com.launcherfacil.app.pills.PillAlarms
+import com.launcherfacil.app.pills.PillStore
 import com.launcherfacil.app.locate.LocateService
 import com.launcherfacil.app.radio.RadioStations
 import com.launcherfacil.app.radio.SLEEP_OPTIONS
@@ -143,6 +147,7 @@ internal object RemoteCommands {
         when (type) {
             "ring" -> FindPhone.ring(context)
             "stopRing" -> FindPhone.stop(context)
+            "resumeKiosk" -> Kiosk.resumeRemotely(context)
 
             // --- Personas ---
             "addPerson" -> {
@@ -231,6 +236,35 @@ internal object RemoteCommands {
                 Kiosk.applyWifi(context)
             }
             "setName" -> Remote.setDeviceName(context, args.string("name"))
+            "setLowBattery" -> {
+                (args["on"] as? Boolean)?.let { settings.lowBatteryAlert = it }
+                (args["percent"] as? Number)?.let { settings.lowBatteryPercent = it.toInt().coerceIn(5, 90) }
+            }
+            "setPills" -> {
+                PillStore(context).enabled = args.bool("on")
+                PillAlarms.schedule(context)
+            }
+            "addPill", "updatePill" -> {
+                val store = PillStore(context)
+                val minutes = args.long("minutes").toInt()
+                val count = (args["count"] as? Number)?.toFloat() ?: error("Falta count")
+                require(minutes in 0 until 24 * 60 && count in PILL_COUNTS) { "Hora o cantidad no válidas" }
+                val photo = decodePhoto(args["photo"] as? String)
+                if (type == "addPill") {
+                    val dose = store.add(minutes, count, photo)
+                    PillAlarms.schedule(context)
+                    return mapOf("id" to dose.id)
+                }
+                val id = args.string("id")
+                require(store.doses.any { it.id == id }) { "Esa pastilla ya no está" }
+                store.update(id, minutes, count, photo)
+                PillAlarms.schedule(context)
+            }
+            "removePill" -> {
+                PillStore(context).remove(args.string("id"))
+                PillAlarms.schedule(context)
+            }
+            "setNewspapers" -> settings.newsPapers = (args["ids"] as List<*>).map { it.toString() }.filter { id -> PAPERS.any { it.id == id } }
             else -> error("Orden desconocida: $type")
         }
         return null

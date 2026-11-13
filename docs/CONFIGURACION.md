@@ -4,7 +4,7 @@ LlamaditApp aplica él solo la mayoría de los ajustes en cuanto se activa el mo
 
 Los menús son los de un **Samsung Galaxy A16** (One UI 8). En otras marcas los nombres son parecidos.
 
-> **¿Cómo llego a los Ajustes con el quiosco activo?** Panel del cuidador (mantener pulsado el reloj 5 s y PIN) → **"Abrir Ajustes de Android"**. Al volver a LlamaditApp, el quiosco se activa solo. Para tareas largas, usa **"Pausar el modo quiosco"** y luego **"Activar el modo quiosco"**.
+> **¿Cómo llego a los Ajustes con el quiosco activo?** Panel del cuidador (mantener pulsado el reloj 5 s y PIN) → **"Abrir Ajustes de Android"**. Al volver a LlamaditApp, el quiosco se activa solo. Para tareas largas, usa **"Pausar el modo quiosco"**: el móvil queda como uno normal, con su pantalla de inicio. Para volver, toca el aviso **Modo quiosco en pausa** o abre LlamaditApp y pulsa **"Activar el modo quiosco"**.
 
 Cada ajuste está marcado como:
 - **Imprescindible**: sin él, algo no funcionará.

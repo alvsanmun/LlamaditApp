@@ -22,6 +22,10 @@
 | 🏠 **Volver a casa** | Botón opcional: la dirección de casa en grande (para enseñarla a la policía o a un vecino) y una flecha que abre la ruta a pie de Google Maps con voz. Al llegar, la foto del portal. El cuidador puede recibir un SMS con la ubicación al pulsarlo y cada 10 minutos de camino. |
 | 🧠 **Ejercicios** | Opcional: cálculos sencillos, parejas de cartas, pintar por números, sopa de letras, ¿quién es? (con las fotos de la familia), repetir una secuencia, contar dinero y puzle. Cambian cada vez y el nivel sube solo. |
 | 📻 **Radio** | Opcional: los logotipos de las emisoras que elige el cuidador. Toca uno y suena, también con la pantalla apagada, hasta tocar el botón rojo o hasta el apagado automático. Calla durante las llamadas. |
+| 🔋 **Batería baja** | Opcional: al bajar del porcentaje que elige el cuidador, sale en grande el dibujo del móvil y el cargador. Se quita con el botón verde o al enchufarlo. |
+| 💊 **Pastillas** | Opcional: a cada hora suena y enseña la foto de cada caja y cuántas tomar; la persona confirma con el botón verde y el cuidador ve el historial de tomas, en el móvil y a distancia. |
+| 📰 **Periódicos** | Opcional: 42 periódicos y revistas gratuitos por secciones (actualidad, deportes, tecnología, salud, cocina…), con su logotipo, foto y letra grande; las noticias se pueden escuchar en voz alta. |
+| 📷 **Cámara y fotos** | Opcional: un círculo blanco para hacer fotos, con la cámara de atrás o la de delante, y otro botón para verlas en grande. Sin menús ni texto. |
 | 🧩 **Diseño a medida** | El cuidador mueve, agranda u oculta los botones y elige el dibujo del SOS (letras, ambulancia, cruz…). |
 | 👥 **Contactos desde Google** | Opcional: el cuidador gestiona los contactos (nombre, foto y teléfono) desde cualquier ordenador en contacts.google.com, y llegan solos al móvil. |
 | 🔊 **Volumen** | Los botones solo cambian el volumen del teléfono, con un panel enorme que se entiende sin leer. El móvil siempre vibra al recibir una llamada. |

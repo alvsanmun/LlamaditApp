@@ -14,8 +14,8 @@ android {
         applicationId = "com.launcherfacil.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 11
-        versionName = "1.8.1"
+        versionCode = 12
+        versionName = "1.9"
     }
 
     // Firma de la versión final: datos en keystore.properties (fuera de git).
@@ -69,6 +69,10 @@ dependencies {
     // Radio por internet (Media3 / ExoPlayer, Apache 2.0). HLS: algunas emisoras (Onda Cero…) emiten así.
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.exoplayer.hls)
+    // Cámara propia, con solo los botones justos (CameraX, Apache 2.0).
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)

@@ -74,7 +74,13 @@ import com.launcherfacil.app.contacts.whatsAppVideoCall
 import com.launcherfacil.app.inbox.countNewMissedCalls
 import com.launcherfacil.app.inbox.countNewSms
 import com.launcherfacil.app.inbox.rememberContentVersion
+import com.launcherfacil.app.alerts.BatteryWatcher
+import com.launcherfacil.app.camera.CameraScreen
+import com.launcherfacil.app.news.NewsScreen
+import com.launcherfacil.app.pills.PillAlarms
+import com.launcherfacil.app.camera.PhotosScreen
 import com.launcherfacil.app.kiosk.Kiosk
+import com.launcherfacil.app.kiosk.PausedNotice
 import com.launcherfacil.app.remote.Remote
 import com.launcherfacil.app.remote.RemoteCommands
 import com.launcherfacil.app.sos.SosService
@@ -93,6 +99,9 @@ import com.launcherfacil.app.gohome.GoHomeService
 import com.launcherfacil.app.ui.ArrivedScreen
 import com.launcherfacil.app.gohome.startWalkingRoute
 import com.launcherfacil.app.ui.hideNavigationBar
+import com.launcherfacil.app.ui.rememberOnResume
+import com.launcherfacil.app.ui.KioskPausedScreen
+import com.launcherfacil.app.ui.showNavigationBar
 import com.launcherfacil.app.ui.MessagesScreen
 import com.launcherfacil.app.ui.MissedCallsScreen
 import com.launcherfacil.app.ui.PinScreen
@@ -120,6 +129,10 @@ class MainActivity : ComponentActivity() {
         Kiosk.configure(this)
         // Gestión a distancia (si el cuidador la ha activado).
         Remote.start(this)
+        if (CaregiverSettings(this).kioskPaused) PausedNotice.show(this)
+        // Avisos: batería baja y pastillas.
+        BatteryWatcher.start(this)
+        PillAlarms.schedule(this)
         // Solo para pruebas: `am start ... --ei debug_interval_seconds 15` acorta el
         // intervalo del SOS (el servicio lo ignora si la app no es depurable).
         debugSosInterval = intent.getIntExtra(SosService.EXTRA_DEBUG_INTERVAL_SECONDS, 0)
@@ -135,18 +148,22 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         Kiosk.enterLockTask(this)
-        hideNavigationBar()
+        updateNavigationBar()
         // Si se venía de WhatsApp completo, se quita la casa flotante.
         WhatsAppApp.onLauncherVisible()
         // Vídeos y música a cero también al volver de la ruta de Google Maps (que sube
-        // el volumen de multimedia para que se oiga la voz).
-        VolumeController.applySoundPolicy(this)
+        // el volumen de multimedia para que se oiga la voz). En pausa, el móvil es del cuidador.
+        if (!CaregiverSettings(this).kioskPaused) VolumeController.applySoundPolicy(this)
+    }
+
+    private fun updateNavigationBar() {
+        if (CaregiverSettings(this).kioskPaused) showNavigationBar() else hideNavigationBar()
     }
 
     // Sin la barra de navegación de abajo (solo quedaba Atrás, que confundía).
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) hideNavigationBar()
+        if (hasFocus) updateNavigationBar()
     }
 
     // Pulsar Inicio (fuera del quiosco) con la app abierta: volver a la pantalla principal.
@@ -170,7 +187,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        if (intent.hasCategory(Intent.CATEGORY_HOME)) homeRequests++
+        // Configurando algo fuera de la app, Inicio vuelve al panel: no corta la configuración.
+        if (intent.hasCategory(Intent.CATEGORY_HOME) && !Kiosk.inCaregiverSession(this)) homeRequests++
         // Con la app ya abierta (Device Owner: no se puede cerrar para volver a abrirla).
         if (intent.hasExtra(SosService.EXTRA_DEBUG_INTERVAL_SECONDS)) {
             debugSosInterval = intent.getIntExtra(SosService.EXTRA_DEBUG_INTERVAL_SECONDS, 0)
@@ -179,12 +197,13 @@ class MainActivity : ComponentActivity() {
         handleDial(intent)
         // Por si la app acaba de ser nombrada Device Owner estando ya abierta.
         Kiosk.enterLockTask(this)
+        updateNavigationBar()
     }
 }
 
 private class DialRequest(val number: String)
 
-private enum class Screen { Home, Contacts, WhatsApp, Dialpad, Messages, MissedCalls, GoHome, Arrived, Exercises, Radio, Pin, NewPin, Settings }
+private enum class Screen { Home, Contacts, WhatsApp, Dialpad, Messages, MissedCalls, GoHome, Arrived, Exercises, Radio, Camera, Photos, News, Pin, NewPin, Settings }
 
 private val PERMISSIONS = APP_PERMISSIONS.toTypedArray()
 
@@ -213,6 +232,11 @@ private fun LauncherApp(
     }
 
     var screen by rememberSaveable { mutableStateOf(Screen.Home) }
+    val settings = remember { CaregiverSettings(context) }
+    var kioskPaused by remember { mutableStateOf(settings.kioskPaused) }
+    // Puede haberse activado desde otra copia de esta pantalla (la abierta desde el aviso).
+    val pausedOnResume = rememberOnResume { settings.kioskPaused }
+    LaunchedEffect(pausedOnResume) { kioskPaused = pausedOnResume }
 
     // Al terminar una llamada o videollamada se vuelve siempre a la pantalla principal.
     fun call(number: String) {
@@ -239,7 +263,11 @@ private fun LauncherApp(
     }
 
     BackHandler(enabled = screen != Screen.Home) { screen = Screen.Home }
-    LaunchedEffect(homeRequests) { screen = Screen.Home }
+    LaunchedEffect(homeRequests) {
+        screen = Screen.Home
+        // El quiosco se ha podido activar a distancia con esta pantalla abierta.
+        kioskPaused = settings.kioskPaused
+    }
     LaunchedEffect(dialRequest) { if (dialRequest != null) screen = Screen.Dialpad }
     LaunchedEffect(arrivedRequests) { if (arrivedRequests > 0) screen = Screen.Arrived }
     // Salir del panel (con la casa, la flecha o Atrás) acaba la pausa de la configuración.
@@ -254,7 +282,6 @@ private fun LauncherApp(
     val remoteVersion by RemoteCommands.settingsVersion.collectAsState()
 
     // Configuración del cuidador: se cierra al apagar la pantalla.
-    val settings = remember { CaregiverSettings(context) }
     DisposableEffect(Unit) {
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(c: Context, i: Intent) {
@@ -268,7 +295,12 @@ private fun LauncherApp(
         onDispose { context.unregisterReceiver(receiver) }
     }
     val activity = context as Activity
-    var kioskPaused by remember { mutableStateOf(Kiosk.isPaused(context)) }
+    fun activateKiosk() {
+        Kiosk.resume(activity)
+        kioskPaused = false
+        screen = Screen.Home
+        activity.hideNavigationBar()
+    }
 
     // Números de los botones de mensajes y llamadas perdidas: se recalculan al llegar
     // un SMS o una llamada y al volver a la pantalla principal.
@@ -286,7 +318,12 @@ private fun LauncherApp(
         Column(Modifier.fillMaxSize().background(Fondo)) {
             Box(Modifier.weight(1f).fillMaxWidth()) {
                 when (screen) {
-                    Screen.Home -> HomeScreen(
+                    // En pausa, LlamaditApp solo se abre para volver a activarla.
+                    Screen.Home -> if (kioskPaused) KioskPausedScreen(
+                        onActivate = ::activateKiosk,
+                        onOpenPanel = { screen = if (settings.hasPin) Screen.Pin else Screen.NewPin },
+                        onUsePhone = { Kiosk.openHome(activity) }
+                    ) else HomeScreen(
                         onCall = { screen = Screen.Contacts },
                         onWhatsApp = { screen = Screen.WhatsApp },
                         onDialpad = { screen = Screen.Dialpad },
@@ -296,6 +333,9 @@ private fun LauncherApp(
                         onMissedCalls = { screen = Screen.MissedCalls },
                         onExercises = { screen = Screen.Exercises },
                         onRadio = { screen = Screen.Radio },
+                        onCamera = { screen = Screen.Camera },
+                        onPhotos = { screen = Screen.Photos },
+                        onNews = { screen = Screen.News },
                         radioOn = radioState.playing != null,
                         onWhatsAppApp = { if (!WhatsAppApp.open(activity)) whatsAppFailed(context) },
                         whatsAppUnread = whatsAppUnread,
@@ -314,6 +354,9 @@ private fun LauncherApp(
                     Screen.Arrived -> ArrivedScreen(onHome = { screen = Screen.Home })
                     Screen.Exercises -> ExercisesScreen(onHome = { screen = Screen.Home })
                     Screen.Radio -> RadioScreen(onHome = { screen = Screen.Home })
+                    Screen.Camera -> CameraScreen(onHome = { screen = Screen.Home })
+                    Screen.Photos -> PhotosScreen(onHome = { screen = Screen.Home })
+                    Screen.News -> NewsScreen(onHome = { screen = Screen.Home })
                     Screen.Messages -> MessagesScreen(onHome = { screen = Screen.Home })
                     Screen.GoHome -> {
                         val house = remember { settings.housePosition }
@@ -407,12 +450,9 @@ private fun LauncherApp(
                         onPauseKiosk = {
                             Kiosk.pause(activity)
                             kioskPaused = true
-                        },
-                        onResumeKiosk = {
-                            Kiosk.resume(activity)
-                            kioskPaused = false
                             screen = Screen.Home
                         },
+                        onResumeKiosk = ::activateKiosk,
                         backButton = backButton,
                         onBackButtonChange = {
                             backButton = it

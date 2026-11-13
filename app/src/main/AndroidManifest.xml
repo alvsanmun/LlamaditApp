@@ -3,8 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature android:name="android.hardware.telephony" android:required="false" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- Botón para hacer fotos; solo se usa con esa pantalla abierta. -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
     <!-- Escribir la fila de videollamada de WhatsApp en los favoritos marcados. -->
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <!-- WhatsApp completo: la casa para volver, dibujada encima de WhatsApp. -->
@@ -36,6 +42,13 @@
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Quiosco en pausa tras reiniciar: LlamaditApp no se abre sola y este aviso la trae. -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- Avisos de las pastillas a su hora exacta, también en reposo. -->
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission
+        android:name="android.permission.SCHEDULE_EXACT_ALARM"
+        android:maxSdkVersion="32" />
     <!-- Las llamadas entrantes siempre vibran. -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- Sensor de proximidad durante las llamadas (apaga la pantalla junto a la oreja). -->
@@ -52,6 +65,11 @@
     <!-- Android 11+: para poder comprobar si WhatsApp está instalado. -->
     <queries>
         <package android:name="com.whatsapp" />
+        <!-- Con el quiosco en pausa, el inicio pasa a ser el del móvil: hay que encontrarlo. -->
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.HOME" />
+        </intent>
     </queries>
 
     <application
@@ -145,6 +163,29 @@
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
+
+        <receiver
+            android:name=".kiosk.BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Avisos a pantalla completa: batería baja y pastillas. -->
+        <activity
+            android:name=".alerts.ReminderActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <receiver
+            android:name=".pills.PillAlarmReceiver"
+            android:exported="false" />
 
         <service
             android:name=".sos.SosService"

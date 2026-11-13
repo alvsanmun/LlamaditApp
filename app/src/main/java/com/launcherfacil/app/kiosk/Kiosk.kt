@@ -27,6 +27,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.net.wifi.WifiManager
 import android.os.Build
@@ -35,13 +36,16 @@ import android.provider.Settings
 import android.view.Surface
 import android.telecom.TelecomManager
 import android.util.Log
+import android.widget.Toast
 import com.launcherfacil.app.APP_PERMISSIONS
 import com.launcherfacil.app.BACKGROUND_LOCATION
 import com.launcherfacil.app.MainActivity
+import com.launcherfacil.app.R
 import com.launcherfacil.app.WHATSAPP_PERMISSIONS
 import com.launcherfacil.app.config.CaregiverSettings
 import com.launcherfacil.app.contacts.WHATSAPP_PACKAGE
 import com.launcherfacil.app.gohome.MAPS_PACKAGE
+import java.util.concurrent.Executors
 
 /**
  * Modo quiosco. Solo funciona si la app es Device Owner; si no, no hace nada y
@@ -52,6 +56,18 @@ object Kiosk {
     private const val CAREGIVER_SESSION_MS = 30 * 60 * 1000L
 
     private const val TAG = "Kiosk"
+
+    private const val LOCK_RETRIES = 3
+    private const val LOCK_RETRY_MS = 300L
+
+    /** Pantalla de inicio de Samsung: tiene prioridad sobre otras que traiga el móvil. */
+    private const val SAMSUNG_HOME = "com.sec.android.app.launcher"
+
+    /**
+     * Ocultar o mostrar las apps tarda varios segundos: se hace en este hilo, de uno en
+     * uno y en orden, para que la pantalla no se congele a mitad del cambio.
+     */
+    private val worker = Executors.newSingleThreadExecutor()
 
     // Ventana de actualizaciones del sistema, en minutos desde medianoche.
     private const val UPDATE_START_MIN = 2 * 60
@@ -137,20 +153,13 @@ object Kiosk {
         if (!isDeviceOwner(context)) return
         val dpm = context.dpm()
         val admin = AdminReceiver.component(context)
+        val paused = CaregiverSettings(context).kioskPaused
 
-        // 1. Este launcher es siempre la pantalla de inicio (también tras reiniciar).
-        val home = IntentFilter(Intent.ACTION_MAIN).apply {
-            addCategory(Intent.CATEGORY_HOME)
-            addCategory(Intent.CATEGORY_DEFAULT)
-        }
-        dpm.addPersistentPreferredActivity(admin, home, ComponentName(context, MainActivity::class.java))
+        // 1. Este launcher es la pantalla de inicio (también tras reiniciar), salvo en pausa.
+        applyHome(context)
 
         // 2. Apps que pueden abrirse dentro del quiosco.
-        val dialer = context.getSystemService(TelecomManager::class.java)?.defaultDialerPackage
-        //    Google Maps, para la ruta a pie del botón "Volver a casa" (si está oculto, no se abre).
-        val allowed = (listOf(context.packageName, WHATSAPP_PACKAGE, MAPS_PACKAGE) + CALL_PACKAGES + listOfNotNull(dialer))
-            .distinct()
-        dpm.setLockTaskPackages(admin, allowed.toTypedArray())
+        dpm.setLockTaskPackages(admin, lockTaskPackages(context))
 
         // 3. Qué se ve en el quiosco: barra de estado (hora, batería, cobertura) y el
         //    menú de apagado. Sin botón de inicio, recientes ni notificaciones.
@@ -191,12 +200,13 @@ object Kiosk {
             Log.w(TAG, "No se pudo fijar la política de actualizaciones", e)
         }
 
-        // 8. Bluetooth desactivado: no se usa y gasta batería.
-        dpm.addUserRestriction(admin, UserManager.DISALLOW_BLUETOOTH)
+        // 8. Bluetooth desactivado: no se usa y gasta batería. Y sin modo avión (dejaría el
+        //    móvil sin llamadas, SMS ni SOS). Con el quiosco en pausa, el cuidador puede usarlos.
+        for (restriction in listOf(UserManager.DISALLOW_BLUETOOTH, UserManager.DISALLOW_AIRPLANE_MODE)) {
+            if (paused) dpm.clearUserRestriction(admin, restriction) else dpm.addUserRestriction(admin, restriction)
+        }
 
-        // 9. Sin modo avión (dejaría el móvil sin llamadas, SMS ni SOS) y Wi-Fi según
-        //    elija el cuidador: por defecto apagado y bloqueado (solo la SIM).
-        dpm.addUserRestriction(admin, UserManager.DISALLOW_AIRPLANE_MODE)
+        // 9. Wi-Fi según elija el cuidador: por defecto apagado y bloqueado (solo la SIM).
         applyWifi(context)
 
         // 10. Apps innecesarias ocultas (no se ejecutan ni gastan batería), salvo con el
@@ -206,7 +216,74 @@ object Kiosk {
 
         // 11. Siempre en vertical, también en las pantallas de otras apps (videollamada de
         //     WhatsApp): giro automático apagado y rotación fija a 0.
-        lockPortrait(context)
+        if (!paused) lockPortrait(context)
+    }
+
+    private fun lockTaskPackages(context: Context): Array<String> {
+        val dialer = context.getSystemService(TelecomManager::class.java)?.defaultDialerPackage
+        // Google Maps, para la ruta a pie del botón "Volver a casa" (si está oculto, no se abre).
+        return (listOf(context.packageName, WHATSAPP_PACKAGE, MAPS_PACKAGE) + CALL_PACKAGES + listOfNotNull(dialer))
+            .distinct().toTypedArray()
+    }
+
+    /** [configure] sin congelar la pantalla. */
+    private fun configureInBackground(context: Context) {
+        val app = context.applicationContext
+        worker.execute {
+            try {
+                configure(app)
+            } catch (e: Exception) {
+                Log.e(TAG, "No se pudo aplicar el quiosco", e)
+            }
+        }
+    }
+
+    /** Las demás pantallas de inicio del móvil; la primera es la suya de siempre. */
+    private fun systemHomes(context: Context): List<ComponentName> =
+        context.packageManager
+            .queryIntentActivities(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_DEFAULT_ONLY)
+            // La prioridad negativa es la de emergencia de Android (FallbackHome), no un inicio.
+            .filter { it.activityInfo.packageName != context.packageName && it.priority >= 0 }
+            .filter { it.activityInfo.packageName !in HIDDEN_PACKAGES }
+            .sortedBy {
+                when {
+                    it.activityInfo.packageName == SAMSUNG_HOME -> 0
+                    it.activityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0 -> 1
+                    else -> 2
+                }
+            }
+            .map { ComponentName(it.activityInfo.packageName, it.activityInfo.name) }
+
+    /**
+     * Pantalla de inicio fija: LlamaditApp o, con el quiosco en pausa, la del móvil. Si
+     * LlamaditApp siguiera siendo el inicio, al cuidador le saltaría a cada Inicio o Atrás.
+     */
+    private fun applyHome(context: Context) {
+        val dpm = context.dpm()
+        val admin = AdminReceiver.component(context)
+        val homes = systemHomes(context)
+        val own = ComponentName(context, MainActivity::class.java)
+        val target = (if (CaregiverSettings(context).kioskPaused) homes.firstOrNull() else null) ?: own
+        // En este orden: añadir sin borrar antes deja la anterior activa (Android 14+).
+        for (other in homes + own) {
+            if (other != target) dpm.clearPackagePersistentPreferredActivities(admin, other.packageName)
+        }
+        val filter = IntentFilter(Intent.ACTION_MAIN).apply {
+            addCategory(Intent.CATEGORY_HOME)
+            addCategory(Intent.CATEGORY_DEFAULT)
+        }
+        dpm.addPersistentPreferredActivity(admin, filter, target)
+    }
+
+    /** Abre la pantalla de inicio: la del móvil en pausa, LlamaditApp si no. */
+    fun openHome(context: Context) {
+        try {
+            context.startActivity(
+                Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+        } catch (e: ActivityNotFoundException) {
+            Log.w(TAG, "No se pudo abrir la pantalla de inicio", e)
+        }
     }
 
     /**
@@ -236,14 +313,17 @@ object Kiosk {
     /**
      * Aplica el Wi-Fi que ha elegido el cuidador. Apagado (por defecto): bloqueado y el
      * móvil va solo con la SIM. Encendido: se desbloquea para elegir redes en los Ajustes
-     * de Android; las redes guardadas se conservan al volver a apagarlo.
+     * de Android; las redes guardadas se conservan al volver a apagarlo. Con el quiosco en
+     * pausa queda libre, sin tocarlo: se vuelve a aplicar lo elegido al activarlo.
      */
     fun applyWifi(context: Context) {
         if (!isDeviceOwner(context)) return
         val dpm = context.dpm()
         val admin = AdminReceiver.component(context)
-        val enabled = CaregiverSettings(context).wifiEnabled
-        if (enabled) {
+        val settings = CaregiverSettings(context)
+        if (settings.kioskPaused) {
+            for (restriction in WIFI_RESTRICTIONS) dpm.clearUserRestriction(admin, restriction)
+        } else if (settings.wifiEnabled) {
             for (restriction in WIFI_RESTRICTIONS) dpm.clearUserRestriction(admin, restriction)
             setWifiEnabled(context, true)
         } else {
@@ -330,6 +410,22 @@ object Kiosk {
             ActivityManager.LOCK_TASK_MODE_NONE
 
     /**
+     * Sale del Lock Task. `stopLockTask` no hace nada si el bloqueo está en otra copia de
+     * MainActivity (la abierta desde el aviso frente a la de Inicio): en ese caso, vaciar
+     * un momento la lista de apps permitidas saca del bloqueo sea cual sea la copia.
+     */
+    fun unlock(activity: Activity) {
+        if (!isLocked(activity)) return
+        activity.stopLockTask()
+        if (isLocked(activity) && isDeviceOwner(activity)) {
+            val dpm = activity.dpm()
+            val admin = AdminReceiver.component(activity)
+            dpm.setLockTaskPackages(admin, emptyArray())
+            dpm.setLockTaskPackages(admin, lockTaskPackages(activity))
+        }
+    }
+
+    /**
      * Para el cuidador: sale del Lock Task y abre otra app (Contactos, Ajustes...).
      * Al volver al launcher, [enterLockTask] lo vuelve a bloquear.
      */
@@ -357,6 +453,9 @@ object Kiosk {
         // Vaciar la lista de Lock Task también saca del modo quiosco.
         dpm.setLockTaskPackages(admin, emptyArray())
         dpm.clearPackagePersistentPreferredActivities(admin, context.packageName)
+        for (home in systemHomes(context)) dpm.clearPackagePersistentPreferredActivities(admin, home.packageName)
+        CaregiverSettings(context).kioskPaused = false
+        PausedNotice.hide(context)
         dpm.setKeyguardDisabled(admin, false)
         dpm.setSystemUpdatePolicy(admin, null)
         dpm.clearUserRestriction(admin, UserManager.DISALLOW_BLUETOOTH)
@@ -387,10 +486,11 @@ object Kiosk {
         if (!isDeviceOwner(activity) || CaregiverSettings(activity).kioskPaused) return
         val first = !inCaregiverSession(activity)
         CaregiverSettings(activity).caregiverSessionUntil = System.currentTimeMillis() + CAREGIVER_SESSION_MS
-        if (isLocked(activity)) activity.stopLockTask()
+        unlock(activity)
         if (first) {
-            setHidden(activity, false)
+            // Maps enseguida: la casa se puede abrir en el mapa justo después.
             applyMaps(activity)
+            configureInBackground(activity)
             Log.i(TAG, "Configuración del cuidador: quiosco en pausa")
         }
     }
@@ -403,37 +503,75 @@ object Kiosk {
     }
 
     /**
-     * Fin de la configuración: se vuelve a aplicar todo el quiosco (también concede los
-     * permisos a WhatsApp si se acaba de instalar) y se bloquea.
+     * Fin de la configuración: se bloquea primero y luego se vuelve a aplicar todo el
+     * quiosco (también concede los permisos a WhatsApp si se acaba de instalar).
      */
     fun endCaregiverSession(activity: Activity) {
         val settings = CaregiverSettings(activity)
         if (settings.caregiverSessionUntil == 0L) return
         settings.caregiverSessionUntil = 0L
-        configure(activity)
         enterLockTask(activity)
+        configureInBackground(activity)
         Log.i(TAG, "Configuración del cuidador terminada: quiosco activo")
     }
 
     /**
-     * Pausa el quiosco SIN dejar de ser Device Owner: se quita el bloqueo y vuelven a
-     * verse las apps ocultas, también tras reiniciar, hasta que se llame a [resume].
-     * Se mantienen la app de Teléfono, los permisos, el Wi-Fi elegido, etc.
+     * Pausa el quiosco SIN dejar de ser Device Owner: el móvil queda como uno normal, con
+     * su pantalla de inicio, sus apps y sin restricciones, también tras reiniciar, hasta
+     * que el cuidador llame a [resume]. LlamaditApp no vuelve sola; sigue siendo la app de
+     * Teléfono, así que las llamadas usan su pantalla. Lo que tarda va en segundo plano.
      */
     fun pause(activity: Activity) {
-        CaregiverSettings(activity).kioskPaused = true
-        if (isLocked(activity)) activity.stopLockTask()
-        if (isDeviceOwner(activity)) setHidden(activity, false)
+        val settings = CaregiverSettings(activity)
+        settings.kioskPaused = true
+        settings.caregiverSessionUntil = 0L
+        unlock(activity)
+        if (!isDeviceOwner(activity)) return
+        applyHome(activity)
+        PausedNotice.show(activity)
+        openHome(activity)
+        Toast.makeText(activity, R.string.kiosk_paused_toast, Toast.LENGTH_LONG).show()
+        configureInBackground(activity)
         Log.i(TAG, "Modo quiosco en pausa")
     }
 
-    /** Vuelve a activar el quiosco tras [pause]. */
+    /**
+     * Vuelve a activar el quiosco tras [pause]. Primero se bloquea, en el momento, y luego
+     * se vuelve a ocultar todo: si no, el móvil pasaba unos segundos a medio camino.
+     */
     fun resume(activity: Activity) {
-        CaregiverSettings(activity).kioskPaused = false
-        CaregiverSettings(activity).caregiverSessionUntil = 0L
-        configure(activity)
-        enterLockTask(activity)
+        val settings = CaregiverSettings(activity)
+        settings.kioskPaused = false
+        settings.caregiverSessionUntil = 0L
+        if (isDeviceOwner(activity)) applyHome(activity)
+        PausedNotice.hide(activity)
+        if (activity.intent.hasCategory(Intent.CATEGORY_HOME)) {
+            enterLockTask(activity)
+        } else {
+            // Abierta desde el aviso o el icono: si se bloqueara esta copia, Inicio crearía
+            // otra y quedarían dos. La copia de Inicio se bloquea al abrirse.
+            openHome(activity)
+            activity.finishAndRemoveTask()
+        }
+        configureInBackground(activity)
         Log.i(TAG, "Modo quiosco activo de nuevo")
+    }
+
+    /**
+     * Activa el quiosco desde la app o la web del cuidador, por si se olvidó de hacerlo al
+     * devolver el móvil. No hay ninguna pantalla desde la que bloquear: se abre LlamaditApp,
+     * que se bloquea al abrirse (con la pantalla apagada, al encenderla).
+     */
+    fun resumeRemotely(context: Context) {
+        if (!isDeviceOwner(context) || !isPaused(context)) return
+        val settings = CaregiverSettings(context)
+        settings.kioskPaused = false
+        settings.caregiverSessionUntil = 0L
+        applyHome(context)
+        PausedNotice.hide(context)
+        openHome(context)
+        configureInBackground(context)
+        Log.i(TAG, "Modo quiosco activado a distancia")
     }
 
     /** Entra en Lock Task si es Device Owner, no está en pausa y aún no está dentro. */
@@ -451,6 +589,28 @@ object Kiosk {
         // forzar su cierre para que pase por onCreate): aplicar el quiosco ahora.
         if (!activity.dpm().isLockTaskPermitted(activity.packageName)) configure(activity)
         if (!activity.dpm().isLockTaskPermitted(activity.packageName)) return
-        activity.startLockTask()
+        tryLock(activity, attemptsLeft = LOCK_RETRIES)
+    }
+
+    /**
+     * En Samsung, `startLockTask` falla a veces justo al volver de la pausa ("Can't lock due
+     * to auth"). Sin capturarlo, la app se caía y Android la reabría: el móvil salía y entraba
+     * del quiosco. Se reintenta y, si no, se abre una tarea nueva, que sí se puede bloquear.
+     */
+    private fun tryLock(activity: Activity, attemptsLeft: Int) {
+        try {
+            activity.startLockTask()
+        } catch (e: RuntimeException) {
+            Log.w(TAG, "No se pudo bloquear; quedan $attemptsLeft intentos", e)
+            activity.window.decorView.postDelayed({
+                if (activity.isDestroyed || isLocked(activity) || isPaused(activity)) return@postDelayed
+                if (attemptsLeft > 0) {
+                    tryLock(activity, attemptsLeft - 1)
+                } else {
+                    openHome(activity)
+                    activity.finishAndRemoveTask()
+                }
+            }, LOCK_RETRY_MS)
+        }
     }
 }

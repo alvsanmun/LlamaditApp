@@ -183,7 +183,7 @@ private fun PortalPhotoEditor() {
         if (uri != null) save(uri)
     }
     fun leaveKiosk() {
-        if (Kiosk.isLocked(activity)) activity.stopLockTask()
+        Kiosk.unlock(activity)
     }
 
     Text(stringResource(R.string.settings_house_photo), color = CgInk, fontSize = 18.sp)

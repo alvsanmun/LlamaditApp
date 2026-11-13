@@ -4,6 +4,8 @@ Con la gestión a distancia, la persona que cuida puede hacer desde su propio m�
 
 - **¿Dónde está?**: la posición en un mapa al momento, con la batería.
 - **Hacer sonar** el móvil 30 segundos, aunque esté en silencio, para encontrarlo en casa.
+- **Batería baja**, **pastillas** (con la foto de cada caja) y **periódicos**; en la actividad verás si ha confirmado las pastillas, y en el apartado Pastillas, el historial de los últimos 30 días.
+- **Activar el modo quiosco**, si se quedó en pausa al devolver el móvil: el botón aparece solo mientras está en pausa.
 - **Personas**: añadir, cambiar la foto, el nombre o el teléfono, ordenar y quitar; quién es el contacto del SOS, quién tiene WhatsApp y quién puede pedir la ubicación por SMS.
 - **Pantalla principal**, dibujo del SOS, **Volver a casa**, **ejercicios**, **radio** y **Wi-Fi**.
 - La **actividad** del móvil: si ha pulsado el SOS o Volver a casa, si ha llegado a casa o si tiene la batería baja.

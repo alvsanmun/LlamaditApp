@@ -435,6 +435,34 @@ Todo está explicado en las [funciones](FUNCIONES.md#13-radio).
 
 > 📱 **Gestión a distancia (opcional):** si el cuidador no vive con la persona, puede gestionar el móvil desde su propio móvil Android o desde el ordenador. Se prepara aparte, con la guía [Gestión a distancia](GESTION-A-DISTANCIA.md).
 
+### 9.7. Cámara y fotos (opcional)
+
+La persona puede hacer fotos con la cámara de atrás o la de delante, y verlas, con botones muy sencillos. No gasta datos.
+
+1. En **Pantalla principal**, activa **Cámara**, **Fotos** o los dos.
+2. Con la gestión a distancia, también puedes activarlos desde la app o la web del cuidador, en **Pantalla principal**.
+3. Enseña a la persona el círculo blanco, que hace la foto, y la papelera de **Fotos**, que pide confirmar antes de borrar.
+
+Las fotos están también en la Galería del móvil, en el álbum **LlamaditApp**.
+
+### 9.8. Batería baja (opcional)
+
+En el apartado **Batería baja**, activa **Recordarle que cargue el móvil** y elige a qué porcentaje avisa (el 20 % va bien). Pulsa **Probar el aviso** para ver cómo es y enséñale a la persona que, al verlo, tiene que **enchufar el cargador** (el aviso se quita solo) o tocar el botón verde.
+
+### 9.9. Pastillas (opcional)
+
+1. En el apartado **Pastillas**, activa **Avisos de las pastillas** y pulsa **Añadir una pastilla**.
+2. Elige la **hora** con − y +, **cuántas** (½ es media pastilla) y haz una **foto de la caja**, de frente y con luz: es lo que verá la persona.
+3. Repite con cada pastilla. Las de la misma hora salen una detrás de otra.
+4. Desde el día siguiente, en ese mismo apartado verás el **Historial**: si se ha tomado cada toma y a qué hora la confirmó, si ha dicho que no se la toma (botón rojo del aviso) o si no ha contestado (también desde la app o la web del cuidador).
+4. Pulsa **Probar el aviso** con la persona delante: tiene que tocar el **botón verde** cada vez que se toma una. El gris del reloj lo deja para dentro de 15 minutos.
+
+Con la gestión a distancia también puedes añadirlas, cambiarlas y hacer la foto desde la app o la web del cuidador, y verás en la actividad si las ha confirmado.
+
+### 9.10. Periódicos (opcional)
+
+En el apartado **Periódicos**, activa **Mostrar el botón Periódicos** y elige qué periódicos ve: están por secciones (actualidad, deportes, economía, tecnología, ciencia, salud, motor, cocina y cine); de entrada solo están los de actualidad. Si eliges de varias secciones, la persona verá primero un botón con un dibujo por cada sección. Gasta datos móviles. Los avisos de cookies y los anuncios que tapan la noticia se quitan solos.
+
 ## 10. WhatsApp (opcional)
 
 Solo si la persona va a hacer **videollamadas de WhatsApp**.

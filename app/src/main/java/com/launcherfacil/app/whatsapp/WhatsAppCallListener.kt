@@ -26,6 +26,8 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
 import com.launcherfacil.app.MainActivity
+import com.launcherfacil.app.alerts.BatteryWatcher
+import com.launcherfacil.app.config.CaregiverSettings
 import com.launcherfacil.app.contacts.WHATSAPP_PACKAGE
 
 /**
@@ -42,6 +44,8 @@ class WhatsAppCallListener : NotificationListenerService() {
     private val handler = Handler(Looper.getMainLooper())
 
     override fun onListenerConnected() {
+        // Este servicio mantiene viva la app: el aviso de batería baja escucha desde aquí.
+        BatteryWatcher.start(this)
         activeNotifications?.forEach(::check)
         WhatsAppApp.updateUnread(activeNotifications)
     }
@@ -68,6 +72,8 @@ class WhatsAppCallListener : NotificationListenerService() {
     }
 
     private fun goHome() {
+        // Con el quiosco en pausa, el cuidador sigue donde estaba.
+        if (CaregiverSettings(this).kioskPaused) return
         try {
             startActivity(
                 Intent(this, MainActivity::class.java).addFlags(

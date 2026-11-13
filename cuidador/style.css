@@ -205,3 +205,22 @@ textarea:focus { outline: 2px solid var(--accent); border-color: var(--accent); 
 .qr.expired { opacity: .2; }
 .qr-card { align-items: stretch; }
 .qr-card #left { text-align: center; font-weight: 800; }
+
+/* Pastillas: una fila por caja, con su foto. */
+.pill-row { display: flex; align-items: center; gap: 12px; width: 100%; background: none; border: 0; padding: 6px 0; font: inherit; color: inherit; text-align: left; cursor: pointer; }
+.pill-row .nm { flex: 1; font-size: 20px; font-weight: 800; }
+.pill-row .ph, .pill-row img.ph { width: 64px; height: 64px; border-radius: 14px; object-fit: cover; background: #D9DEE4; display: grid; place-items: center; }
+.pill-row .ph svg { width: 36px; height: 36px; color: #7A8794; }
+.pill-row .chev { width: 22px; height: 22px; color: var(--muted); }
+.pill-sum { margin: 0 0 6px; font-size: 17px; font-weight: 700; }
+.pill-sum.bad { color: var(--warn); }
+.pill-rec { display: flex; align-items: center; gap: 12px; padding: 6px 2px; }
+.pill-rec .t { width: 58px; font-size: 19px; font-weight: 800; }
+.pill-rec .dot { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-weight: 800; flex: none; }
+.pill-rec.taken .dot { background: var(--green); }
+.pill-rec.missed .dot { background: var(--red); }
+.pill-rec.missed .tx { color: var(--red); }
+.pill-rec.skipped .dot { background: #E65100; }
+.pill-rec.skipped .tx { color: #E65100; }
+.pill-rec.wait .dot { background: var(--chevron); }
+.pill-rec .tx { font-size: 16px; font-weight: 600; }

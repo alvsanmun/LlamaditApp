@@ -72,6 +72,9 @@ fun HomeScreen(
     onWhatsAppApp: () -> Unit = {},
     onExercises: () -> Unit = {},
     onRadio: () -> Unit = {},
+    onCamera: () -> Unit = {},
+    onPhotos: () -> Unit = {},
+    onNews: () -> Unit = {},
     radioOn: Boolean = false,
     whatsAppUnread: Int = 0,
     newSms: Int = 0,
@@ -129,6 +132,15 @@ fun HomeScreen(
                             // puesta y dónde hay que tocar para apagarla.
                             HomeItem.RADIO -> BigTile(AnilRadio, onRadio, modifier.pulsing(radioOn)) {
                                 TileIcon(R.drawable.ic_radio, fraction)
+                            }
+                            HomeItem.CAMERA -> BigTile(TurquesaCamara, onCamera, modifier) {
+                                TileIcon(R.drawable.ic_photo_camera)
+                            }
+                            HomeItem.NEWS -> BigTile(GrisPeriodico, onNews, modifier) {
+                                TileIcon(R.drawable.ic_newspaper)
+                            }
+                            HomeItem.PHOTOS -> BigTile(VioletaFotos, onPhotos, modifier) {
+                                TileIcon(R.drawable.ic_photo_library)
                             }
                             HomeItem.GO_HOME -> BigTile(MarronCasa, onGoHome, modifier) {
                                 TileIcon(R.drawable.ic_go_home, fraction)

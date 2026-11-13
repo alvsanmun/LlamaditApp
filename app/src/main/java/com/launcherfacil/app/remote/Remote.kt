@@ -36,10 +36,12 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.SetOptions
+import com.launcherfacil.app.config.CaregiverSettings
 import com.launcherfacil.app.ui.toBatteryState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -48,6 +50,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import org.json.JSONObject
 
@@ -332,7 +335,9 @@ object Remote {
         publishJob?.cancel()
         publishJob = scope.launch {
             delay(2_000)
-            publish(context.applicationContext)
+            // Solo se cancela la espera: una publicación empezada termina (si no, con cambios
+            // seguidos se cortaba a mitad y la web se quedaba con el estado viejo).
+            withContext(NonCancellable) { publish(context.applicationContext) }
         }
     }
 
@@ -340,6 +345,7 @@ object Remote {
         val id = deviceId ?: return
         try {
             RemoteState.publish(context, db().collection("devices").document(id), deviceName(context))
+            Log.i(TAG, "Estado publicado")
         } catch (e: Exception) {
             Log.w(TAG, "No se pudo publicar el estado", e)
         }
@@ -361,7 +367,8 @@ object Remote {
                     val battery = intent.toBatteryState()
                     val (percent, charging) = lastBattery
                     if (percent < 0 || charging != battery.charging || kotlin.math.abs(percent - battery.percent) >= 5) {
-                        if (battery.percent <= 15 && !battery.charging && (percent > 15 || percent < 0)) {
+                        val limit = CaregiverSettings(c).lowBatteryLimit
+                        if (battery.percent <= limit && !battery.charging && (percent > limit || percent < 0)) {
                             addEvent(c, "lowBattery", mapOf("percent" to battery.percent))
                         }
                         lastBattery = battery.percent to battery.charging

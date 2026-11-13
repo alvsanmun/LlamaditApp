@@ -36,6 +36,10 @@ val APP_PERMISSIONS: List<String> = buildList {
     add(Manifest.permission.WRITE_CALL_LOG)
     add(Manifest.permission.ACCESS_FINE_LOCATION)
     add(Manifest.permission.ACCESS_COARSE_LOCATION)
+    // Botón para hacer fotos.
+    add(Manifest.permission.CAMERA)
+    // Antes de Android 10, guardar las fotos en la Galería necesita este permiso.
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     // Para que se vea la notificación de "SOS activo".
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) add(Manifest.permission.POST_NOTIFICATIONS)
 }

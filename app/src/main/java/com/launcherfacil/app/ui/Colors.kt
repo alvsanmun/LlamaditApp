@@ -38,4 +38,7 @@ val CianWhatsApp = Color(0xFF7CB342)
 val RosaEjercicios = Color(0xFFAD1457)
 /** Radio: añil, distinto del azul del teclado y del morado de las perdidas. */
 val AnilRadio = Color(0xFF3949AB)
+val TurquesaCamara = Color(0xFF00838F)
+val VioletaFotos = Color(0xFF7B1FA2)
+val GrisPeriodico = Color(0xFF4E5B65)
 val GrisBoton = Color(0xFF455A64)

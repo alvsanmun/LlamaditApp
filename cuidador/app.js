@@ -23,7 +23,8 @@ const INVITE_MINUTES = 15;
 const HOME_ITEMS = {
   CLOCK: 'Reloj', BATTERY: 'Batería', CALL: 'Llamar', WHATSAPP: 'Videollamada', DIALPAD: 'Teclado',
   SOS: 'SOS', MESSAGES: 'Mensajes', MISSED_CALLS: 'Llamadas perdidas', GO_HOME: 'Volver a casa',
-  WHATSAPP_APP: 'WhatsApp completo', EXERCISES: 'Ejercicios', RADIO: 'Radio'
+  WHATSAPP_APP: 'WhatsApp completo', EXERCISES: 'Ejercicios', RADIO: 'Radio',
+  CAMERA: 'Cámara', PHOTOS: 'Fotos', NEWS: 'Periódicos'
 };
 const SIZES = { SMALL: 'Pequeño', MEDIUM: 'Mediano', LARGE: 'Grande' };
 const SOS_ICONS = { TEXT: 'Letras SOS', AMBULANCE: 'Ambulancia', CROSS: 'Cruz', SIREN: 'Sirena', HEART: 'Corazón', WARNING: 'Aviso' };
@@ -37,8 +38,31 @@ const EVENTS = {
   goHome: () => 'Ha pulsado Volver a casa',
   arrived: () => 'Ha llegado a casa',
   lowBattery: e => `Batería baja (${e.percent} %)`,
+  pillsTaken: e => `Se ha tomado las pastillas de las ${e.time}`,
+  pillsMissed: e => `No ha confirmado las pastillas de las ${e.time}`,
+  pillsSkipped: e => e.total > 1 && e.skipped < e.total
+    ? `No se ha tomado ${e.skipped} de ${e.total} pastillas de las ${e.time}`
+    : `Ha dicho que no se toma las pastillas de las ${e.time}`,
   linked: e => `Se ha vinculado ${e.name || 'un móvil'}`
 };
+
+// Periódicos que puede ver (los mismos que app/.../news/News.kt).
+const PAPER_GROUPS = [
+  ['📰 Actualidad', { 'elpais': 'El País', 'elmundo': 'El Mundo', 'abc': 'ABC', 'lavanguardia': 'La Vanguardia', '20minutos': '20minutos', 'eldiario': 'elDiario.es', 'elconfidencial': 'El Confidencial', 'larazon': 'La Razón', 'europapress': 'Europa Press', 'elespanol': 'El Español', 'huffpost': 'El HuffPost', 'okdiario': 'OKDIARIO', 'libertaddigital': 'Libertad Digital', 'elindependiente': 'El Independiente', 'infolibre': 'infoLibre', 'lasexta': 'laSexta', 'antena3': 'Antena 3 Noticias', 'newtral': 'Newtral', 'eldebate': 'El Debate', 'cope': 'COPE' }],
+  ['⚽ Deportes', { 'marca': 'Marca', 'as': 'AS', 'mundodeportivo': 'Mundo Deportivo', 'sport': 'Sport', 'relevo': 'Relevo' }],
+  ['💶 Economía', { 'cincodias': 'Cinco Días', 'elblogsalmon': 'El Blog Salmón' }],
+  ['💻 Tecnología', { 'xataka': 'Xataka', 'genbeta': 'Genbeta', 'xatakamovil': 'Xataka Móvil', 'applesfera': 'Applesfera', 'hipertextual': 'Hipertextual', 'computerhoy': 'Computer Hoy', 'andro4all': 'Andro4all' }],
+  ['🔬 Ciencia', { 'muyinteresante': 'Muy Interesante', 'xatakaciencia': 'Xataka Ciencia' }],
+  ['❤️ Salud', { 'vitonica': 'Vitónica', 'saludelmundo': 'Salud (El Mundo)' }],
+  ['🚗 Motor', { 'motorpasion': 'Motorpasión' }],
+  ['🍳 Cocina', { 'directoalpaladar': 'Directo al Paladar' }],
+  ['🎬 Cine y televisión', { 'espinof': 'Espinof', 'fotogramas': 'Fotogramas' }],
+];
+const PAPERS = Object.assign({}, ...PAPER_GROUPS.map(g => g[1]));
+const LOW_BATTERY_LEVELS = [10, 15, 20, 25, 30, 40, 50];
+const PILL_COUNTS = [0.5, 1, 1.5, 2, 2.5, 3, 4, 5];
+const pillCount = c => (Math.floor(c) || '') + (c % 1 ? '½' : '');
+const pillTime = m => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;
 
 // --- Iconos (trazo, como los del panel) -------------------------------------------------
 const ICON = {
@@ -58,7 +82,10 @@ const ICON = {
   bell: '<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>',
   bellOff: '<path d="M8.5 6.1A6 6 0 0 1 18 11v4"/><path d="M6 11v5l-2 2h12"/><path d="M10 21h4"/><path d="M3 3l18 18"/>',
   person: '<circle cx="12" cy="9" r="4" fill="currentColor" stroke="none"/><path d="M4 21a8 8 0 0 1 16 0z" fill="currentColor" stroke="none"/>',
-  plus: '<path d="M12 5v14M5 12h14"/>'
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  battery: '<rect x="7" y="4" width="10" height="17" rx="2"/><path d="M10 2h4"/><path d="M12 9v4"/><path d="M12 16.5h.01"/>',
+  pill: '<rect x="3" y="8.5" width="18" height="7" rx="3.5" transform="rotate(-35 12 12)"/><path d="M9.5 8.5l5 7"/>',
+  news: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/>'
 };
 const svg = (name, extra = '') =>
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ${extra}>${ICON[name]}</svg>`;
@@ -94,6 +121,24 @@ function when(date) {
   const today = new Date().toDateString() === date.toDateString();
   const time = date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
   return today ? `Hoy ${time}` : date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' }) + ' ' + time;
+}
+
+/** Foto elegida → JPEG (base64) de [side] px de lado mayor, sin recortar (cajas de pastillas). */
+function resizeImage(file, side) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, side / Math.max(img.width, img.height));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(img.width * scale);
+      canvas.height = Math.round(img.height * scale);
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(img.src);
+      resolve(canvas.toDataURL('image/jpeg', 0.85));
+    };
+    img.onerror = reject;
+    img.src = URL.createObjectURL(file);
+  });
 }
 
 /** Foto elegida → cuadrado de 720 px en JPEG (base64), como guarda el panel. */
@@ -343,7 +388,8 @@ function render(force = false) {
   const views = {
     home: viewHome, link: viewLink, share: viewShare, device: viewDevice, people: viewPeople, person: viewPerson,
     personForm: viewPersonForm, sos: viewSos, screen: viewScreen, locate: viewLocate, house: viewHouse,
-    exercises: viewExercises, radio: viewRadio, connection: viewConnection, settings: viewSettings, where: viewWhere
+    exercises: viewExercises, radio: viewRadio, connection: viewConnection, settings: viewSettings, where: viewWhere,
+    battery: viewBattery, pills: viewPills, pillForm: viewPillForm, pillHistory: viewPillHistory, news: viewNews
   };
   if (S.deviceId && !S.device && v.name !== 'link') {
     app.innerHTML = '<p class="loading">Conectando con el móvil…</p>';
@@ -505,6 +551,7 @@ function viewDevice() {
   const online = seen && Date.now() - seen.getTime() < 45 * 60000;
   // Lo que se acaba de pedir manda hasta que el móvil lo confirma.
   const ringing = S.ringWanted ?? !!s.ringing;
+  const paused = s.kiosk === 'paused' || s.kiosk === 'session';
   const kiosk = { locked: 'Modo quiosco activo', paused: 'Modo quiosco en pausa', session: 'El cuidador está configurando', off: 'Sin modo quiosco' }[s.kiosk] || '';
   const people = s.people || [];
   const sosPerson = people.find(p => p.sos);
@@ -518,6 +565,14 @@ function viewDevice() {
     ['house', 'house', '#795548', 'Volver a casa', !visible('GO_HOME') ? 'Desactivado' : s.goHome?.hasHouse ? (s.goHome.address || 'Casa marcada') : 'Falta marcar la casa', visible('GO_HOME') && !s.goHome?.hasHouse],
     ['exercises', 'puzzle', '#AD1457', 'Ejercicios', !visible('EXERCISES') ? 'Desactivados' : `${(s.exercises || []).filter(e => e.enabled).length} de 8 activos`, false],
     ['radio', 'radio', '#3949AB', 'Radio', !visible('RADIO') ? 'Desactivada' : `${s.radio?.stations?.length || 0} emisoras`, false],
+    ['battery', 'battery', '#EF6C00', 'Batería baja', s.lowBattery?.on ? `Aviso al ${s.lowBattery.percent} %` : 'Desactivado', false],
+    (() => {
+      const w = pillWeek(s.pills);
+      const missed = s.pills?.enabled ? w.total - w.taken : 0;
+      return ['pills', 'pill', '#00897B', 'Pastillas', missed > 0 ? `${missed} sin tomar en 7 días`
+        : s.pills?.enabled && s.pills.doses?.length ? (n => n === 1 ? '1 toma al día' : `${n} tomas al día`)(new Set(s.pills.doses.map(d => d.minutes)).size) : 'Desactivadas', missed > 0];
+    })(),
+    ['news', 'news', '#4E5B65', 'Periódicos', visible('NEWS') ? `${(s.news || []).length} periódicos` : 'Desactivados', false],
     ['connection', 'wifi', '#455A64', 'Conexión', s.wifi ? 'Wi-Fi y datos móviles' : 'Solo datos móviles', false],
     ['settings', 'link', '#6A1B9A', 'Vinculación', `${(S.device.caregivers || []).length} cuidadores`, false]
   ];
@@ -533,6 +588,10 @@ function viewDevice() {
       </div>
       <div class="sub">${esc(kiosk)}${s.appVersion ? ` · LlamaditApp ${esc(s.appVersion)}` : ''}</div>
     </div>
+    ${paused ? `<div class="card">
+      <p class="warn">Con el modo quiosco en pausa, el móvil no tiene el botón SOS a la vista.</p>
+      <button class="btn green" id="kioskon">Activar el modo quiosco</button>
+    </div>` : ''}
     <div class="big-actions">
       <button class="big locate" id="where">${svg('pin')}¿Dónde está?</button>
       ${ringing
@@ -549,6 +608,10 @@ function viewDevice() {
   bind();
   if (S.devices.length > 1) app.querySelector('.top [data-go]').onclick = () => { closeDevice(); go({ name: 'home' }); };
   $('#where').onclick = () => go({ name: 'where' });
+  if (paused) $('#kioskon').onclick = () => {
+    if (!confirm('¿Activar el modo quiosco ahora? Si alguien está usando el móvil, se le cerrará lo que tenga abierto.')) return;
+    send('resumeKiosk').then(() => toast('Modo quiosco activado ✓')).catch(() => {});
+  };
   $('#ring').onclick = () => {
     // Se cambia el botón al momento; el móvil confirma con su estado (ringing).
     const want = !ringing;
@@ -856,6 +919,174 @@ function viewRadio() {
   bind();
   app.querySelectorAll('[data-del]').forEach(b => b.onclick = () => send('removeStation', { uuid: b.dataset.del }).catch(() => {}));
   $('#sleep').onchange = e => send('setRadioSleep', { minutes: Number(e.target.value) }).catch(() => {});
+}
+
+function viewBattery() {
+  const b = st().lowBattery || { on: false, percent: 20 };
+  app.innerHTML = `${top('Batería baja', 'device')}
+    <div class="card">
+      ${switchRow('lbon', 'Recordarle que cargue el móvil', b.on)}
+      <p class="hint">Cuando la batería baja a este nivel y el móvil no está cargando, sale en grande el dibujo del móvil y el cargador. Se quita con el botón verde o al enchufar el cargador.</p>
+      ${b.on ? `<label class="field">Avisar al<select id="lbpc">${LOW_BATTERY_LEVELS.map(p => `<option value="${p}" ${p === b.percent ? 'selected' : ''}>${p} %</option>`).join('')}</select></label>` : ''}
+    </div>`;
+  bind();
+  $('#lbon').onchange = e => send('setLowBattery', { on: e.target.checked }).catch(() => {});
+  $('#lbpc') && ($('#lbpc').onchange = e => send('setLowBattery', { percent: Number(e.target.value) }).catch(() => {}));
+}
+
+/** Foto de la caja de una pastilla (o el dibujo de una pastilla si no tiene). */
+function pillPhoto(d) {
+  const src = S.photos['pill_' + d.id];
+  return src ? `<img class="ph" src="${src}" alt="">` : `<span class="ph">${svg('pill')}</span>`;
+}
+
+function viewPills() {
+  const p = st().pills || { enabled: false, doses: [] };
+  const doses = p.doses || [];
+  const times = [...new Set(doses.map(d => d.minutes))].sort((a, b) => a - b);
+  app.innerHTML = `${top('Pastillas', 'device')}
+    <div class="card">
+      ${switchRow('pon', 'Avisos de las pastillas', p.enabled)}
+      <p class="hint">A cada hora el móvil suena y enseña la foto de cada caja con las pastillas que hay que tomar. La persona confirma cada una con el botón verde. Si no, se lo vuelve a recordar cada 15 minutos y a la hora lo verás en la actividad.</p>
+    </div>
+    ${pillHistoryCard(p)}
+    ${times.map(t => `<div class="label">${pillTime(t)}</div><div class="card">
+      ${doses.filter(d => d.minutes === t).map(d => `<button class="pill-row" data-pill="${esc(d.id)}">${pillPhoto(d)}<span class="nm">× ${pillCount(d.count)}</span>${svg('chev', 'class="chev"')}</button>`).join('')}
+    </div>`).join('')}
+    <button class="btn primary" id="addpill">Añadir una pastilla</button>`;
+  bind();
+  $('#pon').onchange = e => send('setPills', { on: e.target.checked }).catch(() => {});
+  $('#addpill').onclick = () => go({ name: 'pillForm' });
+  app.querySelectorAll('[data-pill]').forEach(b => b.onclick = () => go({ name: 'pillForm', id: b.dataset.pill }));
+}
+
+/** Historial de tomas: { date, minutes, status: taken|missed|pending, at }. */
+function pillHistory(p) {
+  const today = localDate(new Date());
+  return (p?.history || []).map(r => ({ ...r, status: r.status === 'pending' && r.date < today ? 'missed' : r.status }));
+}
+
+function localDate(d) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+/** Tomas confirmadas y en total de los últimos 7 días (sin las que están sonando). */
+function pillWeek(p) {
+  const from = localDate(new Date(Date.now() - 7 * 86400000));
+  const done = pillHistory(p).filter(r => r.date > from && r.status !== 'pending');
+  return { taken: done.filter(r => r.status === 'taken').length, total: done.length };
+}
+
+function pillDay(date) {
+  const today = localDate(new Date());
+  const yesterday = localDate(new Date(Date.now() - 86400000));
+  if (date === today) return 'Hoy';
+  if (date === yesterday) return 'Ayer';
+  const [y, m, d] = date.split('-').map(Number);
+  const s = new Date(y, m - 1, d).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+function pillRecord(r) {
+  const [cls, mark, text] = r.status === 'taken' ? ['taken', '✓', `Tomada a las ${pillTime(r.at ?? r.minutes)}`]
+    : r.status === 'skipped' ? ['skipped', '✗', r.total > 1 && r.skipped < r.total ? `No se ha tomado ${r.skipped} de ${r.total}` : 'Ha dicho que no se la toma']
+    : r.status === 'missed' ? ['missed', '✗', 'No la ha confirmado'] : ['wait', '…', 'Avisando ahora'];
+  return `<div class="pill-rec ${cls}"><span class="t">${pillTime(r.minutes)}</span><span class="dot">${mark}</span><span class="tx">${text}</span></div>`;
+}
+
+function pillHistoryCard(p) {
+  const h = pillHistory(p);
+  if (!h.length) return '';
+  const w = pillWeek(p);
+  const today = h.filter(r => r.date === localDate(new Date()));
+  return `<div class="label">Historial</div><div class="card">
+    <p class="pill-sum ${w.taken < w.total ? 'bad' : ''}">Últimos 7 días: se ha tomado ${w.taken} de ${w.total} tomas</p>
+    ${today.map(pillRecord).join('')}
+    <button class="btn" data-go="pillHistory">Ver todo el historial</button>
+  </div>`;
+}
+
+function viewPillHistory() {
+  const h = pillHistory(st().pills);
+  const days = [...new Set(h.map(r => r.date))].sort().reverse();
+  app.innerHTML = `${top('Historial de pastillas', 'pills')}
+    ${days.length ? '' : '<p class="hint">Todavía no hay ninguna toma apuntada.</p>'}
+    ${days.map(d => `<div class="label">${esc(pillDay(d))}</div><div class="card">
+      ${h.filter(r => r.date === d).sort((a, b) => a.minutes - b.minutes).map(pillRecord).join('')}
+    </div>`).join('')}`;
+  bind();
+}
+
+function viewPillForm() {
+  const d = (st().pills?.doses || []).find(x => x.id === S.view.id);
+  const minutes = d ? d.minutes : 9 * 60;
+  const time = `${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`;
+  let photo = null;
+  S.view.form = true;
+  app.innerHTML = `${top(d ? 'Pastilla' : 'Nueva pastilla', 'pills')}
+    <div class="card">
+      <label class="field">Hora<input id="tm" type="time" value="${time}"></label>
+      <label class="field">Cuántas<select id="cnt">${PILL_COUNTS.map(c => `<option value="${c}" ${(d ? d.count : 1) === c ? 'selected' : ''}>${pillCount(c)}</option>`).join('')}</select></label>
+    </div>
+    <div class="card">
+      <div class="photo-pick">
+        <span id="ph">${d ? pillPhoto(d) : `<span class="ph">${svg('pill')}</span>`}</span>
+        <div class="btns"><span class="btn file-btn" style="display:grid;place-items:center">Elegir una foto<input type="file" accept="image/*" id="file"></span></div>
+      </div>
+      <p class="hint">Una foto de la caja, de frente y con luz: es lo que verá.</p>
+    </div>
+    <p class="warn" id="err" hidden></p>
+    <button class="btn green" id="save">Guardar</button>
+    ${d ? '<button class="btn danger" id="del">Quitar esta pastilla</button>' : ''}`;
+  bind();
+  $('#file').onchange = async e => {
+    const f = e.target.files[0];
+    if (!f) return;
+    photo = await resizeImage(f, 1080);
+    $('#ph').innerHTML = `<img class="ph" src="${photo}" alt="">`;
+  };
+  $('#save').onclick = async () => {
+    const [h, m] = ($('#tm').value || '').split(':').map(Number);
+    if (Number.isNaN(h) || Number.isNaN(m)) { $('#err').textContent = 'Elige la hora.'; $('#err').hidden = false; return; }
+    const args = { minutes: h * 60 + m, count: Number($('#cnt').value) };
+    if (photo) args.photo = photo;
+    if (d) args.id = d.id;
+    $('#save').disabled = true;
+    try {
+      await send(d ? 'updatePill' : 'addPill', args, { timeout: 30000 });
+      go({ name: 'pills' });
+    } catch (e) {
+      $('#save').disabled = false;
+    }
+  };
+  $('#del') && ($('#del').onclick = () => {
+    if (!confirm('¿Quitar esta pastilla de los avisos?')) return;
+    send('removePill', { id: d.id }).then(() => go({ name: 'pills' })).catch(() => {});
+  });
+}
+
+function viewNews() {
+  const s = st();
+  const layout = parseLayout(s.homeLayout);
+  const shown = layout.some(e => e.item === 'NEWS' && e.visible);
+  const chosen = new Set(s.news || []);
+  app.innerHTML = `${top('Periódicos', 'device')}
+    <div class="card">
+      ${switchRow('nwon', 'Mostrar el botón Periódicos', shown)}
+      <p class="hint">La persona pasa de un periódico a otro con las flechas, baja por las noticias y toca una para verla en grande, escucharla o abrirla entera.</p>
+      <p class="warn">Gasta datos móviles: unos pocos MB cada vez que se abre un periódico.</p>
+    </div>
+    ${PAPER_GROUPS.map(([group, list]) => `<div class="label">${esc(group)}</div>
+      <div class="card">${Object.entries(list).map(([id, name]) => switchRow('np' + id, name, chosen.has(id))).join('')}</div>`).join('')}`;
+  bind();
+  $('#nwon').onchange = e => {
+    layout.forEach(x => { if (x.item === 'NEWS') x.visible = e.target.checked; });
+    send('setHomeLayout', { layout: encodeLayout(layout) }).catch(() => {});
+  };
+  Object.keys(PAPERS).forEach(id => $('#np' + id).onchange = e => {
+    if (e.target.checked) chosen.add(id); else chosen.delete(id);
+    send('setNewspapers', { ids: Object.keys(PAPERS).filter(x => chosen.has(x)) }).catch(() => {});
+  });
 }
 
 function viewConnection() {

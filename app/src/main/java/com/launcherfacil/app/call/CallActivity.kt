@@ -37,6 +37,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import com.launcherfacil.app.R
+import com.launcherfacil.app.config.CaregiverSettings
 import com.launcherfacil.app.contacts.Contact
 import com.launcherfacil.app.contacts.findContactByNumber
 import com.launcherfacil.app.contacts.loadContactPhoto
@@ -59,10 +60,16 @@ class CallActivity : ComponentActivity() {
 
     private var proximityLock: PowerManager.WakeLock? = null
 
+    /** Al acabar la llamada. En pausa, el cuidador vuelve a lo suyo y no a LlamaditApp, que está debajo. */
+    private fun leave() {
+        if (CaregiverSettings(this).kioskPaused) moveTaskToBack(true)
+        finish()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setupCallWindow()
         super.onCreate(savedInstanceState)
-        setContent { WithVolumeOverlay { CallRoute(onFinished = ::finish, onProximity = ::setProximity) } }
+        setContent { WithVolumeOverlay { CallRoute(onFinished = ::leave, onProximity = ::setProximity) } }
     }
 
     // Botones de volumen: solo el volumen del teléfono, con el panel grande.

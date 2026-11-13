@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import com.launcherfacil.app.R
+import com.launcherfacil.app.config.CaregiverSettings
 import com.launcherfacil.app.call.setupCallWindow
 import com.launcherfacil.app.contacts.findFavoriteByName
 import com.launcherfacil.app.contacts.loadContactPhoto
@@ -48,10 +49,16 @@ import com.launcherfacil.app.volume.WithVolumeOverlay
  * su propia pantalla de videollamada (con su botón rojo para colgar).
  */
 class WhatsAppCallActivity : ComponentActivity() {
+    /** Al acabar la llamada. En pausa, el cuidador vuelve a lo suyo y no a LlamaditApp, que está debajo. */
+    private fun leave() {
+        if (CaregiverSettings(this).kioskPaused) moveTaskToBack(true)
+        finish()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setupCallWindow()
         super.onCreate(savedInstanceState)
-        setContent { WithVolumeOverlay { WhatsAppCallRoute(onFinished = ::finish) } }
+        setContent { WithVolumeOverlay { WhatsAppCallRoute(onFinished = ::leave) } }
     }
 
     // Botones de volumen: solo el volumen del teléfono, con el panel grande.

@@ -42,6 +42,7 @@ import com.launcherfacil.app.exercises.Exercise
 import com.launcherfacil.app.exercises.ExerciseProgress
 import com.launcherfacil.app.gohome.hasPortalPhoto
 import com.launcherfacil.app.kiosk.Kiosk
+import com.launcherfacil.app.pills.PillStore
 import com.launcherfacil.app.radio.RadioStations
 import com.launcherfacil.app.ui.toBatteryState
 import kotlinx.coroutines.Dispatchers
@@ -51,6 +52,7 @@ import java.io.ByteArrayOutputStream
 
 /** Lado de las fotos que se suben para la web (pequeñas: caben en el documento). */
 private const val PHOTO_SIDE = 256
+private const val PILL_PHOTO_SIDE = 480
 
 /**
  * Copia del estado del móvil para la web del cuidador: lo mismo que se ve en el panel.
@@ -68,6 +70,7 @@ internal object RemoteState {
         val battery = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))?.toBatteryState()
         val progress = ExerciseProgress(context)
         val radio = RadioStations(context)
+        val pills = PillStore(context)
         val version = runCatching { context.packageManager.getPackageInfo(context.packageName, 0).versionName }.getOrNull()
 
         val state = mapOf(
@@ -119,11 +122,55 @@ internal object RemoteState {
                 "stations" to radio.stations.map { mapOf("uuid" to it.uuid, "name" to it.name) },
                 "sleepMinutes" to radio.sleepMinutes
             ),
+            "lowBattery" to mapOf("on" to settings.lowBatteryAlert, "percent" to settings.lowBatteryPercent),
+            "pills" to mapOf(
+                "enabled" to pills.enabled,
+                "doses" to pills.doses.map {
+                    mapOf("id" to it.id, "minutes" to it.minutes, "count" to it.count.toDouble(), "photo" to pills.hasPhoto(it.id))
+                },
+                // Historial de tomas (30 días): para ver desde lejos si se las está tomando.
+                "history" to pills.history().map { r ->
+                    mapOf(
+                        "date" to r.date.toString(), "minutes" to r.minutes, "status" to r.status.name.lowercase(), "at" to r.at,
+                        "skipped" to r.skipped, "total" to r.total
+                    )
+                }
+            ),
+            "news" to settings.newsPapers,
             "whatsappInstalled" to context.isWhatsAppInstalled(),
             "notificationAccess" to NotificationManagerCompat.getEnabledListenerPackages(context).contains(context.packageName),
         )
         device.set(mapOf("state" to state), SetOptions.merge()).await()
         uploadPhotos(context, device, favorites.map { it.id }.filter { it !in noPhoto })
+        uploadPillPhotos(context, device, pills)
+    }
+
+    /**
+     * Fotos de las cajas de pastillas (documentos "pill_<id>" de la misma colección de
+     * fotos, así no hay que cambiar las reglas de Firebase). Se borran las que ya no están.
+     */
+    private suspend fun uploadPillPhotos(context: Context, device: DocumentReference, pills: PillStore) {
+        val prefs = context.getSharedPreferences("remote_photos", Context.MODE_PRIVATE)
+        val doses = pills.doses.filter { pills.hasPhoto(it.id) }.map { it.id }
+        for (key in prefs.all.keys.filter { it.startsWith("pill_") && it.removePrefix("pill_") !in doses }) {
+            device.collection("photos").document(key).delete().await()
+            prefs.edit { remove(key) }
+        }
+        for (id in doses) {
+            val jpeg = withContext(Dispatchers.IO) {
+                val bitmap = pills.loadPhoto(id) ?: return@withContext null
+                val scale = PILL_PHOTO_SIDE.toFloat() / maxOf(bitmap.width, bitmap.height)
+                val small = if (scale < 1) Bitmap.createScaledBitmap(bitmap, (bitmap.width * scale).toInt(), (bitmap.height * scale).toInt(), true) else bitmap
+                ByteArrayOutputStream().also { small.compress(Bitmap.CompressFormat.JPEG, 80, it) }.toByteArray()
+            } ?: continue
+            val key = "pill_$id"
+            val hash = jpeg.contentHashCode().toString()
+            if (prefs.getString(key, null) == hash) continue
+            device.collection("photos").document(key)
+                .set(mapOf("jpeg" to Base64.encodeToString(jpeg, Base64.NO_WRAP), "at" to FieldValue.serverTimestamp()))
+                .await()
+            prefs.edit { putString(key, hash) }
+        }
     }
 
     /** Sube la foto de cada persona si ha cambiado desde la última vez (se guarda una huella). */

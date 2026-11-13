@@ -203,6 +203,9 @@ private fun ItemBadge(item: HomeItem, sosIcon: SosIcon) {
         HomeItem.WHATSAPP_APP -> CianWhatsApp to R.drawable.ic_chat
         HomeItem.EXERCISES -> RosaEjercicios to R.drawable.ic_extension
         HomeItem.RADIO -> AnilRadio to R.drawable.ic_radio
+        HomeItem.CAMERA -> TurquesaCamara to R.drawable.ic_photo_camera
+        HomeItem.PHOTOS -> VioletaFotos to R.drawable.ic_photo_library
+        HomeItem.NEWS -> GrisPeriodico to R.drawable.ic_newspaper
     }
     Box(
         Modifier.size(48.dp).clip(RoundedCornerShape(12.dp)).background(color),
@@ -270,6 +273,9 @@ private fun HomeItem.label(): Int = when (this) {
     HomeItem.WHATSAPP_APP -> R.string.home_item_whatsapp_app
     HomeItem.EXERCISES -> R.string.home_item_exercises
     HomeItem.RADIO -> R.string.home_item_radio
+    HomeItem.CAMERA -> R.string.home_item_camera
+    HomeItem.PHOTOS -> R.string.home_item_photos
+    HomeItem.NEWS -> R.string.home_item_news
 }
 
 @StringRes

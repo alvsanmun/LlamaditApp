@@ -21,7 +21,7 @@ package com.launcherfacil.app.config
 /** Elementos de la pantalla principal que el cuidador puede colocar. */
 enum class HomeItem(val isButton: Boolean) {
     CLOCK(false), BATTERY(false),
-    CALL(true), WHATSAPP(true), DIALPAD(true), SOS(true), MESSAGES(true), MISSED_CALLS(true), GO_HOME(true), WHATSAPP_APP(true), EXERCISES(true), RADIO(true)
+    CALL(true), WHATSAPP(true), DIALPAD(true), SOS(true), MESSAGES(true), MISSED_CALLS(true), GO_HOME(true), WHATSAPP_APP(true), EXERCISES(true), RADIO(true), CAMERA(true), PHOTOS(true), NEWS(true)
 }
 
 /**
@@ -51,6 +51,11 @@ val DEFAULT_HOME_LAYOUT = listOf(
     HomeEntry(HomeItem.EXERCISES, visible = false),
     // Radio por internet: desactivada hasta que el cuidador la active (gasta datos).
     HomeEntry(HomeItem.RADIO, visible = false),
+    // Hacer fotos y verlas: desactivados hasta que el cuidador los active.
+    HomeEntry(HomeItem.CAMERA, visible = false),
+    HomeEntry(HomeItem.PHOTOS, visible = false),
+    // Periódicos (gasta datos): desactivado hasta que el cuidador lo active.
+    HomeEntry(HomeItem.NEWS, visible = false),
 )
 
 /** Una fila de la pantalla: uno o dos elementos. */

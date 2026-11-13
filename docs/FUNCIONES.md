@@ -240,7 +240,74 @@ Un botón opcional (añil, con una radio) para escuchar la radio por internet. A
 - Si se corta (por ejemplo, sin cobertura), lo vuelve a intentar unas veces. Si no lo consigue, la emisora queda con un marco rojo y un aspa.
 - Gasta **datos móviles**: unos 30 a 60 MB por hora de escucha. Es lo único de LlamaditApp que usa internet.
 
-## 14. Modo quiosco
+## 14. Cámara y fotos
+
+<p align="center">
+  <img src="img/capturas/53-camara.jpg" alt="Cámara: lo que se ve, el botón blanco para hacer la foto y el botón para cambiar de cámara" width="230">
+  <img src="img/capturas/54-fotos.jpg" alt="Fotos en una cuadrícula" width="230">
+  <img src="img/capturas/55-foto.jpg" alt="Una foto en grande, con flechas y papelera" width="230">
+</p>
+
+Dos botones opcionales e independientes, desactivados hasta que el cuidador los active en **Pantalla principal** (desde el panel o a distancia):
+
+- **Cámara** (turquesa): se ve lo que enfoca la cámara. El **círculo blanco** hace la foto, con un destello y una vibración, y la foto aparece pequeña a la izquierda. El botón de la derecha cambia entre la cámara **de atrás** y la **de delante**.
+- **Fotos** (violeta): las fotos hechas con LlamaditApp en una cuadrícula, las más nuevas primero. Al tocar una se ve en grande, con **flechas** para pasar a otra y una **papelera** roja, que pide confirmar con ✗ gris o ✓ rojo.
+
+No se usan la cámara ni la Galería del móvil, que tienen muchas opciones y texto, y no hace falta internet. Las fotos se guardan en el móvil, en la carpeta **Pictures/LlamaditApp**: también salen en la Galería y el cuidador puede pasarlas al ordenador. Desde el botón **Fotos** solo se ven las hechas con LlamaditApp. Las fotos no se envían a ningún sitio, ni siquiera con la gestión a distancia. La cámara solo funciona con su pantalla abierta.
+
+## 15. Aviso de batería baja
+
+<p align="center"><img src="img/capturas/56-bateria-baja.jpg" alt="Aviso de batería baja: el móvil con la batería en rojo y el enchufe acercándose" width="230"></p>
+
+Opcional. Aunque la batería se ve siempre en la pantalla principal, cuando baja del nivel que elige el cuidador (del 10 al 50 %, por defecto el 20 %) y el móvil no está cargando, aparece en grande el **dibujo del móvil con la batería en rojo y el enchufe acercándose**, con un pitido y una vibración. Se quita con el **botón verde** grande, o solo, al **enchufar el cargador**. Sale una vez por cada descarga: vuelve a avisar después de haberlo cargado. Con la pantalla apagada espera a que se encienda, para no despertar a nadie. Con la gestión a distancia, el cuidador ve en la actividad "Batería baja" al llegar a ese nivel.
+
+## 16. Pastillas
+
+<p align="center">
+  <img src="img/capturas/57-pastillas.jpg" alt="Aviso de las pastillas: la foto de la caja, dos pastillas dibujadas y el número, el botón rojo, el despertador gris y el botón verde" width="230">
+  <img src="img/capturas/60-panel-pastillas.jpg" alt="Panel del cuidador: apartado Pastillas, con el resumen del historial" width="230">
+  <img src="img/capturas/61-panel-historial-pastillas.jpg" alt="Historial de las pastillas: cada toma, día a día, con un círculo verde si se confirmó y rojo si no" width="230">
+</p>
+
+Opcional. El cuidador apunta cada pastilla: la **hora**, cuántas (también **media**) y una **foto de la caja**. A esa hora el móvil enciende la pantalla y **suena** (con el volumen de las alarmas, cada minuto durante 5 minutos) y enseña la **foto de la caja**, las **pastillas dibujadas** y el número. La persona toca el **botón verde** al tomársela; si a esa hora hay más pastillas, pasa a la **siguiente caja** (los puntos de arriba dicen cuántas quedan), y tras la última sale un visto bueno.
+
+- El **botón rojo (✗)** es para decir que **no se la toma**: pasa a la siguiente caja igual, el aviso deja de sonar y queda apuntado en el historial ("Ha dicho que no se la toma", o "No se ha tomado 1 de 3" si solo es una caja). El cuidador lo ve en la actividad.
+- El **botón gris del despertador** (con una Z, como el de «posponer» de las alarmas) lo deja para luego. Si no se confirma, el aviso vuelve **cada 15 minutos**, y a la hora el cuidador ve en la actividad "No ha confirmado las pastillas de las 9:00". Cuando las confirma todas, ve "Se ha tomado las pastillas de las 9:00".
+- **Historial**: el cuidador ve, en el panel del móvil y a distancia (app o web del cuidador), cada toma de los últimos 30 días: ✓ verde "Tomada a las 9:12" (la hora a la que la confirmó), ✗ naranja "Ha dicho que no se la toma", ✗ roja "No la ha confirmado" (no contestó) o "Avisando ahora". Arriba, el resumen de la semana ("Últimos 7 días: se ha tomado 12 de 14 tomas"); si falta alguna, el apartado Pastillas sale en ámbar en la portada del panel.
+- Funciona aunque el móvil esté en reposo, sin internet y tras reiniciar.
+- En el panel, **Probar el aviso** lo enseña sin contar como toma.
+
+## 17. Periódicos
+
+<p align="center">
+  <img src="img/capturas/58-periodicos.jpg" alt="Periódicos: el logotipo del periódico con flechas y las noticias con foto" width="230">
+  <img src="img/capturas/59-noticia.jpg" alt="Una noticia en grande, con los botones de escuchar y de abrirla entera" width="230">
+</p>
+
+Botón opcional (gris). Si el cuidador ha activado periódicos de varias secciones, primero salen las **secciones** en botones grandes de colores, cada una con su dibujo (📰 actualidad, ⚽ deportes, 💻 tecnología…); con una sola sección se entra directamente. Dentro, arriba se ve el **logotipo del periódico** y, con las **flechas**, se pasa al anterior o al siguiente. Debajo, las noticias del día con su **foto** y el titular en grande, **bajando con el dedo**. Al tocar una se ve en grande con el resumen y dos botones:
+
+- **Escuchar** (altavoz azul): la voz del móvil lee el titular y el resumen, para quien no sabe leer. Otro toque la para.
+- **Abrirla entera** (hoja): la noticia en la web del periódico, sin salir de LlamaditApp y con la letra más grande.
+
+La **flecha grande de arriba** vuelve siempre al paso anterior (de la noticia entera a la noticia y de ahí al periódico, en el mismo sitio de la lista); Atrás, desde un periódico, vuelve a las secciones; la casa, a la pantalla principal.
+
+Hay 42 periódicos y revistas gratuitos (sus portadas por RSS, comprobadas en noviembre de 2026). El cuidador elige cuáles se ven; de entrada están activos los de actualidad.
+
+| Sección | Periódicos y revistas |
+|---|---|
+| 📰 Actualidad | El País, El Mundo, ABC, La Vanguardia, 20minutos, elDiario.es, El Confidencial, La Razón, Europa Press, El Español, El HuffPost, OKDIARIO, Libertad Digital, El Independiente, infoLibre, laSexta, Antena 3 Noticias, Newtral, El Debate, COPE |
+| ⚽ Deportes | Marca, AS, Mundo Deportivo, Sport, Relevo |
+| 💶 Economía | Cinco Días, El Blog Salmón |
+| 💻 Tecnología | Xataka, Genbeta, Xataka Móvil, Applesfera, Hipertextual, Computer Hoy, Andro4all |
+| 🔬 Ciencia | Muy Interesante, Xataka Ciencia |
+| ❤️ Salud | Vitónica, Salud (El Mundo) |
+| 🚗 Motor | Motorpasión |
+| 🍳 Cocina | Directo al Paladar |
+| 🎬 Cine y televisión | Espinof, Fotogramas |
+
+Algunos (El País, El Mundo, ABC, El Confidencial, Cinco Días…) tienen parte de sus artículos solo para suscriptores: el titular, la foto y el resumen se ven siempre, pero la noticia entera puede pedir suscribirse. No hay fuente que funcione de RTVE, Público, Cadena SER ni elEconomista. **Gasta datos móviles**: unos pocos MB cada vez que se abre un periódico. Al abrir una noticia entera, LlamaditApp **quita sola los avisos de cookies**, los anuncios y las ventanas que tapan la noticia (no acepta nada en nombre de la persona: simplemente no los carga).
+
+## 18. Modo quiosco
 
 - La persona **no puede salir** de LlamaditApp: no hay botón de inicio, ni de apps recientes, ni panel de notificaciones.
 - Solo se pueden abrir LlamaditApp, WhatsApp (para las videollamadas) y las pantallas de llamada del sistema.
@@ -253,12 +320,13 @@ Un botón opcional (añil, con una radio) para escuchar la radio por internet. A
 
 ---
 
-## 15. Gestión a distancia
+## 19. Gestión a distancia
 
 Opcional, para el cuidador. Desde su **móvil Android**, con la **app del cuidador**, o desde **el ordenador**, con la web del cuidador, puede hacer casi todo lo del panel sin tener delante el móvil de la persona:
 
 - **¿Dónde está?**: la posición en un mapa al momento (sin SMS), con la precisión y la batería.
 - **Hacer sonar** el móvil 30 segundos, aunque esté en silencio, para encontrarlo en casa.
+- **Activar el modo quiosco**, si se quedó en pausa al devolver el móvil: el botón aparece solo mientras está en pausa. Si la pantalla está apagada, el móvil se bloquea al encenderla.
 - **Personas**: añadir, cambiar la foto (con la cámara del cuidador), el nombre o el teléfono, ordenar y quitar; quién es el contacto del SOS, quién tiene WhatsApp y quién puede pedir la ubicación por SMS.
 - **Pantalla principal**, dibujo del SOS, botón para volver, **Volver a casa** (dirección y avisos), **ejercicios** y su nivel, **radio** (apagado automático) y **Wi-Fi**.
 - La **batería** y cuándo se conectó por última vez, y la **actividad**: si ha pulsado el SOS o Volver a casa, si ha llegado a casa o si tiene la batería baja.
@@ -337,10 +405,12 @@ Opcional, para el cuidador. Desde su **móvil Android**, con la **app del cuidad
 | **Radio** | Aviso del consumo de datos. Las **emisoras elegidas**, con flechas ↑ y ↓ para el orden, una ✕ para quitarlas y, tocando el logotipo, otro dibujo de la galería. **"Apagar sola después de"**: 30 min, 1 h (por defecto), 2 h, 3 h o nunca. **Añadir emisoras**: "Las más escuchadas del país" (el de la SIM) o buscando por nombre, y el botón **+** de cada una. Las emisoras salen del directorio libre [radio-browser.info](https://www.radio-browser.info). |
 | **WhatsApp** | **Instalar WhatsApp** (si falta: abre Play Store en su ficha), quién **tiene WhatsApp** para la videollamada, el "acceso a notificaciones" para ver las **videollamadas entrantes** con la pantalla propia y el permiso de la pestaña de **WhatsApp completo**. |
 | **Conexión** | Wi-Fi apagado y bloqueado por defecto (solo la SIM). Al encenderlo aparece **"Elegir una red Wi-Fi"**, que abre los Ajustes de Android para conectarse. Al apagarlo se vuelve a bloquear; las redes guardadas se recuerdan. |
-| **Gestión a distancia** | Conectar el móvil al proyecto de Firebase de la familia con una **foto al código QR** que enseña la app o la web del cuidador, el **nombre** con el que sale la persona, los **cuidadores vinculados** (con **Quitar**), **vincular otro cuidador** y **Desconectar del proyecto**. Avisa si Android puede cortar la conexión en reposo. Ver [la sección 15](#15-gestión-a-distancia). |
-| **PIN y modo quiosco** | Cambiar el PIN; **pausar** el modo quiosco (el móvil se usa con normalidad) y **activarlo** de nuevo, sin ordenador; abrir **Contactos** o los **Ajustes de Android**; **quitar el Device Owner** (solo para desinstalar LlamaditApp o entregar el móvil: volver a activar el quiosco exige un ordenador) y **Acerca de** (versión, copyright, licencia GNU AGPL v3 y código fuente). |
+| **Gestión a distancia** | Conectar el móvil al proyecto de Firebase de la familia con una **foto al código QR** que enseña la app o la web del cuidador, el **nombre** con el que sale la persona, los **cuidadores vinculados** (con **Quitar**), **vincular otro cuidador** y **Desconectar del proyecto**. Avisa si Android puede cortar la conexión en reposo. Ver [la sección 15](#19-gestión-a-distancia). |
+| **PIN y modo quiosco** | Cambiar el PIN; **pausar** el modo quiosco (el móvil queda como uno normal, ver abajo) y **activarlo** de nuevo, sin ordenador; abrir **Contactos** o los **Ajustes de Android**; **quitar el Device Owner** (solo para desinstalar LlamaditApp o entregar el móvil: volver a activar el quiosco exige un ordenador) y **Acerca de** (versión, copyright, licencia GNU AGPL v3 y código fuente). |
 
-Los botones de la pantalla principal (Volver a casa, Ejercicios, Radio, WhatsApp completo…) se activan en **Pantalla principal**. Mientras el cuidador configura algo fuera de la app (Contactos, la cuenta de Google, Play Store, los Ajustes…), el modo quiosco queda en pausa y la portada lo dice; vuelve al salir del panel, al pulsar **Terminar** o a los 30 minutos sin volver al panel.
+Los botones de la pantalla principal (Volver a casa, Ejercicios, Radio, WhatsApp completo…) se activan en **Pantalla principal**. Mientras el cuidador configura algo fuera de la app (Contactos, la cuenta de Google, Play Store, los Ajustes…), el modo quiosco queda en pausa y la portada lo dice; el botón Inicio vuelve al panel sin cortar nada, y el quiosco regresa al salir del panel, al pulsar **Terminar** o a los 30 minutos sin volver al panel.
+
+**Con el modo quiosco en pausa**, el móvil funciona como uno normal hasta que el cuidador lo active, también tras reiniciar: sale su pantalla de inicio de siempre, con todas sus apps; Inicio y Atrás ya no llevan a LlamaditApp, y se pueden usar el Wi-Fi, el Bluetooth y el modo avión. Las llamadas siguen entrando por la pantalla de LlamaditApp y, al colgar, se vuelve a donde se estaba. Un aviso fijo recuerda que está en pausa: al tocarlo, o al abrir el icono de LlamaditApp, se puede activar de un toque, sin PIN (el panel sí lo pide), y se recupera todo lo que había (Wi-Fi según lo elegido, apps ocultas, Bluetooth apagado). **En pausa el móvil no tiene el botón SOS a la vista: actívalo antes de devolverlo a la persona** (si se te olvida y tienes la gestión a distancia, puedes activarlo desde la app o la web del cuidador).
 
 > ⚠️ **Apunta el PIN en un sitio seguro.** En la versión final no hay otra forma de entrar al panel: si se olvida, solo queda restablecer el teléfono de fábrica.
 

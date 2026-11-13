@@ -39,6 +39,8 @@ Se puede saltar versiones: de la 1.1 se pasa directamente a la última.
 3. Un poco más arriba, en **Modo quiosco**, pulsa **Pausar el modo quiosco**. Así el móvil puede mostrar los avisos que hagan falta durante la actualización. Al terminar lo volverás a activar.
 
 > Si ya tienes la **versión 1.7 o posterior**, el panel es distinto: **Pausar** está en la tarjeta azul de arriba de la portada, y la versión, en el apartado **PIN y modo quiosco**, al final (**Acerca de**).
+>
+> En las versiones desde la 1.9, al pausar el móvil pasa a su **pantalla de inicio normal**. Para volver a LlamaditApp, toca el aviso **Modo quiosco en pausa** o abre su icono en la lista de apps.
 
 <table><tr>
 <td><img src="img/actualizar/a01-version-y-pausar.jpg" width="260" alt="Panel del cuidador: botón Pausar el modo quiosco y versión 1.1 en Acerca de"></td>
@@ -110,7 +112,7 @@ Fíjate en las líneas **"ya controla este móvil: solo se actualizará"** y **"
 <p align="center"><img src="img/actualizar/a04-aviso-pantalla-completa.jpg" width="300" alt="Aviso de Android: Visualización en pantalla completa"></p>
 
 2. Entra en el panel (reloj 5 segundos y **el mismo PIN de siempre**). Desde la versión 1.7 el panel es nuevo: claro y por apartados. Comprueba que siguen los contactos (**Personas**), el contacto del SOS (**Emergencia**) y lo demás.
-3. En la tarjeta azul de arriba de la portada, que dice **Modo quiosco en pausa**, pulsa **Activar**. La versión nueva sale en el apartado **PIN y modo quiosco**, al final (**Acerca de**).
+3. En la tarjeta azul de arriba de la portada, que dice **Modo quiosco en pausa**, pulsa **Activar**. Si vienes de una versión de la 1.9 o posterior, abre LlamaditApp y pulsa directamente **Activar el modo quiosco**. La versión nueva sale en el apartado **PIN y modo quiosco**, al final (**Acerca de**).
 
 <table><tr>
 <td><img src="img/actualizar/a05-configuracion-conservada.jpg" width="230" alt="El contacto del SOS se conserva"></td>
@@ -129,6 +131,11 @@ Lo nuevo de las últimas versiones, todo desde el panel del cuidador:
 
 | Novedad | Dónde se explica |
 |---|---|
+| **Aviso de batería baja** (1.9): el dibujo del móvil y el cargador al bajar del porcentaje que elijas | [Guía, paso 9.8](GUIA-INSTALACION.md#98-batería-baja-opcional) |
+| **Pastillas** (1.9): a cada hora, la foto de cada caja y cuántas tomar; la persona contesta con el botón verde (tomada) o el rojo (no se la toma) y tú lo ves en la actividad y en el **historial de tomas** | [Guía, paso 9.9](GUIA-INSTALACION.md#99-pastillas-opcional) |
+| **Periódicos** (1.9): 42 periódicos y revistas gratuitos por secciones, con foto, en grande y con voz; la noticia entera se abre sin avisos de cookies ni anuncios que la tapen | [Guía, paso 9.10](GUIA-INSTALACION.md#910-periódicos-opcional) |
+| **Cámara y fotos** (1.9): hacer fotos con la cámara de atrás o la de delante y verlas, con botones muy sencillos. Se activan en **Pantalla principal**, también a distancia | [Guía, paso 9.7](GUIA-INSTALACION.md#97-cámara-y-fotos-opcional) |
+| **Pausa del modo quiosco** (1.9): el móvil queda como uno normal, con su pantalla de inicio, hasta que lo actives; pausar y activar son inmediatos | [Funciones](FUNCIONES.md#panel-del-cuidador) |
 | **Añadir personas sin salir de LlamaditApp** (1.8): formulario propio con foto, nombre, teléfono y WhatsApp; ya no se abre la app Contactos | [Guía, paso 8](GUIA-INSTALACION.md#8-añadir-los-contactos-con-su-foto) |
 | **Gestión a distancia** (1.8, opcional): el cuidador ve dónde está el móvil, lo hace sonar y cambia la configuración desde la **app del cuidador** (Android) o desde el ordenador, con el proyecto de Firebase de su familia | [Gestión a distancia](GESTION-A-DISTANCIA.md) |
 | **Panel del cuidador nuevo** (1.7): claro y por apartados, con el estado del modo quiosco y lo que falta por revisar; **Personas** con fotos y etiquetas, ordenar arrastrando y añadir personas sin poner la estrella | [Guía, paso 9](GUIA-INSTALACION.md#9-configurar-el-panel-del-cuidador) |

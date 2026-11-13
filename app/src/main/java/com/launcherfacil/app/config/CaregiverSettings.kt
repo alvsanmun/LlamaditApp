@@ -146,6 +146,27 @@ class CaregiverSettings(context: Context) {
         get() = BackButton.entries.firstOrNull { it.name == prefs.getString(KEY_BACK_BUTTON, null) } ?: BackButton.HOUSE_TOP
         set(value) = prefs.edit { putString(KEY_BACK_BUTTON, value.name) }
 
+    // --- Aviso de batería baja ---
+
+    var lowBatteryAlert: Boolean
+        get() = prefs.getBoolean("low_battery_alert", false)
+        set(value) = prefs.edit { putBoolean("low_battery_alert", value) }
+
+    var lowBatteryPercent: Int
+        get() = prefs.getInt("low_battery_percent", 20)
+        set(value) = prefs.edit { putInt("low_battery_percent", value) }
+
+    /** Por debajo de este nivel se avisa también al cuidador (gestión a distancia). */
+    val lowBatteryLimit: Int get() = if (lowBatteryAlert) lowBatteryPercent else 15
+
+    // --- Periódicos (ids de news/News.kt PAPERS, en su orden). Por defecto, los de actualidad. ---
+
+    var newsPapers: List<String>
+        get() = prefs.getString("news_papers", null)?.split(",")?.filter { it.isNotBlank() }
+            ?: com.launcherfacil.app.news.PAPERS
+                .filter { it.category == com.launcherfacil.app.news.NewsCategory.GENERAL }.map { it.id }
+        set(value) = prefs.edit { putString("news_papers", value.joinToString(",")) }
+
     // --- Diseño de la pantalla principal (orden, tamaño y botones visibles) ---
 
     var homeLayout: List<HomeEntry>

@@ -71,6 +71,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.launcherfacil.app.R
+import com.launcherfacil.app.pills.PillStore
 import com.launcherfacil.app.config.BackButton
 import com.launcherfacil.app.config.CaregiverSettings
 import com.launcherfacil.app.config.HomeItem
@@ -102,6 +103,9 @@ internal enum class CgSection(val color: Color, @DrawableRes val icon: Int) {
     HOUSE(Color(0xFF795548), R.drawable.ic_cg_house),
     EXERCISES(Color(0xFFAD1457), R.drawable.ic_cg_puzzle),
     RADIO(Color(0xFF3949AB), R.drawable.ic_radio),
+    BATTERY(Color(0xFFEF6C00), R.drawable.ic_battery_alert),
+    PILLS(Color(0xFF00897B), R.drawable.ic_medication),
+    NEWS(Color(0xFF4E5B65), R.drawable.ic_newspaper),
     WHATSAPP(Color(0xFF43A047), R.drawable.ic_cg_chat),
     REMOTE(Color(0xFF6A1B9A), R.drawable.ic_cg_remote),
     CONNECTION(Color(0xFF455A64), R.drawable.ic_cg_wifi),
@@ -245,6 +249,9 @@ fun SettingsScreen(
                             RadioSection()
                         }
                     }
+                    CgSection.BATTERY -> BatteryPage(back)
+                    CgSection.PILLS -> PillsPage(back)
+                    CgSection.NEWS -> NewsPage(back)
                     CgSection.WHATSAPP -> WhatsAppPage(
                         favorites, whatsAppIds, { whatsAppIds = it },
                         onInstallWhatsApp, onAllowOverlay, onOpenNotificationAccess, back
@@ -350,6 +357,14 @@ private fun SettingsHome(
             if (!visible(HomeItem.RADIO)) stringResource(R.string.cg_off) else stringResource(R.string.cg_radio_sub, stations),
             visible(HomeItem.RADIO) && stations == 0
         ),
+        Triple(CgSection.BATTERY, batterySummary(settings), false),
+        remember(resumed) { PillStore(context) }.let { pills ->
+            val (taken, total) = remember(resumed) { pills.summary() }
+            // Tomas sin confirmar en la última semana: en ámbar, para que el cuidador lo mire.
+            if (pills.enabled && taken < total) Triple(CgSection.PILLS, stringResource(R.string.pills_missed_week, total - taken), true)
+            else Triple(CgSection.PILLS, pillsSummary(pills), false)
+        },
+        Triple(CgSection.NEWS, newsSummary(settings), false),
         Triple(
             CgSection.WHATSAPP,
             when {
@@ -455,6 +470,9 @@ private fun CgSection.title(): Int = when (this) {
     CgSection.HOUSE -> R.string.settings_house_title
     CgSection.EXERCISES -> R.string.settings_exercises_title
     CgSection.RADIO -> R.string.settings_radio_title
+    CgSection.BATTERY -> R.string.cg_battery
+    CgSection.PILLS -> R.string.cg_pills
+    CgSection.NEWS -> R.string.cg_news
     CgSection.WHATSAPP -> R.string.cg_whatsapp
     CgSection.REMOTE -> R.string.cg_remote
     CgSection.CONNECTION -> R.string.cg_connection

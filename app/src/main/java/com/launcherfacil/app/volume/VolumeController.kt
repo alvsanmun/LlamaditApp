@@ -46,6 +46,15 @@ object VolumeController {
     private var tone: ToneGenerator? = null
 
     /**
+     * Pantallas que usan la voz o el sonido de multimedia (periódicos, ejercicios): mientras
+     * estén abiertas, los botones de volumen mueven multimedia y no el tono de llamada.
+     */
+    @Volatile private var mediaScreens = 0
+
+    fun mediaScreenOpened() { mediaScreens++ }
+    fun mediaScreenClosed() { mediaScreens = (mediaScreens - 1).coerceAtLeast(0) }
+
+    /**
      * Llamar desde dispatchKeyEvent. Devuelve true si era un botón de volumen (y así
      * no aparece el panel de volumen del sistema).
      */
@@ -66,15 +75,17 @@ object VolumeController {
         val ringing = am.mode == AudioManager.MODE_RINGTONE
         // Con la radio puesta, los botones son los de la radio (multimedia).
         val radio = !inCall && !ringing && Radio.isActive
+        // En los periódicos y los ejercicios, los de la voz que lee (también multimedia).
+        val media = !inCall && !ringing && !radio && mediaScreens > 0
         val stream = when {
             inCall -> AudioManager.STREAM_VOICE_CALL
-            radio -> AudioManager.STREAM_MUSIC
+            radio || media -> AudioManager.STREAM_MUSIC
             else -> AudioManager.STREAM_RING
         }
         val max = am.getStreamMaxVolume(stream)
-        // Durante una llamada no se deja a 0: no se oiría a la otra persona. La radio
-        // tampoco: para que calle está el botón rojo.
-        val min = if (inCall || radio) 1 else 0
+        // Durante una llamada no se deja a 0: no se oiría a la otra persona. La radio y la
+        // voz tampoco: para que callen están sus botones.
+        val min = if (inCall || radio || media) 1 else 0
         val level = (am.getStreamVolume(stream) + if (up) 1 else -1).coerceIn(min, max)
         try {
             am.setStreamVolume(stream, level, 0) // 0 = sin el panel del sistema
@@ -114,10 +125,12 @@ object VolumeController {
      * lo usan la voz de Google Maps y los audios y vídeos de WhatsApp. Vuelve a cero
      * con [applySoundPolicy] al regresar al launcher.
      */
-    fun raiseMediaVolume(context: Context, fraction: Float = 0.8f) {
+    fun raiseMediaVolume(context: Context, fraction: Float = 0.8f, onlyIfSilent: Boolean = false) {
         // Con la radio puesta se deja su volumen (el que ha elegido la persona).
         if (Radio.isActive) return
         val am = context.getSystemService(AudioManager::class.java) ?: return
+        // Si la persona ya ha elegido un volumen con los botones, se respeta.
+        if (onlyIfSilent && am.getStreamVolume(AudioManager.STREAM_MUSIC) > 0) return
         val max = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
         try {
             am.setStreamVolume(AudioManager.STREAM_MUSIC, (max * fraction).toInt().coerceAtLeast(1), 0)
@@ -130,8 +143,9 @@ object VolumeController {
         val am = context.getSystemService(AudioManager::class.java) ?: return
         try {
             setRingerModeFor(am, am.getStreamVolume(AudioManager.STREAM_RING))
-            // La radio sigue sonando de fondo: su volumen no se toca.
-            if (!Radio.isActive) am.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0)
+            // La radio sigue sonando de fondo: su volumen no se toca. Con los periódicos o los
+            // ejercicios abiertos (al volver de apagar la pantalla) tampoco.
+            if (!Radio.isActive && mediaScreens == 0) am.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0)
         } catch (e: SecurityException) {
             Log.w(TAG, "No se pudo aplicar la política de sonido", e)
         }

@@ -113,7 +113,7 @@ internal fun RadioSection() {
         Row(Modifier.fillMaxWidth().padding(vertical = 2.dp), verticalAlignment = Alignment.CenterVertically) {
             StationThumb(station.name, logo, Modifier.clickable {
                 pickingFor = station.uuid
-                if (Kiosk.isLocked(activity)) activity.stopLockTask()
+                Kiosk.unlock(activity)
                 gallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             })
             Text(

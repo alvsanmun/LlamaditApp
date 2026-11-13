@@ -36,3 +36,8 @@ fun Activity.hideNavigationBar() {
         hide(WindowInsetsCompat.Type.navigationBars())
     }
 }
+
+/** Con el quiosco en pausa, el móvil se maneja como siempre: la barra de abajo se queda. */
+fun Activity.showNavigationBar() {
+    WindowCompat.getInsetsController(window, window.decorView).show(WindowInsetsCompat.Type.navigationBars())
+}
