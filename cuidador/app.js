@@ -991,7 +991,11 @@ function pillRecord(r) {
   const [cls, mark, text] = r.status === 'taken' ? ['taken', '✓', `Tomada a las ${pillTime(r.at ?? r.minutes)}`]
     : r.status === 'skipped' ? ['skipped', '✗', r.total > 1 && r.skipped < r.total ? `No se ha tomado ${r.skipped} de ${r.total}` : 'Ha dicho que no se la toma']
     : r.status === 'missed' ? ['missed', '✗', 'No la ha confirmado'] : ['wait', '…', 'Avisando ahora'];
-  return `<div class="pill-rec ${cls}"><span class="t">${pillTime(r.minutes)}</span><span class="dot">${mark}</span><span class="tx">${text}</span></div>`;
+  // Qué pastillas eran: la foto de cada caja, cuántas y si la tomó (✓) o no (✗).
+  const boxes = (r.boxes || []).map(b => `<span class="pill-box">${pillPhoto(b)}<b class="n">× ${pillCount(b.count)}</b>${
+    b.taken === true ? '<b class="ans y">✓</b>' : b.taken === false ? '<b class="ans n2">✗</b>' : ''}</span>`).join('');
+  return `<div class="pill-rec ${cls}"><span class="t">${pillTime(r.minutes)}</span><span class="dot">${mark}</span><span class="tx">${text}</span></div>${
+    boxes ? `<div class="pill-boxes">${boxes}</div>` : ''}`;
 }
 
 function pillHistoryCard(p) {

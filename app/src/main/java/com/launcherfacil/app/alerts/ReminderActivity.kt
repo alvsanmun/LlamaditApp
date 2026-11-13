@@ -87,8 +87,8 @@ class ReminderActivity : ComponentActivity() {
                     PillsAlertScreen(
                         minutes = minutes,
                         version = version,
-                        onDone = { skipped, total ->
-                            if (!test) PillAlarms.confirm(this, minutes, skipped, total)
+                        onDone = { answers ->
+                            if (!test) PillAlarms.confirm(this, minutes, answers)
                             leave()
                         },
                         onLater = ::leave

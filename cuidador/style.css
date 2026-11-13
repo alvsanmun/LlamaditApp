@@ -224,3 +224,11 @@ textarea:focus { outline: 2px solid var(--accent); border-color: var(--accent); 
 .pill-rec.skipped .tx { color: #E65100; }
 .pill-rec.wait .dot { background: var(--chevron); }
 .pill-rec .tx { font-size: 16px; font-weight: 600; }
+.pill-boxes { display: flex; flex-wrap: wrap; gap: 10px; padding: 6px 0 10px 62px; }
+.pill-box { position: relative; width: 82px; height: 82px; }
+.pill-box .ph, .pill-box img.ph { width: 82px; height: 82px; border-radius: 14px; object-fit: cover; background: #D9DEE4; display: grid; place-items: center; }
+.pill-box .ph svg { width: 34px; height: 34px; color: #7A8794; }
+.pill-box .n { position: absolute; left: 3px; bottom: 3px; background: rgba(27,36,48,.8); color: #fff; font-size: 12px; border-radius: 6px; padding: 1px 5px; }
+.pill-box .ans { position: absolute; right: -6px; top: -6px; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 14px; }
+.pill-box .ans.y { background: var(--green); }
+.pill-box .ans.n2 { background: #E65100; }

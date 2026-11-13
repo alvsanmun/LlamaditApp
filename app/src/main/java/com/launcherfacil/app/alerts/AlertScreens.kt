@@ -172,7 +172,7 @@ private fun DrawScope.bolt(center: Offset, height: Float, color: Color) {
  * El botón gris del reloj lo deja para luego: el aviso vuelve a los 15 minutos.
  */
 @Composable
-fun PillsAlertScreen(minutes: Int, version: Int, onDone: (skipped: Int, total: Int) -> Unit, onLater: () -> Unit) {
+fun PillsAlertScreen(minutes: Int, version: Int, onDone: (answers: Map<String, Boolean>) -> Unit, onLater: () -> Unit) {
     val context = LocalContext.current
     val store = remember { PillStore(context) }
     val doses = remember(minutes, version) { store.dosesAt(minutes) }
@@ -183,7 +183,7 @@ fun PillsAlertScreen(minutes: Int, version: Int, onDone: (skipped: Int, total: I
     LaunchedEffect(finished) {
         if (finished) {
             delay(1500)
-            onDone(answers.count { !it }, doses.size)
+            onDone(doses.zip(answers).associate { (dose, taken) -> dose.id to taken })
         }
     }
     val answer = { taken: Boolean ->

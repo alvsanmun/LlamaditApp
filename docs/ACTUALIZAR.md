@@ -132,7 +132,7 @@ Lo nuevo de las últimas versiones, todo desde el panel del cuidador:
 | Novedad | Dónde se explica |
 |---|---|
 | **Aviso de batería baja** (1.9): el dibujo del móvil y el cargador al bajar del porcentaje que elijas | [Guía, paso 9.8](GUIA-INSTALACION.md#98-batería-baja-opcional) |
-| **Pastillas** (1.9): a cada hora, la foto de cada caja y cuántas tomar; la persona contesta con el botón verde (tomada) o el rojo (no se la toma) y tú lo ves en la actividad y en el **historial de tomas** | [Guía, paso 9.9](GUIA-INSTALACION.md#99-pastillas-opcional) |
+| **Pastillas** (1.9): a cada hora, la foto de cada caja y cuántas tomar; la persona contesta con el botón verde (tomada) o el rojo (no se la toma) y tú lo ves en la actividad y en el **historial de tomas**, con la foto de cada caja (1.9.1) | [Guía, paso 9.9](GUIA-INSTALACION.md#99-pastillas-opcional) |
 | **Periódicos** (1.9): 42 periódicos y revistas gratuitos por secciones, con foto, en grande y con voz; la noticia entera se abre sin avisos de cookies ni anuncios que la tapen | [Guía, paso 9.10](GUIA-INSTALACION.md#910-periódicos-opcional) |
 | **Cámara y fotos** (1.9): hacer fotos con la cámara de atrás o la de delante y verlas, con botones muy sencillos. Se activan en **Pantalla principal**, también a distancia | [Guía, paso 9.7](GUIA-INSTALACION.md#97-cámara-y-fotos-opcional) |
 | **Pausa del modo quiosco** (1.9): el móvil queda como uno normal, con su pantalla de inicio, hasta que lo actives; pausar y activar son inmediatos | [Funciones](FUNCIONES.md#panel-del-cuidador) |

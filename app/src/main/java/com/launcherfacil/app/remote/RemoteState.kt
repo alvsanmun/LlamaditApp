@@ -132,7 +132,8 @@ internal object RemoteState {
                 "history" to pills.history().map { r ->
                     mapOf(
                         "date" to r.date.toString(), "minutes" to r.minutes, "status" to r.status.name.lowercase(), "at" to r.at,
-                        "skipped" to r.skipped, "total" to r.total
+                        "skipped" to r.skipped, "total" to r.total,
+                        "boxes" to r.boxes.map { b -> mapOf("id" to b.id, "count" to b.count.toDouble(), "taken" to b.taken) }
                     )
                 }
             ),
@@ -151,7 +152,8 @@ internal object RemoteState {
      */
     private suspend fun uploadPillPhotos(context: Context, device: DocumentReference, pills: PillStore) {
         val prefs = context.getSharedPreferences("remote_photos", Context.MODE_PRIVATE)
-        val doses = pills.doses.filter { pills.hasPhoto(it.id) }.map { it.id }
+        // Las de ahora y las que salen en el historial (aunque ya se hayan quitado).
+        val doses = pills.photoIds()
         for (key in prefs.all.keys.filter { it.startsWith("pill_") && it.removePrefix("pill_") !in doses }) {
             device.collection("photos").document(key).delete().await()
             prefs.edit { remove(key) }

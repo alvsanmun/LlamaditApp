@@ -16,8 +16,8 @@ android {
         applicationId = "com.launcherfacil.cuidador"
         minSdk = 26
         targetSdk = 35
-        versionCode = 3
-        versionName = "1.0.2"
+        versionCode = 4
+        versionName = "1.0.3"
     }
 
     // Misma clave que el launcher (keystore.properties, fuera de git).

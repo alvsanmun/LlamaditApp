@@ -71,8 +71,13 @@ enum class PillStatus { TAKEN, SKIPPED, MISSED, PENDING }
  */
 data class PillRecord(
     val date: LocalDate, val minutes: Int, val status: PillStatus, val at: Int?,
-    val skipped: Int = 0, val total: Int = 0
+    val skipped: Int = 0, val total: Int = 0,
+    /** Las cajas de esa toma, con lo que contestó en cada una (para ver cuál se tomó). */
+    val boxes: List<PillBox> = emptyList()
 )
+
+/** Una caja dentro de una toma del historial: [taken] = true tomada, false no, null sin contestar. */
+data class PillBox(val id: String, val count: Float, val taken: Boolean?)
 
 fun formatPillTime(minutes: Int): String = "%d:%02d".format(minutes / 60, minutes % 60)
 
@@ -123,7 +128,26 @@ class PillStore(context: Context) {
 
     fun remove(id: String) {
         save(doses.filter { it.id != id })
-        photoFile(id).delete()
+        // La foto se queda mientras salga en el historial, para saber qué pastilla era.
+        if (id !in historyPhotoIds()) photoFile(id).delete()
+    }
+
+    private fun historyPhotoIds(): Set<String> = history().flatMap { r -> r.boxes.map { it.id } }.toSet()
+
+    /** Las cajas con foto que hay que tener: las de ahora y las que salen en el historial. */
+    fun photoIds(): List<String> = (doses.map { it.id } + historyPhotoIds()).distinct().filter { hasPhoto(it) }
+
+    /** Foto pequeña (para el historial), con caché: no se decodifican fotos enteras en la lista. */
+    fun loadThumb(id: String): Bitmap? {
+        thumbs[id]?.let { return it }
+        val file = photoFile(id).takeIf { it.exists() } ?: return null
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        BitmapFactory.decodeFile(file.path, bounds)
+        var sample = 1
+        while (maxOf(bounds.outWidth, bounds.outHeight) / (sample * 2) >= 200) sample *= 2
+        val bitmap = BitmapFactory.decodeFile(file.path, BitmapFactory.Options().apply { inSampleSize = sample }) ?: return null
+        thumbs[id] = bitmap
+        return bitmap
     }
 
     fun photoFile(id: String) = File(appContext.filesDir, "pills/$id.jpg")
@@ -133,6 +157,7 @@ class PillStore(context: Context) {
     fun loadPhoto(id: String): Bitmap? = photoFile(id).takeIf { it.exists() }?.let { BitmapFactory.decodeFile(it.path) }
 
     private fun savePhoto(id: String, bitmap: Bitmap) {
+        thumbs.remove(id)
         val file = photoFile(id).apply { parentFile?.mkdirs() }
         file.outputStream().use { bitmap.compress(Bitmap.CompressFormat.JPEG, 85, it) }
     }
@@ -153,7 +178,7 @@ class PillStore(context: Context) {
      * Apunta cómo va la toma de hoy a esa hora. Una toma confirmada no cambia, y "sonando"
      * no pisa lo que ya hubiera.
      */
-    fun record(minutes: Int, status: PillStatus, skipped: Int = 0, total: Int = 0) {
+    fun record(minutes: Int, status: PillStatus, answers: Map<String, Boolean> = emptyMap()) {
         val today = LocalDate.now()
         val list = history(convertOld = false).toMutableList()
         val i = list.indexOfFirst { it.date == today && it.minutes == minutes }
@@ -163,7 +188,11 @@ class PillStore(context: Context) {
         if (status == PillStatus.PENDING && old != null) return
         val now = LocalTime.now()
         val answered = status == PillStatus.TAKEN || status == PillStatus.SKIPPED
-        val record = PillRecord(today, minutes, status, if (answered) now.hour * 60 + now.minute else null, skipped, total)
+        val boxes = dosesAt(minutes).map { dose ->
+            PillBox(dose.id, dose.count, if (answered) answers[dose.id] ?: (status == PillStatus.TAKEN) else null)
+        }
+        val skipped = boxes.count { it.taken == false }
+        val record = PillRecord(today, minutes, status, if (answered) now.hour * 60 + now.minute else null, skipped, boxes.size, boxes)
         if (i >= 0) list[i] = record else list.add(record)
         val from = today.minusDays(HISTORY_DAYS.toLong())
         val array = JSONArray()
@@ -171,9 +200,13 @@ class PillStore(context: Context) {
             array.put(JSONObject().put("d", r.date.toString()).put("m", r.minutes).put("s", r.status.name).apply {
                 r.at?.let { put("at", it) }
                 if (r.status == PillStatus.SKIPPED) put("n", r.skipped).put("of", r.total)
+                if (r.boxes.isNotEmpty()) put("b", JSONArray().apply {
+                    r.boxes.forEach { b -> put(JSONObject().put("id", b.id).put("c", b.count.toDouble()).apply { b.taken?.let { put("t", it) } }) }
+                })
             })
         }
         prefs.edit { putString("history", array.toString()) }
+        prunePhotos()
     }
 
     /**
@@ -189,7 +222,12 @@ class PillStore(context: Context) {
                 val date = LocalDate.parse(o.getString("d"))
                 var status = PillStatus.valueOf(o.getString("s"))
                 if (convertOld && status == PillStatus.PENDING && date.isBefore(today)) status = PillStatus.MISSED
-                PillRecord(date, o.getInt("m"), status, if (o.has("at")) o.getInt("at") else null, o.optInt("n"), o.optInt("of"))
+                val b = o.optJSONArray("b") ?: JSONArray()
+                val boxes = (0 until b.length()).map { j ->
+                    val x = b.getJSONObject(j)
+                    PillBox(x.getString("id"), x.getDouble("c").toFloat(), if (x.has("t")) x.getBoolean("t") else null)
+                }
+                PillRecord(date, o.getInt("m"), status, if (o.has("at")) o.getInt("at") else null, o.optInt("n"), o.optInt("of"), boxes)
             } catch (e: Exception) {
                 null
             }
@@ -203,9 +241,21 @@ class PillStore(context: Context) {
         return done.count { it.status == PillStatus.TAKEN } to done.size
     }
 
+    /** Borra las fotos de pastillas quitadas que ya no salen en el historial. */
+    private fun prunePhotos() {
+        val keep = (doses.map { it.id } + historyPhotoIds()).toSet()
+        File(appContext.filesDir, "pills").listFiles()?.forEach { f ->
+            if (f.nameWithoutExtension !in keep) {
+                f.delete()
+                thumbs.remove(f.nameWithoutExtension)
+            }
+        }
+    }
+
     companion object {
         /** Días que se guardan en el historial. */
         const val HISTORY_DAYS = 30
+        private val thumbs = java.util.concurrent.ConcurrentHashMap<String, Bitmap>()
     }
 }
 
@@ -270,13 +320,14 @@ object PillAlarms {
 
     /**
      * La persona ha contestado a todas las cajas de esa hora: con el verde (tomada) o con el
-     * rojo (no se la toma, [skipped] de [total]). En los dos casos el aviso deja de sonar.
+     * rojo (no se la toma), caja a caja en [answers] (id → tomada). En los dos casos el aviso deja de sonar.
      */
-    fun confirm(context: Context, minutes: Int, skipped: Int = 0, total: Int = 0) {
+    fun confirm(context: Context, minutes: Int, answers: Map<String, Boolean> = emptyMap()) {
         val store = PillStore(context)
+        val skipped = answers.count { !it.value }
+        val total = answers.size
         store.markTaken(minutes)
-        if (skipped > 0) store.record(minutes, PillStatus.SKIPPED, skipped, total)
-        else store.record(minutes, PillStatus.TAKEN)
+        store.record(minutes, if (skipped > 0) PillStatus.SKIPPED else PillStatus.TAKEN, answers)
         cancelRepeat(context, minutes)
         Remote.publishSoon(context)
         if (skipped > 0) {

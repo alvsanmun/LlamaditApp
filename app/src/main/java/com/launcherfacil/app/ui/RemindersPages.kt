@@ -27,6 +27,8 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -76,6 +78,7 @@ import com.launcherfacil.app.news.PAPERS
 import com.launcherfacil.app.pills.PILL_COUNTS
 import com.launcherfacil.app.pills.PillAlarms
 import com.launcherfacil.app.pills.PillDose
+import com.launcherfacil.app.pills.PillBox
 import com.launcherfacil.app.pills.PillRecord
 import com.launcherfacil.app.pills.PillStatus
 import java.time.LocalDate
@@ -255,20 +258,51 @@ private fun PillRecordRow(record: PillRecord) {
         PillStatus.MISSED -> Triple(Color(0xFFC62828), R.drawable.ic_close, stringResource(R.string.pills_status_missed))
         PillStatus.PENDING -> Triple(Color(0xFF8A96A5), R.drawable.ic_snooze, stringResource(R.string.pills_status_pending))
     }
-    Row(
-        Modifier.fillMaxWidth().padding(vertical = 6.dp, horizontal = 4.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        Text(formatPillTime(record.minutes), color = CgInk, fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, modifier = Modifier.width(64.dp))
-        Box(Modifier.size(32.dp).clip(RoundedCornerShape(16.dp)).background(color), contentAlignment = Alignment.Center) {
-            Icon(painterResource(icon), null, tint = Color.White, modifier = Modifier.size(20.dp))
+    Column(Modifier.fillMaxWidth().padding(vertical = 6.dp, horizontal = 4.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Text(formatPillTime(record.minutes), color = CgInk, fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, modifier = Modifier.width(64.dp))
+            Box(Modifier.size(32.dp).clip(RoundedCornerShape(16.dp)).background(color), contentAlignment = Alignment.Center) {
+                Icon(painterResource(icon), null, tint = Color.White, modifier = Modifier.size(20.dp))
+            }
+            Text(text, color = when (record.status) {
+                PillStatus.MISSED -> Color(0xFFC62828)
+                PillStatus.SKIPPED -> Color(0xFFE65100)
+                else -> CgInk
+            }, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
         }
-        Text(text, color = when (record.status) {
-            PillStatus.MISSED -> Color(0xFFC62828)
-            PillStatus.SKIPPED -> Color(0xFFE65100)
-            else -> CgInk
-        }, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+        // Qué pastillas eran: la foto de cada caja, cuántas y si la tomó (✓) o no (✗).
+        if (record.boxes.isNotEmpty()) {
+            Row(
+                Modifier.padding(start = 64.dp, top = 8.dp).horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                record.boxes.forEach { PillBoxThumb(it) }
+            }
+        }
+    }
+}
+
+@Composable
+private fun PillBoxThumb(box: PillBox) {
+    val context = LocalContext.current
+    val photo by produceState<Bitmap?>(null, box.id) { value = withContext(Dispatchers.IO) { PillStore(context).loadThumb(box.id) } }
+    Box(Modifier.size(90.dp)) {
+        PillThumb(photo, Modifier.size(82.dp).align(Alignment.BottomStart))
+        Text(
+            "× " + formatPillCount(box.count), color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.ExtraBold,
+            modifier = Modifier.align(Alignment.BottomStart).padding(start = 3.dp, bottom = 3.dp)
+                .clip(RoundedCornerShape(6.dp)).background(Color(0xCC1B2430)).padding(horizontal = 5.dp, vertical = 1.dp)
+        )
+        val taken = box.taken
+        if (taken != null) {
+            Box(
+                Modifier.size(24.dp).align(Alignment.TopEnd).clip(RoundedCornerShape(12.dp))
+                    .background(if (taken) Color(0xFF2E7D32) else Color(0xFFE65100)),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(painterResource(if (taken) R.drawable.ic_check else R.drawable.ic_close), null, tint = Color.White, modifier = Modifier.size(16.dp))
+            }
+        }
     }
 }
 

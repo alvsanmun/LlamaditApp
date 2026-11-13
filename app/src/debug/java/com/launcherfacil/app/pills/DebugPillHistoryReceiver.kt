@@ -56,6 +56,13 @@ class DebugPillHistoryReceiver : BroadcastReceiver() {
                     skipped -> o.put("s", "SKIPPED").put("at", minutes + 2).put("n", 1).put("of", 1)
                     else -> o.put("s", "TAKEN").put("at", minutes + (d * 3 + i * 5) % 25)
                 }
+                val boxes = JSONArray()
+                PillStore(context).dosesAt(minutes).forEach { dose ->
+                    boxes.put(JSONObject().put("id", dose.id).put("c", dose.count.toDouble()).apply {
+                        if (!missed) put("t", !skipped)
+                    })
+                }
+                if (boxes.length() > 0) o.put("b", boxes)
                 array.put(o)
             }
         }

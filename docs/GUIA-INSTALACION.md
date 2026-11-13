@@ -454,7 +454,7 @@ En el apartado **Batería baja**, activa **Recordarle que cargue el móvil** y e
 1. En el apartado **Pastillas**, activa **Avisos de las pastillas** y pulsa **Añadir una pastilla**.
 2. Elige la **hora** con − y +, **cuántas** (½ es media pastilla) y haz una **foto de la caja**, de frente y con luz: es lo que verá la persona.
 3. Repite con cada pastilla. Las de la misma hora salen una detrás de otra.
-4. Desde el día siguiente, en ese mismo apartado verás el **Historial**: si se ha tomado cada toma y a qué hora la confirmó, si ha dicho que no se la toma (botón rojo del aviso) o si no ha contestado (también desde la app o la web del cuidador).
+4. Desde el día siguiente, en ese mismo apartado verás el **Historial**: si se ha tomado cada toma y a qué hora la confirmó, si ha dicho que no se la toma (botón rojo del aviso) o si no ha contestado, con la foto de cada caja para saber qué pastilla era (también desde la app o la web del cuidador).
 4. Pulsa **Probar el aviso** con la persona delante: tiene que tocar el **botón verde** cada vez que se toma una. El gris del reloj lo deja para dentro de 15 minutos.
 
 Con la gestión a distancia también puedes añadirlas, cambiarlas y hacer la foto desde la app o la web del cuidador, y verás en la actividad si las ha confirmado.
