@@ -124,7 +124,7 @@ fun HomeScreen(
                             HomeItem.MISSED_CALLS ->
                                 SmallTileWithBadge(MoradoPerdidas, R.drawable.ic_phone_missed, newMissedCalls, onMissedCalls, modifier, fraction)
                             HomeItem.WHATSAPP_APP ->
-                                SmallTileWithBadge(CianWhatsApp, R.drawable.ic_chat, whatsAppUnread, onWhatsAppApp, modifier, fraction)
+                                SmallTileWithBadge(CianWhatsApp, R.drawable.ic_whatsapp_chat, whatsAppUnread, onWhatsAppApp, modifier, fraction)
                             HomeItem.EXERCISES -> BigTile(RosaEjercicios, onExercises, modifier) {
                                 TileIcon(R.drawable.ic_extension, fraction)
                             }

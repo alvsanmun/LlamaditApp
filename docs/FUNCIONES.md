@@ -67,7 +67,7 @@ Las mismas fotos, en el mismo orden, pero solo de las personas marcadas como "Ti
   <img src="img/capturas/31-whatsapp-casa.jpg" alt="Lista de chats con la pestaña de la casa en el borde derecho" width="230">
 </p>
 
-Un botón aparte, verde claro con un bocadillo, para quien quiera usar **WhatsApp entero**: chats, notas de voz, fotos y vídeos. Lleva un **número rojo** con los mensajes sin leer, que baja solo al leerlos.
+Un botón aparte, verde claro con un bocadillo redondo y un teléfono dentro, para quien quiera usar **WhatsApp entero**: chats, notas de voz, fotos y vídeos. Lleva un **número rojo** con los mensajes sin leer, que baja solo al leerlos.
 
 - Al tocarlo se abre WhatsApp, con el sonido de audios y vídeos activado.
 - Mientras se usa, una **pestaña pequeña con una casa**, pegada al borde derecho de la pantalla, vuelve a LlamaditApp con un toque. Es pequeña y semitransparente para tapar lo mínimo, y está por debajo de la barra de arriba de WhatsApp y por encima del teclado.

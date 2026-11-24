@@ -200,7 +200,7 @@ private fun ItemBadge(item: HomeItem, sosIcon: SosIcon) {
         HomeItem.MESSAGES -> NaranjaMensajes to R.drawable.ic_sms
         HomeItem.MISSED_CALLS -> MoradoPerdidas to R.drawable.ic_phone_missed
         HomeItem.GO_HOME -> MarronCasa to R.drawable.ic_go_home
-        HomeItem.WHATSAPP_APP -> CianWhatsApp to R.drawable.ic_chat
+        HomeItem.WHATSAPP_APP -> CianWhatsApp to R.drawable.ic_whatsapp_chat
         HomeItem.EXERCISES -> RosaEjercicios to R.drawable.ic_extension
         HomeItem.RADIO -> AnilRadio to R.drawable.ic_radio
         HomeItem.CAMERA -> TurquesaCamara to R.drawable.ic_photo_camera
